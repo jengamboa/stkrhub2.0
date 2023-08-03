@@ -30,10 +30,10 @@
         $game = mysqli_fetch_assoc($result);
 
         // Retrieve the added game components for this game from the "added_game_components" table
-        $query_components = "SELECT agc.added_component_id, gc.component_name, gc.price, gc.category, agc.is_custom_design, agc.custom_design_file_path, agc.quantity
-                            FROM added_game_components agc
-                            INNER JOIN game_components gc ON agc.component_id = gc.component_id
-                            WHERE agc.game_id = '$game_id'";
+        $query_components = "SELECT agc.added_component_id, agc.color_id, gc.component_id, gc.component_name, gc.price, gc.category, agc.is_custom_design, agc.custom_design_file_path, agc.quantity
+FROM added_game_components agc
+INNER JOIN game_components gc ON agc.component_id = gc.component_id
+WHERE agc.game_id = '$game_id'";
         $result_components = mysqli_query($conn, $query_components);
     }
     ?>
@@ -51,8 +51,8 @@
                 <th>Price</th>
                 <th>Category</th>
                 <th>Edit Quantity</th>
-                <th>Filename</th>
-                <th>Modify</th> <!-- New column -->
+                <th>Info</th>
+                <th>Modify</th>
                 <th>Delete Component</th>
             </tr>
         </thead>
@@ -65,20 +65,58 @@
                     <td>
                         <input type="number" class="quantity-input" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" value="<?php echo max(1, min(99, $component['quantity'])); ?>" min="1" max="99">
                     </td>
-                    <td>
-                        <?php if ($component['is_custom_design'] == 1 && !empty($component['custom_design_file_path'])) {
-                            echo basename($component['custom_design_file_path']);
-                        } ?>
-                    </td>
-                    <td>
-                        <!-- Add the Update Custom Design button -->
-                        <?php if ($component['is_custom_design'] == 1) { ?>
-                            <button class="update-design" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" data-componentname="<?php echo $component['component_name']; ?>" data-componentprice="<?php echo $component['price']; ?>" data-componentcategory="<?php echo $component['category']; ?>" data-filepath="<?php echo $component['custom_design_file_path']; ?>" data-filename="<?php echo basename($component['custom_design_file_path']); ?>" data-gamename="<?php echo $game['name']; ?>" data-addedcomponentid="<?php echo $component['added_component_id']; ?>"> <!-- Add this line -->
-                                Update Custom Design
-                            </button>
-                        <?php } ?>
 
+                    <td>
+                        <?php
+                        if ($component['custom_design_file_path']) {
+                            // Display the custom design filepath if available
+                            echo basename($component['custom_design_file_path']);
+                        } elseif ($component['color_id']) {
+                            // Retrieve the color details from the "component_colors" table
+                            $query_color = "SELECT color_name FROM component_colors WHERE color_id = '{$component['color_id']}'";
+                            $result_color = mysqli_query($conn, $query_color);
+                            $color = mysqli_fetch_assoc($result_color);
+                            if ($color) {
+                                echo $color['color_name'];
+                            }
+                        } else {
+                            echo "No Info";
+                        }
+                        ?>
                     </td>
+
+                    <td>
+                        <?php if ($component['custom_design_file_path']) { ?>
+                            <!-- Add the Update Custom Design button -->
+                            <button class="update-design" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" data-componentname="<?php echo $component['component_name']; ?>" data-componentprice="<?php echo $component['price']; ?>" data-componentcategory="<?php echo $component['category']; ?>" data-filepath="<?php echo $component['custom_design_file_path']; ?>" data-filename="<?php echo basename($component['custom_design_file_path']); ?>" data-gamename="<?php echo $game['name']; ?>" data-addedcomponentid="<?php echo $component['added_component_id']; ?>">Update Custom Design</button>
+                        <?php } elseif ($component['color_id']) { ?>
+                            <?php
+                            // Retrieve the component_id and component_name
+                            $component_id = $component['component_id'];
+                            $added_component_id = $component['added_component_id'];
+                            $component_name = $component['component_name'];
+
+                            // Retrieve all color options for the component from the component_colors table
+                            $query_colors = "SELECT color_name FROM component_colors WHERE component_id = '$component_id'";
+                            $result_colors = mysqli_query($conn, $query_colors);
+
+                            // Echo the component_id and component_name
+                            echo "Added Component ID: $added_component_id, Component ID: $component_id, Component Name: $component_name<br>";
+
+                            // Echo out all available colors
+                            $colors = array();
+                            while ($color = mysqli_fetch_assoc($result_colors)) {
+                                $colors[] = $color['color_name'];
+                            }
+                            if (!empty($colors)) {
+                                echo "Available Colors: " . implode(', ', $colors);
+                            } else {
+                                echo "No Available Colors";
+                            }
+                            ?>
+                        <?php } ?>
+                    </td>
+
                     <td>
                         <button class="delete-component" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>">Delete</button>
                     </td>

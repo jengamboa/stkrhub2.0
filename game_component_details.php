@@ -62,7 +62,7 @@ $result_assets = mysqli_query($conn, $query_assets);
         <form method="post" action="process_add_component_with_colors.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
             <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
-            
+
             <label for="selected_color">Select Color:</label>
             <select id="selected_color" name="selected_color">
                 <?php
@@ -74,7 +74,10 @@ $result_assets = mysqli_query($conn, $query_assets);
                 }
                 ?>
             </select>
-            
+
+            <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
+            <input type="hidden" name="component_name" value="<?php echo $component['component_name']; ?>">
+
             <input type="submit" name="add_with_colors" value="Add with Colors">
         </form>
     <?php } else { ?>
