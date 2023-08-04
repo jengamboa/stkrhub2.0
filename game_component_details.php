@@ -78,7 +78,7 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
             <input type="hidden" name="component_name" value="<?php echo $component['component_name']; ?>">
 
-            <input type="submit" name="add_with_colors" value="Add with Colors">
+            <input type="submit" name="add_with_colors" value="Add with Colors">dice
         </form>
     <?php } else { ?>
         <!-- Button to add the component with design -->
@@ -91,6 +91,18 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
             <input type="submit" name="add_with_design" value="Add with Design">
         </form>
+
+        <!-- Button to add the component without design -->
+        <form method="post" action="process_direct_add_component.php">
+            <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
+            <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
+            <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
+            <input type="hidden" name="component_name" value="<?php echo $component['component_name']; ?>">
+            <input type="hidden" name="component_price" value="<?php echo $component['price']; ?>">
+            <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
+            <input type="submit" name="direct_add" value="Add Directly without Design">
+        </form>
+
     <?php } ?>
 
     <form method="post" action="add_custom_component.php">

@@ -1,3 +1,27 @@
+<?php
+include 'connection.php';
+include 'html/header.html.php';
+
+// Check if the user is logged in. If not, redirect to the login page.
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
+    $game_id = $_GET['game_id'];
+
+    // Retrieve the game details from the "games" table
+    $query = "SELECT * FROM games WHERE game_id = '$game_id' AND user_id = '{$_SESSION['user_id']}'";
+    $result = mysqli_query($conn, $query);
+    $game = mysqli_fetch_assoc($result);
+
+    // Retrieve the added game components for this game from the "added_game_components" table
+    $query_components = "SELECT agc.added_component_id, agc.color_id, gc.component_id, gc.component_name, gc.price, gc.category, agc.is_custom_design, agc.custom_design_file_path, agc.quantity FROM added_game_components agc INNER JOIN game_components gc ON agc.component_id = gc.component_id WHERE agc.game_id = '$game_id'";
+    $result_components = mysqli_query($conn, $query_components);
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -10,33 +34,6 @@
 
 <body>
     <h2>Game Dashboard</h2>
-
-    <?php
-    include 'connection.php';
-    include 'html/header.html.php';
-
-    // Check if the user is logged in. If not, redirect to the login page.
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: login.php");
-        exit;
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
-        $game_id = $_GET['game_id'];
-
-        // Retrieve the game details from the "games" table
-        $query = "SELECT * FROM games WHERE game_id = '$game_id' AND user_id = '{$_SESSION['user_id']}'";
-        $result = mysqli_query($conn, $query);
-        $game = mysqli_fetch_assoc($result);
-
-        // Retrieve the added game components for this game from the "added_game_components" table
-        $query_components = "SELECT agc.added_component_id, agc.color_id, gc.component_id, gc.component_name, gc.price, gc.category, agc.is_custom_design, agc.custom_design_file_path, agc.quantity
-FROM added_game_components agc
-INNER JOIN game_components gc ON agc.component_id = gc.component_id
-WHERE agc.game_id = '$game_id'";
-        $result_components = mysqli_query($conn, $query_components);
-    }
-    ?>
 
     <h3><?php echo $game['name']; ?></h3>
     <p><?php echo $game['description']; ?></p>
@@ -66,7 +63,7 @@ WHERE agc.game_id = '$game_id'";
                         <input type="number" class="quantity-input" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" value="<?php echo max(1, min(99, $component['quantity'])); ?>" min="1" max="99">
                     </td>
 
-                    <td>
+                    <td class="info-cell">
                         <?php
                         if ($component['custom_design_file_path']) {
                             // Display the custom design filepath if available
@@ -85,7 +82,7 @@ WHERE agc.game_id = '$game_id'";
                         ?>
                     </td>
 
-                    <td>
+                    <td class="modify-cell">
                         <?php if ($component['custom_design_file_path']) { ?>
                             <!-- Add the Update Custom Design button -->
                             <button class="update-design" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" data-componentname="<?php echo $component['component_name']; ?>" data-componentprice="<?php echo $component['price']; ?>" data-componentcategory="<?php echo $component['category']; ?>" data-filepath="<?php echo $component['custom_design_file_path']; ?>" data-filename="<?php echo basename($component['custom_design_file_path']); ?>" data-gamename="<?php echo $game['name']; ?>" data-addedcomponentid="<?php echo $component['added_component_id']; ?>">Update Custom Design</button>
@@ -97,23 +94,18 @@ WHERE agc.game_id = '$game_id'";
                             $component_name = $component['component_name'];
 
                             // Retrieve all color options for the component from the component_colors table
-                            $query_colors = "SELECT color_name FROM component_colors WHERE component_id = '$component_id'";
+                            $query_colors = "SELECT color_id, color_name FROM component_colors WHERE component_id = '$component_id'";
                             $result_colors = mysqli_query($conn, $query_colors);
-
-                            // Echo the component_id and component_name
-                            echo "Added Component ID: $added_component_id, Component ID: $component_id, Component Name: $component_name<br>";
-
-                            // Echo out all available colors
-                            $colors = array();
-                            while ($color = mysqli_fetch_assoc($result_colors)) {
-                                $colors[] = $color['color_name'];
-                            }
-                            if (!empty($colors)) {
-                                echo "Available Colors: " . implode(', ', $colors);
-                            } else {
-                                echo "No Available Colors";
-                            }
                             ?>
+
+                            <div class="color-links">
+                                <!-- Echo out all available colors as clickable links -->
+                                <?php while ($color = mysqli_fetch_assoc($result_colors)) { ?>
+                                    <a class="color-link" href="#" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component_id; ?>" data-colorid="<?php echo $color['color_id']; ?>" data-addedcomponentid="<?php echo $added_component_id; ?>">
+                                        <?php echo $color['color_name']; ?>
+                                    </a>
+                                <?php } ?>
+                            </div>
                         <?php } ?>
                     </td>
 
@@ -134,6 +126,38 @@ WHERE agc.game_id = '$game_id'";
 
     <script>
         $(document).ready(function() {
+
+
+            // Handle color link clicks
+            $('.color-link').click(function(e) {
+                e.preventDefault();
+
+                var game_id = $(this).data('gameid');
+                var component_id = $(this).data('componentid');
+                var color_id = $(this).data('colorid');
+                var added_component_id = $(this).data('addedcomponentid');
+
+                // Send AJAX request to process_update_color.php
+                $.ajax({
+                    type: 'GET',
+                    url: 'process_update_color.php',
+                    data: {
+                        game_id: game_id,
+                        component_id: component_id,
+                        color_id: color_id,
+                        added_component_id: added_component_id
+                    },
+                    success: function(response) {
+                        // Handle the response if needed
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        // Handle errors if needed
+                        console.error(error);
+                    }
+                });
+            });
+
 
             // Listen for update custom design button click
             $('.update-design').click(function() {
