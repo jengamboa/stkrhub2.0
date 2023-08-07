@@ -53,25 +53,33 @@ $result_purchased = mysqli_query($conn, $query_purchased);
     <div class="panel">
         <h2>Ready to Publish Games</h2>
         <ul>
-            <?php while ($purchase = mysqli_fetch_assoc($result_purchased)) { ?>
-                <li>
-                    <?php
+            <?php
+            while ($purchase = mysqli_fetch_assoc($result_purchased)) {
+                if ($purchase['is_published'] == 0) {
                     $game_id = $purchase['game_id'];
+                    $purchase_id = $purchase['purchase_id']; // Added line to get purchase ID
                     $query_game = "SELECT * FROM games WHERE game_id = '$game_id'";
                     $result_game = mysqli_query($conn, $query_game);
                     $game = mysqli_fetch_assoc($result_game);
-                    ?>
-                    <form method="get" action="edit_game_page.php">
-                        <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
-                        <input type="hidden" name="game_name" value="<?php echo $game['name']; ?>">
-                        <button type="submit" name="edit_game_page">Edit Game Page</button>
-                    </form>
-                    <p>Game ID: <?php echo $game['game_id']; ?></p>
-                    <p>Game Name: <?php echo $game['name']; ?></p>
-                </li>
-            <?php } ?>
+            ?>
+                    <li>
+                        <form method="get" action="edit_game_page.php">
+                            <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
+                            <input type="hidden" name="game_name" value="<?php echo $game['name']; ?>">
+                            <button type="submit" name="edit_game_page">Edit Game Page</button>
+                        </form>
+                        <p>Game ID: <?php echo $game['game_id']; ?></p>
+                        <p>Game Name: <?php echo $game['name']; ?></p>
+                        <p>Purchase ID: <?php echo $purchase_id; ?></p> <!-- Added line to display purchase ID -->
+                    </li>
+            <?php
+                }
+            }
+            ?>
         </ul>
     </div>
+
+
 
 
 
