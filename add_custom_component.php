@@ -30,6 +30,7 @@ $game_name = $_POST['game_name']; // Fetching the game name
                 <a href="game_component_details.php?game_id=<?php echo $game_id; ?>&game_name=<?php echo urlencode($game_name); ?>&component_id=<?php echo $component['component_id']; ?>">
                     <strong><?php echo $component['component_name']; ?></strong><br>
                     Price: <?php echo $component['price']; ?><br>
+                    Size: <?php echo $component['size']; ?><br> <!-- Display the size of the component -->
                 </a>
             </li>
         <?php } ?>
