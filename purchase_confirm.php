@@ -5,28 +5,23 @@ include 'html/header.html.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_game'])) {
     $user_id = $_POST['user_id'];
     $game_id = $_POST['game_id'];
+    $game_name = $_POST['game_name'];
+    $game_price = $_POST['game_price']; // Retrieve the game price
 
     // Get the current date and time
     $purchase_date = date("Y-m-d H:i:s");
+    $is_published = 0; // Set is_published to 0
 
     // Insert the purchase details into the purchased_games table
-    $insert_query = "INSERT INTO purchased_games (user_id, game_id, purchase_date, is_published) VALUES ('$user_id', '$game_id', '$purchase_date', 1)";
-    $insert_result = mysqli_query($conn, $insert_query);
-
-    if ($insert_result) {
-        // Purchase successfully added, you can redirect or display a success message
-
-        // Update the is_published of the purchased game to 0 (added to marketplace)
-        $update_is_published_query = "UPDATE purchased_games SET is_published = 0 WHERE user_id = '$user_id' AND game_id = '$game_id'";
-        $update_is_published_result = mysqli_query($conn, $update_is_published_query);
-
-        if ($update_is_published_result) {
-            echo "Purchase successful and game is_published updated!";
-        } else {
-            echo "Error updating game is_published: " . mysqli_error($conn);
-        }
+    $insert_query = "INSERT INTO purchased_games (purchase_id, user_id, game_id, purchase_date, is_published, price) VALUES (NULL, '$user_id', '$game_id', '$purchase_date', '$is_published', '$game_price')";
+    
+    if (mysqli_query($conn, $insert_query)) {
+        echo "Purchase successful!<br>";
+        echo "User ID: $user_id<br>";
+        echo "Game ID: $game_id<br>";
+        echo "Game Name: $game_name<br>";
+        echo "Game Price: $game_price<br>"; // Display the purchased price
     } else {
-        // Handle the error if the insert fails
         echo "Error adding purchase: " . mysqli_error($conn);
     }
 } else {
