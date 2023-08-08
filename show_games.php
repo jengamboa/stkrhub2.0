@@ -52,16 +52,19 @@ $result = mysqli_query($conn, $query);
             while ($game = mysqli_fetch_assoc($result)) {
                 echo '<li>';
                 echo '<a href="game_dashboard.php?game_id=' . $game['game_id'] . '">' . $game['name'] . '</a>';
-                echo 'Total Price: $' . calculateTotalPrice($game['game_id']); // Call the function here
+                echo '<br> Total Price: $' . calculateTotalPrice($game['game_id']); // Call the function here
                 echo '<br>Is Published: ' . ($game['is_published'] == 1 ? 'Yes' : 'No'); // Display is_published
-                echo '<form method="post" action="purchase.php">';
+
+                echo '<form method="post" action="process_game_add_to_cart.php">';
                 echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
                 echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
                 echo '<input type="hidden" name="game_name" value="' . $game['name'] . '">';
                 echo '<input type="hidden" name="game_price" value="' . calculateTotalPrice($game['game_id']) . '">'; // Add this line
-                echo '<button type="submit" name="purchase_game">Purchase to Add in Marketplace</button>';
-                echo '</form>';
                 echo 'Is Purchased: ' . ($game['is_purchased'] == 1 ? 'Yes' : 'No'); // Display is_published here
+            
+                echo '<br><button type="submit" name="purchase_game">Add to Cart</button>';
+                echo '</form>';
+
                 echo '</li>';
             }
             ?>
