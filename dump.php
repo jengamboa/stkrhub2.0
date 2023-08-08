@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_game'])) {
     
     if (mysqli_query($conn, $insert_query)) {
         // Update the is_published value in the games table
-        $update_query = "UPDATE games SET is_purchased = 1 WHERE game_id = '$game_id'";
+        $update_query = "UPDATE games SET is_published = 1 WHERE game_id = '$game_id'";
         mysqli_query($conn, $update_query);
 
         echo "Purchase successful!<br>";

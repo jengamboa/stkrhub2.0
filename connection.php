@@ -20,5 +20,3 @@ if (!$conn) {
 // Store the database connection in the session
 $_SESSION['db_connection'] = $conn;
 ?>
-
-
