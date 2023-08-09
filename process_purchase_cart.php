@@ -1,7 +1,7 @@
 <?php
 include 'connection.php';
 
-echo 'DELETEE';
+echo 'PURCHASE';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
     echo '<h2>Selected Cart IDs:</h2>';
