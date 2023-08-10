@@ -41,10 +41,22 @@ if (isset($_SESSION['user_id'])) {
                 echo 'Is Published: ' . ($game['is_published'] == 1 ? 'Yes' : 'No') . '<br>';
                 echo 'Price: $' . $game['price'] . '<br>';
 
+                // Add "Add to Cart" button
+                echo '<form method="post" action="process_add_game_to_cart.php">';
+                echo '<input type="hidden" name="built_game_id" value="' . $game['built_game_id'] . '">';
+                echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
+                echo '<input type="hidden" name="game_name" value="' . $game['name'] . '">';
+                echo '<input type="hidden" name="user_id" value="' . $_SESSION['user_id'] . '">';
+                echo '<input type="hidden" name="price" value="' . $game['price'] . '">';
+                echo '<button type="submit" name="add_to_cart">Add to Cart</button>';
+                echo '</form>';
+
                 echo '</li>';
             }
             ?>
         </ul>
+
+
     </div>
 
     <?php
