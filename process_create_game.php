@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
         // Game created successfully, redirect to show_games.php
-        header("Location: show_games.php");
+        header("Location: created_games_page.php");
         exit;
     } else {
         // Handle the error if the game creation fails

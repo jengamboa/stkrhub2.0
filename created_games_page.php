@@ -65,16 +65,20 @@ $result = mysqli_query($conn, $query);
                 echo '<li>';
                 echo '<a href="game_dashboard.php?game_id=' . $game['game_id'] . '">' . $game['name'] . '</a>';
                 echo '<br> Total Price: $' . calculateTotalPrice($game['game_id']); // Call the function here
-                echo '<br>Is Published: ' . ($game['is_published'] == 1 ? 'Yes' : 'No'); // Display is_published
-
+            
                 echo '<form method="post" action="process_build_game.php">';
                 echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
                 echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
                 echo '<input type="hidden" name="game_name" value="' . $game['name'] . '">';
                 echo '<input type="hidden" name="game_price" value="' . calculateTotalPrice($game['game_id']) . '">'; // Add this line
-                echo 'Is Purchased: ' . ($game['is_purchased'] == 1 ? 'Yes' : 'No'); // Display is_published here
+            
+                // Additional hidden fields
+                echo '<input type="hidden" name="description" value="' . $game['description'] . '">';
+                echo '<input type="hidden" name="category" value="' . $game['category'] . '">';
 
-                echo '<br><button type="submit" name="purchase_game">Build Game</button>';
+                echo 'Is Built: ' . ($game['is_built'] == 1 ? 'Yes' : 'No'); // Display is_built here
+            
+                echo '<br><button type="submit" name="build_game">Build Game</button>';
                 echo '</form>';
 
                 echo '</li>';
@@ -82,6 +86,8 @@ $result = mysqli_query($conn, $query);
             ?>
         </ul>
     </div>
+
+
 
 
 
