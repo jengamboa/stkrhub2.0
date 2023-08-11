@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2023 at 11:10 AM
+-- Generation Time: Aug 10, 2023 at 11:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,8 +43,62 @@ CREATE TABLE `added_game_components` (
 --
 
 INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`) VALUES
-(222, 26, 3, 0, NULL, 1, 3, '7x7'),
-(223, 26, 4, 1, 'uploads/stkrhub_db.sql', 1, NULL, '10x10');
+(224, 30, 1, 1, 'uploads/converted one filinvest.txt', 2, NULL, '7x7'),
+(225, 30, 1, 0, '', 2, NULL, '7x7'),
+(226, 30, 4, 1, 'uploads/TANAUAN 03-07-23-03-21-23.log', 2, NULL, '10x10'),
+(227, 30, 2, 1, 'uploads/Ninite Foxit Reader Installer.exe', 3, NULL, '7x7'),
+(228, 30, 2, 0, '', 13, NULL, '7x7'),
+(229, 30, 3, 0, NULL, 3, 2, '7x7'),
+(230, 30, 3, 0, NULL, 2, 2, '7x7'),
+(231, 30, 1, 0, '', 1, NULL, '7x7'),
+(232, 30, 4, 0, '', 1, NULL, '10x10'),
+(233, 32, 3, 0, NULL, 1, 3, '7x7');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_review_response`
+--
+
+CREATE TABLE `admin_review_response` (
+  `admin_review_response_id` int(11) NOT NULL,
+  `built_game_id` int(11) DEFAULT NULL,
+  `game_id` int(11) DEFAULT NULL,
+  `admin_file_upload` varchar(255) DEFAULT NULL,
+  `admin_text_response` text DEFAULT NULL,
+  `response_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `built_games`
+--
+
+CREATE TABLE `built_games` (
+  `built_game_id` int(11) NOT NULL,
+  `game_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `creator_id` int(11) NOT NULL,
+  `build_date` datetime NOT NULL,
+  `is_pending` tinyint(4) DEFAULT 0,
+  `is_canceled` tinyint(4) DEFAULT 0,
+  `is_approved` tinyint(4) DEFAULT 0,
+  `is_purchased` tinyint(4) DEFAULT 0,
+  `is_published` tinyint(4) DEFAULT 0,
+  `price` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `built_games`
+--
+
+INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_published`, `price`) VALUES
+(6, 30, 'denzel\'s game', 'desc', 3, '2023-08-10 11:59:21', 0, 0, 1, 0, 0, 100.00),
+(7, 31, 'Jerrick\'s game', 'desc', 4, '2023-08-10 11:59:54', 1, 0, 1, 0, 0, 0.00),
+(9, 31, 'Jerrick\'s game', 'desc', 4, '2023-08-10 12:05:07', 1, 0, 0, 0, 0, 0.00),
+(10, 32, 'Snake and Laddders v2', 'asdkjasd', 6, '2023-08-10 16:47:18', 0, 0, 1, 0, 0, 7.00);
 
 -- --------------------------------------------------------
 
@@ -56,6 +110,7 @@ CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `game_id` int(11) DEFAULT NULL,
+  `built_game_id` int(11) DEFAULT NULL,
   `added_component_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL
@@ -65,12 +120,12 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`cart_id`, `user_id`, `game_id`, `added_component_id`, `quantity`, `price`) VALUES
-(1, 3, 26, NULL, 3, 0.00),
-(2, 3, 26, NULL, 3, 21.00),
-(3, 3, 26, NULL, 1, 21.00),
-(4, 3, 26, NULL, 1, 21.00),
-(5, 3, 26, NULL, 1, 21.00);
+INSERT INTO `cart` (`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`) VALUES
+(19, 3, 30, 6, NULL, 1, 100.00),
+(20, 6, 32, 10, NULL, 3, 7.00),
+(21, 6, 32, 10, NULL, 2, 7.00),
+(22, 6, 32, 10, NULL, 1, 7.00),
+(23, 6, 32, 10, NULL, 1, 7.00);
 
 -- --------------------------------------------------------
 
@@ -152,16 +207,17 @@ CREATE TABLE `games` (
   `category` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `is_published` tinyint(1) NOT NULL DEFAULT 0,
-  `is_purchased` tinyint(1) NOT NULL DEFAULT 0
+  `is_built` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `games`
 --
 
-INSERT INTO `games` (`game_id`, `name`, `description`, `category`, `user_id`, `created_at`, `is_published`, `is_purchased`) VALUES
-(26, 'game game', 'desc', 'action', 3, '2023-08-09 07:09:59', 0, 0);
+INSERT INTO `games` (`game_id`, `name`, `description`, `category`, `user_id`, `created_at`, `is_built`) VALUES
+(30, 'denzel\'s game', 'desc', 'action', 3, '2023-08-10 11:46:03', 0),
+(31, 'Jerrick\'s game', 'desc', 'action', 4, '2023-08-10 11:54:04', 0),
+(32, 'Snake and Laddders v2', 'asdkjasd', 'action', 6, '2023-08-10 16:46:35', 0);
 
 -- --------------------------------------------------------
 
@@ -245,7 +301,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `created_at`, `shipping_address`, `avatar`) VALUES
 (3, 'denzel', 'denzelgo17@gmail.com', '$2y$10$ARZ0Q6SNMcoKJIvaaiGwZeb/T0EtfPk9HMj.XvGnVgdcMYL8ZkwKa', '2023-08-02 09:11:37', 'asd', 'avatars/8173e568598f81410724842698d17181.jpg'),
 (4, 'jerrick', 'jerrick@gmail.com', '$2y$10$GLMUnEDCDln02y6c/zMR9O2W78THngXnkxL06sair.wT5gt9Bx7Ya', '2023-08-02 09:14:19', NULL, NULL),
-(5, 'jp', 'jp@gmail.com', '$2y$10$4B39cJlUoie9r2lN65LRbu.1YdKsDgMdfuIPUJECdFlgsUBNSWQn.', '2023-08-03 05:09:20', NULL, NULL);
+(5, 'jp', 'jp@gmail.com', '$2y$10$4B39cJlUoie9r2lN65LRbu.1YdKsDgMdfuIPUJECdFlgsUBNSWQn.', '2023-08-03 05:09:20', NULL, NULL),
+(6, 'berns', 'berns@gmail.com', '$2y$10$cGi0jPeiwD62dxv/vk7WMePFmV4ro0rAut7dAQscujTptnGXnPTte', '2023-08-10 08:46:14', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -293,7 +350,35 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (26, 3, 'login', '2023-08-07 08:07:39'),
 (27, 3, 'login', '2023-08-07 09:49:50'),
 (28, 3, 'login', '2023-08-08 03:29:35'),
-(29, 3, 'login', '2023-08-08 23:09:00');
+(29, 3, 'login', '2023-08-08 23:09:00'),
+(30, 3, 'login', '2023-08-10 00:16:07'),
+(31, 3, 'login', '2023-08-10 03:53:35'),
+(32, 3, 'logout', '2023-08-10 03:53:51'),
+(33, 4, 'login', '2023-08-10 03:53:54'),
+(34, 3, 'logout', '2023-08-10 08:46:03'),
+(35, 6, 'login', '2023-08-10 08:46:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_review_response`
+--
+
+CREATE TABLE `user_review_response` (
+  `user_review_response_id` int(11) NOT NULL,
+  `built_game_id` int(11) DEFAULT NULL,
+  `user_file_upload` varchar(255) DEFAULT NULL,
+  `user_text_response` text DEFAULT NULL,
+  `response_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_review_response`
+--
+
+INSERT INTO `user_review_response` (`user_review_response_id`, `built_game_id`, `user_file_upload`, `user_text_response`, `response_date`) VALUES
+(7, 6, 'uploads/response/user/stkrhub_db.sql', 'ganito kase yan hahahha ganon ganon tas ganyan tas ganito boom panes', '2023-08-10 05:06:41'),
+(8, 6, 'uploads/response/user/stkrhub_db.sql', 'ganito kase yan hahahha ganon ganon tas ganyan tas ganito boom panes', '2023-08-10 05:09:03');
 
 --
 -- Indexes for dumped tables
@@ -309,13 +394,30 @@ ALTER TABLE `added_game_components`
   ADD KEY `FK_added_game_components_color` (`color_id`);
 
 --
+-- Indexes for table `admin_review_response`
+--
+ALTER TABLE `admin_review_response`
+  ADD PRIMARY KEY (`admin_review_response_id`),
+  ADD KEY `built_game_id` (`built_game_id`),
+  ADD KEY `game_id` (`game_id`);
+
+--
+-- Indexes for table `built_games`
+--
+ALTER TABLE `built_games`
+  ADD PRIMARY KEY (`built_game_id`),
+  ADD KEY `game_id` (`game_id`),
+  ADD KEY `creator_id` (`creator_id`);
+
+--
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `FK_cart_users` (`user_id`),
   ADD KEY `FK_cart_games` (`game_id`),
-  ADD KEY `FK_cart_added_game_components` (`added_component_id`);
+  ADD KEY `FK_cart_added_game_components` (`added_component_id`),
+  ADD KEY `built_game_id` (`built_game_id`);
 
 --
 -- Indexes for table `component_assets`
@@ -381,6 +483,12 @@ ALTER TABLE `user_logs`
   ADD PRIMARY KEY (`log_id`);
 
 --
+-- Indexes for table `user_review_response`
+--
+ALTER TABLE `user_review_response`
+  ADD PRIMARY KEY (`user_review_response_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -388,13 +496,25 @@ ALTER TABLE `user_logs`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234;
+
+--
+-- AUTO_INCREMENT for table `admin_review_response`
+--
+ALTER TABLE `admin_review_response`
+  MODIFY `admin_review_response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `built_games`
+--
+ALTER TABLE `built_games`
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `component_assets`
@@ -418,7 +538,7 @@ ALTER TABLE `component_templates`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `game_components`
@@ -442,13 +562,19 @@ ALTER TABLE `purchased_games`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `user_review_response`
+--
+ALTER TABLE `user_review_response`
+  MODIFY `user_review_response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -463,12 +589,27 @@ ALTER TABLE `added_game_components`
   ADD CONSTRAINT `added_game_components_ibfk_2` FOREIGN KEY (`component_id`) REFERENCES `game_components` (`component_id`);
 
 --
+-- Constraints for table `admin_review_response`
+--
+ALTER TABLE `admin_review_response`
+  ADD CONSTRAINT `admin_review_response_ibfk_1` FOREIGN KEY (`built_game_id`) REFERENCES `built_games` (`built_game_id`),
+  ADD CONSTRAINT `admin_review_response_ibfk_2` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`);
+
+--
+-- Constraints for table `built_games`
+--
+ALTER TABLE `built_games`
+  ADD CONSTRAINT `built_games_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`),
+  ADD CONSTRAINT `built_games_ibfk_2` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`);
+
+--
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `FK_cart_added_game_components` FOREIGN KEY (`added_component_id`) REFERENCES `added_game_components` (`added_component_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_cart_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`built_game_id`) REFERENCES `built_games` (`built_game_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `component_assets`
