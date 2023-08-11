@@ -6,10 +6,10 @@ include 'html/header.html.php';
 <?php
 
 // Insert logout event into the user_logs table
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
+if (isset($_SESSION['users_id'])) {
+    $user_id = $_SESSION['users_id'];
     $event_type = 'logout';
-    $insert_query = "INSERT INTO user_logs (user_id, event_type) VALUES ('$user_id', '$event_type')";
+    $insert_query = "INSERT INTO user_logs (users_id, event_type) VALUES ('$users_id', '$event_type')";
     mysqli_query($conn, $insert_query);
 }
 

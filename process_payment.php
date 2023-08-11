@@ -1,7 +1,7 @@
 <?php
 include 'connection.php';
 
-echo '<h2>Summary of Added Items to Purchase:</h2>';
+echo '<h2>Payment Summary:</h2>';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
     echo '<ul>';
@@ -24,17 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is
             echo 'Quantity: ' . $item['quantity'] . '<br>';
             echo 'Price: $' . $item['game_price'] . '<br>';
             echo '</li>';
+
+            // Update built_games table to set is_purchased = 1 for the selected built_game_id
+            $update_query = "UPDATE built_games SET is_purchased = 1 WHERE built_game_id = '{$item['built_game_id']}'";
+            mysqli_query($conn, $update_query);
         }
     }
     echo '</ul>';
-
-    // Add a single "Buy" button that directs to payment.php
-    echo '<form method="post" action="process_payment.php">';
-    foreach ($_POST['selectedItems'] as $cartId) {
-        echo '<input type="hidden" name="selectedItems[]" value="' . $cartId . '">';
-    }
-    echo '<button type="submit" name="buy">Buy</button>';
-    echo '</form>';
 } else {
     echo 'No items selected.';
 }
