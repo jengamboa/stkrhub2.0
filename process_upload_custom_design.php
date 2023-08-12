@@ -1,9 +1,10 @@
 <?php
 include 'connection.php';
 
-// Get the game ID and component ID from the form data
+// Get the game ID, component ID, and size from the form data
 $game_id = $_POST['game_id'];
 $component_id = $_POST['component_id'];
+$selected_size = $_POST['selected_size'];
 
 // Process the uploaded custom design file if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_design'])) {
@@ -18,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_design'])) {
         // Move the uploaded file to the destination directory
         if (move_uploaded_file($file_tmp, $file_dest)) {
             // Insert the new component with custom design into the added_game_components table
-            $insert_query = "INSERT INTO added_game_components (game_id, component_id, is_custom_design, custom_design_file_path)
-                             VALUES ('$game_id', '$component_id', 1, '$file_dest')"; // is_custom_design = 1 for custom design
+            $insert_query = "INSERT INTO added_game_components (game_id, component_id, size, is_custom_design, custom_design_file_path)
+                             VALUES ('$game_id', '$component_id', '$selected_size', 1, '$file_dest')"; // is_custom_design = 1 for custom design
 
             if (mysqli_query($conn, $insert_query)) {
                 // Redirect back to the game dashboard after successful addition

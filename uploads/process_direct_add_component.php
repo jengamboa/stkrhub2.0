@@ -4,16 +4,10 @@ include 'connection.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direct_add'])) {
     $component_id = $_POST['component_id'];
     $game_id = $_POST['game_id']; // Get the game ID from the form
-    $selected_size = $_POST['selected_size']; // Get the selected size from the form
-
-    // Echo the values passed from the previous page
-    echo "Game ID: " . $game_id . "<br>";
-    echo "Component ID: " . $component_id . "<br>";
-    echo "Selected Size: " . $selected_size . "<br>";
 
     // Insert the new component into the added_game_components table
-    $insert_query = "INSERT INTO added_game_components (game_id, component_id, size, is_custom_design, custom_design_file_path)
-                     VALUES ('$game_id', '$component_id', '$selected_size', 0, '')"; // is_custom_design = 0 for no custom design
+    $insert_query = "INSERT INTO added_game_components (game_id, component_id, is_custom_design, custom_design_file_path)
+                     VALUES ('$game_id', '$component_id', 0, '')"; // is_custom_design = 0 for no custom design
 
     if (mysqli_query($conn, $insert_query)) {
         // Redirect back to the game dashboard after successful addition
