@@ -10,13 +10,13 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Retrieve cart data including games and game components
-$query_cart = "SELECT cart.cart_id, cart.game_id, cart.added_component_id, cart.quantity, cart.price,
-              games.name AS game_name,
-              added_game_components.is_custom_design, added_game_components.custom_design_file_path,
-              added_game_components.quantity AS component_quantity, added_game_components.color_id, added_game_components.size
+$query_cart = "SELECT cart.cart_id, cart.built_game_id, cart.added_component_id, cart.quantity, cart.price,
+              built_games.name AS game_name,
+              built_games_added_game_components.is_custom_design, built_games_added_game_components.custom_design_file_path,
+              built_games_added_game_components.quantity AS component_quantity, built_games_added_game_components.color_id, built_games_added_game_components.size
               FROM cart
-              LEFT JOIN games ON cart.game_id = games.game_id
-              LEFT JOIN added_game_components ON cart.added_component_id = added_game_components.added_component_id
+              LEFT JOIN built_games ON cart.built_game_id = built_games.built_game_id
+              LEFT JOIN built_games_added_game_components ON cart.added_component_id = built_games_added_game_components.added_component_id
               WHERE cart.user_id = '$user_id'";
 $result_cart = mysqli_query($conn, $query_cart);
 ?>
@@ -38,17 +38,17 @@ $result_cart = mysqli_query($conn, $query_cart);
                 echo '<p><input type="checkbox" name="selectedItems[]" value="' . $item['cart_id'] . '"> Cart ID: ' . $item['cart_id'] . '</p>';
                 echo '</div>';
 
-                if (!empty($item['game_id'])) {
-                    // Display game and dropdown of game components
-                    echo '<p>Game: ' . $item['game_name'] . '</p>';
+                if (!empty($item['built_game_id'])) {
+                    // Display built game and its components
+                    echo '<p>Built Game: ' . $item['game_name'] . '</p>';
 
-                    // Display added game components based on the game ID
+                    // Display added game components for the current built game
                     echo '<p>Added Game Components:</p>';
                     echo '<table border="1">';
                     echo '<tr><th>Component ID</th><th>Is Custom Design</th><th>Custom Design File Path</th><th>Quantity</th><th>Color ID</th><th>Size</th></tr>';
 
-                    // Loop through added game components for the current game
-                    $query_components = "SELECT * FROM added_game_components WHERE game_id = " . $item['game_id'];
+                    // Loop through added game components for the current built game
+                    $query_components = "SELECT * FROM built_games_added_game_components WHERE built_game_id = " . $item['built_game_id'];
                     $result_components = mysqli_query($conn, $query_components);
                     while ($component = mysqli_fetch_assoc($result_components)) {
                         echo '<tr>';
@@ -62,17 +62,8 @@ $result_cart = mysqli_query($conn, $query_cart);
                     }
 
                     echo '</table>';
-                } else {
-                    // Display individual game component
-                    echo '<p>Game Component:</p>';
-                    echo '<ul>';
-                    echo '<li>Is Custom Design: ' . ($item['is_custom_design'] == 1 ? 'Yes' : 'No') . '</li>';
-                    echo '<li>Custom Design File Path: ' . $item['custom_design_file_path'] . '</li>';
-                    echo '<li>Quantity: ' . $item['quantity'] . '</li>';
-                    echo '<li>Color ID: ' . $item['color_id'] . '</li>';
-                    echo '<li>Size: ' . $item['size'] . '</li>';
-                    echo '</ul>';
                 }
+
                 echo '</div>';
 
                 // Quantity input with onchange attribute
@@ -132,11 +123,6 @@ $result_cart = mysqli_query($conn, $query_cart);
             });
         });
     </script>
-
-
-
 </body>
-
-
 
 </html>

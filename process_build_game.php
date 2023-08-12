@@ -18,13 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['build_game'])) {
     mysqli_stmt_bind_param($stmt, "issss", $game_id, $game_name, $description, $user_id, $game_price);
 
     if (mysqli_stmt_execute($stmt)) {
+        $built_game_id = mysqli_insert_id($conn); // Get the auto-generated built_game_id
         mysqli_stmt_close($stmt);
-        header("Location: built_games_page.php"); // Redirect to built games page
+
+        // Redirect to process_build_game_2.php along with the data
+        header("Location: process_build_game_2.php?user_id=$user_id&game_id=$game_id&game_name=$game_name&game_price=$game_price&description=$description&category=$category&built_game_id=$built_game_id");
         exit();
     } else {
         echo "Error: " . mysqli_error($conn);
     }
-
-    mysqli_stmt_close($stmt);
 }
-?>
+?>  
