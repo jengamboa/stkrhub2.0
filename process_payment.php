@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is
 
             // Insert the order into the orders table with is_pending and is_preparing set to 1
             $insert_order_query = "INSERT INTO orders (cart_id, user_id, built_game_id, added_component_id, quantity, price, is_pending, is_ready, is_shipped, is_completed, is_canceled, is_preparing, order_date)
-                                   VALUES ('{$item['cart_id']}', '{$item['user_id']}', $built_game_id, $added_component_id, '{$item['quantity']}', '{$item['game_price']}', 1, 0, 0, 0, 0, 1, NOW())";
+                                   VALUES ('{$item['cart_id']}', '{$item['user_id']}', $built_game_id, $added_component_id, '{$item['quantity']}', '{$item['game_price']}', 1, 0, 0, 0, 0, 0, NOW())";
             mysqli_query($conn, $insert_order_query);
         }
     }
