@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Retrieve cart data including games and game components
+// Retrieve cart data including games and game components with is_active = 1
 $query_cart = "SELECT cart.cart_id, cart.built_game_id, cart.added_component_id, cart.quantity, cart.price,
               built_games.name AS game_name,
               built_games_added_game_components.is_custom_design, built_games_added_game_components.custom_design_file_path,
@@ -17,7 +17,7 @@ $query_cart = "SELECT cart.cart_id, cart.built_game_id, cart.added_component_id,
               FROM cart
               LEFT JOIN built_games ON cart.built_game_id = built_games.built_game_id
               LEFT JOIN built_games_added_game_components ON cart.added_component_id = built_games_added_game_components.added_component_id
-              WHERE cart.user_id = '$user_id'";
+              WHERE cart.user_id = '$user_id' AND cart.is_active = 1";
 $result_cart = mysqli_query($conn, $query_cart);
 ?>
 
