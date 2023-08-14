@@ -47,6 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is
             // Update is_active to 0 for the purchased cart item
             $update_cart_query = "UPDATE cart SET is_active = 0 WHERE cart_id = '$cartId'";
             mysqli_query($conn, $update_cart_query);
+
+            // Update is_purchased to 1 for the built game
+            if (!empty($item['built_game_id'])) {
+                $update_built_game_query = "UPDATE built_games SET is_purchased = 1 WHERE built_game_id = '{$item['built_game_id']}'";
+                mysqli_query($conn, $update_built_game_query);
+            }
         }
     }
     echo '</ul>';

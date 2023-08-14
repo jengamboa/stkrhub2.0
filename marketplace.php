@@ -18,7 +18,8 @@ while ($game = mysqli_fetch_assoc($result)) {
     echo 'Publish Date: ' . $game['publish_date'] . '<br>';
     echo 'Creator ID: ' . $game['user_id'] . '<br>';
 
-    // You can display more game details here if needed
+    // Add a "View" button for each game
+    echo '<a href="built_game_page.php?built_game_id=' . $game['built_game_id'] . '">View</a>';
 
     echo '</li>';
 }
