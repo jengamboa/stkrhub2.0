@@ -36,6 +36,7 @@ while ($game = mysqli_fetch_assoc($result)) {
     // Add "Publish" button
     echo '<form method="post" action="edit_game_page.php">';
     echo '<input type="hidden" name="built_game_id" value="' . $game['built_game_id'] . '">';
+    echo '<input type="hidden" name="user_id" value="' . $game['creator_id'] . '">'; // Pass the user ID
     echo '<button type="submit" name="publish">Publish</button>';
     echo '</form>';
 
