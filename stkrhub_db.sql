@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2023 at 05:59 PM
+-- Generation Time: Aug 15, 2023 at 05:43 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -94,8 +94,9 @@ INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `c
 (31, 34, 'game 1', 'desc', 3, '2023-08-12 21:05:05', 0, 0, 0, 0, 0, 12.00),
 (32, 34, 'game 1', 'desc', 3, '2023-08-12 21:06:02', 0, 0, 0, 0, 0, 12.00),
 (33, 34, 'game 1', 'desc', 3, '2023-08-12 21:08:32', 0, 0, 0, 0, 0, 23.00),
-(34, 34, 'game 1', 'desc', 3, '2023-08-12 21:13:29', 0, 0, 1, 1, 0, 23.00),
-(35, 35, 'jeric', 'asd', 4, '2023-08-14 22:56:10', 0, 0, 1, 0, 0, 0.00);
+(34, 34, 'game 1', 'desc', 3, '2023-08-12 21:13:29', 0, 0, 1, 1, 1, 23.00),
+(35, 35, 'jeric', 'asd', 4, '2023-08-14 22:56:10', 0, 0, 1, 0, 0, 0.00),
+(36, 36, 'hehe', 'hehe', 3, '2023-08-15 06:51:35', 0, 0, 1, 1, 1, 0.00);
 
 -- --------------------------------------------------------
 
@@ -153,7 +154,10 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`) VALUES
 (29, 3, 34, 34, NULL, 1, 23.00, 0),
 (30, 3, 34, 34, NULL, 1, 23.00, 0),
-(31, 4, 35, 35, NULL, 1, 0.00, 1);
+(31, 4, 35, 35, NULL, 1, 0.00, 1),
+(32, 3, 36, 36, NULL, 1, 0.00, 0),
+(33, 3, 36, 36, NULL, 1, 0.00, 0),
+(34, 3, 34, 34, NULL, 1, 23.00, 0);
 
 -- --------------------------------------------------------
 
@@ -244,7 +248,8 @@ CREATE TABLE `games` (
 
 INSERT INTO `games` (`game_id`, `name`, `description`, `category`, `user_id`, `created_at`, `is_built`) VALUES
 (34, 'game 1', 'desc', 'action', 3, '2023-08-12 20:59:18', 0),
-(35, 'jeric', 'asd', 'asd', 4, '2023-08-14 22:38:12', 0);
+(35, 'jeric', 'asd', 'asd', 4, '2023-08-14 22:38:12', 0),
+(36, 'hehe', 'hehe', 'hehe', 3, '2023-08-15 06:51:33', 0);
 
 -- --------------------------------------------------------
 
@@ -312,7 +317,10 @@ INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `built_game_id`, `added_
 (16, 30, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-14 22:41:41'),
 (17, 29, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-14 22:47:08'),
 (18, 29, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-14 23:03:02'),
-(19, 30, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-14 23:03:11');
+(19, 30, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-14 23:03:11'),
+(20, 32, 3, 36, NULL, 1, 0.00, 1, 0, 0, 0, 0, 0, '2023-08-15 06:52:28'),
+(21, 33, 3, 36, NULL, 1, 0.00, 1, 0, 0, 0, 0, 0, '2023-08-15 06:56:33'),
+(22, 34, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-15 23:17:51');
 
 -- --------------------------------------------------------
 
@@ -321,19 +329,30 @@ INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `built_game_id`, `added_
 --
 
 CREATE TABLE `published_built_games` (
-  `id` int(11) NOT NULL,
+  `published_id` int(11) NOT NULL,
   `built_game_id` int(11) NOT NULL,
   `game_name` varchar(255) NOT NULL,
   `edition` varchar(50) DEFAULT NULL,
-  `publish_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `publish_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `game_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `published_built_games`
 --
 
-INSERT INTO `published_built_games` (`id`, `built_game_id`, `game_name`, `edition`, `publish_date`) VALUES
-(1, 34, 'hehe', 'haha', '2023-08-14 15:55:58');
+INSERT INTO `published_built_games` (`published_id`, `built_game_id`, `game_name`, `edition`, `publish_date`, `user_id`, `price`, `game_id`) VALUES
+(1, 34, 'hehe', 'haha', '2023-08-14 15:55:58', 0, 0.00, 0),
+(2, 34, 'haha', 'hehe', '2023-08-14 16:44:53', 0, 0.00, 0),
+(3, 34, 'as', 'vbsad', '2023-08-14 17:05:26', 3, 0.00, 0),
+(4, 36, 'HAHAH', 'HAHHAA', '2023-08-14 22:57:07', 3, 0.00, 0),
+(5, 34, 'huhu', 'huhu edition', '2023-08-15 14:56:46', 3, 0.00, 0),
+(6, 34, 'boom panes', 'oanes', '2023-08-15 14:59:37', 3, 0.00, 0),
+(7, 34, 'boom panes', 'oanes', '2023-08-15 15:02:21', 3, 0.00, 0),
+(8, 34, 'qwerty', 'qwerty', '2023-08-15 15:03:39', 3, 0.00, 0),
+(9, 34, 'home ', 'home', '2023-08-15 15:09:02', 3, 23.00, 34);
 
 -- --------------------------------------------------------
 
@@ -425,7 +444,10 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (44, 3, 'login', '2023-08-14 14:37:29'),
 (45, 3, 'login', '2023-08-14 14:37:43'),
 (46, 4, 'login', '2023-08-14 14:38:02'),
-(47, 4, 'login', '2023-08-14 14:55:54');
+(47, 4, 'login', '2023-08-14 14:55:54'),
+(48, 3, 'login', '2023-08-14 16:40:55'),
+(49, 3, 'login', '2023-08-14 22:43:00'),
+(50, 3, 'login', '2023-08-15 14:26:35');
 
 -- --------------------------------------------------------
 
@@ -537,7 +559,7 @@ ALTER TABLE `orders`
 -- Indexes for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`published_id`),
   ADD KEY `built_game_id` (`built_game_id`);
 
 --
@@ -578,7 +600,7 @@ ALTER TABLE `admin_review_response`
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
@@ -590,7 +612,7 @@ ALTER TABLE `built_games_added_game_components`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `component_assets`
@@ -614,7 +636,7 @@ ALTER TABLE `component_templates`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `game_components`
@@ -626,13 +648,13 @@ ALTER TABLE `game_components`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `published_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -644,7 +666,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
