@@ -10,4 +10,3 @@
     <a href="logout.php">logout</a>
     <a href="marketplace.php">marketplace</a>
 </div>
-

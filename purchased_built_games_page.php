@@ -37,6 +37,9 @@ while ($game = mysqli_fetch_assoc($result)) {
     echo '<form method="post" action="edit_game_page.php">';
     echo '<input type="hidden" name="built_game_id" value="' . $game['built_game_id'] . '">';
     echo '<input type="hidden" name="user_id" value="' . $game['creator_id'] . '">'; // Pass the user ID
+    echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">'; // Pass the game ID
+    echo '<input type="hidden" name="game_name" value="' . $game['name'] . '">'; // Pass the game name
+    echo '<input type="hidden" name="price" value="' . $game['price'] . '">'; // Pass the price
     echo '<button type="submit" name="publish">Publish</button>';
     echo '</form>';
 

@@ -32,5 +32,4 @@ if (isset($_GET['built_game_id'])) {
     echo '<p>No built game ID was provided.</p>';
 }
 
-include 'html/footer.html.php'; // Include your footer or any necessary files
 ?>

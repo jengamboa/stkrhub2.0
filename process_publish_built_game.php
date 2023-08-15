@@ -4,13 +4,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['built_game_id'])) {
     $game_name = isset($_POST['game_name']) ? $_POST['game_name'] : '';
     $edition = isset($_POST['edition']) ? $_POST['edition'] : '';
     $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : '';
+    $price = isset($_POST['price']) ? $_POST['price'] : '';
+    $game_id = isset($_POST['game_id']) ? $_POST['game_id'] : '';
 
     // Database connection
     include 'connection.php';
 
     // Insert data into the "published_built_games" table
-    $insertQuery = "INSERT INTO published_built_games (built_game_id, game_name, edition, user_id) 
-                    VALUES ('$built_game_id', '$game_name', '$edition', '$user_id')";
+    $insertQuery = "INSERT INTO published_built_games (built_game_id, game_id, game_name, edition, user_id, price) 
+                    VALUES ('$built_game_id', '$game_id', '$game_name', '$edition', '$user_id', '$price')";
 
     if (mysqli_query($conn, $insertQuery)) {
         // Update "is_published" column in the "built_games" table
@@ -20,9 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['built_game_id'])) {
 
             echo '<h2>Game Published</h2>';
             echo '<p>Built Game ID: ' . $built_game_id . '</p>';
+            echo '<p>Game ID: ' . $game_id . '</p>';
             echo '<p>Complete Game Name: ' . $game_name . '</p>';
             echo '<p>Edition: ' . $edition . '</p>';
             echo '<p>Creator ID: ' . $user_id . '</p>';
+            echo '<p>Price: $' . $price . '</p>';
 
             // You can include your footer or any necessary files here
         } else {
