@@ -102,6 +102,8 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="submit" name="add_with_colors" value="Add with Colors">dice
         </form>
     <?php } else { ?>
+
+        <!-- TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO: -->
         <!-- Button to add the component with design -->
         <form method="post" action="upload_custom_design.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
@@ -111,12 +113,14 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="hidden" name="component_price" value="<?php echo $component['price']; ?>">
             <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
             <input type="hidden" name="selected_size" value="<?php echo $component['size']; ?>"> <!-- Include size -->
+            
 
             <input type="submit" name="add_with_design" value="Add with Design">
         </form>
 
+        <!-- TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO: -->
         <!-- Button to add the component without design -->
-        <form method="post" action="dump.php">
+        <form method="post" action="process_direct_add_component.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
             <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
             <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
@@ -124,8 +128,14 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="hidden" name="component_price" value="<?php echo $component['price']; ?>">
             <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
             <input type="hidden" name="selected_size" value="<?php echo $component['size']; ?>"> <!-- Include size -->
+
+            <!-- Quantity input -->
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+
             <input type="submit" name="direct_add" value="Add Directly without Design">
         </form>
+        
 
         <!-- Dropdown to select and add other components based on the category -->
         <form method="post" action="process_navigate_size.php" id="componentForm">

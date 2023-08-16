@@ -1,47 +1,47 @@
 <?php
-
 include 'connection.php';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direct_add'])) {
-    $game_id = $_POST['game_id'];
-    $game_name = $_POST['game_name'];
+include 'html/header.html.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_with_colors'])) {
+
     $component_id = $_POST['component_id'];
-    $component_name = $_POST['component_name'];
-    $component_price = $_POST['component_price'];
-    $component_category = $_POST['component_category'];
-    $selected_size = $_POST['selected_size'];
+    $selected_color_id = $_POST['selected_color'];
+    $selected_size = $_POST['selected_size']; // Include size
 
-    // Now you can use these variables in your logic
+    // Assuming you have the user ID stored in the session
+    $user_id = $_SESSION['user_id'];
 
-    // Check if game_id exists (it's part of a game) or not
-    if ($game_id !== '') {
+    if (isset($_POST['game_id']) && $_POST['game_id'] !== '') {
+        $game_id = $_POST['game_id'];
 
-        // Echo the values passed from the previous page
-        echo "Game ID: " . $game_id . "<br>";
-        echo "Component ID: " . $component_id . "<br>";
-        echo "Selected Size: " . $selected_size . "<br>";
+        echo "This is inside of a game";
 
-        // Insert the new component into the added_game_components table
-        $insert_query = "INSERT INTO added_game_components (game_id, component_id, size, is_custom_design, custom_design_file_path)
-                             VALUES ('$game_id', '$component_id', '$selected_size', 0, '')"; // is_custom_design = 0 for no custom design
+        // Insert the color and size information into the added_game_components table
+        $insert_query = "INSERT INTO added_game_components (game_id, component_id, color_id, size, user_id) 
+                     VALUES ('$game_id', '$component_id', '$selected_color_id', '$selected_size', '$user_id')";
+        $insert_result = mysqli_query($conn, $insert_query);
 
-        if (mysqli_query($conn, $insert_query)) {
-            // Redirect back to the game dashboard after successful addition
+        if ($insert_result) {
+            // Color and size information added successfully, redirect to game dashboard
             header("Location: game_dashboard.php?game_id=$game_id");
             exit;
         } else {
-            // Handle the error if the insert fails
-            echo "Error: " . $insert_query . "<br>" . mysqli_error($conn);
-            exit;
+            echo "Error inserting color and size information: " . mysqli_error($conn) . "<br>";
         }
 
     } else {
-        echo "It is a single game component.<br>";
+        echo "It is a single game component";
 
-        // Echo the values for the single game component
-        echo "Game ID: " . $game_id . "<br>"; // Since game_id is not available for single components, you might want to display a placeholder value or message
-        echo "Component ID: " . $component_id . "<br>";
+        // Insert the single game component into the added_game_components table
+        $insert_query = "INSERT INTO added_game_components (game_id, component_id, color_id, size, user_id) 
+                     VALUES (NULL, '$component_id', '$selected_color_id', '$selected_size', '$user_id')";
+        $insert_result = mysqli_query($conn, $insert_query);
+
+        if ($insert_result) {
+            echo "Single game component inserted successfully.";
+        } else {
+            echo "Error inserting single game component: " . mysqli_error($conn);
+        }
     }
-
-    // Rest of your logic goes here...
 }
 ?>

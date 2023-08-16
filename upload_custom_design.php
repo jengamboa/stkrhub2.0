@@ -29,21 +29,43 @@ $result_templates = mysqli_query($conn, $query_templates);
 </head>
 
 <body>
-    <h2>Upload Custom Design for <?php echo $game_name; ?></h2>
+    <h2>Upload Custom Design
+        <?php if ($game_id !== '') {
+            echo "for " . $game_name;
+        } ?>
+    </h2>
 
     <!-- Display the passed values -->
-    <p>Game ID: <?php echo $game_id; ?></p>
-    <p>Game Name: <?php echo $game_name; ?></p>
-    <p>Component ID: <?php echo $component_id; ?></p>
-    <p>Component Name: <?php echo $component_name; ?></p>
-    <p>Component Price: <?php echo $component_price; ?></p>
-    <p>Component Category: <?php echo $component_category; ?></p>
-    <p>Selected Size: <?php echo $selected_size; ?></p> <!-- Display the selected size -->
+    <?php if ($game_id !== '') { ?>
+    <p>Game ID:
+        <?php echo $game_id; ?>
+    </p>
+    <p>Game Name:
+        <?php echo $game_name; ?>
+    </p>
+    <?php } ?>
+    <p>Component ID:
+        <?php echo $component_id; ?>
+    </p>
+    <p>Component Name:
+        <?php echo $component_name; ?>
+    </p>
+    <p>Component Price:
+        <?php echo $component_price; ?>
+    </p>
+    <p>Component Category:
+        <?php echo $component_category; ?>
+    </p>
+    <p>Selected Size:
+        <?php echo $selected_size; ?>
+    </p> <!-- Display the selected size -->
 
     <!-- Form to upload custom design -->
     <form method="post" action="process_upload_custom_design.php" enctype="multipart/form-data">
+        <?php if ($game_id !== '') { ?>
         <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
         <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
+        <?php } ?>
         <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
         <input type="hidden" name="selected_size" value="<?php echo $selected_size; ?>"> <!-- Pass the selected size -->
 
@@ -52,29 +74,38 @@ $result_templates = mysqli_query($conn, $query_templates);
         <input type="file" id="custom_design_file" name="custom_design_file" required>
         <br>
 
+        <!-- Add the component_price input field -->
+        <input type="hidden" name="component_price" value="<?php echo $component_price; ?>">
+
+        <!-- Input for quantity -->
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+        <br>
+
         <!-- Button to submit the form -->
         <input type="submit" name="upload_design" value="Upload Design">
     </form>
 
     <!-- Display template files -->
     <h3>Component Template Files</h3>
-    <?php if (mysqli_num_rows($result_templates) > 0) { ?>
-        <table>
-            <tr>
-                <th>Template Name</th>
-                <th>Download Link</th>
-            </tr>
-            <?php while ($template = mysqli_fetch_assoc($result_templates)) { ?>
-                <tr>
-                    <td><?php echo $template['template_name']; ?></td>
-                    <td><a href="<?php echo $template['template_file_path']; ?>" download>Download</a></td>
-                </tr>
-            <?php } ?>
-        </table>
+    <?php if ($result_templates !== false && mysqli_num_rows($result_templates) > 0) { ?>
+    <table>
+        <tr>
+            <th>Template Name</th>
+            <th>Download Link</th>
+        </tr>
+        <?php while ($template = mysqli_fetch_assoc($result_templates)) { ?>
+        <tr>
+            <td>
+                <?php echo $template['template_name']; ?>
+            </td>
+            <td><a href="<?php echo $template['template_file_path']; ?>" download>Download</a></td>
+        </tr>
+        <?php } ?>
+    </table>
     <?php } else { ?>
-        <p>No template files available for this component.</p>
+    <p>No template files available for this component.</p>
     <?php } ?>
-
 </body>
 
 </html>
