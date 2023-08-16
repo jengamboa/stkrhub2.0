@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2023 at 05:43 PM
+-- Generation Time: Aug 16, 2023 at 06:30 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,22 +29,29 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `added_game_components` (
   `added_component_id` int(11) NOT NULL,
-  `game_id` int(11) NOT NULL,
+  `game_id` int(11) DEFAULT NULL,
   `component_id` int(11) NOT NULL,
   `is_custom_design` tinyint(1) NOT NULL,
   `custom_design_file_path` varchar(255) DEFAULT NULL,
   `quantity` int(11) DEFAULT 1,
   `color_id` int(11) DEFAULT NULL,
-  `size` varchar(50) DEFAULT NULL
+  `size` varchar(50) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `added_game_components`
 --
 
-INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`) VALUES
-(236, 34, 1, 0, '', 1, NULL, '7x7'),
-(237, 34, 2, 1, 'uploads/.ci.yaml', 3, NULL, '7x7');
+INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`, `user_id`) VALUES
+(298, NULL, 4, 1, 'uploads/AUTHORS', 42, NULL, '10x10', 3),
+(299, NULL, 4, 1, 'uploads/AUTHORS', 42, NULL, '10x10', 3),
+(300, NULL, 4, 1, 'uploads/AUTHORS', 42, NULL, '10x10', 3),
+(301, 34, 4, 1, 'uploads/AUTHORS', 31, NULL, '10x10', 3),
+(302, NULL, 4, 1, 'uploads/AUTHORS', 31, NULL, '10x10', 3),
+(303, NULL, 4, 1, 'uploads/.gitignore', 1, NULL, '10x10', 3),
+(304, NULL, 4, 1, 'uploads/.gitignore', 1, NULL, '10x10', 3),
+(305, NULL, 4, 1, 'uploads/.ci.yaml', 1, NULL, '10x10', 3);
 
 -- --------------------------------------------------------
 
@@ -154,10 +161,21 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`) VALUES
 (29, 3, 34, 34, NULL, 1, 23.00, 0),
 (30, 3, 34, 34, NULL, 1, 23.00, 0),
-(31, 4, 35, 35, NULL, 1, 0.00, 1),
 (32, 3, 36, 36, NULL, 1, 0.00, 0),
 (33, 3, 36, 36, NULL, 1, 0.00, 0),
-(34, 3, 34, 34, NULL, 1, 23.00, 0);
+(34, 3, 34, 34, NULL, 1, 23.00, 0),
+(39, 3, 34, 34, NULL, 1, 23.00, 1),
+(43, 3, 34, 34, NULL, 1, 23.00, 1),
+(49, 3, 34, 34, NULL, 1, 23.00, 1),
+(50, 3, 34, 34, NULL, 1, 23.00, 1),
+(51, 4, 34, 34, NULL, 1, 23.00, 1),
+(61, 3, NULL, NULL, 298, 42, 0.00, 1),
+(62, 3, NULL, NULL, 299, 42, 0.00, 1),
+(63, 3, NULL, NULL, 300, 42, 0.00, 1),
+(64, 3, NULL, NULL, 302, 31, 0.00, 1),
+(65, 3, NULL, NULL, 303, 32, 0.00, 1),
+(66, 3, NULL, NULL, 304, 32, 0.00, 1),
+(67, 3, NULL, NULL, 305, 69, 14.00, 1);
 
 -- --------------------------------------------------------
 
@@ -249,7 +267,8 @@ CREATE TABLE `games` (
 INSERT INTO `games` (`game_id`, `name`, `description`, `category`, `user_id`, `created_at`, `is_built`) VALUES
 (34, 'game 1', 'desc', 'action', 3, '2023-08-12 20:59:18', 0),
 (35, 'jeric', 'asd', 'asd', 4, '2023-08-14 22:38:12', 0),
-(36, 'hehe', 'hehe', 'hehe', 3, '2023-08-15 06:51:33', 0);
+(36, 'hehe', 'hehe', 'hehe', 3, '2023-08-15 06:51:33', 0),
+(37, 'hehe', 'hehe', 'hehe', 4, '2023-08-16 15:10:01', 0);
 
 -- --------------------------------------------------------
 
@@ -447,7 +466,16 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (47, 4, 'login', '2023-08-14 14:55:54'),
 (48, 3, 'login', '2023-08-14 16:40:55'),
 (49, 3, 'login', '2023-08-14 22:43:00'),
-(50, 3, 'login', '2023-08-15 14:26:35');
+(50, 3, 'login', '2023-08-15 14:26:35'),
+(51, 3, 'login', '2023-08-16 01:41:54'),
+(52, 3, 'login', '2023-08-16 01:46:08'),
+(53, 3, 'login', '2023-08-16 07:09:19'),
+(54, 4, 'login', '2023-08-16 07:09:54'),
+(55, 4, 'login', '2023-08-16 07:12:54'),
+(56, 4, 'login', '2023-08-16 07:26:02'),
+(57, 3, 'login', '2023-08-16 12:03:59'),
+(58, 4, 'login', '2023-08-16 12:36:02'),
+(59, 3, 'login', '2023-08-16 13:26:54');
 
 -- --------------------------------------------------------
 
@@ -588,7 +616,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
 
 --
 -- AUTO_INCREMENT for table `admin_review_response`
@@ -612,7 +640,7 @@ ALTER TABLE `built_games_added_game_components`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `component_assets`
@@ -636,7 +664,7 @@ ALTER TABLE `component_templates`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `game_components`
@@ -666,7 +694,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
