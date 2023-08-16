@@ -1,158 +1,47 @@
 <?php
+
 include 'connection.php';
-include 'html/header.html.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direct_add'])) {
+    $game_id = $_POST['game_id'];
+    $game_name = $_POST['game_name'];
+    $component_id = $_POST['component_id'];
+    $component_name = $_POST['component_name'];
+    $component_price = $_POST['component_price'];
+    $component_category = $_POST['component_category'];
+    $selected_size = $_POST['selected_size'];
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+    // Now you can use these variables in your logic
 
-$user_id = $_SESSION['user_id'];
+    // Check if game_id exists (it's part of a game) or not
+    if ($game_id !== '') {
 
-// Retrieve cart data including games and game components
-$query_cart = "SELECT cart.cart_id, cart.game_id, cart.added_component_id, cart.quantity, cart.price,
-              games.name AS game_name,
-              added_game_components.is_custom_design, added_game_components.custom_design_file_path,
-              added_game_components.quantity AS component_quantity, added_game_components.color_id, added_game_components.size
-              FROM cart
-              LEFT JOIN games ON cart.game_id = games.game_id
-              LEFT JOIN added_game_components ON cart.added_component_id = added_game_components.added_component_id
-              WHERE cart.user_id = '$user_id'";
-$result_cart = mysqli_query($conn, $query_cart);
-?>
+        // Echo the values passed from the previous page
+        echo "Game ID: " . $game_id . "<br>";
+        echo "Component ID: " . $component_id . "<br>";
+        echo "Selected Size: " . $selected_size . "<br>";
 
-<!DOCTYPE html>
-<html>
+        // Insert the new component into the added_game_components table
+        $insert_query = "INSERT INTO added_game_components (game_id, component_id, size, is_custom_design, custom_design_file_path)
+                             VALUES ('$game_id', '$component_id', '$selected_size', 0, '')"; // is_custom_design = 0 for no custom design
 
-<head>
-    <title>Cart</title>
-</head>
-
-<body>
-    <div class="panel">
-        <h2>Cart</h2>
-        <form id="cartForm" method="post">
-            <?php
-            while ($item = mysqli_fetch_assoc($result_cart)) {
-                echo '<div class="cart-item">';
-                echo '<p><input type="checkbox" name="selectedItems[]" value="' . $item['cart_id'] . '"> Cart ID: ' . $item['cart_id'] . '</p>';
-                echo '</div>';
-
-                if (!empty($item['game_id'])) {
-                    // Display game and dropdown of game components
-                    echo '<p>Game: ' . $item['game_name'] . '</p>';
-
-                    // Display added game components based on the game ID
-                    echo '<p>Added Game Components:</p>';
-                    echo '<table border="1">';
-                    echo '<tr><th>Component ID</th><th>Is Custom Design</th><th>Custom Design File Path</th><th>Quantity</th><th>Color ID</th><th>Size</th></tr>';
-
-                    // Loop through added game components for the current game
-                    $query_components = "SELECT * FROM added_game_components WHERE game_id = " . $item['game_id'];
-                    $result_components = mysqli_query($conn, $query_components);
-                    while ($component = mysqli_fetch_assoc($result_components)) {
-                        echo '<tr>';
-                        echo '<td>' . $component['added_component_id'] . '</td>';
-                        echo '<td>' . ($component['is_custom_design'] == 1 ? 'Yes' : 'No') . '</td>';
-                        echo '<td>' . $component['custom_design_file_path'] . '</td>';
-                        echo '<td>' . $component['quantity'] . '</td>';
-                        echo '<td>' . $component['color_id'] . '</td>';
-                        echo '<td>' . $component['size'] . '</td>';
-                        echo '</tr>';
-                    }
-
-                    echo '</table>';
-                } else {
-                    // Display individual game component
-                    echo '<p>Game Component:</p>';
-                    echo '<ul>';
-                    echo '<li>Is Custom Design: ' . ($item['is_custom_design'] == 1 ? 'Yes' : 'No') . '</li>';
-                    echo '<li>Custom Design File Path: ' . $item['custom_design_file_path'] . '</li>';
-                    echo '<li>Quantity: ' . $item['quantity'] . '</li>';
-                    echo '<li>Color ID: ' . $item['color_id'] . '</li>';
-                    echo '<li>Size: ' . $item['size'] . '</li>';
-                    echo '</ul>';
-                }
-                echo '</div>';
-
-                // Quantity input with onchange attribute
-                echo '<div class="cart-item">';
-                echo '<label for="quantity_' . $item['cart_id'] . '">Quantity:</label>';
-                echo '<input type="number" id="quantity_' . $item['cart_id'] . '" value="' . $item['quantity'] . '" onchange="updateQuantity(' . $item['cart_id'] . ', this.value)">';
-                echo '</div>';
-            }
-            ?>
-        </form>
-
-        <button id="deleteButton">Delete Selected</button>
-        <button id="purchaseButton">Purchase Selected</button>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-        function updateQuantity(cartId, newQuantity) {
-            // Send AJAX request to update quantity
-            $.ajax({
-                url: 'process_update_quantity.php', // Replace with your PHP script
-                method: 'POST',
-                data: { cart_id: cartId, quantity: newQuantity },
-                success: function (response) {
-                    // Handle success (e.g., display updated cart or refresh page)
-                    console.log('Quantity updated successfully');
-                    // You can update the cart display here if needed
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error updating quantity:', error);
-                }
-            });
+        if (mysqli_query($conn, $insert_query)) {
+            // Redirect back to the game dashboard after successful addition
+            header("Location: game_dashboard.php?game_id=$game_id");
+            exit;
+        } else {
+            // Handle the error if the insert fails
+            echo "Error: " . $insert_query . "<br>" . mysqli_error($conn);
+            exit;
         }
-    </script>
-    <script>
-        $(document).ready(function () {
 
-            $("#deleteButton").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "process_delete_cart.php",
-                    data: $("#cartForm").serialize(),
-                    success: function (response) {
-                        // Handle the response from process_delete_cart.php if needed
-                        console.log(response);
-                        // For example, you could display a message
-                        // alert("Items deleted successfully!");
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle errors if any
-                        console.error(error);
-                    }
-                });
-            });
+    } else {
+        echo "It is a single game component.<br>";
 
-            $("#purchaseButton").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "process_purchase_cart.php",
-                    data: $("#cartForm").serialize(),
-                    success: function (response) {
-                        // Handle the response from process_delete_cart.php if needed
-                        console.log(response);
-                        // For example, you could display a message
-                        // alert("Items deleted successfully!");
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle errors if any
-                        console.error(error);
-                    }
-                });
-            });
-        });
-    </script>
+        // Echo the values for the single game component
+        echo "Game ID: " . $game_id . "<br>"; // Since game_id is not available for single components, you might want to display a placeholder value or message
+        echo "Component ID: " . $component_id . "<br>";
+    }
 
-
-
-</body>
-
-
-
-</html>
+    // Rest of your logic goes here...
+}
+?>

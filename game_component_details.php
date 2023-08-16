@@ -34,14 +34,33 @@ $result_assets = mysqli_query($conn, $query_assets);
     <h2>Game Component Details</h2>
 
     <!-- Display the game ID and game name -->
-    <p>Game Name: <?php echo $game_name; ?></p>
+    <?php if (!empty($game_name)) { ?>
+        <p>Game Name:
+            <?php echo $game_name; ?>
+        </p>
+    <?php } ?>
 
     <!-- Display the component details -->
-    <h3><?php echo $component['component_name']; ?></h3>
-    <p>Description: <?php echo $component['description']; ?></p>
-    <p>Price: <?php echo $component['price']; ?></p>
-    <p>Category: <?php echo $component['category']; ?></p>
-    <p>Size: <?php echo $component['size']; ?></p>
+    <h3>
+        <?php echo $component['component_name']; ?>
+    </h3>
+
+    <!-- Display description if available -->
+    <?php if (!empty($component['description'])) { ?>
+        <p>Description:
+            <?php echo $component['description']; ?>
+        </p>
+    <?php } ?>
+
+    <p>Price:
+        <?php echo $component['price']; ?>
+    </p>
+    <p>Category:
+        <?php echo $component['category']; ?>
+    </p>
+    <p>Size:
+        <?php echo $component['size']; ?>
+    </p>
 
     <!-- Display the component assets (images) -->
     <?php if (mysqli_num_rows($result_assets) > 0) { ?>
@@ -92,12 +111,12 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="hidden" name="component_price" value="<?php echo $component['price']; ?>">
             <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
             <input type="hidden" name="selected_size" value="<?php echo $component['size']; ?>"> <!-- Include size -->
-            
+
             <input type="submit" name="add_with_design" value="Add with Design">
         </form>
 
         <!-- Button to add the component without design -->
-        <form method="post" action="process_direct_add_component.php">
+        <form method="post" action="dump.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
             <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
             <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
@@ -140,10 +159,11 @@ $result_assets = mysqli_query($conn, $query_assets);
 
     <script>
         // Redirect to navigate.php when an option is selected
-        document.getElementById("select_component").addEventListener("change", function() {
+        document.getElementById("select_component").addEventListener("change", function () {
             document.getElementById("componentForm").submit();
         });
     </script>
+
 </body>
 
 </html>
