@@ -1,0 +1,30 @@
+
+there is quantity input on every game detail page
+conditions:
+if inside game then insert quantity to added_game_components table
+
+if single game component, then added_game_components table -> cart table -> update quantity at cart table
+
+
+directly - OK
+with file - 
+with colors - 
+
+
+**TRY DIRECT ADD - OK NOW
+**TRY WITH UPLOAD
+
+
+
+
+I want that after inserting to added_game_components table, insert it also to cart table
+
+cart table in order:
+`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`
+
+
+after inserting to cart table, 
+also insert the quantity to cart table
+
+cart table in order:
+`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`
