@@ -76,13 +76,21 @@ $result_assets = mysqli_query($conn, $query_assets);
         <p>No assets available for this component.</p>
     <?php } ?>
 
+    <!-- TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO: -->
     <?php if ($component['has_colors'] == 1) { ?>
         <h4>Color Options</h4>
         <!-- Display color picker or dropdown list here -->
         <form method="post" action="process_add_component_with_colors.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
             <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
+            <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
+            <input type="hidden" name="component_name" value="<?php echo $component['component_name']; ?>">
+            <input type="hidden" name="component_price" value="<?php echo $component['price']; ?>">
             <input type="hidden" name="selected_size" value="<?php echo $component['size']; ?>"> <!-- Include size -->
+
+            <!-- Add a quantity input for color-selected component -->
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" value="1" min="1" required>
 
             <label for="selected_color">Select Color:</label>
             <select id="selected_color" name="selected_color">
@@ -102,8 +110,9 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="submit" name="add_with_colors" value="Add with Colors">dice
         </form>
     <?php } else { ?>
+        <!-- TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO: -->
 
-        <!-- TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO: -->
+
         <!-- Button to add the component with design -->
         <form method="post" action="upload_custom_design.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
@@ -113,12 +122,12 @@ $result_assets = mysqli_query($conn, $query_assets);
             <input type="hidden" name="component_price" value="<?php echo $component['price']; ?>">
             <input type="hidden" name="component_category" value="<?php echo $component['category']; ?>">
             <input type="hidden" name="selected_size" value="<?php echo $component['size']; ?>"> <!-- Include size -->
-            
+
 
             <input type="submit" name="add_with_design" value="Add with Design">
         </form>
 
-        <!-- TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO: -->
+
         <!-- Button to add the component without design -->
         <form method="post" action="process_direct_add_component.php">
             <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
@@ -135,7 +144,7 @@ $result_assets = mysqli_query($conn, $query_assets);
 
             <input type="submit" name="direct_add" value="Add Directly without Design">
         </form>
-        
+
 
         <!-- Dropdown to select and add other components based on the category -->
         <form method="post" action="process_navigate_size.php" id="componentForm">

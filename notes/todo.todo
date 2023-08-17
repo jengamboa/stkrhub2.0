@@ -1,4 +1,3 @@
-
 there is quantity input on every game detail page
 conditions:
 if inside game then insert quantity to added_game_components table
@@ -28,3 +27,30 @@ also insert the quantity to cart table
 
 cart table in order:
 `cart_id`, `user_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`
+
+
+
+______________________________________________________________________________
+USER:
+☐ marketplace pindot to game page
+☐ built game > game component page table
+☐ edit (price (based on the database), uploads, etc)
+
+cart:
+    ☐ address
+    ☐ select address/ add address
+    ☐ default address
+
+orders:
+    ☐ tracking of orders
+    ☐ to ship, to deliver... (is_to ship...)
+
+published built games page: 
+    ☐ # of buyers
+    ☐ total profit
+    ☐ total commision of STKR Hub
+
+
+ADMIN:
+☐ set % for commisions
+☐ CMS
