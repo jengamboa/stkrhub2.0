@@ -1,55 +1,44 @@
 <?php
-include 'connection.php';
+include 'connection.php'; // Include your database connection
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['built_game_id'])) {
-    // Retrieve form data
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $built_game_id = $_POST['built_game_id'];
-    $game_name = isset($_POST['game_name']) ? $_POST['game_name'] : '';
-    $edition = isset($_POST['edition']) ? $_POST['edition'] : '';
-    $min_players = isset($_POST['min_players']) ? $_POST['min_players'] : '';
-    $max_players = isset($_POST['max_players']) ? $_POST['max_players'] : '';
-    $min_playtime = isset($_POST['min_playtime']) ? $_POST['min_playtime'] : '';
-    $max_playtime = isset($_POST['max_playtime']) ? $_POST['max_playtime'] : '';
-    $creator_id = isset($_POST['creator_id']) ? $_POST['creator_id'] : ''; // Added creator ID
-    $age = isset($_POST['age']) ? $_POST['age'] : ''; // Retrieve selected age value
-    $short_description = isset($_POST['short_description']) ? $_POST['short_description'] : '';
-    $long_description = isset($_POST['long_description']) ? $_POST['long_description'] : '';
-    $website = isset($_POST['website']) ? $_POST['website'] : '';
+    $creator_id = $_POST['creator_id'];
+    $game_name = $_POST['game_name'];
+    $edition = $_POST['edition'];
+    $published_date = date('Y-m-d'); // Current date
+    $age_id = $_POST['age'];
+    $short_description = $_POST['short_description'];
+    $long_description = $_POST['long_description'];
+    $website = $_POST['website'];
 
-    // Handle logo upload
-    $logoPath = ''; // Initialize logo path
-    if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
-        $logoName = $_FILES['logo']['name'];
-        $logoTmpName = $_FILES['logo']['tmp_name'];
-        $logoPath = 'notes/' . $logoName; // Update the directory path as needed
-        move_uploaded_file($logoTmpName, $logoPath);
-    }
+    // Handle file upload
+    $targetDirectory = 'uploads/';
+    $logoPath = $targetDirectory . basename($_FILES['logo']['name']);
 
-    // Insert data into published_built_games table
-    $insertQuery = "INSERT INTO published_built_games (built_game_id, game_name, edition, creator_id, age_id, short_description, long_description, website, logo_path) VALUES ('$built_game_id', '$game_name', '$edition', '$creator_id', '$age', '$short_description', '$long_description', '$website', '$logoPath')";
 
-    if (mysqli_query($conn, $insertQuery)) {
-        // Get the ID of the inserted published game
-        $published_game_id = mysqli_insert_id($conn);
+    if (move_uploaded_file($_FILES['logo']['tmp_name'], $logoPath)) {
 
-        // Insert "Number of Players" data into published_game_players table
-        $playersInsertQuery = "INSERT INTO published_game_players (published_game_id, min_players, max_players) VALUES ('$published_game_id', '$min_players', '$max_players')";
-        mysqli_query($conn, $playersInsertQuery);
+        // Get player counts and playtimes
+        $min_players = $_POST['min_players'];
+        $max_players = $_POST['max_players'];
+        $min_playtime = $_POST['min_playtime'];
+        $max_playtime = $_POST['max_playtime'];
 
-        // Insert "Play Time" data into published_game_playtime table
-        $playtimeInsertQuery = "INSERT INTO published_game_playtime (published_game_id, min_playtime, max_playtime) VALUES ('$published_game_id', '$min_playtime', '$max_playtime')";
+        // Insert data into the published_built_games table
+    $insertQuery = "INSERT INTO published_built_games (built_game_id, game_name, edition, published_date, creator_id, age_id, short_description, long_description, website, logo_path, min_players, max_players, min_playtime, max_playtime) 
+                    VALUES ('$built_game_id', '$game_name', '$edition', '$published_date', '$creator_id', '$age_id', '$short_description', '$long_description', '$website', '$logoPath', '$min_players', '$max_players', '$min_playtime', '$max_playtime')";
 
-        if (mysqli_query($conn, $playtimeInsertQuery)) {
-            echo 'Game published successfully.';
+
+        if (mysqli_query($conn, $insertQuery)) {
+            echo "Game published successfully!";
         } else {
-            echo 'Error publishing game: ' . mysqli_error($conn);
+            echo "Error: " . mysqli_error($conn);
         }
     } else {
-        echo 'Error publishing game: ' . mysqli_error($conn);
+        echo "File upload failed.";
     }
-} else {
-    echo 'Invalid request.';
-}
 
-mysqli_close($conn);
+    
+}
 ?>

@@ -34,7 +34,8 @@ if (mysqli_num_rows($result) > 0) {
 </head>
 
 <body>
-    <form method="post" action="process_publish_built_game.php">
+    <form method="post" action="dump.php" enctype="multipart/form-data">
+
         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
         <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>"> <!-- Add this line -->
 
@@ -87,6 +88,9 @@ if (mysqli_num_rows($result) > 0) {
         logo
         <label for="logo">Game Logo:</label><br>
         <input type="file" id="logo" name="logo" required><br>
+
+
+
 
         <button type="submit" name="update">Publish Game</button>
     </form>
