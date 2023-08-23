@@ -1,48 +1,41 @@
 <?php
-// upload.php
-include 'connection.php';
+session_start();
 
-$folder_name = 'upload/';
+// Include the database connection
+require_once 'connection.php';
 
-// Get the game name from the form
-$game_name = $_POST['gameName'];
+// Process form data
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $age = $_POST['age'];
 
-// Insert game name into the game table
-$query = "INSERT INTO game (game_name) VALUES (?)";
-$stmt = mysqli_prepare($_SESSION['db_connection'], $query);
+    // Insert name and age into the "main" table
+    $insertMainQuery = "INSERT INTO main (name, age) VALUES ('$name', '$age')";
+    mysqli_query($conn, $insertMainQuery);
 
-if ($stmt) {
-    mysqli_stmt_bind_param($stmt, "s", $game_name);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-} else {
-    echo "Database error: " . mysqli_error($_SESSION['db_connection']);
-}
+    // Process uploaded files
+    $uploadDir = 'uploads/'; // Directory to store uploaded files
 
-if (!empty($_FILES)) {
-    $original_filename = $_FILES['file']['name'];
-    $file_extension = pathinfo($original_filename, PATHINFO_EXTENSION);
-
-    // Generate a unique filename
-    $unique_filename = uniqid() . '_' . $original_filename;
-
-    $temp_file = $_FILES['file']['tmp_name'];
-    $location = $folder_name . $unique_filename;
-
-    // Move the uploaded file to the desired location
-    move_uploaded_file($temp_file, $location);
-
-    // Insert file information into the uploaded_files table
-    $query = "INSERT INTO uploaded_files (original_filename, unique_filename, upload_date) VALUES (?, ?, NOW())";
-    $stmt = mysqli_prepare($_SESSION['db_connection'], $query);
-
-    if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ss", $original_filename, $unique_filename);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    } else {
-        echo "Database error: " . mysqli_error($_SESSION['db_connection']);
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true); // Create the directory if it doesn't exist
     }
+
+    $files = $_FILES['file'];
+
+    foreach ($files['name'] as $key => $name) {
+        $tmpName = $files['tmp_name'][$key];
+        $newName = uniqid() . '_' . $name;
+        $uploadPath = $uploadDir . $newName;
+
+        move_uploaded_file($tmpName, $uploadPath);
+
+        // Insert file information into the "uploads" table
+        $insertUploadQuery = "INSERT INTO uploads (filename) VALUES ('$newName')";
+        mysqli_query($conn, $insertUploadQuery);
+    }
+
+    // Redirect or display success message
+    header("Location: index.html");
+    exit();
 }
-
-
+?>

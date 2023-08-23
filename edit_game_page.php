@@ -31,10 +31,13 @@ if (mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Game Page</title>
+
+
 </head>
 
 <body>
-    <form method="post" action="dump.php" enctype="multipart/form-data">
+    <form method="post" action="dump_process.php" enctype="multipart/form-data">
+        <!-- <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data"> -->
 
         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
         <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>"> <!-- Add this line -->
@@ -85,12 +88,16 @@ if (mysqli_num_rows($result) > 0) {
         <label for="website">Website:</label><br>
         <input type="url" id="website" name="website"><br>
 
-        logo
         <label for="logo">Game Logo:</label><br>
         <input type="file" id="logo" name="logo" required><br>
 
+        <label for="graphics">Game Graphics:</label><br>
 
+        <input type="file" id="graphics" class="filepond" name="graphics[]" multiple data-max-file-size="3MB"
+            data-max-files="3" /><br>
 
+        <input type="file" name="graphics[]" id="imagesFilepond" class="filepond" multiple data-allow-reorder="true"
+            data-max-file-size="30MB"><br>
 
         <button type="submit" name="update">Publish Game</button>
     </form>
