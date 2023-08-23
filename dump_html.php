@@ -1,40 +1,46 @@
-<?php
-include 'connection.php';
-include 'html/header.html.php';
-
-$built_game_id = $_GET['built_game_id']; // Retrieve the built_game_id from the URL parameter
-
-$query = "SELECT built_game_id, game_id, creator_id, price FROM built_games WHERE built_game_id = '$built_game_id'";
-$result = mysqli_query($conn, $query);
-
-if (mysqli_num_rows($result) > 0) {
-    $gameInfo = mysqli_fetch_assoc($result);
-
-    echo '<h2>Edit Game Page</h2>';
-    echo '<p>Built Game ID: ' . $gameInfo['built_game_id'] . '</p>';
-    echo '<p>Game ID: ' . $gameInfo['game_id'] . '</p>';
-    echo '<p>Creator ID: ' . $gameInfo['creator_id'] . '</p>';
-    echo '<p>Price: $' . $gameInfo['price'] . '</p>';
-
-    // Display the rest of your form
-    // ...
-} else {
-    echo '<p>No information found for the provided built game ID.</p>';
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Game Page</title>
+    <title>Sample File Pond Server Implementation</title>
+    <!-- Filepond Css -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css">
+    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css">
 </head>
 
 <body>
+    <?php
+    include 'connection.php';
+    include 'html/header.html.php';
+
+    $built_game_id = $_GET['built_game_id']; // Retrieve the built_game_id from the URL parameter
+    
+    $query = "SELECT built_game_id, game_id, creator_id, price FROM built_games WHERE built_game_id = '$built_game_id'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        $gameInfo = mysqli_fetch_assoc($result);
+
+        echo '<h2>Edit Game Page</h2>';
+        echo '<p>Built Game ID: ' . $gameInfo['built_game_id'] . '</p>';
+        echo '<p>Game ID: ' . $gameInfo['game_id'] . '</p>';
+        echo '<p>Creator ID: ' . $gameInfo['creator_id'] . '</p>';
+        echo '<p>Price: $' . $gameInfo['price'] . '</p>';
+
+        // Display the rest of your form
+        // ...
+    } else {
+        echo '<p>No information found for the provided built game ID.</p>';
+    }
+
+    ?>
     <form method="post" action="dump_process.php" enctype="multipart/form-data">
+        <!-- <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data"> -->
 
         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
         <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>"> <!-- Add this line -->
@@ -85,18 +91,52 @@ if (mysqli_num_rows($result) > 0) {
         <label for="website">Website:</label><br>
         <input type="url" id="website" name="website"><br>
 
-        logo
         <label for="logo">Game Logo:</label><br>
         <input type="file" id="logo" name="logo" required><br>
 
-        
+        <label for="graphics">Game Graphics:</label><br>
 
-
+        <input type="file" name="graphics[]" id="imagesFilepond" class="filepond" multiple data-allow-reorder="true"
+            data-max-file-size="30MB"><br>
 
         <button type="submit" name="update">Publish Game</button>
     </form>
 
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script
+        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js">
+        </script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js">
+    </script>
 
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            // initializing file pond js 
+            FilePond.registerPlugin(
+                FilePondPluginImagePreview,
+                FilePondPluginFileValidateSize,
+                FilePondPluginFileValidateType
+            );
+
+            // Select the file input and use 
+            // create() to turn it into a pond
+            FilePond.create(
+                document.querySelector('#imagesFilepond'),
+                {
+                    name: 'filepond',
+                    maxFiles: 5,
+                    allowBrowse: true,
+                    
+
+                }
+            );
+
+        })
+    </script>
 </body>
 
 </html>
