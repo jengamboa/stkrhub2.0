@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2023 at 06:30 PM
+-- Generation Time: Aug 23, 2023 at 05:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,14 +44,13 @@ CREATE TABLE `added_game_components` (
 --
 
 INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`, `user_id`) VALUES
-(298, NULL, 4, 1, 'uploads/AUTHORS', 42, NULL, '10x10', 3),
-(299, NULL, 4, 1, 'uploads/AUTHORS', 42, NULL, '10x10', 3),
-(300, NULL, 4, 1, 'uploads/AUTHORS', 42, NULL, '10x10', 3),
-(301, 34, 4, 1, 'uploads/AUTHORS', 31, NULL, '10x10', 3),
-(302, NULL, 4, 1, 'uploads/AUTHORS', 31, NULL, '10x10', 3),
-(303, NULL, 4, 1, 'uploads/.gitignore', 1, NULL, '10x10', 3),
-(304, NULL, 4, 1, 'uploads/.gitignore', 1, NULL, '10x10', 3),
-(305, NULL, 4, 1, 'uploads/.ci.yaml', 1, NULL, '10x10', 3);
+(314, 36, 3, 0, NULL, 2, 3, '7x7', 3),
+(315, NULL, 3, 0, NULL, 4, 2, '7x7', 3),
+(316, NULL, 3, 0, NULL, 7, 2, '7x7', 3),
+(317, 34, 3, 0, NULL, 21, 3, '7x7', 3),
+(318, NULL, 3, 0, NULL, 22, 1, '7x7', 3),
+(319, 38, 3, 0, NULL, 7, 3, '7x7', 3),
+(320, 38, 1, 1, 'uploads/AUTHORS', 25, NULL, '7x7', 3);
 
 -- --------------------------------------------------------
 
@@ -67,6 +66,27 @@ CREATE TABLE `admin_review_response` (
   `admin_text_response` text DEFAULT NULL,
   `response_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `age`
+--
+
+CREATE TABLE `age` (
+  `age_id` int(11) NOT NULL,
+  `age_value` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `age`
+--
+
+INSERT INTO `age` (`age_id`, `age_value`) VALUES
+(1, '2+'),
+(2, '8+'),
+(3, '16+'),
+(4, '18+');
 
 -- --------------------------------------------------------
 
@@ -94,8 +114,8 @@ CREATE TABLE `built_games` (
 --
 
 INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_published`, `price`) VALUES
-(27, 34, 'game 1', 'desc', 3, '2023-08-12 20:59:20', 0, 0, 0, 0, 0, 0.00),
-(28, 34, 'game 1', 'desc', 3, '2023-08-12 20:59:51', 0, 0, 0, 0, 0, 0.00),
+(27, 34, 'game 1', 'desc', 3, '2023-08-12 20:59:20', 0, 0, 1, 0, 0, 0.00),
+(28, 34, 'game 1', 'desc', 3, '2023-08-12 20:59:51', 0, 0, 1, 0, 0, 0.00),
 (29, 34, 'game 1', 'desc', 3, '2023-08-12 21:00:33', 0, 0, 0, 0, 0, 12.00),
 (30, 34, 'game 1', 'desc', 3, '2023-08-12 21:01:01', 0, 0, 0, 0, 0, 12.00),
 (31, 34, 'game 1', 'desc', 3, '2023-08-12 21:05:05', 0, 0, 0, 0, 0, 12.00),
@@ -103,7 +123,10 @@ INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `c
 (33, 34, 'game 1', 'desc', 3, '2023-08-12 21:08:32', 0, 0, 0, 0, 0, 23.00),
 (34, 34, 'game 1', 'desc', 3, '2023-08-12 21:13:29', 0, 0, 1, 1, 1, 23.00),
 (35, 35, 'jeric', 'asd', 4, '2023-08-14 22:56:10', 0, 0, 1, 0, 0, 0.00),
-(36, 36, 'hehe', 'hehe', 3, '2023-08-15 06:51:35', 0, 0, 1, 1, 1, 0.00);
+(36, 36, 'hehe', 'hehe', 3, '2023-08-15 06:51:35', 0, 0, 1, 1, 1, 0.00),
+(37, 38, 'dice game', 'action', 3, '2023-08-19 13:31:19', 0, 0, 0, 0, 0, 7.00),
+(38, 38, 'dice game', 'action', 3, '2023-08-19 13:37:47', 0, 0, 0, 0, 0, 19.00),
+(39, 38, 'dice game', 'action', 3, '2023-08-19 14:35:48', 0, 0, 1, 1, 0, 19.00);
 
 -- --------------------------------------------------------
 
@@ -135,7 +158,12 @@ INSERT INTO `built_games_added_game_components` (`added_component_id`, `built_ga
 (240, 33, 34, 1, 0, '', 1, 0, '7x7'),
 (241, 33, 34, 2, 1, 'uploads/.ci.yaml', 1, 0, '7x7'),
 (242, 34, 34, 1, 0, '', 1, 0, '7x7'),
-(243, 34, 34, 2, 1, 'uploads/.chahahahai.yaml', 1, 0, '7x7');
+(243, 34, 34, 2, 1, 'uploads/.chahahahai.yaml', 1, 0, '7x7'),
+(244, 37, 38, 3, 0, '', 7, 3, '7x7'),
+(245, 38, 38, 3, 0, '', 7, 3, '7x7'),
+(246, 38, 38, 1, 1, 'uploads/AUTHORS', 25, 0, '7x7'),
+(247, 39, 38, 3, 0, '', 7, 3, '7x7'),
+(248, 39, 38, 1, 1, 'uploads/AUTHORS', 25, 0, '7x7');
 
 -- --------------------------------------------------------
 
@@ -164,18 +192,9 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_com
 (32, 3, 36, 36, NULL, 1, 0.00, 0),
 (33, 3, 36, 36, NULL, 1, 0.00, 0),
 (34, 3, 34, 34, NULL, 1, 23.00, 0),
-(39, 3, 34, 34, NULL, 1, 23.00, 1),
-(43, 3, 34, 34, NULL, 1, 23.00, 1),
-(49, 3, 34, 34, NULL, 1, 23.00, 1),
-(50, 3, 34, 34, NULL, 1, 23.00, 1),
+(39, 3, 34, 34, NULL, 2, 23.00, 0),
 (51, 4, 34, 34, NULL, 1, 23.00, 1),
-(61, 3, NULL, NULL, 298, 42, 0.00, 1),
-(62, 3, NULL, NULL, 299, 42, 0.00, 1),
-(63, 3, NULL, NULL, 300, 42, 0.00, 1),
-(64, 3, NULL, NULL, 302, 31, 0.00, 1),
-(65, 3, NULL, NULL, 303, 32, 0.00, 1),
-(66, 3, NULL, NULL, 304, 32, 0.00, 1),
-(67, 3, NULL, NULL, 305, 69, 14.00, 1);
+(77, 3, 38, 39, NULL, 1, 19.00, 0);
 
 -- --------------------------------------------------------
 
@@ -268,7 +287,8 @@ INSERT INTO `games` (`game_id`, `name`, `description`, `category`, `user_id`, `c
 (34, 'game 1', 'desc', 'action', 3, '2023-08-12 20:59:18', 0),
 (35, 'jeric', 'asd', 'asd', 4, '2023-08-14 22:38:12', 0),
 (36, 'hehe', 'hehe', 'hehe', 3, '2023-08-15 06:51:33', 0),
-(37, 'hehe', 'hehe', 'hehe', 4, '2023-08-16 15:10:01', 0);
+(37, 'hehe', 'hehe', 'hehe', 4, '2023-08-16 15:10:01', 0),
+(38, 'dice game', 'action', 'action', 3, '2023-08-19 13:30:55', 0);
 
 -- --------------------------------------------------------
 
@@ -339,7 +359,9 @@ INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `built_game_id`, `added_
 (19, 30, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-14 23:03:11'),
 (20, 32, 3, 36, NULL, 1, 0.00, 1, 0, 0, 0, 0, 0, '2023-08-15 06:52:28'),
 (21, 33, 3, 36, NULL, 1, 0.00, 1, 0, 0, 0, 0, 0, '2023-08-15 06:56:33'),
-(22, 34, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-15 23:17:51');
+(22, 34, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-15 23:17:51'),
+(23, 39, 3, 34, NULL, 2, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-19 14:34:42'),
+(24, 77, 3, 39, NULL, 1, 19.00, 1, 0, 0, 0, 0, 0, '2023-08-19 14:36:29');
 
 -- --------------------------------------------------------
 
@@ -348,30 +370,61 @@ INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `built_game_id`, `added_
 --
 
 CREATE TABLE `published_built_games` (
-  `published_id` int(11) NOT NULL,
+  `published_game_id` int(11) NOT NULL,
   `built_game_id` int(11) NOT NULL,
   `game_name` varchar(255) NOT NULL,
-  `edition` varchar(50) DEFAULT NULL,
-  `publish_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `game_id` int(11) NOT NULL
+  `edition` varchar(255) NOT NULL,
+  `published_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `creator_id` int(11) NOT NULL,
+  `age_id` int(11) DEFAULT NULL,
+  `short_description` text DEFAULT NULL,
+  `long_description` text DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `logo_path` varchar(255) DEFAULT NULL,
+  `min_players` int(11) DEFAULT NULL,
+  `max_players` int(11) DEFAULT NULL,
+  `min_playtime` int(11) DEFAULT NULL,
+  `max_playtime` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `published_built_games`
 --
 
-INSERT INTO `published_built_games` (`published_id`, `built_game_id`, `game_name`, `edition`, `publish_date`, `user_id`, `price`, `game_id`) VALUES
-(1, 34, 'hehe', 'haha', '2023-08-14 15:55:58', 0, 0.00, 0),
-(2, 34, 'haha', 'hehe', '2023-08-14 16:44:53', 0, 0.00, 0),
-(3, 34, 'as', 'vbsad', '2023-08-14 17:05:26', 3, 0.00, 0),
-(4, 36, 'HAHAH', 'HAHHAA', '2023-08-14 22:57:07', 3, 0.00, 0),
-(5, 34, 'huhu', 'huhu edition', '2023-08-15 14:56:46', 3, 0.00, 0),
-(6, 34, 'boom panes', 'oanes', '2023-08-15 14:59:37', 3, 0.00, 0),
-(7, 34, 'boom panes', 'oanes', '2023-08-15 15:02:21', 3, 0.00, 0),
-(8, 34, 'qwerty', 'qwerty', '2023-08-15 15:03:39', 3, 0.00, 0),
-(9, 34, 'home ', 'home', '2023-08-15 15:09:02', 3, 23.00, 34);
+INSERT INTO `published_built_games` (`published_game_id`, `built_game_id`, `game_name`, `edition`, `published_date`, `creator_id`, `age_id`, `short_description`, `long_description`, `website`, `logo_path`, `min_players`, `max_players`, `min_playtime`, `max_playtime`) VALUES
+(30, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
+(31, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
+(32, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
+(33, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
+(34, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123),
+(35, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123),
+(36, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123),
+(37, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `published_game_graphics`
+--
+
+CREATE TABLE `published_game_graphics` (
+  `graphics_id` int(11) NOT NULL,
+  `published_game_id` int(11) DEFAULT NULL,
+  `media_path` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uploads`
+--
+
+CREATE TABLE `uploads` (
+  `id` int(11) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -475,7 +528,10 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (56, 4, 'login', '2023-08-16 07:26:02'),
 (57, 3, 'login', '2023-08-16 12:03:59'),
 (58, 4, 'login', '2023-08-16 12:36:02'),
-(59, 3, 'login', '2023-08-16 13:26:54');
+(59, 3, 'login', '2023-08-16 13:26:54'),
+(60, 3, 'login', '2023-08-17 13:48:15'),
+(61, 3, 'login', '2023-08-19 04:41:59'),
+(62, 3, 'login', '2023-08-21 13:09:20');
 
 -- --------------------------------------------------------
 
@@ -511,6 +567,12 @@ ALTER TABLE `admin_review_response`
   ADD PRIMARY KEY (`admin_review_response_id`),
   ADD KEY `built_game_id` (`built_game_id`),
   ADD KEY `game_id` (`game_id`);
+
+--
+-- Indexes for table `age`
+--
+ALTER TABLE `age`
+  ADD PRIMARY KEY (`age_id`);
 
 --
 -- Indexes for table `built_games`
@@ -587,8 +649,21 @@ ALTER TABLE `orders`
 -- Indexes for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  ADD PRIMARY KEY (`published_id`),
-  ADD KEY `built_game_id` (`built_game_id`);
+  ADD PRIMARY KEY (`published_game_id`),
+  ADD KEY `age_id` (`age_id`);
+
+--
+-- Indexes for table `published_game_graphics`
+--
+ALTER TABLE `published_game_graphics`
+  ADD PRIMARY KEY (`graphics_id`),
+  ADD KEY `published_game_id` (`published_game_id`);
+
+--
+-- Indexes for table `uploads`
+--
+ALTER TABLE `uploads`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -616,7 +691,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
 
 --
 -- AUTO_INCREMENT for table `admin_review_response`
@@ -625,22 +700,28 @@ ALTER TABLE `admin_review_response`
   MODIFY `admin_review_response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `age`
+--
+ALTER TABLE `age`
+  MODIFY `age_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
 --
 ALTER TABLE `built_games_added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `component_assets`
@@ -664,7 +745,7 @@ ALTER TABLE `component_templates`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `game_components`
@@ -676,13 +757,25 @@ ALTER TABLE `game_components`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  MODIFY `published_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `published_game_graphics`
+--
+ALTER TABLE `published_game_graphics`
+  MODIFY `graphics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `uploads`
+--
+ALTER TABLE `uploads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -694,7 +787,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
@@ -782,7 +875,13 @@ ALTER TABLE `orders`
 -- Constraints for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  ADD CONSTRAINT `published_built_games_ibfk_1` FOREIGN KEY (`built_game_id`) REFERENCES `built_games` (`built_game_id`);
+  ADD CONSTRAINT `published_built_games_ibfk_1` FOREIGN KEY (`age_id`) REFERENCES `age` (`age_id`);
+
+--
+-- Constraints for table `published_game_graphics`
+--
+ALTER TABLE `published_game_graphics`
+  ADD CONSTRAINT `published_game_graphics_ibfk_1` FOREIGN KEY (`published_game_id`) REFERENCES `published_built_games` (`published_game_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
