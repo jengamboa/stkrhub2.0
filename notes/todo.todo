@@ -3,9 +3,12 @@ USER:
 ✔ marketplace pindot to game page @done (8/19/2023, 12:44:22 PM)
 ✔ built game > game component page table @done (8/19/2023, 1:47:06 PM)
 ☐ dropzone.js multiple upload
+☐ dropzone upload on component game
 ☐ edit (price (based on the database), uploads, etc)
 ☐ size at table create game
 ☐ when building a game, input "build game name" (input error when built game name already exists)
+☐ reponse will be at the same database table
+
 
 
 cart:

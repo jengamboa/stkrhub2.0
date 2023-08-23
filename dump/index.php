@@ -1,33 +1,55 @@
+<?php
+//index.php
+include 'connection.php';
+
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload</title>
-    <!-- Include Dropzone.js CSS and JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/min/dropzone.min.css">
+    <title>How to Upload a File using Dropzone.js with PHP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
 </head>
+
 <body>
-    <h1>Upload Files</h1>
-    <form action="upload.php" class="dropzone" id="myDropzone">
-        <div class="fallback">
-            <input name="file" type="file" multiple />
+
+    <form action="upload.php" class="dropzone" id="dropzoneFrom">
+        <div class="form-group">
+            <label for="gameName">Game Name:</label>
+            <input type="text" class="form-control" id="gameName" name="gameName" required>
         </div>
     </form>
-    
-    <!-- Explicit upload button -->
-    <button id="uploadButton" class="btn">Upload</button>
 
-    <!-- Include Dropzone.js -->
-    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/min/dropzone.min.js"></script>
-    <script>
-        // Attach a click event listener to the explicit upload button
-        document.getElementById('uploadButton').addEventListener('click', function () {
-            // Trigger Dropzone's processQueue method to initiate the upload
-            if (Dropzone.instances.length > 0) {
-                Dropzone.instances[0].processQueue();
-            }
-        });
-    </script>
+    <button type="button" class="btn btn-info" id="submit-all">Upload</button>
+
 </body>
+
 </html>
+
+<script>
+
+    $(document).ready(function () {
+
+        Dropzone.options.dropzoneFrom = {
+            maxFilesize: 1000,
+            addRemoveLinks: true,
+
+            autoProcessQueue: false,
+            parallelUploads: 10,
+            acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+            init: function () {
+                var submitButton = document.querySelector('#submit-all');
+                myDropzone = this;
+                submitButton.addEventListener("click", function () {
+                    myDropzone.processQueue();
+                });
+
+            },
+        };
+
+    });
+</script>

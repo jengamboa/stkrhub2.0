@@ -1,41 +1,48 @@
 <?php
-session_start();
-include 'connection.php'; // Include your database connection script
+// upload.php
+include 'connection.php';
 
-// Ensure the session's database connection is available
-if (!isset($_SESSION['db_connection'])) {
-    die("Database connection not established.");
+$folder_name = 'upload/';
+
+// Get the game name from the form
+$game_name = $_POST['gameName'];
+
+// Insert game name into the game table
+$query = "INSERT INTO game (game_name) VALUES (?)";
+$stmt = mysqli_prepare($_SESSION['db_connection'], $query);
+
+if ($stmt) {
+    mysqli_stmt_bind_param($stmt, "s", $game_name);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+} else {
+    echo "Database error: " . mysqli_error($_SESSION['db_connection']);
 }
 
-$conn = $_SESSION['db_connection'];
+if (!empty($_FILES)) {
+    $original_filename = $_FILES['file']['name'];
+    $file_extension = pathinfo($original_filename, PATHINFO_EXTENSION);
 
-// Define the directory to store uploaded files
-$uploadDir = 'uploads/';
+    // Generate a unique filename
+    $unique_filename = uniqid() . '_' . $original_filename;
 
-// Prepare the insert statement
-$insertQuery = "INSERT INTO uploads (filename, filepath) VALUES (?, ?)";
+    $temp_file = $_FILES['file']['tmp_name'];
+    $location = $folder_name . $unique_filename;
 
-// Check if files were uploaded
-if (!empty($_FILES['file']['name'])) {
-    $files = $_FILES['file'];
+    // Move the uploaded file to the desired location
+    move_uploaded_file($temp_file, $location);
 
-    // Loop through uploaded files
-    foreach ($files['tmp_name'] as $index => $tmpName) {
-        $filename = basename($files['name'][$index]);
-        $filePath = $uploadDir . $filename;
+    // Insert file information into the uploaded_files table
+    $query = "INSERT INTO uploaded_files (original_filename, unique_filename, upload_date) VALUES (?, ?, NOW())";
+    $stmt = mysqli_prepare($_SESSION['db_connection'], $query);
 
-        // Move uploaded file to the desired directory
-        move_uploaded_file($tmpName, $filePath);
-
-        // Insert file information into the database
-        $stmt = mysqli_prepare($conn, $insertQuery);
-        mysqli_stmt_bind_param($stmt, "ss", $filename, $filePath);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "ss", $original_filename, $unique_filename);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+    } else {
+        echo "Database error: " . mysqli_error($_SESSION['db_connection']);
     }
-
-    echo "Files uploaded and inserted into the database.";
-} else {
-    echo "No files uploaded.";
 }
-?>
+
+
