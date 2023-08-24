@@ -1,7 +1,17 @@
 <?php
 include 'connection.php'; // Include your database connection
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    // $built_game_id = $_POST['built_game_id'];
+    // $creator_id = $_POST['creator_id'];
+    // $game_name = $_POST['game_name'];
+    // $edition = $_POST['edition'];
+    // $published_date = date('Y-m-d'); // Current date
+    // $age_id = $_POST['age'];
+    // $short_description = $_POST['short_description'];
+    // $long_description = $_POST['long_description'];
+    // $website = $_POST['website'];
+
     $built_game_id = $_POST['built_game_id'];
     $creator_id = $_POST['creator_id'];
     $game_name = $_POST['game_name'];
@@ -13,8 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $website = $_POST['website'];
 
     // Handle file upload for game logo
-    $targetDirectory = 'uploads/';
-    $logoPath = $targetDirectory . basename($_FILES['logo']['name']);
+    $targetDirectory = 'uploads/published_built_games/logos/';
+    $logoFileName = uniqid() . '_' . basename($_FILES['logo']['name']); // Generate a unique filename
+    $logoPath = $targetDirectory . $logoFileName;
+
 
     if (move_uploaded_file($_FILES['logo']['tmp_name'], $logoPath)) {
         // Get player counts and playtimes
@@ -33,34 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
             echo "Error: " . mysqli_error($conn);
         }
 
-        // Handle multiple file upload for graphics
-        if (isset($_FILES['graphics']) && count($_FILES['graphics']['tmp_name']) > 0) {
-            // Array to store uploaded graphics paths
-            $graphicsPaths = [];
-
-            foreach ($_FILES['graphics']['tmp_name'] as $key => $tmp_name) {
-                $graphicsName = $_FILES['graphics']['name'][$key];
-                $graphicsPath = $targetDirectory . basename($graphicsName);
-
-                if (move_uploaded_file($tmp_name, $graphicsPath)) {
-                    $graphicsPaths[] = $graphicsPath;
-                } else {
-                    echo "File upload for graphics failed.";
-                }
-            }
-
-            // Insert graphics paths into the published_graphics table
-            foreach ($graphicsPaths as $graphicsPath) {
-                $insertGraphicsQuery = "INSERT INTO published_graphics (built_game_id, graphics_path) 
-                                        VALUES ('$built_game_id', '$graphicsPath')";
-
-                if (mysqli_query($conn, $insertGraphicsQuery)) {
-                    echo "Graphics uploaded and inserted successfully!";
-                } else {
-                    echo "Error inserting graphics: " . mysqli_error($conn);
-                }
-            }
-        }
 
     } else {
         echo "File upload failed.";

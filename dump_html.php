@@ -30,14 +30,20 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Game Page</title>
+    <title>Simple Form with Dropzone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
+
 </head>
 
 <body>
-    <form method="post" action="dump_process.php" enctype="multipart/form-data">
+    <!-- <form method="post" action="dump_process.php" enctype="multipart/form-data"> -->
+    <!-- <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data"> -->
+    <form id="my-form" action="dump_process.php" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
-        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>"> <!-- Add this line -->
+        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>">
+        <!-- Add this line -->
 
         <!-- Rest of your form inputs -->
 
@@ -85,18 +91,40 @@ if (mysqli_num_rows($result) > 0) {
         <label for="website">Website:</label><br>
         <input type="url" id="website" name="website"><br>
 
-        logo
         <label for="logo">Game Logo:</label><br>
         <input type="file" id="logo" name="logo" required><br>
 
-        
+        <label for="graphics">Game Graphics:</label><br>
 
+        <!-- Dropzone.js File Upload -->
+        <div id="file-upload" class="dropzone"></div><br><br>
 
-
-        <button type="submit" name="update">Publish Game</button>
+        <button type="submit" id="submit-button" name="submit">Submit</button>
     </form>
 
+    <!-- Include Dropzone.js script -->
+    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
+    <!-- Initialize Dropzone -->
+    <script>
+        var myDropzone = new Dropzone("#file-upload", {
+            paramName: "file", // Name of the uploaded file parameter
+            url: "dump_process_dropzone.php", // URL to handle file uploads
+            autoProcessQueue: false, // Don't process files automatically
+            addRemoveLinks: true,
+            parallelUploads: 10,
+        });
 
+        // Prevent the default form submission and start Dropzone file processing
+        document.getElementById("submit-button").addEventListener("click", function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            myDropzone.processQueue(); // Process the file queue
+        });
+
+        // When all files are uploaded, submit the form to process_main.php
+        myDropzone.on("queuecomplete", function () {
+            document.getElementById("my-form").submit();
+        });
+    </script>
 </body>
 
 </html>

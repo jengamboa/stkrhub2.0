@@ -30,8 +30,9 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Game Page</title>
-
+    <title>Simple Form with Dropzone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
 
 </head>
 
@@ -93,16 +94,42 @@ if (mysqli_num_rows($result) > 0) {
 
         <label for="graphics">Game Graphics:</label><br>
 
-        <input type="file" id="graphics" class="filepond" name="graphics[]" multiple data-max-file-size="3MB"
-            data-max-files="3" /><br>
-
-        <input type="file" name="graphics[]" id="imagesFilepond" class="filepond" multiple data-allow-reorder="true"
-            data-max-file-size="30MB"><br>
+        <!-- Dropzone form -->
+        <div class="dropzone" id="my-dropzone"></div>
 
         <button type="submit" name="update">Publish Game</button>
     </form>
 
+    <script>
+        // Configure Dropzone
+        Dropzone.options.myDropzone = {
+            url: 'process_dropzone_publish.php', // Specify the URL to handle file uploads
+            paramName: 'file', // Name of the file input field
+            autoProcessQueue: false, // Prevent Dropzone from uploading files immediately
+            parallelUploads: 10, // Number of parallel upload
+            maxFilesize: 256, // Maximum size of
+            addRemoveLinks: true,
 
+            init: function () {
+                var combinedSubmitButton = document.querySelector("#combined-submit");
+                var myDropzone = this;
+
+                combinedSubmitButton.addEventListener("click", function (event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    if (myDropzone.getQueuedFiles().length > 0) {
+                        // If there are files in the queue, upload them
+                        myDropzone.processQueue();
+                    } else {
+                        // If no files to upload, submit the main form directly
+                        document.querySelector("#main-form").submit();
+                    }
+                });
+
+                // Other Dropzone callbacks...
+            }
+        };
+    </script>
 </body>
 
 </html>
