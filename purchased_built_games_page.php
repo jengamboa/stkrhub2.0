@@ -34,8 +34,14 @@ while ($game = mysqli_fetch_assoc($result)) {
     echo 'Price: $' . $game['price'] . '<br>';
 
     if ($game['is_published'] == 0) {
+<<<<<<< HEAD
         echo '<a href="dump_html.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
         // echo '<a href="edit_game_page.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
+=======
+        // echo '<a href="dump_html.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
+        // echo '<a href="edit_game_page.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
+        echo '<a href="dump_html.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
+>>>>>>> bf1c23e601a3ea6e431c94a3a71dc2f602e44277
     } else {
         echo 'Already Published';
     }
