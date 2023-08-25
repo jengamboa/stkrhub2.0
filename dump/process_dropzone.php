@@ -1,5 +1,4 @@
 <?php
-
 // Include the existing connection.php to get the database connection
 require_once 'connection.php';
 
@@ -11,8 +10,9 @@ if (!file_exists($targetDir)) {
     mkdir($targetDir, 0777, true);
 }
 
-$userId = 123; // Replace with the actual user ID
-$builtGameId = 456; // Replace with the actual built game ID
+// Get the user ID and built game ID from the form
+$userId = isset($_POST["user_id"]) ? intval($_POST["user_id"]) : 0;
+$builtGameId = isset($_POST["built_game_id"]) ? intval($_POST["built_game_id"]) : 0;
 
 // Get the original file name
 $originalFileName = $_FILES["file"]["name"];
@@ -26,7 +26,6 @@ $targetPath = $targetDir . $newFileName;
 // Move the temporary file to the target path
 if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
     // Insert uploaded file information into the database
-    
 
     $uniqueFileName = $newFileName; // Store the unique filename
 
@@ -40,9 +39,7 @@ if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
     }
 } else {
     echo "Error uploading $originalFileName.<br>";
-
-    
 }
-header("Location: process_main.php");
 
+header("Location: process_main.php");
 ?>

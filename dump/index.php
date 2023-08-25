@@ -11,16 +11,20 @@
   <h2>Simple Form with Dropzone</h2>
 
   <form id="my-form" action="process_main.php" method="post" enctype="multipart/form-data">
+
     <!-- Name Input -->
     <label for="name">Name:</label>
-    
     <input type="text" id="name" name="name" required><br><br>
 
     <!-- Dropzone.js File Upload -->
-    <div id="file-upload" class="dropzone"></div><br><br>
+    <div id="file-upload" class="dropzone">
+      <input type="hidden" name="user_id" value="123">
+      <input type="hidden" name="built_game_id" value="456">
+    </div><br><br>
 
     <button type="submit" id="submit-button">Submit</button>
   </form>
+
 
   <!-- Include Dropzone.js script -->
   <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
