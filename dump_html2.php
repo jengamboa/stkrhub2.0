@@ -114,28 +114,7 @@
     </script>
 
     <script>
-        window.addEventListener("DOMContentLoaded", function () {
-            // initializing file pond js 
-            FilePond.registerPlugin(
-                FilePondPluginImagePreview,
-                FilePondPluginFileValidateSize,
-                FilePondPluginFileValidateType
-            );
 
-            // Select the file input and use 
-            // create() to turn it into a pond
-            FilePond.create(
-                document.querySelector('#imagesFilepond'),
-                {
-                    name: 'filepond',
-                    maxFiles: 5,
-                    allowBrowse: true,
-                    
-
-                }
-            );
-
-        })
     </script>
 </body>
 

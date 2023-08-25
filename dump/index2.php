@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    
+
     <h2>Simple Form with Dropzone</h2>
 
     <form action="process_form.php" method="post" enctype="multipart/form-data">
