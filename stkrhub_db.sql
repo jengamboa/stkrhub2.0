@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2023 at 05:20 AM
+-- Generation Time: Aug 25, 2023 at 05:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -50,7 +50,9 @@ INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component
 (317, 34, 3, 0, NULL, 21, 3, '7x7', 3),
 (318, NULL, 3, 0, NULL, 22, 1, '7x7', 3),
 (319, 38, 3, 0, NULL, 7, 3, '7x7', 3),
-(320, 38, 1, 1, 'uploads/AUTHORS', 25, NULL, '7x7', 3);
+(320, 38, 1, 1, 'uploads/AUTHORS', 25, NULL, '7x7', 3),
+(324, 35, 1, 0, '', 2, NULL, '7x7', 4),
+(325, 37, 2, 0, '', 3, NULL, '7x7', 4);
 
 -- --------------------------------------------------------
 
@@ -126,7 +128,9 @@ INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `c
 (36, 36, 'hehe', 'hehe', 3, '2023-08-15 06:51:35', 0, 0, 1, 1, 1, 0.00),
 (37, 38, 'dice game', 'action', 3, '2023-08-19 13:31:19', 0, 0, 0, 0, 0, 7.00),
 (38, 38, 'dice game', 'action', 3, '2023-08-19 13:37:47', 0, 0, 0, 0, 0, 19.00),
-(39, 38, 'dice game', 'action', 3, '2023-08-19 14:35:48', 0, 0, 1, 1, 0, 19.00);
+(39, 38, 'dice game', 'action', 3, '2023-08-19 14:35:48', 0, 0, 1, 1, 0, 19.00),
+(40, 35, 'jeric', 'asd', 4, '2023-08-25 22:01:40', 0, 0, 1, 1, 1, 24.00),
+(41, 37, 'hehe', 'hehe', 4, '2023-08-25 22:17:18', 0, 0, 1, 1, 1, 33.00);
 
 -- --------------------------------------------------------
 
@@ -163,7 +167,9 @@ INSERT INTO `built_games_added_game_components` (`added_component_id`, `built_ga
 (245, 38, 38, 3, 0, '', 7, 3, '7x7'),
 (246, 38, 38, 1, 1, 'uploads/AUTHORS', 25, 0, '7x7'),
 (247, 39, 38, 3, 0, '', 7, 3, '7x7'),
-(248, 39, 38, 1, 1, 'uploads/AUTHORS', 25, 0, '7x7');
+(248, 39, 38, 1, 1, 'uploads/AUTHORS', 25, 0, '7x7'),
+(249, 40, 35, 1, 0, '', 2, 0, '7x7'),
+(250, 41, 37, 2, 0, '', 3, 0, '7x7');
 
 -- --------------------------------------------------------
 
@@ -194,7 +200,9 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `game_id`, `built_game_id`, `added_com
 (34, 3, 34, 34, NULL, 1, 23.00, 0),
 (39, 3, 34, 34, NULL, 2, 23.00, 0),
 (51, 4, 34, 34, NULL, 1, 23.00, 1),
-(77, 3, 38, 39, NULL, 1, 19.00, 0);
+(77, 3, 38, 39, NULL, 1, 19.00, 0),
+(78, 4, 35, 35, NULL, 1, 0.00, 1),
+(79, 4, 35, 40, NULL, 2, 24.00, 0);
 
 -- --------------------------------------------------------
 
@@ -262,6 +270,34 @@ INSERT INTO `component_templates` (`template_id`, `component_id`, `template_name
 (1, 1, 'side 1', 'assets\\component_templates/template1.bin'),
 (2, 1, 'side 2', 'assets\\component_templates/template2.png'),
 (3, 2, 'side 3', 'assets\\component_templates/template3.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dropzone_published_uploads`
+--
+
+CREATE TABLE `dropzone_published_uploads` (
+  `upload_id` int(11) NOT NULL,
+  `creator_id` int(11) NOT NULL,
+  `built_game_id` int(11) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `unique_file_name` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dropzone_published_uploads`
+--
+
+INSERT INTO `dropzone_published_uploads` (`upload_id`, `creator_id`, `built_game_id`, `file_name`, `file_path`, `unique_file_name`, `date_added`) VALUES
+(1, 123, 456, 'peakpx.jpg', 'uploads/64e7720f7366a_peakpx.jpg', '64e7720f7366a_peakpx.jpg', '2023-08-24 23:06:55'),
+(2, 123, 456, 'pxfuel.jpg', 'uploads/64e772102b574_pxfuel.jpg', '64e772102b574_pxfuel.jpg', '2023-08-24 23:06:56'),
+(3, 123, 456, '364230412_107425115781751_3994915381724451657_n.jpg', 'uploads/64e7725501e9a_364230412_107425115781751_3994915381724451657_n.jpg', '64e7725501e9a_364230412_107425115781751_3994915381724451657_n.jpg', '2023-08-24 23:08:05'),
+(4, 123, 456, '364230412_107425115781751_3994915381724451657_n.jpg', 'uploads/64e7727326fa4_364230412_107425115781751_3994915381724451657_n.jpg', '64e7727326fa4_364230412_107425115781751_3994915381724451657_n.jpg', '2023-08-24 23:08:35'),
+(5, 123, 456, 'peakpx.jpg', 'uploads/64e77290d7095_peakpx.jpg', '64e77290d7095_peakpx.jpg', '2023-08-24 23:09:04'),
+(6, 123, 456, 'desktop-1920x1080.jpg', 'uploads/64e77385847d3_desktop-1920x1080.jpg', '64e77385847d3_desktop-1920x1080.jpg', '2023-08-24 23:13:09');
 
 -- --------------------------------------------------------
 
@@ -361,7 +397,8 @@ INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `built_game_id`, `added_
 (21, 33, 3, 36, NULL, 1, 0.00, 1, 0, 0, 0, 0, 0, '2023-08-15 06:56:33'),
 (22, 34, 3, 34, NULL, 1, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-15 23:17:51'),
 (23, 39, 3, 34, NULL, 2, 23.00, 1, 0, 0, 0, 0, 0, '2023-08-19 14:34:42'),
-(24, 77, 3, 39, NULL, 1, 19.00, 1, 0, 0, 0, 0, 0, '2023-08-19 14:36:29');
+(24, 77, 3, 39, NULL, 1, 19.00, 1, 0, 0, 0, 0, 0, '2023-08-19 14:36:29'),
+(25, 79, 4, 40, NULL, 2, 24.00, 1, 0, 0, 0, 0, 0, '2023-08-25 22:03:42');
 
 -- --------------------------------------------------------
 
@@ -380,7 +417,7 @@ CREATE TABLE `published_built_games` (
   `short_description` text DEFAULT NULL,
   `long_description` text DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
-  `logo_path` varchar(255) DEFAULT NULL,
+  `logo_path` varchar(255) NOT NULL,
   `min_players` int(11) DEFAULT NULL,
   `max_players` int(11) DEFAULT NULL,
   `min_playtime` int(11) DEFAULT NULL,
@@ -392,39 +429,65 @@ CREATE TABLE `published_built_games` (
 --
 
 INSERT INTO `published_built_games` (`published_game_id`, `built_game_id`, `game_name`, `edition`, `published_date`, `creator_id`, `age_id`, `short_description`, `long_description`, `website`, `logo_path`, `min_players`, `max_players`, `min_playtime`, `max_playtime`) VALUES
-(30, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
-(31, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
-(32, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
-(33, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', NULL, NULL, NULL, NULL),
-(34, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123),
-(35, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123),
-(36, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123),
-(37, 39, 'hihi', 'hihih', '2023-08-21 00:00:00', 3, 3, '123', '123', 'https://facebook.com', 'uploads/WIN_20230813_13_50_22_Pro.jpg', 123, 123, 123, 123);
+(50, 39, 'f', 'f', '2023-08-24 00:00:00', 3, 1, 'f', 'f', 'https://facebook.com', 'uploads/pxfuel.jpg', 12, 123, 1233, 122),
+(51, 39, 'f', 'f', '2023-08-24 00:00:00', 3, 1, 'f', 'f', 'https://facebook.com', 'uploads/pxfuel.jpg', 12, 123, 1233, 122),
+(52, 39, 'f', 'f', '2023-08-24 00:00:00', 3, 1, 'f', 'f', 'https://facebook.com', 'uploads/peakpx.jpg', 12, 123, 1233, 122),
+(53, 39, 'df', 'df', '2023-08-24 00:00:00', 3, 1, '9', '0', 'https://facebook.com', 'uploads/64e76fa2397c0_desktop-1920x1080.jpg', 123, 4, 5, 7),
+(54, 39, 'df', 'df', '2023-08-24 00:00:00', 3, 1, '9', '0', 'https://facebook.com', 'uploads/published_built_games/logos/64e76ff3d6dd3_desktop-1920x1080.jpg', 123, 4, 5, 7),
+(55, 39, '123', '345', '2023-08-25 00:00:00', 3, 1, 'gg', 'g', 'https://facebook.com', 'uploads/364230412_107425115781751_3994915381724451657_n.jpg', 567, 789, 90, 5),
+(56, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/desktop-1920x1080.jpg', 235, 4567, 7, 78),
+(57, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/published_built_games/logos/desktop-1920x1080.jpg', 235, 4567, 7, 78),
+(58, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/published_built_games/logos/desktop-1920x1080.jpg', 235, 4567, 7, 78),
+(59, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/published_built_games/logos/desktop-1920x1080.jpg', 235, 4567, 7, 78),
+(60, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/published_built_games/logos/64e8a84581bde_1692969029.jpg', 235, 4567, 7, 78),
+(61, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/published_built_games/logos/64e8a853f0a9e_1692969043.jpg', 235, 4567, 7, 78),
+(62, 39, 'f', '123', '2023-08-25 00:00:00', 3, 1, '8', '9', 'https://facebook.com', 'uploads/published_built_games/logos/64e8a85998761_1692969049.jpg', 235, 4567, 7, 78),
+(63, 39, '7', '567', '2023-08-25 00:00:00', 3, 1, '13', '134', 'https://facebook.com', 'uploads/published_built_games/logos/64e8ab6960c83_1692969833.jpg', 356, 123, 134, 134),
+(64, 39, '7', '567', '2023-08-25 00:00:00', 3, 1, '13', '134', 'https://facebook.com', 'uploads/published_built_games/logos/64e8abb972fe3_1692969913.jpg', 356, 123, 134, 134),
+(65, 39, 'f', 'asd', '2023-08-25 00:00:00', 3, 1, 'dsvg', 'dfs', 'https://facebook.com', 'uploads/published_built_games/logos/64e8ac3497bf5_1692970036.jpg', 34, 2543, 234, 24),
+(66, 39, 'afs', 'asf', '2023-08-25 00:00:00', 3, 1, 'df', 'df', 'https://facebook.com', 'uploads/published_built_games/logos/64e8acc3b60fd_1692970179.jpg', 4, 12, 124, 124),
+(67, 39, 'asd', 'asd', '2023-08-25 00:00:00', 3, 1, 'asdf', 'asd', 'https://facebook.com', 'uploads/published_built_games/logos/64e8ad86c2ebe_1692970374.jpg', 777, 888, 999, 14),
+(68, 40, 'jericjerickl', 'jericjerickl', '2023-08-25 00:00:00', 4, 4, 'jericjerickl', 'jericjerickl', 'https://facebook.com', 'uploads/published_built_games/logos/64e8b4f0b1e43_1692972272.jpg', 777, 777, 777, 777),
+(69, 40, 'asf', 'asf', '2023-08-25 00:00:00', 4, 1, '24', '24', 'https://facebook.com', 'uploads/published_built_games/logos/64e8b6e12af48_1692972769.jpg', 41, 124, 124, 124),
+(70, 41, 'HEHEEHE', 'hehee first edition', '2023-08-25 00:00:00', 4, 1, 'dsf', 'sdf', 'https://facebook.com', 'uploads/published_built_games/logos/64e8b82dc6b04_1692973101.jpg', 123, 123, 123, 123),
+(71, 41, 'HIHIHIHIH', 'HIHIHI edition', '2023-08-25 00:00:00', 4, 1, '12', '123', 'https://facebook.com', 'uploads/published_built_games/logos/64e8b889a2fde_1692973193.jpg', 12, 123, 12, 123),
+(72, 41, 'HIHIHIHIH', 'HIHIHI edition', '2023-08-25 00:00:00', 4, 1, '12', '123', 'https://facebook.com', 'uploads/published_built_games/logos/64e8b9992422f_1692973465.jpg', 12, 123, 12, 123);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `published_game_graphics`
+-- Table structure for table `published_multiple_files`
 --
 
-CREATE TABLE `published_game_graphics` (
-  `graphics_id` int(11) NOT NULL,
-  `published_game_id` int(11) DEFAULT NULL,
-  `media_path` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `uploads`
---
-
-CREATE TABLE `uploads` (
+CREATE TABLE `published_multiple_files` (
   `id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_path` varchar(255) NOT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `creator_id` int(11) NOT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `published_game_id` int(11) DEFAULT NULL,
+  `built_game_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `published_multiple_files`
+--
+
+INSERT INTO `published_multiple_files` (`id`, `file_name`, `file_path`, `creator_id`, `upload_date`, `published_game_id`, `built_game_id`) VALUES
+(1, '64e8ad86cbbc1_364230412_107425115781751_3994915381724451657_n.jpg', 'uploads/64e8ad86cbbc1_364230412_107425115781751_3994915381724451657_n.jpg', 3, '2023-08-25 13:32:54', NULL, NULL),
+(2, '64e8ad86dcd4e_pxfuel.jpg', 'uploads/64e8ad86dcd4e_pxfuel.jpg', 3, '2023-08-25 13:32:54', NULL, NULL),
+(3, '64e8b4f113ff6_pxfuel.jpg', 'uploads/64e8b4f113ff6_pxfuel.jpg', 4, '2023-08-25 14:04:33', NULL, NULL),
+(4, '64e8b4f128a26_peakpx.jpg', 'uploads/64e8b4f128a26_peakpx.jpg', 4, '2023-08-25 14:04:33', NULL, NULL),
+(5, '64e8b4f134bcb_desktop-1920x1080.jpg', 'uploads/64e8b4f134bcb_desktop-1920x1080.jpg', 4, '2023-08-25 14:04:33', NULL, NULL),
+(6, '64e8b6e1410f2_pxfuel.jpg', 'uploads/64e8b6e1410f2_pxfuel.jpg', 4, '2023-08-25 14:12:49', NULL, NULL),
+(7, '64e8b6e14a175_peakpx.jpg', 'uploads/64e8b6e14a175_peakpx.jpg', 4, '2023-08-25 14:12:49', NULL, NULL),
+(8, '64e8b6e15e536_desktop-1920x1080.jpg', 'uploads/64e8b6e15e536_desktop-1920x1080.jpg', 4, '2023-08-25 14:12:49', NULL, NULL),
+(9, '64e8b889aa42e_pxfuel.jpg', 'uploads/64e8b889aa42e_pxfuel.jpg', 4, '2023-08-25 14:19:53', 0, 41),
+(10, '64e8b889b7427_peakpx.jpg', 'uploads/64e8b889b7427_peakpx.jpg', 4, '2023-08-25 14:19:53', 0, 41),
+(11, '64e8b889c56c0_desktop-1920x1080.jpg', 'uploads/64e8b889c56c0_desktop-1920x1080.jpg', 4, '2023-08-25 14:19:53', 0, 41),
+(12, '64e8b9992f6ce_pxfuel.jpg', 'uploads/64e8b9992f6ce_pxfuel.jpg', 4, '2023-08-25 14:24:25', 72, 41),
+(13, '64e8b99938776_peakpx.jpg', 'uploads/64e8b99938776_peakpx.jpg', 4, '2023-08-25 14:24:25', 72, 41),
+(14, '64e8b999438f0_desktop-1920x1080.jpg', 'uploads/64e8b999438f0_desktop-1920x1080.jpg', 4, '2023-08-25 14:24:25', 72, 41);
 
 -- --------------------------------------------------------
 
@@ -531,7 +594,13 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (59, 3, 'login', '2023-08-16 13:26:54'),
 (60, 3, 'login', '2023-08-17 13:48:15'),
 (61, 3, 'login', '2023-08-19 04:41:59'),
-(62, 3, 'login', '2023-08-21 13:09:20');
+(62, 3, 'login', '2023-08-21 13:09:20'),
+(63, 3, 'login', '2023-08-23 06:53:31'),
+(64, 3, 'login', '2023-08-23 12:32:19'),
+(65, 3, 'login', '2023-08-24 12:50:36'),
+(66, 3, 'login', '2023-08-24 14:35:32'),
+(67, 3, 'login', '2023-08-25 12:53:11'),
+(68, 4, 'login', '2023-08-25 13:44:10');
 
 -- --------------------------------------------------------
 
@@ -623,6 +692,12 @@ ALTER TABLE `component_templates`
   ADD KEY `component_id` (`component_id`);
 
 --
+-- Indexes for table `dropzone_published_uploads`
+--
+ALTER TABLE `dropzone_published_uploads`
+  ADD PRIMARY KEY (`upload_id`);
+
+--
 -- Indexes for table `games`
 --
 ALTER TABLE `games`
@@ -653,17 +728,11 @@ ALTER TABLE `published_built_games`
   ADD KEY `age_id` (`age_id`);
 
 --
--- Indexes for table `published_game_graphics`
+-- Indexes for table `published_multiple_files`
 --
-ALTER TABLE `published_game_graphics`
-  ADD PRIMARY KEY (`graphics_id`),
-  ADD KEY `published_game_id` (`published_game_id`);
-
---
--- Indexes for table `uploads`
---
-ALTER TABLE `uploads`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `published_multiple_files`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `file_name` (`file_name`);
 
 --
 -- Indexes for table `users`
@@ -691,7 +760,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 
 --
 -- AUTO_INCREMENT for table `admin_review_response`
@@ -709,19 +778,19 @@ ALTER TABLE `age`
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
 --
 ALTER TABLE `built_games_added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `component_assets`
@@ -742,6 +811,12 @@ ALTER TABLE `component_templates`
   MODIFY `template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `dropzone_published_uploads`
+--
+ALTER TABLE `dropzone_published_uploads`
+  MODIFY `upload_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
@@ -757,25 +832,19 @@ ALTER TABLE `game_components`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
--- AUTO_INCREMENT for table `published_game_graphics`
+-- AUTO_INCREMENT for table `published_multiple_files`
 --
-ALTER TABLE `published_game_graphics`
-  MODIFY `graphics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `uploads`
---
-ALTER TABLE `uploads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `published_multiple_files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -787,7 +856,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
@@ -876,12 +945,6 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `published_built_games`
   ADD CONSTRAINT `published_built_games_ibfk_1` FOREIGN KEY (`age_id`) REFERENCES `age` (`age_id`);
-
---
--- Constraints for table `published_game_graphics`
---
-ALTER TABLE `published_game_graphics`
-  ADD CONSTRAINT `published_game_graphics_ibfk_1` FOREIGN KEY (`published_game_id`) REFERENCES `published_built_games` (`published_game_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
