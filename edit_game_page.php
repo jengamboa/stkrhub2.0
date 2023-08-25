@@ -91,10 +91,10 @@
 
         <!-- others -->
         <label for="short_description">Short Description:</label><br>
-        <textarea id="short_description" name="short_description"></textarea><br>
+        <textarea id="short_description" name="short_description" required></textarea><br>
 
         <label for="long_description">Long Description:</label><br>
-        <textarea id="long_description" name="long_description"></textarea><br>
+        <textarea id="long_description" name="long_description" required></textarea><br>
 
         <label for="website">Website:</label><br>
         <input type="url" id="website" name="website"><br>

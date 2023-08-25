@@ -9,6 +9,9 @@ USER:
 ☐ when building a game, input "build game name" (input error when built game name already exists)
 ☐ reponse will be at the same database table
 ☐ prices connect to quantity
+☐ price set
+☐ user profile feed (list of all published games)
+☐ published games (comments and stars and wishlist)
 
 cart:
     ☐ address
