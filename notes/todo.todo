@@ -8,6 +8,7 @@ USER:
 ☐ size at table create game
 ☐ when building a game, input "build game name" (input error when built game name already exists)
 ☐ reponse will be at the same database table
+☐ prices connect to quantity
 
 cart:
     ☐ address

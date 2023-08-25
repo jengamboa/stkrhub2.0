@@ -5,19 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Simple Form with Dropzone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
-
-=======
     <title>Sample File Pond Server Implementation</title>
+
     <!-- Filepond Css -->
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css">
-    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css">
->>>>>>> bf1c23e601a3ea6e431c94a3a71dc2f602e44277
+    <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -27,7 +18,7 @@
 
     $built_game_id = $_GET['built_game_id']; // Retrieve the built_game_id from the URL parameter
     
-    $query = "SELECT built_game_id, game_id, creator_id, price FROM built_games WHERE built_game_id = '$built_game_id'";
+    $query = "SELECT built_game_id, game_id, creator_id, price, is_published FROM built_games WHERE built_game_id = '$built_game_id'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
@@ -39,6 +30,15 @@
         echo '<p>Creator ID: ' . $gameInfo['creator_id'] . '</p>';
         echo '<p>Price: $' . $gameInfo['price'] . '</p>';
 
+        // Echo the value of the is_published column
+        echo '<p>Is Published: ' . ($gameInfo['is_published'] == 1 ? 'Yes' : 'No') . '</p>';
+
+        // Redirect if is_published is equal to 1
+        if ($gameInfo['is_published'] == 1) {
+            header("Location: purchased_built_games_page.php");
+            exit;
+        }
+
         // Display the rest of your form
         // ...
     } else {
@@ -46,12 +46,12 @@
     }
 
     ?>
-    <form method="post" action="dump_process.php" enctype="multipart/form-data">
-        
-        <!-- <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data"> -->
+    <!-- <form method="post" action="dump_process.php" enctype="multipart/form-data"> -->
+    <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data">
 
         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
-        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>"> <!-- Add this line -->
+        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>">
+        <!-- Add this line -->
 
         <!-- Rest of your form inputs -->
 
@@ -102,85 +102,26 @@
         <label for="logo">Game Logo:</label><br>
         <input type="file" id="logo" name="logo" required><br>
 
-        <label for="graphics">Game Graphics:</label><br>
-
-<<<<<<< HEAD
-        <!-- Dropzone form -->
-        <div class="dropzone" id="my-dropzone"></div>
-=======
-        <input type="file" name="graphics[]" id="imagesFilepond" class="filepond" multiple data-allow-reorder="true"
-            data-max-file-size="30MB"><br>
->>>>>>> bf1c23e601a3ea6e431c94a3a71dc2f602e44277
+        <input type="file" name="multiple_files[]" class="filepond">
 
         <button type="submit" name="update">Publish Game</button>
     </form>
 
+
+    <script src="https://unpkg.com/filepond@4.28.2/dist/filepond.min.js"></script>
     <script>
-        // Configure Dropzone
-        Dropzone.options.myDropzone = {
-            url: 'process_dropzone_publish.php', // Specify the URL to handle file uploads
-            paramName: 'file', // Name of the file input field
-            autoProcessQueue: false, // Prevent Dropzone from uploading files immediately
-            parallelUploads: 10, // Number of parallel upload
-            maxFilesize: 256, // Maximum size of
-            addRemoveLinks: true,
-
-<<<<<<< HEAD
-            init: function () {
-                var combinedSubmitButton = document.querySelector("#combined-submit");
-                var myDropzone = this;
-
-                combinedSubmitButton.addEventListener("click", function (event) {
-                    event.preventDefault(); // Prevent the default form submission
-
-                    if (myDropzone.getQueuedFiles().length > 0) {
-                        // If there are files in the queue, upload them
-                        myDropzone.processQueue();
-                    } else {
-                        // If no files to upload, submit the main form directly
-                        document.querySelector("#main-form").submit();
-                    }
-                });
-
-                // Other Dropzone callbacks...
-            }
-        };
-=======
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script>
-        window.addEventListener("DOMContentLoaded", function () {
-            // initializing file pond js 
-            FilePond.registerPlugin(
-                FilePondPluginImagePreview,
-                FilePondPluginImageExifOrientation,
-                FilePondPluginFileValidateSize,
-                FilePondPluginImageEdit,
-                FilePondPluginFileValidateType
-            );
-
-            // Select the file input and use 
-            // create() to turn it into a pond
-            FilePond.create(
-                document.querySelector('#imagesFilepond'),
-                {
-                    name: 'filepond',
-                    maxFiles: 5,
-                    allowBrowse: true,
-                    acceptedFileTypes: ['image/*'],
-
-                }
-            );
-
-        })
->>>>>>> bf1c23e601a3ea6e431c94a3a71dc2f602e44277
+        // Initialize FilePond with allowMultiple and maxFiles options
+        const inputElement = document.querySelector('.filepond');
+        FilePond.create(inputElement, {
+            allowMultiple: true,
+            maxFiles: 10,
+            allowReplace: true,
+            allowRemove: true,
+            required: true,
+            allowDrop: true,
+            allowBrowse: true,
+            storeAsFile: true,
+        });
     </script>
 </body>
 

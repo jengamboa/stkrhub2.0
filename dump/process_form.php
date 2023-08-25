@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert multiple files into the "published_multiple_files" table
-    $uploadDirectory = "uploads/"; // Create a directory to store uploaded files
+    $uploadDirectory = "uploads/published_built_games/multiple/"; // Create a directory to store uploaded files
     if (!is_dir($uploadDirectory)) {
         mkdir($uploadDirectory, 0755, true);
     }

@@ -35,10 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
 <body>
     <h2>Game Dashboard</h2>
 
-    <h3><?php echo $game['name']; ?></h3>
-    <p><?php echo $game['description']; ?></p>
-    <p>Category: <?php echo $game['category']; ?></p>
-    <p>Total Price: <?php echo calculateTotalPrice($game_id); ?></p>
+    <h3>
+        <?php echo $game['name']; ?>
+    </h3>
+    <p>
+        <?php echo $game['description']; ?>
+    </p>
+    <p>Category:
+        <?php echo $game['category']; ?>
+    </p>
+    <p>Total Price:
+        <?php echo calculateTotalPrice($game_id); ?>
+    </p>
 
     <h4>Added Components</h4>
     <table id="componentsTable" class="display">
@@ -56,11 +64,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
         <tbody>
             <?php while ($component = mysqli_fetch_assoc($result_components)) { ?>
                 <tr>
-                    <td><?php echo $component['component_name']; ?></td>
-                    <td><?php echo $component['price']; ?></td>
-                    <td><?php echo $component['category']; ?></td>
                     <td>
-                        <input type="number" class="quantity-input" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" value="<?php echo max(1, min(99, $component['quantity'])); ?>" min="1" max="99">
+                        <?php echo $component['component_name']; ?>
+                    </td>
+                    <td>
+                        <?php echo $component['price']; ?>
+                    </td>
+                    <td>
+                        <?php echo $component['category']; ?>
+                    </td>
+                    <td>
+                        <input type="number" class="quantity-input" data-gameid="<?php echo $game_id; ?>"
+                            data-componentid="<?php echo $component['added_component_id']; ?>"
+                            value="<?php echo max(1, min(99, $component['quantity'])); ?>" min="1" max="99">
                     </td>
 
                     <td class="info-cell">
@@ -86,7 +102,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
                     <td class="modify-cell">
                         <?php if ($component['custom_design_file_path']) { ?>
                             <!-- Add the Update Custom Design button -->
-                            <button class="update-design" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>" data-componentname="<?php echo $component['component_name']; ?>" data-componentprice="<?php echo $component['price']; ?>" data-componentcategory="<?php echo $component['category']; ?>" data-filepath="<?php echo $component['custom_design_file_path']; ?>" data-filename="<?php echo basename($component['custom_design_file_path']); ?>" data-gamename="<?php echo $game['name']; ?>" data-addedcomponentid="<?php echo $component['added_component_id']; ?>">Update Custom Design</button>
+                            <button class="update-design" data-gameid="<?php echo $game_id; ?>"
+                                data-componentid="<?php echo $component['added_component_id']; ?>"
+                                data-componentname="<?php echo $component['component_name']; ?>"
+                                data-componentprice="<?php echo $component['price']; ?>"
+                                data-componentcategory="<?php echo $component['category']; ?>"
+                                data-filepath="<?php echo $component['custom_design_file_path']; ?>"
+                                data-filename="<?php echo basename($component['custom_design_file_path']); ?>"
+                                data-gamename="<?php echo $game['name']; ?>"
+                                data-addedcomponentid="<?php echo $component['added_component_id']; ?>">Update Custom
+                                Design</button>
                         <?php } elseif ($component['color_id']) { ?>
                             <?php
                             // Retrieve the component_id and component_name
@@ -102,7 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
                             <div class="color-links">
                                 <!-- Echo out all available colors as clickable links -->
                                 <?php while ($color = mysqli_fetch_assoc($result_colors)) { ?>
-                                    <a class="color-link" href="#" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component_id; ?>" data-colorid="<?php echo $color['color_id']; ?>" data-addedcomponentid="<?php echo $added_component_id; ?>">
+                                    <a class="color-link" href="#" data-gameid="<?php echo $game_id; ?>"
+                                        data-componentid="<?php echo $component_id; ?>"
+                                        data-colorid="<?php echo $color['color_id']; ?>"
+                                        data-addedcomponentid="<?php echo $added_component_id; ?>">
                                         <?php echo $color['color_name']; ?>
                                     </a>
                                 <?php } ?>
@@ -111,7 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
                     </td>
 
                     <td>
-                        <button class="delete-component" data-gameid="<?php echo $game_id; ?>" data-componentid="<?php echo $component['added_component_id']; ?>">Delete</button>
+                        <button class="delete-component" data-gameid="<?php echo $game_id; ?>"
+                            data-componentid="<?php echo $component['added_component_id']; ?>">Delete</button>
                     </td>
                 </tr>
             <?php } ?>
@@ -126,11 +155,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
 
             // Handle color link clicks
-            $('.color-link').click(function(e) {
+            $('.color-link').click(function (e) {
                 e.preventDefault();
 
                 var game_id = $(this).data('gameid');
@@ -148,11 +177,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
                         color_id: color_id,
                         added_component_id: added_component_id
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // Handle the response if needed
                         console.log(response);
                     },
-                    error: function(error) {
+                    error: function (error) {
                         // Handle errors if needed
                         console.error(error);
                     }
@@ -161,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
 
 
             // Listen for update custom design button click
-            $('.update-design').click(function() {
+            $('.update-design').click(function () {
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
                 var component_name = $(this).data('componentname');
@@ -190,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
             $('#componentsTable').DataTable();
 
             // Listen for changes to quantity input
-            $('.quantity-input').change(function() {
+            $('.quantity-input').change(function () {
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
                 var quantity = $(this).val();
@@ -204,14 +233,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
                         added_component_id: component_id,
                         quantity: quantity
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                     }
                 });
             });
 
             // Listen for delete button click
-            $('.delete-component').click(function() {
+            $('.delete-component').click(function () {
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
 
@@ -223,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
                         game_id: game_id,
                         added_component_id: component_id
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                         // Reload the page after successful deletion
                         location.reload();
@@ -245,14 +274,14 @@ function calculateTotalPrice($game_id)
     $total_price = 0;
 
     // Retrieve the added game components for this game from the "added_game_components" table
-    $query_components = "SELECT gc.price FROM added_game_components agc
+    $query_components = "SELECT gc.price, agc.quantity FROM added_game_components agc
                         INNER JOIN game_components gc ON agc.component_id = gc.component_id
                         WHERE agc.game_id = '$game_id'";
     $result_components = mysqli_query($conn, $query_components);
 
-    // Calculate the total price by summing up the prices of all added components
+    // Calculate the total price by summing up the prices of all added components, considering quantity
     while ($component = mysqli_fetch_assoc($result_components)) {
-        $total_price += $component['price'];
+        $total_price += $component['price'] * $component['quantity'];
     }
 
     return $total_price;

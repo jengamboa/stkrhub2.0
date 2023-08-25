@@ -19,14 +19,14 @@ function calculateTotalPrice($game_id)
     $total_price = 0;
 
     // Retrieve the added game components for this game from the "added_game_components" table
-    $query_components = "SELECT gc.price FROM added_game_components agc
+    $query_components = "SELECT gc.price, agc.quantity FROM added_game_components agc
                         INNER JOIN game_components gc ON agc.component_id = gc.component_id
                         WHERE agc.game_id = '$game_id'";
     $result_components = mysqli_query($conn, $query_components);
 
-    // Calculate the total price by summing up the prices of all added components
+    // Calculate the total price by summing up the prices of all added components, considering quantity
     while ($component = mysqli_fetch_assoc($result_components)) {
-        $total_price += $component['price'];
+        $total_price += $component['price'] * $component['quantity'];
     }
 
     return $total_price;

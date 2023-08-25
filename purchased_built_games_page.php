@@ -13,8 +13,12 @@ echo '<a href="purchased_built_games_page.php">Purchased</a>';
 echo '<a href="published_built_games_page.php">Published</a>';
 echo '</div>';
 
-$query = "SELECT * FROM built_games WHERE is_purchased = 1";
+// Get the logged-in user's ID from the session
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT * FROM built_games WHERE is_purchased = 1 AND creator_id = $user_id";
 $result = mysqli_query($conn, $query);
+
 
 echo '<h2>Purchased Built Games</h2>';
 echo '<ul>';
@@ -36,8 +40,7 @@ while ($game = mysqli_fetch_assoc($result)) {
     if ($game['is_published'] == 0) {
 
         // echo '<a href="dump_html.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
-        // echo '<a href="edit_game_page.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
-        echo '<a href="dump_html.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
+        echo '<a href="edit_game_page.php?built_game_id=' . $game['built_game_id'] . '">Publish</a>';
     } else {
         echo 'Already Published';
     }
