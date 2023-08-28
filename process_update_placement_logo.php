@@ -6,31 +6,33 @@ if (isset($_GET['pending_published_game_id'])) {
     // Retrieve the "Pending Published Built Game ID" from the query parameters
     $pendingPublishedBuiltGameID = $_GET['pending_published_game_id'];
 
-    // Define the target directory for uploads
-    $uploadsDirectory = 'uploads/';
+    // Echo the value
+    echo "Pending Published Built Game ID: " . $pendingPublishedBuiltGameID;
 
-    // Ensure the directory exists
-    if (!is_dir($uploadsDirectory)) {
-        mkdir($uploadsDirectory, 0777, true);
+
+
+    // Define the target directory for file uploads
+    $targetDir = "uploads/";
+
+    // Create the target directory if it doesn't exist
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true);
     }
 
-    // Handle logo file upload
-    if (isset($_FILES['logo'])) {
-        $logoFileName = basename($_FILES['logo']['name']);
-        $logoFilePath = $uploadsDirectory . $logoFileName;
+    // Get the uploaded file information
+    $fileName = basename($_FILES["logo"]["name"]);
+    $targetPath = $targetDir . $fileName;
 
-        // Move uploaded logo to the uploads directory
-        if (move_uploaded_file($_FILES['logo']['tmp_name'], $logoFilePath)) {
-            echo "Logo uploaded successfully.<br>";
-
-            // Link the logo with the "Pending Published Built Game ID"
-            // ... Perform database update or processing here ...
-            echo "Logo linked to Pending Published Built Game ID: " . $pendingPublishedBuiltGameID;
-        } else {
-            echo "Error uploading logo.";
-        }
+    // Check if the file already exists
+    if (file_exists($targetPath)) {
+        echo "File already exists.";
     } else {
-        echo "Logo upload failed.";
+        // Move the uploaded file to the target directory
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
+            echo "File uploaded successfully.";
+        } else {
+            echo "Error uploading file.";
+        }
     }
 } else {
     echo "Pending Published Built Game ID not found in the URL.";

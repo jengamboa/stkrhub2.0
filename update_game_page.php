@@ -91,7 +91,6 @@
 
         <!-- Add the hidden input for Pending Published Built Game ID -->
         <input type="hidden" name="pending_published_game_id" value="<?= $gameInfo['pending_published_game_id'] ?>">
-        value="<?= $gameInfo['pending_published_game_id'] ?>">
 
         <!-- LOGO -->
         <label for="placement_logo">Placement Logo:</label><br>
