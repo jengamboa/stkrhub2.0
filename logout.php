@@ -16,6 +16,6 @@ if (isset($_SESSION['users_id'])) {
 // Clear the session and redirect to the login page
 session_unset();
 session_destroy();
-header("Location: login.php");
+header("Location: login_page.php");
 exit;
 ?>

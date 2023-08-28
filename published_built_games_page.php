@@ -2,6 +2,13 @@
 include 'connection.php';
 include 'html/header.html.php';
 
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to the login page or handle the unauthorized access as needed
+    header("Location: login_page.php"); // Change to your login page URL
+    exit();
+}
+
+
 echo '<div>';
 echo '<a href="create_game.php">Create Game</a>';
 echo '<a href="created_games_page.php">Created Games</a>';
@@ -12,6 +19,7 @@ echo '<a href="approved_built_games_page.php">Approved</a>';
 echo '<a href="purchased_built_games_page.php">Purchased</a>';
 echo '<a href="published_built_games_page.php">Published</a>';
 echo '</div>';
+
 
 $query = "SELECT * FROM published_built_games";
 $result = mysqli_query($conn, $query);

@@ -1,6 +1,13 @@
 <?php
 include 'connection.php';
 include 'html/header.html.php';
+
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to the login page or handle the unauthorized access as needed
+    header("Location: login_page.php"); // Change to your login page URL
+    exit();
+}
+
 ?>
 
 <div>

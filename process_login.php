@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insert_query = "INSERT INTO user_logs (user_id, event_type) VALUES ('$user_id', '$event_type')";
             mysqli_query($conn, $insert_query);
 
-            header("Location: user_dashboard.php");
+            header("Location: index.php");
             exit;
         }
     }
