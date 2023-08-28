@@ -1,0 +1,19 @@
+built_games_added_game_components
+
+orders table
+- cart id
+- user id
+- built_game_id
+- added_component_id
+- quantity
+- price
+
+- is_pending
+- is_ready
+- is_shipped
+- is_completed
+- is canceled 
+
+canceled
+- add to cart again (based on the built game id)
+

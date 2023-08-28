@@ -102,27 +102,66 @@
         <label for="logo">Game Logo:</label><br>
         <input type="file" id="logo" name="logo" required><br>
 
-        <input type="file" name="multiple_files[]" class="filepond">
+        <div id="fileContainer">
+            <!-- Multiple -->
+            <label for="order_position_1">File 1:</label>
+            <input type="file" id="order_position_1" name="multiple_files[]" class="filepond" required><br>
+
+            <label for="order_position_2">File 2:</label>
+            <input type="file" id="order_position_2" name="multiple_files[]" class="filepond" required><br>
+
+            <label for="order_position_3">File 3:</label>
+            <input type="file" id="order_position_3" name="multiple_files[]" class="filepond" required><br>
+
+            <label for="order_position_4">File 4:</label>
+            <input type="file" id="order_position_4" name="multiple_files[]" class="filepond"><br>
+
+            <label for="order_position_5">File 5:</label>
+            <input type="file" id="order_position_5" name="multiple_files[]" class="filepond"><br>
+
+            <label for="order_position_6">File 6:</label>
+            <input type="file" id="order_position_6" name="multiple_files[]" class="filepond"><br>
+
+            <label for="order_position_7">File 7:</label>
+            <input type="file" id="order_position_7" name="multiple_files[]" class="filepond"><br>
+
+            <label for="order_position_8">File 8:</label>
+            <input type="file" id="order_position_8" name="multiple_files[]" class="filepond"><br>
+
+            <label for="order_position_9">File 9:</label>
+            <input type="file" id="order_position_9" name="multiple_files[]" class="filepond"><br>
+
+            <label for="order_position_10">File 10:</label>
+            <input type="file" id="order_position_10" name="multiple_files[]" class="filepond"><br>
+        </div>
+
+        <!-- Repeat for files 3 to 10 -->
 
         <button type="submit" name="update">Publish Game</button>
-    </form>
 
+    </form>
 
     <script src="https://unpkg.com/filepond@4.28.2/dist/filepond.min.js"></script>
     <script>
-        // Initialize FilePond with allowMultiple and maxFiles options
-        const inputElement = document.querySelector('.filepond');
-        FilePond.create(inputElement, {
-            allowMultiple: true,
-            maxFiles: 10,
-            allowReplace: true,
-            allowRemove: true,
-            required: true,
-            allowDrop: true,
-            allowBrowse: true,
-            storeAsFile: true,
+
+        // Initialize FilePond for each individual input element
+        const inputElements = document.querySelectorAll('input[type="file"].filepond');
+        inputElements.forEach(inputElement => {
+            FilePond.create(inputElement, {
+                allowMultiple: false, // Each input handles a single file
+                allowReplace: true,
+                allowRemove: true,
+                allowBrowse: true,
+                storeAsFile: true,
+                // required: true,
+            });
         });
+
     </script>
+
+
+
+
 </body>
 
 </html>

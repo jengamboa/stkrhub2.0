@@ -2,16 +2,16 @@ ______________________________________________________________________________
 USER:
 ✔ marketplace pindot to game page @done (8/19/2023, 12:44:22 PM)
 ✔ built game > game component page table @done (8/19/2023, 1:47:06 PM)
-☐ dropzone.js multiple upload
+✔ dropzone.js multiple upload @done (8/26/2023, 10:33:35 PM)
 ☐ dropzone upload on component game
 ☐ edit (price (based on the database), uploads, etc)
 ☐ size at table create game
 ☐ when building a game, input "build game name" (input error when built game name already exists)
 ☐ reponse will be at the same database table
-☐ prices connect to quantity
+☐ prices connect to quantity at cart
 ☐ price set
 ☐ user profile feed (list of all published games)
-☐ published games (comments and stars and wishlist)
+☐ report table for plagiarism
 
 cart:
     ☐ address
@@ -20,9 +20,10 @@ cart:
 
 orders:
     ☐ tracking of orders
-    ☐ to ship, to deliver... (is_to ship...)
+    ☐ to ship, to deliver... (is_to ship...) n
 
 published built games page: 
+    ☐ published games (comments and stars and wishlist)
     ☐ # of buyers
     ☐ total profit
     ☐ total commision of STKR Hub
