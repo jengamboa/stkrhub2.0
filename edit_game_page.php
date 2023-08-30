@@ -102,6 +102,10 @@
         <label for="logo">Logo:</label><br>
         <input type="file" class="filepond" name="logo" accept="image/*" required>
 
+        <label for="game_images">Game Images:</label><br>
+        <input type="file" class="filepond" name="game_images[]" multiple required>
+
+
         <button type="submit" name="update">Publish Game</button>
 
     </form>
@@ -118,7 +122,22 @@
             storeAsFile: true,
             required: true
         });
+
+        // Initialize FilePond for the game images input
+        const imageInput = document.querySelector('input[name="game_images[]"]');
+        const imagePond = FilePond.create(imageInput, {
+            allowMultiple: true, // Allow multiple files to be uploaded
+            allowReplace: true,
+            allowRemove: true,
+            allowBrowse: true,
+            storeAsFile: true,
+            required: true,
+            maxFiles: 10,
+        });
+
     </script>
+
+
 
 
 

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     // Handle uploaded logo file
     $logo_path = 'uploads/';
     $logo_file = $_FILES['logo'];
-    $logo_filename = $logo_file['name'];
+    $logo_filename = uniqid() . '_' . $logo_file['name']; // Add unique ID to the filename
     $logo_path .= $logo_filename;
 
     if (move_uploaded_file($logo_file['tmp_name'], $logo_path)) {
@@ -30,6 +30,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
         $insertQuery = "INSERT INTO published_built_games (built_game_id, game_name, edition, published_date, creator_id, age_id, short_description, long_description, logo_path, website, min_players, max_players, min_playtime, max_playtime) VALUES ('$built_game_id', '$game_name', '$edition', '$published_date', '$creator_id', '$age_id', '$short_description', '$long_description', '$logo_path', '$website', '$min_players', '$max_players', '$min_playtime', '$max_playtime')";
 
         if (mysqli_query($conn, $insertQuery)) {
+            // Retrieve the generated published_built_game_id
+            $published_built_game_id = mysqli_insert_id($conn);
+
+            // Insert game images into the published_multiple_files table
+            $image_paths = []; // To store uploaded image paths
+            $image_files = $_FILES['game_images'];
+            $num_images = count($image_files['name']);
+
+            for ($i = 0; $i < $num_images; $i++) {
+                $image_filename = uniqid() . '_' . $image_files['name'][$i]; // Generate unique filename
+                $image_path = 'uploads/' . $image_filename;
+
+                if (move_uploaded_file($image_files['tmp_name'][$i], $image_path)) {
+                    // Image upload successful
+                    $image_paths[] = $image_path;
+                } else {
+                    // Image upload failed
+                    echo "Image upload failed.";
+                }
+            }
+
+            foreach ($image_paths as $image_path) {
+                $insertImageQuery = "INSERT INTO published_multiple_files (published_built_game_id, built_game_id, creator_id, file_path) VALUES ('$published_built_game_id', '$built_game_id', '$creator_id', '$image_path')";
+
+                if (mysqli_query($conn, $insertImageQuery)) {
+                    echo 'Image inserted successfully.';
+                } else {
+                    echo "Error inserting image: " . mysqli_error($conn);
+                }
+            }
             echo 'success';
         } else {
             echo "Error: " . mysqli_error($conn);
