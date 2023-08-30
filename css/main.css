@@ -121,7 +121,7 @@ body {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
-  color: #777777;
+  color: #a7a7a7;
   background: #fff; }
 
 html,
@@ -196,7 +196,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.5em; }
 
 .typography h1, .typography h2, .typography h3, .typography h4, .typography h5, .typography h6 {
-  color: #777777; }
+  color: #a7a7a7; }
 
 .button-area {
   background: #fff; }
@@ -463,7 +463,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.82em !important; }
     .ordered-list li span {
       font-weight: 300;
-      color: #777777; }
+      color: #a7a7a7; }
 
 .ordered-list-alpha li {
   margin-left: 30px;
@@ -473,7 +473,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.82em !important; }
   .ordered-list-alpha li span {
     font-weight: 300;
-    color: #777777; }
+    color: #a7a7a7; }
 
 .ordered-list-roman li {
   margin-left: 30px;
@@ -483,7 +483,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.82em !important; }
   .ordered-list-roman li span {
     font-weight: 300;
-    color: #777777; }
+    color: #a7a7a7; }
 
 .single-input {
   display: block;
@@ -3482,7 +3482,7 @@ label {
       margin: 0 5px; }
   .price-range-area .price {
     margin-right: 5px;
-    color: #777777; }
+    color: #a7a7a7; }
 
 /* Feature Product Area css
 ============================================================================================ */
@@ -3588,7 +3588,7 @@ label {
   .f_p_item h5 {
     margin-bottom: 0px;
     font-size: 18px;
-    color: #777777; }
+    color: #a7a7a7; }
   .f_p_item:hover .f_p_img .p_icon {
     right: 15px; }
 
@@ -3630,7 +3630,7 @@ label {
     .most_p_list .media .media-body h3 {
       font-size: 16px;
       font-weight: 500;
-      color: #777777;
+      color: #a7a7a7;
       margin-bottom: 0px; }
 
 /* End Feature Product Area css
@@ -3698,14 +3698,14 @@ label {
     font-size: 14px;
     font-family: "Roboto", sans-serif;
     font-weight: normal;
-    color: #777777;
+    color: #a7a7a7;
     position: relative; }
     .p_filter_widgets .list li a:before {
       content: "";
       height: 10px;
       width: 10px;
       border-radius: 50%;
-      border: 1px solid #777777;
+      border: 1px solid #a7a7a7;
       position: absolute;
       left: 0px;
       top: 5px;
@@ -3751,7 +3751,7 @@ label {
   display: inline-block;
   font-size: 14px;
   font-weight: normal;
-  color: #777777;
+  color: #a7a7a7;
   font-family: "Roboto", sans-serif;
   margin-top: 15px; }
 .p_filter_widgets .range_item input {
@@ -3759,25 +3759,25 @@ label {
   border: none;
   width: 100px;
   font-size: 14px;
-  color: #777777;
+  color: #a7a7a7;
   font-family: "Roboto", sans-serif;
   margin-top: 9px;
   padding-left: 3px; }
   .p_filter_widgets .range_item input.placeholder {
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-family: "Roboto", sans-serif; }
   .p_filter_widgets .range_item input:-moz-placeholder {
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-family: "Roboto", sans-serif; }
   .p_filter_widgets .range_item input::-moz-placeholder {
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-family: "Roboto", sans-serif; }
   .p_filter_widgets .range_item input::-webkit-input-placeholder {
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-family: "Roboto", sans-serif; }
 
 .product_top_bar {
@@ -3974,7 +3974,7 @@ label {
   margin-bottom: 24px; }
   .product_count label {
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-family: "Roboto", sans-serif;
     font-weight: normal;
     padding-right: 10px; }
@@ -4059,7 +4059,7 @@ label {
         color: #ffffff;
         margin-bottom: 0px;
         font-size: 14px;
-        color: #777777;
+        color: #a7a7a7;
         font-weight: normal; }
     .product_description_area .tab-content .total_rate .rating_list {
       margin-bottom: 30px; }
@@ -4071,7 +4071,7 @@ label {
         margin-bottom: 10px; }
       .product_description_area .tab-content .total_rate .rating_list .list li a {
         font-size: 14px;
-        color: #777777; }
+        color: #a7a7a7; }
         .product_description_area .tab-content .total_rate .rating_list .list li a i {
           color: #fbd600; }
       .product_description_area .tab-content .total_rate .rating_list .list li:nth-child a i:last-child {
@@ -4087,7 +4087,7 @@ label {
           font-size: 14px;
           font-family: "Roboto", sans-serif;
           font-weight: normal;
-          color: #777777;
+          color: #a7a7a7;
           margin-bottom: 0px;
           white-space: nowrap; }
       .product_description_area .tab-content .table tbody tr:first-child td {
@@ -4115,7 +4115,7 @@ label {
       .review_item .media .media-body h5 {
         font-size: 13px;
         font-weight: normal;
-        color: #777777; }
+        color: #a7a7a7; }
       .review_item .media .media-body .reply_btn {
         border: 1px solid #e0e0e0;
         padding: 0px 28px;
@@ -4178,7 +4178,7 @@ label {
   font-size: 14px;
   font-weight: 500;
   font-family: "Roboto", sans-serif;
-  color: #777777;
+  color: #a7a7a7;
   border-bottom: 0px !important; }
 .cart_inner .table tbody tr td {
   padding-top: 30px;
@@ -4296,7 +4296,7 @@ label {
     .cart_inner .table tbody tr.shipping_area .shipping_box .list li a {
       padding-right: 30px;
       font-size: 14px;
-      color: #777777;
+      color: #a7a7a7;
       position: relative; }
       .cart_inner .table tbody tr.shipping_area .shipping_box .list li a:before {
         content: "";
@@ -4331,7 +4331,7 @@ label {
     margin-top: 20px;
     margin-bottom: 20px; }
     .cart_inner .table tbody tr.shipping_area .shipping_box h6 i {
-      color: #777777;
+      color: #a7a7a7;
       padding-left: 5px; }
   .cart_inner .table tbody tr.shipping_area .shipping_box .shipping_select {
     display: block;
@@ -4346,7 +4346,7 @@ label {
       .cart_inner .table tbody tr.shipping_area .shipping_box .shipping_select .list li {
         font-size: 14px;
         font-weight: normal;
-        color: #777777; }
+        color: #a7a7a7; }
   .cart_inner .table tbody tr.shipping_area .shipping_box input {
     height: 40px;
     outline: none;
@@ -4408,27 +4408,27 @@ label {
       border-radius: 3px;
       font-size: 14px;
       font-family: "Roboto", sans-serif;
-      color: #777777;
+      color: #a7a7a7;
       font-weight: normal; }
       .returning_customer .contact_form .form-group input.placeholder {
         font-size: 14px;
         font-family: "Roboto", sans-serif;
-        color: #777777;
+        color: #a7a7a7;
         font-weight: normal; }
       .returning_customer .contact_form .form-group input:-moz-placeholder {
         font-size: 14px;
         font-family: "Roboto", sans-serif;
-        color: #777777;
+        color: #a7a7a7;
         font-weight: normal; }
       .returning_customer .contact_form .form-group input::-moz-placeholder {
         font-size: 14px;
         font-family: "Roboto", sans-serif;
-        color: #777777;
+        color: #a7a7a7;
         font-weight: normal; }
       .returning_customer .contact_form .form-group input::-webkit-input-placeholder {
         font-size: 14px;
         font-family: "Roboto", sans-serif;
-        color: #777777;
+        color: #a7a7a7;
         font-weight: normal; }
     .returning_customer .contact_form .form-group .primary-btn {
       line-height: 38px;
@@ -4448,7 +4448,7 @@ label {
       margin-top: 20px;
       font-size: 14px;
       font-family: "Roboto", sans-serif;
-      color: #777777;
+      color: #a7a7a7;
       font-weight: normal; }
 
 .p_star {
@@ -4519,15 +4519,15 @@ label {
   margin-bottom: 20px; }
   .billing_details .contact_form .form-group input {
     border-radius: 3px;
-    color: #777777; }
+    color: #a7a7a7; }
     .billing_details .contact_form .form-group input.placeholder {
-      color: #777777; }
+      color: #a7a7a7; }
     .billing_details .contact_form .form-group input:-moz-placeholder {
-      color: #777777; }
+      color: #a7a7a7; }
     .billing_details .contact_form .form-group input::-moz-placeholder {
-      color: #777777; }
+      color: #a7a7a7; }
     .billing_details .contact_form .form-group input::-webkit-input-placeholder {
-      color: #777777; }
+      color: #a7a7a7; }
   .billing_details .contact_form .form-group textarea {
     height: 150px;
     border-radius: 3px;
@@ -4535,7 +4535,7 @@ label {
   .billing_details .contact_form .form-group .country_select {
     width: 100%; }
     .billing_details .contact_form .form-group .country_select span {
-      color: #777777; }
+      color: #a7a7a7; }
     .billing_details .contact_form .form-group .country_select .list {
       width: 100%;
       border-radius: 0px; }
@@ -4561,7 +4561,7 @@ label {
     padding-bottom: 15px; }
   .order_box .list li a {
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-weight: normal;
     border-bottom: 1px solid #eeeeee;
     display: block;
@@ -4582,7 +4582,7 @@ label {
     color: #ffffff;
     font-weight: 500; }
     .order_box .list_2 li a span {
-      color: #777777;
+      color: #a7a7a7;
       text-transform: capitalize; }
   .order_box .list_2 li:last-child a span {
     color: #ffffff; }
@@ -4670,7 +4670,7 @@ label {
       .order_d_inner .details_item .list li a span {
         width: 145px;
         display: inline-block;
-        color: #777777; }
+        color: #a7a7a7; }
 
 .order_details_table {
   background: #e5ecee;
@@ -4788,7 +4788,7 @@ label {
     left: 370px; }
 .login_form .form-group a {
   font-size: 14px;
-  color: #777777;
+  color: #a7a7a7;
   font-family: "Roboto", sans-serif;
   margin-top: 20px;
   display: block; }
@@ -4811,27 +4811,27 @@ label {
     box-shadow: none;
     border-radius: 0px;
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     font-family: "Roboto", sans-serif;
     font-weight: normal; }
     .tracking_box_area .tracking_box_inner .tracking_form .form-group input.placeholder {
       font-size: 14px;
-      color: #777777;
+      color: #a7a7a7;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
     .tracking_box_area .tracking_box_inner .tracking_form .form-group input:-moz-placeholder {
       font-size: 14px;
-      color: #777777;
+      color: #a7a7a7;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
     .tracking_box_area .tracking_box_inner .tracking_form .form-group input::-moz-placeholder {
       font-size: 14px;
-      color: #777777;
+      color: #a7a7a7;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
     .tracking_box_area .tracking_box_inner .tracking_form .form-group input::-webkit-input-placeholder {
       font-size: 14px;
-      color: #777777;
+      color: #a7a7a7;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
   .tracking_box_area .tracking_box_inner .tracking_form .form-group:last-child {
@@ -4914,7 +4914,7 @@ label {
   margin-top: 24px;
   margin-bottom: 15px; }
   .l_blog_item .l_blog_text .date a {
-    color: #777777;
+    color: #a7a7a7;
     font-size: 12px; }
 .l_blog_item .l_blog_text h4 {
   font-size: 18px;
@@ -4990,7 +4990,7 @@ label {
     .causes_item .causes_text p {
       font-size: 14px;
       line-height: 24px;
-      color: #777777;
+      color: #a7a7a7;
       font-weight: 300;
       margin-bottom: 0px; }
   .causes_item .causes_bottom a {
@@ -5029,7 +5029,7 @@ label {
       padding: 10px 0px 13px;
       transition: all 0.3s linear; }
       .single-recent-blog-post .details .sec_h4:hover {
-        color: #777777; }
+        color: #a7a7a7; }
   .single-recent-blog-post .date {
     font-size: 14px;
     line-height: 24px;
@@ -5106,12 +5106,12 @@ label {
       font: 300 14px/21px "Roboto", sans-serif;
       color: #ffffff; }
       .blog_info .post_tag a:hover {
-        color: #777777; }
+        color: #a7a7a7; }
       .blog_info .post_tag a.active {
         color: #26D3E0; }
   .blog_info .blog_meta li a {
     font: 300 14px/20px "Roboto", sans-serif;
-    color: #777777;
+    color: #a7a7a7;
     vertical-align: middle;
     padding-bottom: 12px;
     display: inline-block; }
@@ -5489,7 +5489,7 @@ label {
     color: #cccccc;
     margin-bottom: 13px; }
   .comments-area .comment {
-    color: #777777;
+    color: #a7a7a7;
     margin-bottom: 0px; }
   .comments-area .btn-reply {
     background-color: #fff;
@@ -5538,7 +5538,7 @@ label {
     border-radius: 0px;
     width: 100%;
     font-size: 14px;
-    color: #777777;
+    color: #a7a7a7;
     border: 1px solid transparent; }
     .comment-form .form-control:focus {
       box-shadow: none;
@@ -5755,31 +5755,31 @@ label {
 .single-footer-widget ::-moz-selection {
   /* Code for Firefox */
   background-color: #191919 !important;
-  color: #777777; }
+  color: #a7a7a7; }
 .single-footer-widget ::selection {
   background-color: #191919 !important;
-  color: #777777; }
+  color: #a7a7a7; }
 .single-footer-widget ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
-  color: #777777;
+  color: #a7a7a7;
   font-weight: 300; }
 .single-footer-widget :-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
-  color: #777777;
+  color: #a7a7a7;
   opacity: 1;
   font-weight: 300; }
 .single-footer-widget ::-moz-placeholder {
   /* Mozilla Firefox 19+ */
-  color: #777777;
+  color: #a7a7a7;
   opacity: 1;
   font-weight: 300; }
 .single-footer-widget :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
-  color: #777777;
+  color: #a7a7a7;
   font-weight: 300; }
 .single-footer-widget ::-ms-input-placeholder {
   /* Microsoft Edge */
-  color: #777777;
+  color: #a7a7a7;
   font-weight: 300; }
 
 .footer-text {

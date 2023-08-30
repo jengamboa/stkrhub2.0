@@ -1,11 +1,11 @@
 <?php
 include 'connection.php';
-include 'html/header.html.php';
+include 'html/page_header2.php';
 
+// Check if the user is logged in. If not, redirect to the login page.
 if (!isset($_SESSION['user_id'])) {
-    // Redirect to the login page or handle the unauthorized access as needed
-    header("Location: login_page.php"); // Change to your login page URL
-    exit();
+    header("Location: login_page.php");
+    exit;
 }
 
 $user_id = $_SESSION['user_id'];
@@ -17,19 +17,28 @@ $user_id = $_SESSION['user_id'];
 
 <head>
     <title>Built Games</title>
+
+    <!--
+        CSS
+        ============================================= -->
+    <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
+
 </head>
 
 <body>
-    <div>
-        <a href="create_game.php">Create Game</a>
-        <a href="created_games_page.php">Created Games</a>
-        <a href="built_games_page.php">Built Games</a>
-        <a href="pending_built_games_page.php">Pending</a>
-        <a href="canceled_built_games_page.php">Canceled</a>
-        <a href="approved_built_games_page.php">Approved</a>
-        <a href="purchased_built_games_page.php">Purchased</a>
-        <a href="published_built_games_page.php">Published</a>
-    </div>
+
+
+    <br><br><br>
 
     <h2>Built Games</h2>
     <ul>

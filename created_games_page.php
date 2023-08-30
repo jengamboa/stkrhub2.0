@@ -1,7 +1,7 @@
 <?php
 // show_games.php
 include 'connection.php';
-include 'html/header.html.php';
+include 'html/page_header2.php';
 
 // Check if the user is logged in. If not, redirect to the login page.
 if (!isset($_SESSION['user_id'])) {
@@ -42,21 +42,27 @@ $result = mysqli_query($conn, $query);
 
 <head>
     <title>My Games</title>
+
+    <!--
+        CSS
+        ============================================= -->
+    <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
 </head>
 
 <body>
-    <div>
-        <a href="create_game.php">create game</a>
-        <a href="created_games_page.php">created games </a>
-        <a href="built_games_page.php">built_games_</a>
-        <a href="pending_built_games_page.php">pending</a>
-        <a href="canceled_built_games_page.php">canceled</a>
-        <a href="approved_built_games_page.php">approved</a>
-        <a href="purchased_built_games_page.php">purchased</a>
-        <a href="published_built_games_page.php">published</a>
-    </div>
 
 
+<br><br><br><br>
     <div class="panel">
         <h2>All Created Games</h2>
         <ul>

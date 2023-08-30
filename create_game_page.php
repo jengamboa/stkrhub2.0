@@ -1,7 +1,7 @@
 <?php
 // create_game.php
 include 'connection.php';
-include 'html/header.html.php';
+include 'html/page_header2.php';
 
 // Check if the user is logged in. If not, redirect to the login page.
 if (!isset($_SESSION['user_id'])) {
@@ -15,9 +15,22 @@ if (!isset($_SESSION['user_id'])) {
 
 <head>
     <title>Create Game</title>
+
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/nouislider.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
+    <br><br>
     <div>
         <a href="create_game.php">create game</a>
         <a href="created_games_page.php">created games </a>

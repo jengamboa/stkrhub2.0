@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+$user_id=$_SESSION['user_id'];
 
 echo '<div>';
 echo '<a href="create_game.php">Create Game</a>';

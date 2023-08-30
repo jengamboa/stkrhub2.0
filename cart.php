@@ -26,6 +26,8 @@ $result_cart = mysqli_query($conn, $query_cart);
 
 <head>
     <title>Cart</title>
+
+    
 </head>
 
 <body>

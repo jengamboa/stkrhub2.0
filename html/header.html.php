@@ -3,7 +3,7 @@
     <a href="login.php">login</a>
     <a href="user_dashboard.php">dashboard</a>
     <a href="user_profile.php">user profile</a>
-    <a href="create_game.php">create game</a>
+    <a href="create_game_page.php">create game</a>
     <a href="show_games.php">show_games</a>
     <a href="add_custom_component.php">add_custom_component</a>
     <a href="ready_to_publish_games.php">ready to publish games</a>

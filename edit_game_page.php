@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample File Pond Server Implementation</title>
 
-    <!-- Filepond Css -->
-    <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.css" rel="stylesheet">
 </head>
 
 <body>
@@ -46,6 +45,7 @@
     }
 
     ?>
+
     <!-- <form method="post" action="dump_process.php" enctype="multipart/form-data"> -->
     <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data">
 
@@ -99,66 +99,26 @@
         <label for="website">Website:</label><br>
         <input type="url" id="website" name="website"><br>
 
-        <label for="logo">Game Logo:</label><br>
-        <input type="file" id="logo" name="logo" required><br>
-
-        <div id="fileContainer">
-            <!-- Multiple -->
-            <label for="order_position_1">File 1:</label>
-            <input type="file" id="order_position_1" name="multiple_files[]" class="filepond" required><br>
-
-            <label for="order_position_2">File 2:</label>
-            <input type="file" id="order_position_2" name="multiple_files[]" class="filepond" required><br>
-
-            <label for="order_position_3">File 3:</label>
-            <input type="file" id="order_position_3" name="multiple_files[]" class="filepond" required><br>
-
-            <label for="order_position_4">File 4:</label>
-            <input type="file" id="order_position_4" name="multiple_files[]" class="filepond"><br>
-
-            <label for="order_position_5">File 5:</label>
-            <input type="file" id="order_position_5" name="multiple_files[]" class="filepond"><br>
-
-            <label for="order_position_6">File 6:</label>
-            <input type="file" id="order_position_6" name="multiple_files[]" class="filepond"><br>
-
-            <label for="order_position_7">File 7:</label>
-            <input type="file" id="order_position_7" name="multiple_files[]" class="filepond"><br>
-
-            <label for="order_position_8">File 8:</label>
-            <input type="file" id="order_position_8" name="multiple_files[]" class="filepond"><br>
-
-            <label for="order_position_9">File 9:</label>
-            <input type="file" id="order_position_9" name="multiple_files[]" class="filepond"><br>
-
-            <label for="order_position_10">File 10:</label>
-            <input type="file" id="order_position_10" name="multiple_files[]" class="filepond"><br>
-        </div>
-
-        <!-- Repeat for files 3 to 10 -->
+        <label for="logo">Logo:</label><br>
+        <input type="file" class="filepond" name="logo" accept="image/*" required>
 
         <button type="submit" name="update">Publish Game</button>
 
     </form>
 
-    <script src="https://unpkg.com/filepond@4.28.2/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/filepond@4.28.2/dist/filepond.js"></script>
     <script>
-
-        // Initialize FilePond for each individual input element
-        const inputElements = document.querySelectorAll('input[type="file"].filepond');
-        inputElements.forEach(inputElement => {
-            FilePond.create(inputElement, {
-                allowMultiple: false, // Each input handles a single file
-                allowReplace: true,
-                allowRemove: true,
-                allowBrowse: true,
-                storeAsFile: true,
-                // required: true,
-            });
+        // Initialize FilePond with the specified settings
+        const inputElement = document.querySelector('input[name="logo"]');
+        const pond = FilePond.create(inputElement, {
+            allowMultiple: false, // Each input handles a single file
+            allowReplace: true,
+            allowRemove: true,
+            allowBrowse: true,
+            storeAsFile: true,
+            required: true
         });
-
     </script>
-
 
 
 

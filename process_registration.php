@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $insert_query = "INSERT INTO users (username, email, password, created_at) VALUES ('$username', '$email', '$password', NOW())";
     if (mysqli_query($conn, $insert_query)) {
         // Redirect the user to the login page after successful registration
-        header("Location: login.php");
+        header("Location: login_page.php");
         exit;
     } else {
         // Handle the error if the insertion fails
