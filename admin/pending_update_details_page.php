@@ -47,6 +47,11 @@ include '../connection.php'; // Include your database connection
                 echo '<p>Maximum Players: ' . $currentGameInfo['max_players'] . '</p>';
                 echo '<p>Minimum Playtime: ' . $currentGameInfo['min_playtime'] . '</p>';
                 echo '<p>Maximum Playtime: ' . $currentGameInfo['max_playtime'] . '</p>';
+
+                echo '<p>desired_markup: ' . $currentGameInfo['desired_markup'] . '</p>';
+                echo '<p>manufacturer_profit: ' . $currentGameInfo['manufacturer_profit'] . '</p>';
+                echo '<p>creator_profit: ' . $currentGameInfo['creator_profit'] . '</p>';
+                echo '<p>marketplace_price: ' . $currentGameInfo['marketplace_price'] . '</p>';
             } else {
                 echo '<p>No information found for the provided published game ID.</p>';
             }
@@ -112,6 +117,11 @@ include '../connection.php'; // Include your database connection
                 echo '<p>Maximum Players: ' . $potentialGameInfo['max_players'] . '</p>';
                 echo '<p>Minimum Playtime: ' . $potentialGameInfo['min_playtime'] . '</p>';
                 echo '<p>Maximum Playtime: ' . $potentialGameInfo['max_playtime'] . '</p>';
+
+                echo '<p>desired_markup: ' . $potentialGameInfo['desired_markup'] . '</p>';
+                echo '<p>manufacturer_profit: ' . $potentialGameInfo['manufacturer_profit'] . '</p>';
+                echo '<p>creator_profit: ' . $potentialGameInfo['creator_profit'] . '</p>';
+                echo '<p>marketplace_price: ' . $potentialGameInfo['marketplace_price'] . '</p>';
             } else {
                 echo '<p>No information found for the provided published game ID.</p>';
             }

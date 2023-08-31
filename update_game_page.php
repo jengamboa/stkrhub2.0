@@ -18,6 +18,18 @@
     $built_game_id = $_GET['built_game_id'];
     $published_game_id = $_GET['published_game_id'];
 
+    // Retrieve the markup percentage from the database
+    $query_markup = "SELECT percentage FROM markup_percentage";
+    $result_markup = mysqli_query($conn, $query_markup);
+    $markup_percentage = mysqli_fetch_assoc($result_markup)['percentage'];
+
+    $query = "SELECT built_game_id, game_id, creator_id, price, is_published FROM built_games WHERE built_game_id = '$built_game_id'";
+    $result = mysqli_query($conn, $query);
+    
+    if (mysqli_num_rows($result) > 0) {
+        $gameInfo = mysqli_fetch_assoc($result);
+    }
+
     echo 'built game id: ' . $built_game_id . '<br>';
     echo 'published game id: ' . $published_game_id . '<br>';
     ?>
@@ -48,6 +60,11 @@
             echo '<p>Maximum Players: ' . $currentGameInfo['max_players'] . '</p>';
             echo '<p>Minimum Playtime: ' . $currentGameInfo['min_playtime'] . '</p>';
             echo '<p>Maximum Playtime: ' . $currentGameInfo['max_playtime'] . '</p>';
+
+            echo '<p>desired_markup: ' . $currentGameInfo['desired_markup'] . '</p>';
+            echo '<p>manufacturer_profit: ' . $currentGameInfo['manufacturer_profit'] . '</p>';
+            echo '<p>creator_profit: ' . $currentGameInfo['creator_profit'] . '</p>';
+            echo '<p>marketplace_price: ' . $currentGameInfo['marketplace_price'] . '</p>';
         } else {
             echo '<p>No information found for the provided published game ID.</p>';
         }
@@ -128,6 +145,27 @@
             <input type="file" class="filepond" name="game_images[]" multiple required>
 
 
+            <div id="partitions">
+                <p>Cost: <span id="cost">
+                        <?php echo $gameInfo['price']; ?>
+                    </span></p>
+
+                <label for="desired_markup">Desired Markup:</label>
+                <input type="number" name="desired_markup" id="desired_markup" required>
+
+                <!-- Hidden input fields to store calculated values -->
+                <label for="manufacturer_profit">STKR:</label>
+                <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
+
+                <label for="creator_profit">Creator:</label>
+                <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
+
+                <label for="marketplace_price">Marketplace Price:</label>
+                <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
+            </div>
+
+            <br>
+
             <button type="submit" name="update">Publish Game</button>
 
         </form>
@@ -157,6 +195,36 @@
             storeAsFile: true,
             required: true,
             maxFiles: 10,
+        });
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Get the initial cost from PHP variable
+        var cost = <?php echo $gameInfo['price']; ?>;
+        var markupPercentage = <?php echo $markup_percentage; ?>; // Get the markup percentage
+
+        // Set up event listener for desired markup change
+        $('#desired_markup').on('input', function () {
+            var desiredMarkup = parseFloat($(this).val()); // Parse the input value as a float
+
+            // STKR Hub
+            var manufacturerProfit = desiredMarkup * (markupPercentage / 100);
+            $('#manufacturerProfit').text(manufacturerProfit.toFixed(2));
+
+            // Creator
+            var creatorProfit = desiredMarkup * ((100 - markupPercentage) / 100);
+            $('#creatorProfit').text(creatorProfit.toFixed(2));
+
+            // Marketplace Price
+            var marketplacePrice = desiredMarkup + cost;
+            $('#marketplacePrice').text(marketplacePrice.toFixed(2));
+
+            // Update the hidden input fields with calculated values
+            $('#manufacturerProfitInput').val(manufacturerProfit.toFixed(2));
+            $('#creatorProfitInput').val(creatorProfit.toFixed(2));
+            $('#marketplacePriceInput').val(marketplacePrice.toFixed(2));
         });
 
     </script>

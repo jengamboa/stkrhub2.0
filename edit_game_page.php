@@ -17,6 +17,11 @@
 
     $built_game_id = $_GET['built_game_id']; // Retrieve the built_game_id from the URL parameter
     
+    // Retrieve the markup percentage from the database
+    $query_markup = "SELECT percentage FROM markup_percentage";
+    $result_markup = mysqli_query($conn, $query_markup);
+    $markup_percentage = mysqli_fetch_assoc($result_markup)['percentage'];
+
     $query = "SELECT built_game_id, game_id, creator_id, price, is_published FROM built_games WHERE built_game_id = '$built_game_id'";
     $result = mysqli_query($conn, $query);
 
@@ -28,7 +33,8 @@
         echo '<p>Game ID: ' . $gameInfo['game_id'] . '</p>';
         echo '<p>Creator ID: ' . $gameInfo['creator_id'] . '</p>';
         echo '<p>Price: $' . $gameInfo['price'] . '</p>';
-
+        echo '<p>Markup Percentage: ' . $markup_percentage . '%</p>'; // Echo the markup percentage
+    
         // Echo the value of the is_published column
         echo '<p>Is Published: ' . ($gameInfo['is_published'] == 1 ? 'Yes' : 'No') . '</p>';
 
@@ -106,12 +112,36 @@
         <input type="file" class="filepond" name="game_images[]" multiple required>
 
 
+
+        <div id="partitions">
+            <p>Cost: <span id="cost">
+                    <?php echo $gameInfo['price']; ?>
+                </span></p>
+
+            <label for="desired_markup">Desired Markup:</label>
+            <input type="number" name="desired_markup" id="desired_markup" required>
+            
+            <!-- Hidden input fields to store calculated values -->
+            <label for="manufacturer_profit">STKR:</label>
+            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
+
+            <label for="creator_profit">Creator:</label>
+            <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
+
+            <label for="marketplace_price">Marketplace Price:</label>
+            <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
+        </div>
+
+
+        <br>
+
         <button type="submit" name="update">Publish Game</button>
 
     </form>
 
     <script src="https://unpkg.com/filepond@4.28.2/dist/filepond.js"></script>
     <script>
+
         // Initialize FilePond with the specified settings
         const inputElement = document.querySelector('input[name="logo"]');
         const pond = FilePond.create(inputElement, {
@@ -133,6 +163,35 @@
             storeAsFile: true,
             required: true,
             maxFiles: 10,
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Get the initial cost from PHP variable
+        var cost = <?php echo $gameInfo['price']; ?>;
+        var markupPercentage = <?php echo $markup_percentage; ?>; // Get the markup percentage
+
+        // Set up event listener for desired markup change
+        $('#desired_markup').on('input', function () {
+            var desiredMarkup = parseFloat($(this).val()); // Parse the input value as a float
+
+            // STKR Hub
+            var manufacturerProfit = desiredMarkup * (markupPercentage / 100);
+            $('#manufacturerProfit').text(manufacturerProfit.toFixed(2));
+
+            // Creator
+            var creatorProfit = desiredMarkup * ((100 - markupPercentage) / 100);
+            $('#creatorProfit').text(creatorProfit.toFixed(2));
+
+            // Marketplace Price
+            var marketplacePrice = desiredMarkup + cost;
+            $('#marketplacePrice').text(marketplacePrice.toFixed(2));
+
+            // Update the hidden input fields with calculated values
+            $('#manufacturerProfitInput').val(manufacturerProfit.toFixed(2));
+            $('#creatorProfitInput').val(creatorProfit.toFixed(2));
+            $('#marketplacePriceInput').val(marketplacePrice.toFixed(2));
         });
 
     </script>

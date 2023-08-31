@@ -1,62 +1,44 @@
 <?php
-include 'connection.php';
+include 'connection.php'; // Include your database connection
 
-echo '<h2>Payment Summary:</h2>';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
-    echo '<ul>';
-    foreach ($_POST['selectedItems'] as $cartId) {
-        // Fetch cart item details based on cart_id
-        $query = "SELECT c.*, bg.name AS game_name, bg.price AS game_price
-                  FROM cart c
-                  LEFT JOIN built_games bg ON c.built_game_id = bg.built_game_id
-                  WHERE c.cart_id = '$cartId'";
-        $result = mysqli_query($conn, $query);
-
-        if ($result && mysqli_num_rows($result) > 0) {
-            $item = mysqli_fetch_assoc($result);
-
-            echo '<li>';
-            echo 'Cart ID: ' . $item['cart_id'] . '<br>';
-            echo 'User ID: ' . $item['user_id'] . '<br>';
-
-            // Check if the item is a complete game with components
-            if (!empty($item['built_game_id'])) {
-                echo 'Built Game ID: ' . $item['built_game_id'] . '<br>';
-                echo 'Game Name: ' . $item['game_name'] . '<br>';
-            }
-
-            // Check if the item is a single game component
-            if (!empty($item['added_component_id'])) {
-                echo 'Added Component ID: ' . $item['added_component_id'] . '<br>';
-            }
-
-            echo 'Quantity: ' . $item['quantity'] . '<br>';
-            echo 'Price: $' . $item['game_price'] . '<br>';
-            echo '</li>';
-
-            // Determine the appropriate column values for insertion
-            $built_game_id = !empty($item['built_game_id']) ? $item['built_game_id'] : 'NULL';
-            $added_component_id = !empty($item['added_component_id']) ? $item['added_component_id'] : 'NULL';
-
-            // Insert the order into the orders table with is_pending and is_preparing set to 1
-            $insert_order_query = "INSERT INTO orders (cart_id, user_id, built_game_id, added_component_id, quantity, price, is_pending, is_ready, is_shipped, is_completed, is_canceled, is_preparing, order_date)
-                                   VALUES ('{$item['cart_id']}', '{$item['user_id']}', $built_game_id, $added_component_id, '{$item['quantity']}', '{$item['game_price']}', 1, 0, 0, 0, 0, 0, NOW())";
-            mysqli_query($conn, $insert_order_query);
-
-            // Update is_active to 0 for the purchased cart item
-            $update_cart_query = "UPDATE cart SET is_active = 0 WHERE cart_id = '$cartId'";
-            mysqli_query($conn, $update_cart_query);
-
-            // Update is_purchased to 1 for the built game
-            if (!empty($item['built_game_id'])) {
-                $update_built_game_query = "UPDATE built_games SET is_purchased = 1 WHERE built_game_id = '{$item['built_game_id']}'";
-                mysqli_query($conn, $update_built_game_query);
-            }
-        }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit;
     }
-    echo '</ul>';
+
+    // Get the selected cart items from the hidden field
+    $selectedItems = isset($_POST['selectedItems']) ? $_POST['selectedItems'] : '';
+
+    // Explode the comma-separated list of cart IDs into an array
+    $cartIds = explode(",", $selectedItems);
+
+    // Get the user ID
+    $user_id = $_SESSION['user_id'];
+
+    // Loop through the cart IDs and insert into the orders table
+    foreach ($cartIds as $cart_id) {
+        // Use prepared statement to prevent SQL injection
+        $query = "INSERT INTO orders (cart_id, user_id, published_game_id, built_game_id, added_component_id, quantity, price, is_pending, order_date, desired_markup, manufacturer_profit, creator_profit, marketplace_price)
+                  SELECT cart.cart_id, cart.user_id, cart.published_game_id, cart.built_game_id, cart.added_component_id, cart.quantity, cart.price, 1, NOW(), published_built_games.desired_markup, published_built_games.manufacturer_profit, published_built_games.creator_profit, published_built_games.marketplace_price
+                  FROM cart
+                  LEFT JOIN published_built_games ON cart.published_game_id = published_built_games.published_game_id
+                  WHERE cart.cart_id = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "i", $cart_id);
+        mysqli_stmt_execute($stmt);
+
+        // Update the cart item's is_active status to 0
+        $updateQuery = "UPDATE cart SET is_active = 0 WHERE cart_id = ?";
+        $updateStmt = mysqli_prepare($conn, $updateQuery);
+        mysqli_stmt_bind_param($updateStmt, "i", $cart_id);
+        mysqli_stmt_execute($updateStmt);
+    }
+
+    // Redirect to a success page or display a success message
+    header("Location: cart.php");
+    exit;
 } else {
-    echo 'No items selected.';
+    echo "Invalid request method";
 }
 ?>

@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$user_id=$_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
 
 echo '<div>';
 echo '<a href="create_game.php">Create Game</a>';
@@ -22,7 +22,7 @@ echo '<a href="published_built_games_page.php">Published</a>';
 echo '</div>';
 
 
-$query = "SELECT * FROM published_built_games";
+$query = "SELECT * FROM published_built_games WHERE creator_id = $user_id";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -78,9 +78,56 @@ $result = mysqli_query($conn, $query);
 
 
             <p>Already Published</p>
-            <a
-                href="update_game_page.php?built_game_id=<?= $game['built_game_id']; ?>&published_game_id=<?= $game['published_game_id']; ?>">Edit
-                and Update</a>
+            <?php
+            // Assuming you have fetched the game details and stored them in the $game variable
+        
+            if ($game['has_pending_update'] == 0) {
+                echo '<a href="update_game_page.php?built_game_id=' . $game['built_game_id'] . '&published_game_id=' . $game['published_game_id'] . '">Edit and Update</a>';
+            } else {
+                echo 'Your update request is still under review';
+            }
+            ?>
+
+            <?php
+            // Count the number of occurrences in orders table
+            $publishedGameId = $game['published_game_id'];
+            $countQuery = "SELECT COUNT(*) as order_count FROM orders WHERE published_game_id = ?";
+            $stmt = mysqli_prepare($conn, $countQuery);
+            mysqli_stmt_bind_param($stmt, "i", $publishedGameId);
+            mysqli_stmt_execute($stmt);
+            $countResult = mysqli_stmt_get_result($stmt);
+            $countRow = mysqli_fetch_assoc($countResult);
+            $orderCount = $countRow['order_count'];
+
+            echo '<p>Number of Orders: ' . $orderCount . '</p>';
+
+
+            // Use prepared statements to prevent SQL injection
+            $query = "SELECT orders.manufacturer_profit, orders.creator_profit FROM orders LEFT JOIN published_built_games ON orders.published_game_id = published_built_games.published_game_id WHERE orders.published_game_id = ?";
+            $stmt = mysqli_prepare($conn, $query);
+            mysqli_stmt_bind_param($stmt, "i", $publishedGameId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Initialize variables to hold the total manufacturer_profit and creator_profit values
+            $totalManufacturerProfit = 0;
+            $totalCreatorProfit = 0;
+
+            // Check if any rows were returned
+            if (mysqli_num_rows($result) > 0) {
+                // Loop through each row and add up the values of manufacturer_profit and creator_profit columns
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $totalManufacturerProfit += $row['manufacturer_profit'];
+                    $totalCreatorProfit += $row['creator_profit'];
+                }
+
+                // Print the total manufacturer_profit and creator_profit values
+                echo "Total Manufacturer Profit: " . $totalManufacturerProfit . "<br>";
+                echo "Total Creator Profit: " . $totalCreatorProfit . "<br>";
+            } else {
+                echo "No rows found";
+            }
+            ?>
 
 
 

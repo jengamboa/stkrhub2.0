@@ -18,6 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $min_playtime = $_POST['min_playtime'];
     $max_playtime = $_POST['max_playtime'];
 
+    // Retrieve the calculated values from the $_POST array
+    $desired_markup = $_POST['desired_markup'];
+    $manufacturer_profit = $_POST['manufacturer_profit'];
+    $creator_profit = $_POST['creator_profit'];
+    $marketplace_price = $_POST['marketplace_price'];
+
     // Handle uploaded logo file
     $logo_path = 'uploads/';
     $logo_file = $_FILES['logo'];
@@ -27,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     if (move_uploaded_file($logo_file['tmp_name'], $logo_path)) {
         // Logo upload successful
         // Insert data into the published_built_games table
-        $insertQuery = "INSERT INTO published_built_games (built_game_id, game_name, edition, published_date, creator_id, age_id, short_description, long_description, logo_path, website, min_players, max_players, min_playtime, max_playtime) VALUES ('$built_game_id', '$game_name', '$edition', '$published_date', '$creator_id', '$age_id', '$short_description', '$long_description', '$logo_path', '$website', '$min_players', '$max_players', '$min_playtime', '$max_playtime')";
+        $insertQuery = "INSERT INTO published_built_games (built_game_id, game_name, edition, published_date, creator_id, age_id, short_description, long_description, logo_path, website, min_players, max_players, min_playtime, max_playtime, desired_markup, manufacturer_profit, creator_profit, marketplace_price) VALUES ('$built_game_id', '$game_name', '$edition', '$published_date', '$creator_id', '$age_id', '$short_description', '$long_description', '$logo_path', '$website', '$min_players', '$max_players', '$min_playtime', '$max_playtime', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price')";
 
         if (mysqli_query($conn, $insertQuery)) {
             // Retrieve the generated published_built_game_id
@@ -61,6 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
                 }
             }
             echo 'success';
+
+            $isPublihsedQuery = "UPDATE built_games SET is_published = 1 WHERE built_game_id = '$built_game_id'";
+            mysqli_query($conn, $isPublihsedQuery);
+
         } else {
             echo "Error: " . mysqli_error($conn);
         }

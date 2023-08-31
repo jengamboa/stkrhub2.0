@@ -25,6 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
         echo '<p>Maximum Players: ' . $currentGameInfo['max_players'] . '</p>';
         echo '<p>Minimum Playtime: ' . $currentGameInfo['min_playtime'] . '</p>';
         echo '<p>Maximum Playtime: ' . $currentGameInfo['max_playtime'] . '</p>';
+
+        echo '<p>desired_markup: ' . $currentGameInfo['desired_markup'] . '</p>';
+        echo '<p>manufacturer_profit: ' . $currentGameInfo['manufacturer_profit'] . '</p>';
+        echo '<p>creator_profit: ' . $currentGameInfo['creator_profit'] . '</p>';
+        echo '<p>marketplace_price: ' . $currentGameInfo['marketplace_price'] . '</p>';
     }
 
 
@@ -53,6 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
         echo 'Maximum Players: ' . $pendingGameInfo['max_players'] . '<br>';
         echo 'Minimum Playtime: ' . $pendingGameInfo['min_playtime'] . '<br>';
         echo 'Maximum Playtime: ' . $pendingGameInfo['max_playtime'] . '<br>';
+
+        echo '<p>desired_markup: ' . $pendingGameInfo['desired_markup'] . '</p>';
+        echo '<p>manufacturer_profit: ' . $pendingGameInfo['manufacturer_profit'] . '</p>';
+        echo '<p>creator_profit: ' . $pendingGameInfo['creator_profit'] . '</p>';
+        echo '<p>marketplace_price: ' . $pendingGameInfo['marketplace_price'] . '</p>';
     }
 
     // Update the values in the published_built_games table
@@ -68,7 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
                 min_players = '{$pendingGameInfo['min_players']}',
                 max_players = '{$pendingGameInfo['max_players']}',
                 min_playtime = '{$pendingGameInfo['min_playtime']}',
-                max_playtime = '{$pendingGameInfo['max_playtime']}'
+                max_playtime = '{$pendingGameInfo['max_playtime']}',
+
+                desired_markup = '{$pendingGameInfo['desired_markup']}',
+                manufacturer_profit = '{$pendingGameInfo['manufacturer_profit']}',
+                creator_profit = '{$pendingGameInfo['creator_profit']}',
+                marketplace_price = '{$pendingGameInfo['marketplace_price']}'
             WHERE published_game_id = '$published_game_id'
         ";
 
