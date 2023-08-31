@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2023 at 05:34 PM
+-- Generation Time: Aug 31, 2023 at 05:11 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -113,6 +113,7 @@ CREATE TABLE `built_games_added_game_components` (
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `published_game_id` int(11) DEFAULT NULL,
   `game_id` int(11) DEFAULT NULL,
   `built_game_id` int(11) DEFAULT NULL,
   `added_component_id` int(11) DEFAULT NULL,
@@ -224,6 +225,17 @@ CREATE TABLE `index_banner` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `markup_percentage`
+--
+
+CREATE TABLE `markup_percentage` (
+  `id` int(11) NOT NULL,
+  `percentage` decimal(5,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -231,6 +243,7 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `cart_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `published_game_id` int(11) DEFAULT NULL,
   `built_game_id` int(11) DEFAULT NULL,
   `added_component_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
@@ -241,7 +254,11 @@ CREATE TABLE `orders` (
   `is_completed` tinyint(4) DEFAULT 0,
   `is_canceled` tinyint(4) DEFAULT 0,
   `is_preparing` tinyint(4) NOT NULL DEFAULT 0,
-  `order_date` datetime DEFAULT current_timestamp()
+  `order_date` datetime DEFAULT current_timestamp(),
+  `desired_markup` decimal(10,2) DEFAULT NULL,
+  `manufacturer_profit` decimal(10,2) DEFAULT NULL,
+  `creator_profit` decimal(10,2) DEFAULT NULL,
+  `marketplace_price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -266,7 +283,11 @@ CREATE TABLE `pending_update_published_built_games` (
   `min_players` int(11) DEFAULT NULL,
   `max_players` int(11) DEFAULT NULL,
   `min_playtime` int(11) DEFAULT NULL,
-  `max_playtime` int(11) DEFAULT NULL
+  `max_playtime` int(11) DEFAULT NULL,
+  `desired_markup` decimal(10,2) DEFAULT NULL,
+  `manufacturer_profit` decimal(10,2) DEFAULT NULL,
+  `creator_profit` decimal(10,2) DEFAULT NULL,
+  `marketplace_price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -306,7 +327,11 @@ CREATE TABLE `published_built_games` (
   `max_players` int(11) DEFAULT NULL,
   `min_playtime` int(11) DEFAULT NULL,
   `max_playtime` int(11) DEFAULT NULL,
-  `has_pending_update` tinyint(1) DEFAULT 0
+  `has_pending_update` tinyint(1) DEFAULT 0,
+  `desired_markup` decimal(10,2) DEFAULT NULL,
+  `manufacturer_profit` decimal(10,2) DEFAULT NULL,
+  `creator_profit` decimal(10,2) DEFAULT NULL,
+  `marketplace_price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -415,9 +440,6 @@ ALTER TABLE `built_games_added_game_components`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `FK_cart_users` (`user_id`),
-  ADD KEY `FK_cart_games` (`game_id`),
-  ADD KEY `FK_cart_added_game_components` (`added_component_id`),
   ADD KEY `built_game_id` (`built_game_id`);
 
 --
@@ -464,6 +486,12 @@ ALTER TABLE `game_components`
 -- Indexes for table `index_banner`
 --
 ALTER TABLE `index_banner`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `markup_percentage`
+--
+ALTER TABLE `markup_percentage`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -599,6 +627,12 @@ ALTER TABLE `game_components`
 -- AUTO_INCREMENT for table `index_banner`
 --
 ALTER TABLE `index_banner`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `markup_percentage`
+--
+ALTER TABLE `markup_percentage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
