@@ -26,8 +26,8 @@ if (!isset($_SESSION['user_id'])) {
         <nav>
             <ul>
                 <li><a href="pending_orders_page.php">Pending Orders</a></li>
-                <li><a href="production_orders_page.php">In Production Orders</a></li>
-                <li><a href="ship_orders.php_page">To Ship Orders</a></li>
+                <li><a href="in_production_orders_page.php">In Production Orders</a></li>
+                <li><a href="ship_orders_page.php">To Ship Orders</a></li>
                 <li><a href="deliver_orders_page.php">To Deliver Orders</a></li>
                 <li><a href="received_orders_page.php">Received Orders</a></li>
                 <li><a href="canceled_orders_page.php">Canceled Orders</a></li>
