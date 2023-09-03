@@ -7,6 +7,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Get the selected address details
+    $selectedAddressId = $_POST['selectedAddressId'];
+    $selectedAddressFullname = $_POST['selectedAddressFullname'];
+    $selectedAddressNumber = $_POST['selectedAddressNumber'];
+    $selectedAddressRegion = $_POST['selectedAddressRegion'];
+    $selectedAddressProvince = $_POST['selectedAddressProvince'];
+    $selectedAddressCity = $_POST['selectedAddressCity'];
+    $selectedAddressBarangay = $_POST['selectedAddressBarangay'];
+    $selectedAddressZip = $_POST['selectedAddressZip'];
+    $selectedAddressStreet = $_POST['selectedAddressStreet'];
+
+    // Now you can echo these values as needed
+    echo "Selected Address ID: " . $selectedAddressId . "<br>";
+    echo "Full Name: " . $selectedAddressFullname . "<br>";
+    echo "Number: " . $selectedAddressNumber . "<br>";
+    echo "Region: " . $selectedAddressRegion . "<br>";
+    echo "Province: " . $selectedAddressProvince . "<br>";
+    echo "City: " . $selectedAddressCity . "<br>";
+    echo "Barangay: " . $selectedAddressBarangay . "<br>";
+    echo "ZIP: " . $selectedAddressZip . "<br>";
+    echo "Street: " . $selectedAddressStreet . "<br>";
+
+
     // Get the selected cart items from the hidden field
     $selectedItems = isset($_POST['selectedItems']) ? $_POST['selectedItems'] : '';
 
@@ -28,11 +51,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_bind_param($stmt, "i", $cart_id);
         mysqli_stmt_execute($stmt);
 
+        // Get the last inserted order_id
+        $lastOrderId = mysqli_insert_id($conn);
+        echo $lastOrderId;
+
         // Update the cart item's is_active status to 0
         $updateQuery = "UPDATE cart SET is_active = 0 WHERE cart_id = ?";
         $updateStmt = mysqli_prepare($conn, $updateQuery);
         mysqli_stmt_bind_param($updateStmt, "i", $cart_id);
         mysqli_stmt_execute($updateStmt);
+
+        $updateAddressQuery = "UPDATE orders 
+                      SET fullname = ?, number = ?, region = ?, province = ?, city = ?, barangay = ?, zip = ?, street = ?
+                      WHERE order_id = ?";
+        $updateAddressStmt = mysqli_prepare($conn, $updateAddressQuery);
+        mysqli_stmt_bind_param($updateAddressStmt, "ssssssssi", $selectedAddressFullname, $selectedAddressNumber, $selectedAddressRegion, $selectedAddressProvince, $selectedAddressCity, $selectedAddressBarangay, $selectedAddressZip, $selectedAddressStreet, $lastOrderId);
+        mysqli_stmt_execute($updateAddressStmt);
+
+
     }
 
     // Redirect to a success page or display a success message

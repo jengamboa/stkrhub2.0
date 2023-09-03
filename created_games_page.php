@@ -80,7 +80,7 @@ $result = mysqli_query($conn, $query);
             
                 // Additional hidden fields
                 echo '<input type="hidden" name="description" value="' . $game['description'] . '">';
-                echo '<input type="hidden" name="category" value="' . $game['category'] . '">';
+            
 
                 echo 'Is Built: ' . ($game['is_built'] == 1 ? 'Yes' : 'No'); // Display is_built here
             

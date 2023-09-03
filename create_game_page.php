@@ -52,10 +52,6 @@ if (!isset($_SESSION['user_id'])) {
         <textarea id="description" name="description" rows="5" required></textarea>
         <br>
 
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category" required>
-        <br>
-
         <input type="submit" value="Create Game">
     </form>
 </body>

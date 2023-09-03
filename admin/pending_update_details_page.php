@@ -35,6 +35,7 @@ include '../connection.php'; // Include your database connection
                 echo '<p>Published Game ID: ' . $currentGameInfo['published_game_id'] . '</p>';
                 echo '<p>Built Game ID: ' . $currentGameInfo['built_game_id'] . '</p>';
                 echo '<p>Game Name: ' . $currentGameInfo['game_name'] . '</p>';
+                echo '<p>category: ' . $currentGameInfo['category'] . '</p>';
                 echo '<p>Edition: ' . $currentGameInfo['edition'] . '</p>';
                 echo '<p>Published Date: ' . $currentGameInfo['published_date'] . '</p>';
                 echo '<p>Creator ID: ' . $currentGameInfo['creator_id'] . '</p>';
@@ -105,6 +106,7 @@ include '../connection.php'; // Include your database connection
                 echo '<h2>Potential Information</h2>';
                 echo '<p>Built Game ID: ' . $potentialGameInfo['built_game_id'] . '</p>';
                 echo '<p>Game Name: ' . $potentialGameInfo['game_name'] . '</p>';
+                echo '<p>category: ' . $potentialGameInfo['category'] . '</p>';
                 echo '<p>Edition: ' . $potentialGameInfo['edition'] . '</p>';
                 echo '<p>Published Date: ' . $potentialGameInfo['published_date'] . '</p>';
                 echo '<p>Creator ID: ' . $potentialGameInfo['creator_id'] . '</p>';

@@ -30,7 +30,7 @@ $result = mysqli_query($conn, $query);
 <ul>
     <?php while ($game = mysqli_fetch_assoc($result)): ?>
         <li>
-            <p>Published Game ID:
+        <p>Published Game ID:
                 <?= $game['published_game_id'] ?>
             </p>
             <p>Built Game ID:
@@ -76,8 +76,6 @@ $result = mysqli_query($conn, $query);
                 <?= $game['max_playtime'] ?>
             </p>
 
-
-            <p>Already Published</p>
             <?php
             // Assuming you have fetched the game details and stored them in the $game variable
         
@@ -107,16 +105,16 @@ $result = mysqli_query($conn, $query);
             $stmt = mysqli_prepare($conn, $query);
             mysqli_stmt_bind_param($stmt, "i", $publishedGameId);
             mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+            $result2 = mysqli_stmt_get_result($stmt);
 
             // Initialize variables to hold the total manufacturer_profit and creator_profit values
             $totalManufacturerProfit = 0;
             $totalCreatorProfit = 0;
 
             // Check if any rows were returned
-            if (mysqli_num_rows($result) > 0) {
+            if (mysqli_num_rows($result2) > 0) {
                 // Loop through each row and add up the values of manufacturer_profit and creator_profit columns
-                while ($row = mysqli_fetch_assoc($result)) {
+                while ($row = mysqli_fetch_assoc($result2)) {
                     $totalManufacturerProfit += $row['manufacturer_profit'];
                     $totalCreatorProfit += $row['creator_profit'];
                 }
@@ -128,9 +126,6 @@ $result = mysqli_query($conn, $query);
                 echo "No rows found";
             }
             ?>
-
-
-
         </li>
     <?php endwhile; ?>
 </ul>

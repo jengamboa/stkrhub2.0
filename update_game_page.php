@@ -25,11 +25,20 @@
 
     $query = "SELECT built_game_id, game_id, creator_id, price, is_published FROM built_games WHERE built_game_id = '$built_game_id'";
     $result = mysqli_query($conn, $query);
-    
+
     if (mysqli_num_rows($result) > 0) {
         $gameInfo = mysqli_fetch_assoc($result);
     }
 
+    // Fetch category data from the categories table
+    $query_categories = "SELECT category_id, category_name FROM categories";
+    $result_categories = mysqli_query($conn, $query_categories);
+
+    // Check if there are categories available
+    if (mysqli_num_rows($result_categories) > 0) {
+        $categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
+    }
+    
     echo 'built game id: ' . $built_game_id . '<br>';
     echo 'published game id: ' . $published_game_id . '<br>';
     ?>
@@ -48,6 +57,19 @@
             echo '<p>Published Game ID: ' . $currentGameInfo['published_game_id'] . '</p>';
             echo '<p>Built Game ID: ' . $currentGameInfo['built_game_id'] . '</p>';
             echo '<p>Game Name: ' . $currentGameInfo['game_name'] . '</p>';
+
+            // Fetch the category_id from the published_built_games table
+            $categoryID = $currentGameInfo['category'];
+
+            // Query the categories table to retrieve the category_name
+            $categoryQuery = "SELECT category_name FROM categories WHERE category_id = $categoryID";
+            $categoryResult = mysqli_query($conn, $categoryQuery);
+            $categoryRow = mysqli_fetch_assoc($categoryResult);
+            $categoryName = $categoryRow['category_name'];
+
+            // Echo the category_name
+            echo '<p>Game Category: ' . $categoryName . '</p>';
+
             echo '<p>Edition: ' . $currentGameInfo['edition'] . '</p>';
             echo '<p>Published Date: ' . $currentGameInfo['published_date'] . '</p>';
             echo '<p>Creator ID: ' . $currentGameInfo['creator_id'] . '</p>';
@@ -96,6 +118,17 @@
 
             <label for="game_name">Final Publishing Game Name:</label><br>
             <input type="text" id="game_name" name="game_name"><br>
+
+            <label for="category">Category:</label><br>
+            <select id="category" name="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <?php
+                // Loop through the categories and populate the dropdown
+                foreach ($categories as $category) {
+                    echo '<option value="' . $category['category_id'] . '">' . $category['category_name'] . '</option>';
+                }
+                ?>
+            </select><br>
 
             <label for="edition">Edition:</label><br>
             <input type="text" id="edition" name="edition"><br>

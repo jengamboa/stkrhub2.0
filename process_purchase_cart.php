@@ -13,6 +13,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the user ID
     $user_id = $_SESSION['user_id'];
 
+    // Retrieve the user's default address from the addresses table
+    $getDefaultAddressQuery = "SELECT * FROM addresses WHERE user_id = ? AND is_default = 1";
+    $stmt = mysqli_prepare($conn, $getDefaultAddressQuery);
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $defaultAddressResult = mysqli_stmt_get_result($stmt);
+
+    // Retrieve the user's other addresses (not default) from the addresses table
+    $getOtherAddressesQuery = "SELECT * FROM addresses WHERE user_id = ? AND is_default = 0";
+    $stmt = mysqli_prepare($conn, $getOtherAddressesQuery);
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $otherAddressesResult = mysqli_stmt_get_result($stmt);
+
+
+
     // Loop through the selected cart items and process them
     foreach ($selectedItems as $cart_id) {
         // Use prepared statements to prevent SQL injection
@@ -64,6 +80,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Add the "Buy" button that directs to process_payment.php
     echo '<form method="post" action="process_payment.php">';
     echo '<input type="hidden" name="selectedItems" value="' . implode(",", $selectedItems) . '">';
+
+    // Check if there is a default address
+    if (mysqli_num_rows($defaultAddressResult) > 0) {
+        // Display the default address at the top
+        $defaultAddress = mysqli_fetch_assoc($defaultAddressResult);
+
+        // Include address details as hidden fields
+        echo '<input type="hidden" name="selectedAddressId" value="' . $defaultAddress['address_id'] . '">';
+        echo '<input type="hidden" name="selectedAddressFullname" value="' . $defaultAddress['fullname'] . '">';
+        echo '<input type="hidden" name="selectedAddressNumber" value="' . $defaultAddress['number'] . '">';
+        echo '<input type="hidden" name="selectedAddressRegion" value="' . $defaultAddress['region'] . '">';
+        echo '<input type="hidden" name="selectedAddressProvince" value="' . $defaultAddress['province'] . '">';
+        echo '<input type="hidden" name="selectedAddressCity" value="' . $defaultAddress['city'] . '">';
+        echo '<input type="hidden" name="selectedAddressBarangay" value="' . $defaultAddress['barangay'] . '">';
+        echo '<input type="hidden" name="selectedAddressZip" value="' . $defaultAddress['zip'] . '">';
+        echo '<input type="hidden" name="selectedAddressStreet" value="' . $defaultAddress['street'] . '">';
+
+        // Display the default address
+        echo 'Select an Address:<br>';
+        echo '<input type="radio" name="selectedAddress" value="' . $defaultAddress['address_id'] . '" checked> ' . $defaultAddress['fullname'] . ', ' . $defaultAddress['number'] . ', ' . $defaultAddress['region'] . ', ' . $defaultAddress['province'] . ', ' . $defaultAddress['city'] . ', ' . $defaultAddress['barangay'] . ', ' . $defaultAddress['zip'] . ', ' . $defaultAddress['street'] . '<br>';
+
+        // Display the other addresses
+        while ($row = mysqli_fetch_assoc($otherAddressesResult)) {
+            echo '<input type="radio" name="selectedAddressId" value="' . $row['address_id'] . '"> ' . $row['fullname'] . ', ' . $row['number'] . ', ' . $row['region'] . ', ' . $row['province'] . ', ' . $row['city'] . ', ' . $row['barangay'] . ', ' . $row['zip'] . ', ' . $row['street'] . '<br>';
+        }
+    } else {
+        echo "No addresses found for this user.";
+    }
+
     echo '<button type="submit">Buy</button>';
     echo '</form>';
 } else {

@@ -25,6 +25,15 @@
     $query = "SELECT built_game_id, game_id, creator_id, price, is_published FROM built_games WHERE built_game_id = '$built_game_id'";
     $result = mysqli_query($conn, $query);
 
+    // Fetch category data from the categories table
+    $query_categories = "SELECT category_id, category_name FROM categories";
+    $result_categories = mysqli_query($conn, $query_categories);
+
+    // Check if there are categories available
+    if (mysqli_num_rows($result_categories) > 0) {
+        $categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
+    }
+
     if (mysqli_num_rows($result) > 0) {
         $gameInfo = mysqli_fetch_assoc($result);
 
@@ -63,6 +72,17 @@
 
         <label for="game_name">Final Publishing Game Name:</label><br>
         <input type="text" id="game_name" name="game_name"><br>
+
+        <label for="category">Category:</label><br>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <?php
+            // Loop through the categories and populate the dropdown
+            foreach ($categories as $category) {
+                echo '<option value="' . $category['category_id'] . '">' . $category['category_name'] . '</option>';
+            }
+            ?>
+        </select><br>
 
         <label for="edition">Edition:</label><br>
         <input type="text" id="edition" name="edition"><br>
@@ -120,7 +140,7 @@
 
             <label for="desired_markup">Desired Markup:</label>
             <input type="number" name="desired_markup" id="desired_markup" required>
-            
+
             <!-- Hidden input fields to store calculated values -->
             <label for="manufacturer_profit">STKR:</label>
             <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>

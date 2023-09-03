@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
         echo 'Built Game ID: ' . $currentGameInfo['built_game_id'] . '<br>';
 
         echo 'Game Name: ' . $currentGameInfo['game_name'] . '<br>';
+        echo 'Category: ' . $currentGameInfo['category'] . '<br>';
         echo '<p>Edition: ' . $currentGameInfo['edition'] . '</p>';
         echo '<p>Age ID: ' . $currentGameInfo['age_id'] . '</p>';
         echo '<p>Short Description: ' . $currentGameInfo['short_description'] . '</p>';
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
         echo 'Built Game ID: ' . $pendingGameInfo['built_game_id'] . '<br>';
 
         echo 'Game Name: ' . $pendingGameInfo['game_name'] . '<br>';
+        echo 'category: ' . $pendingGameInfo['category'] . '<br>';
         echo 'Edition: ' . $pendingGameInfo['edition'] . '<br>';
         echo 'Age ID: ' . $pendingGameInfo['age_id'] . '<br>';
         echo 'Short Description: ' . $pendingGameInfo['short_description'] . '<br>';
@@ -68,7 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
     // Update the values in the published_built_games table
     $updateQuery = "
             UPDATE published_built_games
-            SET game_name = '{$pendingGameInfo['game_name']}',
+                SET game_name = '{$pendingGameInfo['game_name']}',
+                category = '{$pendingGameInfo['category']}',    
                 edition = '{$pendingGameInfo['edition']}',
                 age_id = '{$pendingGameInfo['age_id']}',
                 short_description = '{$pendingGameInfo['short_description']}',

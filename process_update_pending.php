@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $built_game_id = $_POST['built_game_id'];
     $creator_id = $_POST['creator_id'];
     $game_name = $_POST['game_name'];
+    $category = $_POST['category'];
     $edition = $_POST['edition'];
     $published_date = date('Y-m-d'); // Current date
     $age_id = $_POST['age'];
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     if (move_uploaded_file($logo_file['tmp_name'], $logo_path)) {
         // Logo upload successful
         // Insert data into the published_built_games table
-        $insertQuery = "INSERT INTO pending_update_published_built_games (published_built_game_id, built_game_id, game_name, edition, published_date, creator_id, age_id, short_description, long_description, logo_path, website, min_players, max_players, min_playtime, max_playtime, desired_markup, manufacturer_profit, creator_profit, marketplace_price) VALUES ('$published_built_game_id', '$built_game_id', '$game_name', '$edition', '$published_date', '$creator_id', '$age_id', '$short_description', '$long_description', '$logo_path', '$website', '$min_players', '$max_players', '$min_playtime', '$max_playtime', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price')";
+        $insertQuery = "INSERT INTO pending_update_published_built_games (published_built_game_id, built_game_id, game_name, category, edition, published_date, creator_id, age_id, short_description, long_description, logo_path, website, min_players, max_players, min_playtime, max_playtime, desired_markup, manufacturer_profit, creator_profit, marketplace_price) VALUES ('$published_built_game_id', '$built_game_id', '$game_name', '$category', '$edition', '$published_date', '$creator_id', '$age_id', '$short_description', '$long_description', '$logo_path', '$website', '$min_players', '$max_players', '$min_playtime', '$max_playtime', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price')";
 
         if (mysqli_query($conn, $insertQuery)) {
             // Retrieve the generated published_built_game_id

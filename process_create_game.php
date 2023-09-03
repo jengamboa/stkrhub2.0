@@ -6,16 +6,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the user input
     $name = $_POST['name'];
     $description = $_POST['description'];
-    $category = $_POST['category'];
 
     // Prepare the SQL query with placeholders
-    $insert_query = "INSERT INTO games (name, description, category, user_id) VALUES (?, ?, ?, ?)";
+    $insert_query = "INSERT INTO games (name, description, user_id) VALUES (?, ?, ?)";
 
     // Prepare the statement
     $stmt = mysqli_prepare($conn, $insert_query);
 
     // Bind the parameters to the statement
-    mysqli_stmt_bind_param($stmt, "sssi", $name, $description, $category, $_SESSION['user_id']);
+    mysqli_stmt_bind_param($stmt, "ssi", $name, $description, $_SESSION['user_id']);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
