@@ -18,10 +18,14 @@
     <table id="userTable" class="display">
         <thead>
             <tr>
+                <th>Added Component ID</th>
+                <th>Component ID</th>
                 <th>Component Name</th>
                 <th>Price</th>
                 <th>Category</th>
-                <th>Game ID</th>
+                <th>Quantity</th>
+                <th>Info</th>
+                <th>Modify</th>
             </tr>
         </thead>
         <tbody>
@@ -31,27 +35,49 @@
 
 
     <?php
-    $game_id = '34';
+    $user_id = '3';
+    $game_id = '44';
     ?>
 
     <!-- Custom JavaScript -->
     <script>
-        $(document).ready(function () {
-            var game_id = <?php echo $game_id; ?>; // Corrected PHP syntax
+        $(document).ready(function() {
+            var user_id = <?php echo $user_id; ?>; 
+            var game_id = <?php echo $game_id; ?>; 
 
             $('#userTable').DataTable({
                 "ajax": {
                     "url": "fetch_users.php",
                     data: {
-                        game_id: game_id,
+                        user_id: user_id,
+                        game_id: game_id,                        
                     },
                     "dataSrc": ""
                 },
-                "columns": [
-                    { "data": "component_name" },
-                    { "data": "price" },
-                    { "data": "category" },
-                    { "data": "gameID" },
+                "columns": [{
+                        "data": "added_component_id"
+                    },
+                    {
+                        "data": "component_id"
+                    },
+                    {
+                        "data": "component_name"
+                    },
+                    {
+                        "data": "price"
+                    },
+                    {
+                        "data": "category"
+                    },
+                    {
+                        "data": "edit_quantity"
+                    },
+                    {
+                        "data": "info"
+                    },
+                    {
+                        "data": "modify"
+                    },
                 ]
             });
         });
