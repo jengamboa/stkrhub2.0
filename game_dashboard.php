@@ -42,6 +42,9 @@
         <p>
             <?php echo $game['description']; ?>
         </p>
+        <p>Game ID:
+            <?php echo $game['game_id']; ?>
+        </p>
         <p>Category:
             <?php echo $game['category']; ?>
         </p>
@@ -153,7 +156,7 @@
             <input type="hidden" name="game_name" value="<?php echo $game['name']; ?>">
             <input type="submit" name="add_custom_component" value="Add Custom Game Component">
 
-            
+
         </form>
 
         <script>

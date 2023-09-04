@@ -36,7 +36,7 @@
 
     <?php
     $user_id = '3';
-    $game_id = '44';
+    $game_id = '47';
     ?>
 
     <!-- Custom JavaScript -->

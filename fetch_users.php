@@ -65,15 +65,29 @@ while ($added_game_components = $result->fetch_assoc()) {
                 data-componentprice="' . $price . '"
                 data-componentcategory="' . $category . '"
                 data-filepath="' . $custom_design_file_path . '"
-                data-gamename="' . $game_name . '"
                 data-addedcomponentid="' . $added_component_id . '"
-
             >
                 Update Custom Design
             </button>
         ';
     } elseif ($added_game_components['color_id']) {
-        $modify = "color id";
+        $getColors = "SELECT color_name FROM component_colors WHERE component_id = '$component_id'";
+        $sqlGetColors = $conn->query($getColors);
+    
+        $colorsArray = array();
+    
+        while ($fetchedColors = $sqlGetColors->fetch_assoc()) {
+            $color_name = $fetchedColors['color_name'];
+    
+            // Create the link using the color_name
+            $link = '<a href="' . $color_name . '">' . $color_name . '</a>';
+    
+            $colorsArray[] = array(
+                'color_link' => $link,
+            );
+        }
+    
+        $modify = $colorsArray;
     } else {
         $modify = "else";
     }
