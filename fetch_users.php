@@ -71,26 +71,53 @@ while ($added_game_components = $result->fetch_assoc()) {
             </button>
         ';
     } elseif ($added_game_components['color_id']) {
-        $getColors = "SELECT color_name FROM component_colors WHERE component_id = '$component_id'";
+        $getColors = "SELECT color_id, color_name FROM component_colors WHERE component_id = '$component_id'";
         $sqlGetColors = $conn->query($getColors);
-    
-        $colorsArray = array();
-    
+
+        $color_names = array();
+        $color_ids = array();
+
         while ($fetchedColors = $sqlGetColors->fetch_assoc()) {
-            $color_name = $fetchedColors['color_name'];
-    
-            // Create the link using the color_name
-            $link = '<a href="' . $color_name . '">' . $color_name . '</a>';
-    
-            $colorsArray[] = array(
-                'color_link' => $link,
-            );
+            $color_ids[] = $fetchedColors['color_id'];
+            $color_names[] = $fetchedColors['color_name'];
         }
-    
-        $modify = $colorsArray;
+
+        if (!empty($color_names) && !empty($color_ids)) {
+            $buttons = array();
+
+            foreach ($color_names as $index => $color_name) {
+                $color_id = $color_ids[$index];
+
+                $buttons[] = '
+                    <button
+                        type="button" 
+                        class="color-link"
+                        data-gameid="' . $game_id . '"
+                        data-componentid="' . $component_id . '"
+                        data-colorid="' . $color_id . '"
+                        data-addedcomponentid="' . $added_component_id . '"
+                    >
+                        "' . $color_name . '"
+                    </button>
+                ';
+            }
+
+            $modify = implode(" ", $buttons);
+        }
     } else {
         $modify = "else";
     }
+
+    $delete = '
+        <button
+            class="delete-component"
+            data-gameid="' . $game_id . '"
+            data-componentid= "' . $added_component_id . '"
+        >
+            Delete
+        </button>
+    ';
+
 
     $json[] = array(
         "added_component_id" => $added_component_id,
@@ -101,6 +128,7 @@ while ($added_game_components = $result->fetch_assoc()) {
         "edit_quantity" => $edit_quantity,
         "info" => $info,
         "modify" => $modify,
+        "delete" => $delete,
     );
 }
 

@@ -69,7 +69,10 @@ $result = mysqli_query($conn, $query);
             <?php
             while ($game = mysqli_fetch_assoc($result)) {
                 echo '<li>';
-                echo '<a href="game_dashboard.php?game_id=' . $game['game_id'] . '">' . $game['name'] . '</a>';
+
+                echo '<a href="dump_ui.php?game_id=' . $game['game_id'] . '">' . $game['name'] . '</a>';
+
+                // echo '<a href="game_dashboard.php?game_id=' . $game['game_id'] . '">' . $game['name'] . '</a>';
                 echo '<br> Total Price: $' . calculateTotalPrice($game['game_id']); // Call the function here
             
                 echo '<form method="post" action="process_build_game.php">';

@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id']) && isset($_G
 
         // You can perform additional actions or redirect as needed
         // For example, redirect back to the game dashboard with a success message
-        header("Location: game_dashboard.php?game_id=$game_id&success=true");
+        header("Location: dump_ui.php?game_id=$game_id&success=true");
         exit();
     } else {
         echo "Error updating color: " . mysqli_error($conn);
