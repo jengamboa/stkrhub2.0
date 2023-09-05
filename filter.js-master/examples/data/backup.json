@@ -1,0 +1,42 @@
+[
+    {
+      "name": "Yojimbos",
+      "outline": "A crafty ronin comes to a town divided by two criminal gangs and decides to play them against each other to free the town.",
+      "rating": 0,
+      "director": "Akira Kurosawa",
+      "year": 1961,
+      "stars": [
+        "Toshirô Mifune",
+        "Eijirô Tôno",
+        "Tatsuya Nakadai"
+      ],
+      "runtime": 100,
+      "genre": [
+        "Action"
+      ],
+      "certificate": "TV_MA",
+      "date": "1981-08-02T10:29:29+05:30",
+      "actor": "Toshirô Mifune",
+      "id": 250
+    },
+    {
+      "name": "Yojimbobos",
+      "outline": "A crafty ronin comes to a town divided by two criminal gangs and decides to play them against each other to free the town.",
+      "rating": 8.4,
+      "director": "Akira Kurosawa",
+      "year": 1961,
+      "stars": [
+        "Toshirô Mifune",
+        "Eijirô Tôno",
+        "Tatsuya Nakadai"
+      ],
+      "runtime": 110,
+      "genre": [
+        "Adventure"
+      ],
+      "certificate": "TV_MA",
+      "date": "1981-08-02T10:29:29+05:30",
+      "actor": "Toshirô Mifune",
+      "id": 250
+    }
+  ]

@@ -96,7 +96,7 @@ $result_cart = mysqli_query($conn, $query_cart);
                     console.error('Error updating quantity:', error);
                 }
             });
-    }
+        }
     </script>
     <script>
         $(document).ready(function () {
@@ -118,7 +118,7 @@ $result_cart = mysqli_query($conn, $query_cart);
                     }
                 });
             });
-    });
+        });
     </script>
 </body>
 

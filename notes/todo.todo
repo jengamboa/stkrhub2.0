@@ -12,6 +12,7 @@ USER:
 ☐ price set
 ☐ user profile feed (list of all published games)
 ☐ report table for plagiarism
+☐ sa process ng pag build/edit ng published games, sa category dapat ung category name na hindi category_id
 
 cart:
     ☐ address

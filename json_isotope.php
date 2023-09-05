@@ -1,11 +1,41 @@
 <?php
-// Your PHP logic to fetch and process data
+// Simulate generating JSON data dynamically
 $data = array(
-    array("id" => 1, "name" => "Item 1", "category" => "category1", "image" => "image1.jpg"),
-    array("id" => 2, "name" => "Item 2", "category" => "category2", "image" => "image2.jpg"),
-    // Add more data here
+    "items" => array(
+        array(
+            "name" => "Item 1",
+            "category" => "filter-class1"
+        ),
+        array(
+            "name" => "Item 2",
+            "category" => "filter-class2"
+        ),
+        array(
+            "name" => "Item 3",
+            "category" => "filter-class1"
+        ),
+        // Add more items as needed
+    ),
+    "buttons" => array(
+        array(
+            "text" => "All",
+            "filter" => "*"
+        ),
+        array(
+            "text" => "Category 1",
+            "filter" => ".filter-class1"
+        ),
+        array(
+            "text" => "Category 2",
+            "filter" => ".filter-class2"
+        )
+        // Add more buttons as needed
+    )
 );
 
-header('Content-Type: application/json');
+// Set the response content type to JSON
+header("Content-Type: application/json");
+
+// Encode the data as JSON and send it as the response
 echo json_encode($data);
 ?>
