@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2023 at 02:08 PM
+-- Generation Time: Sep 05, 2023 at 03:59 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,7 +47,7 @@ INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component
 (314, 36, 3, 0, NULL, 2, 3, '7x7', 3),
 (315, NULL, 3, 0, NULL, 4, 2, '7x7', 3),
 (316, NULL, 3, 0, NULL, 7, 2, '7x7', 3),
-(317, 34, 3, 0, NULL, 3, 1, '7x7', 3),
+(317, 34, 3, 0, NULL, 3, 2, '7x7', 3),
 (318, NULL, 3, 0, NULL, 22, 1, '7x7', 3),
 (319, 38, 3, 0, NULL, 7, 3, '7x7', 3),
 (320, 38, 1, 1, 'uploads/AUTHORS', 25, NULL, '7x7', 3),
@@ -71,7 +71,50 @@ INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component
 (341, NULL, 2, 0, '', 1, NULL, '7x7', 7),
 (342, NULL, 4, 0, '', 1, NULL, '10x10', 7),
 (343, NULL, 4, 0, '', 1, NULL, '10x10', 7),
-(344, NULL, 1, 1, 'uploads/stkrhub_db.sql', 1, NULL, '7x7', 7);
+(344, NULL, 1, 1, 'uploads/stkrhub_db.sql', 1, NULL, '7x7', 7),
+(345, 44, 3, 0, NULL, 99, 2, '7x7', 3),
+(346, NULL, 2, 0, '', 1, NULL, '7x7', 3),
+(347, NULL, 2, 0, '', 1, NULL, '7x7', 3),
+(348, NULL, 2, 0, '', 1, NULL, '7x7', 3),
+(349, 47, 1, 1, 'uploads/old published multiple files.png', 2, NULL, '7x7', 3),
+(350, 47, 3, 0, NULL, 3, 2, '7x7', 3),
+(351, 47, 4, 0, '', 4, NULL, '10x10', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `address_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `number` varchar(20) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `province` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `barangay` varchar(255) NOT NULL,
+  `zip` varchar(10) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `addresses`
+--
+
+INSERT INTO `addresses` (`address_id`, `user_id`, `fullname`, `number`, `region`, `province`, `city`, `barangay`, `zip`, `street`, `is_default`, `created_at`) VALUES
+(1, 3, 'Denzel Go', '09770257461', 'NCR', 'NCR', 'Valenzuela City', 'asdgasd', '1440', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:17:11'),
+(2, 3, 'Denzel Go', '09770257461', 'NCR', 'NCR', 'Valenzuela City', 'asdgasd', '1440', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:19:26'),
+(3, 3, 'Denzel Goasdj', '09770257461', 'NCR', 'NCR', 'Valenzuela City', 'asdgasd', '1440', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:19:42'),
+(4, 3, 'Denzel Go', '09770257461', 'NCR', 'NCR', 'Valenzuela City', '132', '123', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:21:36'),
+(5, 3, 'Denzel Go', 'asd', 'NCR', 'asd', 'Valenzuela City', 'asd', 'asd', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:21:50'),
+(6, 3, 'Denzel Go', 'sasd', 'NCR', 'as', 'Valenzuela City', 'asd', '123', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:23:28'),
+(7, 3, 'Denzel Go', 'qwe', 'NCR', 'dasd', 'Valenzuela City', 'asd', 'asd', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:23:40'),
+(8, 3, 'Denzel Go', 'asd', 'NCR', 'asd', 'Valenzuela City', 'asd', 'asd', '8 Doneza St. Balubaran Malinta', 1, '2023-09-03 06:23:53'),
+(9, 3, 'Full Name', 'number', 'region', 'province', 'city', 'barangay', 'zip', 'street', 0, '2023-09-03 12:45:31');
 
 -- --------------------------------------------------------
 
@@ -135,27 +178,30 @@ CREATE TABLE `built_games` (
 --
 
 INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_published`, `price`) VALUES
-(27, 34, 'game 1', 'desc', 3, '2023-08-12 20:59:20', 0, 0, 1, 0, 0, 0.00),
-(28, 34, 'game 1', 'desc', 3, '2023-08-12 20:59:51', 0, 0, 1, 0, 0, 0.00),
-(29, 34, 'game 1', 'desc', 3, '2023-08-12 21:00:33', 0, 0, 0, 0, 0, 12.00),
-(30, 34, 'game 1', 'desc', 3, '2023-08-12 21:01:01', 0, 0, 0, 0, 0, 12.00),
-(31, 34, 'game 1', 'desc', 3, '2023-08-12 21:05:05', 0, 0, 0, 0, 0, 12.00),
-(32, 34, 'game 1', 'desc', 3, '2023-08-12 21:06:02', 0, 0, 0, 0, 0, 12.00),
-(33, 34, 'game 1', 'desc', 3, '2023-08-12 21:08:32', 0, 0, 0, 0, 0, 23.00),
-(34, 34, 'game 1', 'desc', 3, '2023-08-12 21:13:29', 0, 0, 1, 1, 1, 23.00),
-(35, 35, 'jeric', 'asd', 4, '2023-08-14 22:56:10', 0, 0, 1, 1, 1, 0.00),
-(36, 36, 'hehe', 'hehe', 3, '2023-08-15 06:51:35', 0, 0, 1, 1, 1, 0.00),
-(37, 38, 'dice game', 'action', 3, '2023-08-19 13:31:19', 0, 0, 0, 0, 0, 7.00),
-(38, 38, 'dice game', 'action', 3, '2023-08-19 13:37:47', 0, 0, 0, 0, 0, 19.00),
-(39, 38, 'dice game', 'action', 3, '2023-08-19 14:35:48', 0, 0, 1, 1, 1, 19.00),
-(40, 35, 'jeric', 'asd', 4, '2023-08-25 22:01:40', 0, 0, 1, 1, 1, 24.00),
-(41, 37, 'hehe', 'hehe', 4, '2023-08-25 22:17:18', 0, 0, 1, 1, 1, 33.00),
-(42, 39, 'frielle', 'frielles game', 3, '2023-08-27 13:40:36', 0, 0, 1, 1, 1, 21.00),
-(43, 40, 'fau\'s game', 'wala lng', 7, '2023-08-30 11:08:43', 0, 0, 1, 1, 0, 0.00),
-(45, 41, 'jennica\'s Game', 'aksjdkasjd', 8, '2023-08-30 13:36:20', 0, 0, 1, 1, 0, 1089.00),
-(46, 42, 'Snake and Ladders', 'jashdjasd', 9, '2023-08-30 14:38:33', 0, 0, 1, 1, 0, 133.00),
-(47, 43, 'blah balh game', 'aksdjasd', 3, '2023-08-31 13:42:41', 0, 0, 1, 1, 0, 0.00),
-(48, 43, 'blah balh game', 'aksdjasd', 3, '2023-08-31 14:00:07', 0, 0, 1, 1, 0, 1500.00);
+(27, 34, 'game 1', NULL, 3, '2023-08-12 20:59:20', 0, 0, 1, 0, 0, 0.00),
+(28, 34, 'game 1', NULL, 3, '2023-08-12 20:59:51', 0, 0, 1, 0, 0, 0.00),
+(29, 34, 'game 1', NULL, 3, '2023-08-12 21:00:33', 0, 0, 0, 0, 0, 12.00),
+(30, 34, 'game 1', NULL, 3, '2023-08-12 21:01:01', 0, 0, 0, 0, 0, 12.00),
+(31, 34, 'game 1', NULL, 3, '2023-08-12 21:05:05', 0, 0, 0, 0, 0, 12.00),
+(32, 34, 'game 1', NULL, 3, '2023-08-12 21:06:02', 0, 0, 0, 0, 0, 12.00),
+(33, 34, 'game 1', NULL, 3, '2023-08-12 21:08:32', 0, 0, 0, 0, 0, 23.00),
+(34, 34, 'game 1', NULL, 3, '2023-08-12 21:13:29', 0, 0, 1, 1, 1, 23.00),
+(35, 35, 'jeric', NULL, 4, '2023-08-14 22:56:10', 0, 0, 1, 1, 1, 0.00),
+(36, 36, 'hehe', NULL, 3, '2023-08-15 06:51:35', 0, 0, 1, 1, 1, 0.00),
+(37, 38, 'dice game', NULL, 3, '2023-08-19 13:31:19', 0, 0, 0, 0, 0, 7.00),
+(38, 38, 'dice game', NULL, 3, '2023-08-19 13:37:47', 0, 0, 0, 0, 0, 19.00),
+(39, 38, 'dice game', NULL, 3, '2023-08-19 14:35:48', 0, 0, 1, 1, 1, 19.00),
+(40, 35, 'jeric', NULL, 4, '2023-08-25 22:01:40', 0, 0, 1, 1, 1, 24.00),
+(41, 37, 'hehe', NULL, 4, '2023-08-25 22:17:18', 0, 0, 1, 1, 1, 33.00),
+(42, 39, 'frielle', NULL, 3, '2023-08-27 13:40:36', 0, 0, 1, 1, 1, 21.00),
+(43, 40, 'fau\'s game', NULL, 7, '2023-08-30 11:08:43', 0, 0, 1, 1, 0, 0.00),
+(45, 41, 'jennica\'s Game', NULL, 8, '2023-08-30 13:36:20', 0, 0, 1, 1, 0, 1089.00),
+(46, 42, 'Snake and Ladders', NULL, 9, '2023-08-30 14:38:33', 0, 0, 1, 1, 0, 133.00),
+(47, 43, 'blah balh game', NULL, 3, '2023-08-31 13:42:41', 0, 0, 1, 1, 0, 0.00),
+(48, 43, 'blah balh game', NULL, 3, '2023-08-31 14:00:07', 0, 0, 1, 1, 1, 1500.00),
+(49, 44, 'Snake and Ladders', NULL, 3, '2023-09-03 13:46:47', 1, 0, 0, 0, 0, 693.00),
+(50, 45, 'ITO AY GAME', NULL, 3, '2023-09-03 22:07:18', 0, 0, 0, 1, 0, 0.00),
+(51, 47, 'asdasd', ',m,mm', 3, '2023-09-03 22:18:15', 0, 0, 0, 1, 1, 0.00);
 
 -- --------------------------------------------------------
 
@@ -199,7 +245,8 @@ INSERT INTO `built_games_added_game_components` (`added_component_id`, `built_ga
 (252, 45, 41, 2, 1, 'uploads/Moises.docx', 99, 0, '7x7'),
 (253, 46, 42, 3, 0, '', 7, 3, '7x7'),
 (254, 46, 42, 1, 1, 'uploads/Moises.docx', 7, 0, '7x7'),
-(255, 48, 43, 4, 0, '', 14, 0, '10x10');
+(255, 48, 43, 4, 0, '', 14, 0, '10x10'),
+(256, 49, 44, 3, 0, '', 99, 2, '7x7');
 
 -- --------------------------------------------------------
 
@@ -224,22 +271,6 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`) VALUES
-(29, 3, NULL, 34, 34, NULL, 1, 23.00, 0),
-(30, 3, NULL, 34, 34, NULL, 1, 23.00, 0),
-(32, 3, NULL, 36, 36, NULL, 1, 0.00, 0),
-(33, 3, NULL, 36, 36, NULL, 1, 0.00, 0),
-(34, 3, NULL, 34, 34, NULL, 1, 23.00, 0),
-(39, 3, NULL, 34, 34, NULL, 2, 23.00, 0),
-(51, 4, NULL, 34, 34, NULL, 1, 23.00, 0),
-(77, 3, NULL, 38, 39, NULL, 1, 19.00, 0),
-(78, 4, NULL, 35, 35, NULL, 1, 0.00, 0),
-(79, 4, NULL, 35, 40, NULL, 2, 24.00, 0),
-(80, 3, NULL, 39, 42, NULL, 1, 21.00, 0),
-(81, 4, NULL, 35, 35, NULL, 1, 0.00, 0),
-(86, 8, NULL, 41, 45, NULL, 1, 1089.00, 0),
-(88, 8, NULL, NULL, NULL, 331, 1, 14.00, 1),
-(89, 9, NULL, 42, 46, NULL, 1, 133.00, 0),
-(90, 9, NULL, NULL, NULL, 334, 1, 12.00, 1),
 (100, 3, NULL, NULL, NULL, 339, 2, 11.00, 0),
 (101, 3, NULL, 34, 27, NULL, 1, 0.00, 0),
 (102, 3, 128, NULL, NULL, NULL, 1, 2500.00, 0),
@@ -249,7 +280,33 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built
 (114, 7, NULL, NULL, NULL, 344, 3, 12.00, 0),
 (115, 7, 128, NULL, NULL, NULL, 4, 2500.00, 0),
 (116, 3, 128, NULL, NULL, NULL, 1, 2500.00, 0),
-(117, 3, 128, NULL, NULL, NULL, 3, 2500.00, 1);
+(117, 3, 128, NULL, NULL, NULL, 3, 2500.00, 0),
+(118, 3, NULL, NULL, NULL, 346, 1, 11.00, 0),
+(119, 3, NULL, NULL, NULL, 347, 1, 11.00, 0),
+(120, 3, NULL, NULL, NULL, 348, 1, 11.00, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `category_id` int(11) NOT NULL,
+  `category_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `category_name`) VALUES
+(1, 'board games'),
+(2, 'card games'),
+(3, 'dice games'),
+(4, 'promotional'),
+(5, 'RPGs'),
+(6, 'War Games');
 
 -- --------------------------------------------------------
 
@@ -355,8 +412,7 @@ INSERT INTO `dropzone_published_uploads` (`upload_id`, `creator_id`, `built_game
 CREATE TABLE `games` (
   `game_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `category` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `is_built` tinyint(4) DEFAULT 0
@@ -366,17 +422,21 @@ CREATE TABLE `games` (
 -- Dumping data for table `games`
 --
 
-INSERT INTO `games` (`game_id`, `name`, `description`, `category`, `user_id`, `created_at`, `is_built`) VALUES
-(34, 'game 1', 'desc', 'action', 3, '2023-08-12 20:59:18', 0),
-(35, 'jeric', 'asd', 'asd', 4, '2023-08-14 22:38:12', 0),
-(36, 'hehe', 'hehe', 'hehe', 3, '2023-08-15 06:51:33', 0),
-(37, 'hehe', 'hehe', 'hehe', 4, '2023-08-16 15:10:01', 0),
-(38, 'dice game', 'action', 'action', 3, '2023-08-19 13:30:55', 0),
-(39, 'frielle', 'frielles game', 'kids', 3, '2023-08-27 13:40:14', 0),
-(40, 'fau\'s game', 'wala lng', 'haha', 7, '2023-08-30 11:07:16', 0),
-(41, 'jennica\'s Game', 'aksjdkasjd', 'action', 8, '2023-08-30 13:21:54', 0),
-(42, 'Snake and Ladders', 'jashdjasd', 'kids', 9, '2023-08-30 14:36:49', 0),
-(43, 'blah balh game', 'aksdjasd', 'action', 3, '2023-08-31 13:42:16', 0);
+INSERT INTO `games` (`game_id`, `name`, `description`, `user_id`, `created_at`, `is_built`) VALUES
+(34, 'game 1', NULL, 3, '2023-08-12 20:59:18', 0),
+(35, 'jeric', NULL, 4, '2023-08-14 22:38:12', 0),
+(36, 'hehe', NULL, 3, '2023-08-15 06:51:33', 0),
+(37, 'hehe', NULL, 4, '2023-08-16 15:10:01', 0),
+(38, 'dice game', NULL, 3, '2023-08-19 13:30:55', 0),
+(39, 'frielle', NULL, 3, '2023-08-27 13:40:14', 0),
+(40, 'fau\'s game', NULL, 7, '2023-08-30 11:07:16', 0),
+(41, 'jennica\'s Game', NULL, 8, '2023-08-30 13:21:54', 0),
+(42, 'Snake and Ladders', NULL, 9, '2023-08-30 14:36:49', 0),
+(43, 'blah balh game', NULL, 3, '2023-08-31 13:42:16', 0),
+(44, 'Snake and Ladders', NULL, 3, '2023-09-03 13:46:10', 0),
+(45, 'ITO AY GAME', NULL, 3, '2023-09-03 22:03:20', 0),
+(46, 'fau\'s game', NULL, 3, '2023-09-03 22:15:44', 0),
+(47, 'asdasd', ',m,mm', 3, '2023-09-03 22:16:46', 0);
 
 -- --------------------------------------------------------
 
@@ -471,23 +531,39 @@ CREATE TABLE `orders` (
   `desired_markup` decimal(10,2) DEFAULT NULL,
   `manufacturer_profit` decimal(10,2) DEFAULT NULL,
   `creator_profit` decimal(10,2) DEFAULT NULL,
-  `marketplace_price` decimal(10,2) DEFAULT NULL
+  `marketplace_price` decimal(10,2) DEFAULT NULL,
+  `is_rated` tinyint(1) DEFAULT 0,
+  `fullname` varchar(255) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `barangay` varchar(255) DEFAULT NULL,
+  `zip` varchar(10) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `published_game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_pending`, `in_production`, `is_finished`, `to_ship`, `to_deliver`, `is_received`, `is_canceled`, `is_completely_canceled`, `order_date`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`) VALUES
-(32, 105, 7, NULL, NULL, 340, 1, 0.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 17:44:14', NULL, NULL, NULL, NULL),
-(33, 106, 7, NULL, NULL, 341, 12, 0.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 18:03:24', NULL, NULL, NULL, NULL),
-(34, 113, 7, NULL, 43, NULL, 2, 0.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 20:03:59', NULL, NULL, NULL, NULL),
-(35, 114, 7, NULL, NULL, 344, 3, 12.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 20:03:59', NULL, NULL, NULL, NULL),
-(36, 115, 7, 128, NULL, NULL, 4, 2500.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 20:03:59', NULL, NULL, NULL, NULL),
-(37, 100, 3, NULL, NULL, 339, 2, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 22:33:33', NULL, NULL, NULL, NULL),
-(38, 101, 3, NULL, 27, NULL, 1, 0.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 22:33:33', NULL, NULL, NULL, NULL),
-(39, 102, 3, 128, NULL, NULL, 1, 2500.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-31 22:33:33', 1000.00, 200.00, 800.00, 2500.00),
-(40, 116, 3, 128, NULL, NULL, 1, 2500.00, 0, 1, 0, 1, 1, 1, 1, 0, '2023-08-31 22:33:33', 1000.00, 200.00, 800.00, 2500.00);
+INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `published_game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_pending`, `in_production`, `is_finished`, `to_ship`, `to_deliver`, `is_received`, `is_canceled`, `is_completely_canceled`, `order_date`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`, `is_rated`, `fullname`, `number`, `region`, `province`, `city`, `barangay`, `zip`, `street`) VALUES
+(40, 116, 3, 128, NULL, NULL, 1, 2500.00, 0, 1, 0, 1, 1, 1, 1, 0, '2023-08-31 22:33:33', 1000.00, 200.00, 800.00, 2500.00, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(41, 117, 3, 128, NULL, NULL, 3, 2500.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:00:26', 1000.00, 200.00, 800.00, 2500.00, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(42, 118, 3, NULL, NULL, 346, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:04:01', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(43, 118, 3, NULL, NULL, 346, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:04:22', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(44, 118, 3, NULL, NULL, 346, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:04:29', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 118, 3, NULL, NULL, 346, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:04:36', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 119, 3, NULL, NULL, 347, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:09:22', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(47, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:11:26', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(48, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:14:50', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(49, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:15:08', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(50, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:15:26', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(51, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:17:39', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(52, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:17:47', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(53, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:18:20', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(54, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:20:00', NULL, NULL, NULL, NULL, 0, 'Denzel Go', 'asd', 'NCR', 'asd', 'Valenzuela City', 'asd', 'asd', '8 Doneza St. Balubaran Malinta'),
+(55, 120, 3, NULL, NULL, 348, 1, 11.00, 1, 0, 0, 0, 0, 0, 0, 0, '2023-09-03 21:27:35', NULL, NULL, NULL, NULL, 0, 'Denzel Go', 'asd', 'NCR', 'asd', 'Valenzuela City', 'asd', 'asd', '8 Doneza St. Balubaran Malinta');
 
 -- --------------------------------------------------------
 
@@ -500,6 +576,7 @@ CREATE TABLE `pending_update_published_built_games` (
   `published_built_game_id` int(11) DEFAULT NULL,
   `built_game_id` int(11) DEFAULT NULL,
   `game_name` varchar(255) DEFAULT NULL,
+  `category` text DEFAULT NULL,
   `edition` varchar(50) DEFAULT NULL,
   `published_date` date DEFAULT NULL,
   `creator_id` int(11) DEFAULT NULL,
@@ -543,6 +620,7 @@ CREATE TABLE `published_built_games` (
   `published_game_id` int(11) NOT NULL,
   `built_game_id` int(11) NOT NULL,
   `game_name` varchar(255) NOT NULL,
+  `category` text DEFAULT NULL,
   `edition` varchar(255) NOT NULL,
   `published_date` datetime NOT NULL DEFAULT current_timestamp(),
   `creator_id` int(11) NOT NULL,
@@ -566,9 +644,9 @@ CREATE TABLE `published_built_games` (
 -- Dumping data for table `published_built_games`
 --
 
-INSERT INTO `published_built_games` (`published_game_id`, `built_game_id`, `game_name`, `edition`, `published_date`, `creator_id`, `age_id`, `short_description`, `long_description`, `website`, `logo_path`, `min_players`, `max_players`, `min_playtime`, `max_playtime`, `has_pending_update`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`) VALUES
-(126, 43, '4444', '4444', '2023-08-30 00:00:00', 7, 3, '444', '444', 'https://youtube.com', 'uploads/64ef5fed12c57_old published multiple files.png', 444, 444, 44, 44, 0, NULL, NULL, NULL, NULL),
-(128, 48, 'huhu', 'huhu', '2023-08-31 00:00:00', 3, 1, '77', '77', 'https://www.figma.com/file/DjBLsWy8ezwSHS3rPOj9Es/STKR-HUB?type=design&node-id=2-811&mode=design&t=4vXOGWFOjXgzU5bl-0', 'uploads/64f04b866fd71_old published multiple files.png', 77, 7777, 77, 777, 0, 1000.00, 200.00, 800.00, 2500.00);
+INSERT INTO `published_built_games` (`published_game_id`, `built_game_id`, `game_name`, `category`, `edition`, `published_date`, `creator_id`, `age_id`, `short_description`, `long_description`, `website`, `logo_path`, `min_players`, `max_players`, `min_playtime`, `max_playtime`, `has_pending_update`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`) VALUES
+(128, 48, 'huhu', NULL, 'huhu', '2023-08-31 00:00:00', 3, 1, '77', '77', 'https://www.figma.com/file/DjBLsWy8ezwSHS3rPOj9Es/STKR-HUB?type=design&node-id=2-811&mode=design&t=4vXOGWFOjXgzU5bl-0', 'uploads/64f04b866fd71_old published multiple files.png', 77, 7777, 77, 777, 0, 1000.00, 200.00, 800.00, 2500.00),
+(130, 48, 'bago', '6', 'bago', '2023-09-03 00:00:00', 3, 3, 'sad', 'asd', 'https://facebook.com', 'uploads/64f4a19c89462_Untitled.png', 123, 123, 123, 123, 0, 1000.00, 200.00, 800.00, 2500.00);
 
 -- --------------------------------------------------------
 
@@ -589,12 +667,33 @@ CREATE TABLE `published_multiple_files` (
 --
 
 INSERT INTO `published_multiple_files` (`published_file_id`, `published_built_game_id`, `built_game_id`, `creator_id`, `file_path`) VALUES
-(149, 126, 43, 0, 'uploads/64ef5fed1653f_The Good Planet_Photo Booth.jpg'),
-(150, 126, 43, 0, 'uploads/64ef5fed18fcb_The Good Planet_Name Tag.jpg'),
-(159, 128, 48, 0, 'uploads/64f04b867282b_364353604_1415770232322177_2196495488147212945_n.jpg'),
-(160, 128, 48, 0, 'uploads/64f04b8672d65_364348955_822568686038268_9047415702064368025_n.jpg'),
-(161, 128, 48, 0, 'uploads/64f04b8673211_364357856_264667576337088_261786029898253528_n.jpg'),
-(162, 128, 48, 0, 'uploads/64f04b867367c_359269401_680584827253160_1374356000048144840_n.jpg');
+(167, 130, 48, 0, 'uploads/64f4a19c8ec7e_Untitled.png'),
+(168, 130, 48, 0, 'uploads/64f4a19c8f6b2_stkrhub_db.sql'),
+(169, 130, 48, 0, 'uploads/64f4a2eedb717_Untitled.png'),
+(170, 130, 48, 0, 'uploads/64f4a2eedd2c9_stkrhub_db.sql');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `rating_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `published_game_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `comment` text DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`rating_id`, `order_id`, `published_game_id`, `rating`, `comment`, `user_id`, `date_time`) VALUES
+(4, 40, 128, 1, 'aa', 3, '2023-09-02 12:51:57');
 
 -- --------------------------------------------------------
 
@@ -729,7 +828,13 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (84, 7, 'login', '2023-08-31 09:36:13'),
 (85, 3, 'login', '2023-08-31 12:15:28'),
 (86, 3, 'login', '2023-08-31 13:58:38'),
-(87, 3, 'login', '2023-09-02 09:37:17');
+(87, 3, 'login', '2023-09-02 09:37:17'),
+(88, 3, 'login', '2023-09-02 12:14:12'),
+(89, 3, 'login', '2023-09-03 05:40:21'),
+(90, 3, 'login', '2023-09-03 14:37:32'),
+(91, 3, 'login', '2023-09-03 22:25:17'),
+(92, 3, 'login', '2023-09-04 12:51:57'),
+(93, 3, 'login', '2023-09-04 18:51:30');
 
 -- --------------------------------------------------------
 
@@ -765,6 +870,13 @@ ALTER TABLE `added_game_components`
   ADD KEY `game_id` (`game_id`),
   ADD KEY `component_id` (`component_id`),
   ADD KEY `FK_added_game_components_color` (`color_id`);
+
+--
+-- Indexes for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`address_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `admin_review_response`
@@ -806,6 +918,12 @@ ALTER TABLE `cart`
   ADD KEY `FK_cart_added_game_components` (`added_component_id`),
   ADD KEY `FK_cart_games` (`game_id`),
   ADD KEY `FK_cart_users` (`user_id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`);
 
 --
 -- Indexes for table `component_assets`
@@ -895,6 +1013,15 @@ ALTER TABLE `published_multiple_files`
   ADD PRIMARY KEY (`published_file_id`);
 
 --
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`rating_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `published_game_id` (`published_game_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -920,7 +1047,13 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=345;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=352;
+
+--
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `admin_review_response`
@@ -938,19 +1071,25 @@ ALTER TABLE `age`
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
 --
 ALTER TABLE `built_games_added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `component_assets`
@@ -980,7 +1119,7 @@ ALTER TABLE `dropzone_published_uploads`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `game_components`
@@ -1004,31 +1143,37 @@ ALTER TABLE `markup_percentage`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `pending_update_published_built_games`
 --
 ALTER TABLE `pending_update_published_built_games`
-  MODIFY `pending_update_published_built_games_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `pending_update_published_built_games_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `pending_update_published_multiple_files`
 --
 ALTER TABLE `pending_update_published_multiple_files`
-  MODIFY `pending_update_published_multiple_files_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `pending_update_published_multiple_files_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `published_multiple_files`
 --
 ALTER TABLE `published_multiple_files`
-  MODIFY `published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `rating_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1040,7 +1185,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
@@ -1059,6 +1204,12 @@ ALTER TABLE `added_game_components`
   ADD CONSTRAINT `FK_added_game_components_color` FOREIGN KEY (`color_id`) REFERENCES `component_colors` (`color_id`),
   ADD CONSTRAINT `added_game_components_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `added_game_components_ibfk_2` FOREIGN KEY (`component_id`) REFERENCES `game_components` (`component_id`);
+
+--
+-- Constraints for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `admin_review_response`
@@ -1129,6 +1280,14 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `published_built_games`
   ADD CONSTRAINT `published_built_games_ibfk_1` FOREIGN KEY (`age_id`) REFERENCES `age` (`age_id`);
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`published_game_id`) REFERENCES `published_built_games` (`published_game_id`),
+  ADD CONSTRAINT `ratings_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
