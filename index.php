@@ -42,7 +42,7 @@
 
     <?php
     include 'connection.php';
-    include 'html/page_header.php';
+    include 'html/page_header2.php';
     ?>
 
     <?php
@@ -58,9 +58,6 @@
                 <div class="col-lg-12">
                     <div class="active-banner-slider owl-carousel">
                         <!-- single-slide -->
-
-
-                        
                         <?php
                         // Loop through the fetched data and generate banners
                         while ($row = $result->fetch_assoc()) {
@@ -97,7 +94,7 @@
     </section>
     <!-- End banner Area -->
 
-    
+
 
     <!-- start features Area -->
     <section class="features-area section_gap">
@@ -145,7 +142,7 @@
                 </div>
             </div>
         </div>
-        
+
     </section>
     <!-- end features Area -->
 

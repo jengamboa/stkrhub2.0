@@ -48,8 +48,15 @@ while ($added_game_components = $result->fetch_assoc()) {
         $sqlGetColorName = $conn->query($getColorName);
         $fetchedColorName = $sqlGetColorName->fetch_assoc();
         $color_name = $fetchedColorName['color_name'];
+        $color_code = $fetchedColorName['color_code'];
 
-        $info = $color_name;
+        $info = '
+            <p
+                style="color: '. $color_code .' ;"
+            >
+                '. $color_name .'
+            </p>
+        ';
     } else {
         $info = "N/A";
     }
@@ -71,7 +78,7 @@ while ($added_game_components = $result->fetch_assoc()) {
             </button>
         ';
     } elseif ($added_game_components['color_id']) {
-        $getColors = "SELECT color_id, color_name FROM component_colors WHERE component_id = '$component_id'";
+        $getColors = "SELECT * FROM component_colors WHERE component_id = '$component_id'";
         $sqlGetColors = $conn->query($getColors);
 
         $color_names = array();
@@ -80,6 +87,7 @@ while ($added_game_components = $result->fetch_assoc()) {
         while ($fetchedColors = $sqlGetColors->fetch_assoc()) {
             $color_ids[] = $fetchedColors['color_id'];
             $color_names[] = $fetchedColors['color_name'];
+            $color_codes[] = $fetchedColors['color_code'];
         }
 
         if (!empty($color_names) && !empty($color_ids)) {
@@ -87,6 +95,7 @@ while ($added_game_components = $result->fetch_assoc()) {
 
             foreach ($color_names as $index => $color_name) {
                 $color_id = $color_ids[$index];
+                $color_code = $color_codes[$index];
 
                 $buttons[] = '
                     <button
@@ -96,8 +105,10 @@ while ($added_game_components = $result->fetch_assoc()) {
                         data-componentid="' . $component_id . '"
                         data-colorid="' . $color_id . '"
                         data-addedcomponentid="' . $added_component_id . '"
+
+                        style="background-color: '. $color_code .' ;"
                     >
-                        "' . $color_name . '"
+                        _
                     </button>
                 ';
             }
