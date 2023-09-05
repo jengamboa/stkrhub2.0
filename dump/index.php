@@ -1,187 +1,295 @@
-<!-- edit game page.php -->
+<!-- game_dashboard.php -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample File Pond Server Implementation</title>
-
-    <!-- Filepond Css -->
-    <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.min.css" rel="stylesheet">
+    <title>Game Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
-    <?php
-    include 'connection.php';
-    include 'html/header.html.php';
+    <div id="contentContainer">
+        <?php
+        include 'connection.php';
+        include 'html/header.html.php';
 
-    $built_game_id = $_GET['built_game_id']; // Retrieve the built_game_id from the URL parameter
-    
-    $query = "SELECT built_game_id, game_id, creator_id, price, is_published FROM built_games WHERE built_game_id = '$built_game_id'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) > 0) {
-        $gameInfo = mysqli_fetch_assoc($result);
-
-        echo '<h2>Edit Game Page</h2>';
-        echo '<p>Built Game ID: ' . $gameInfo['built_game_id'] . '</p>';
-        echo '<p>Game ID: ' . $gameInfo['game_id'] . '</p>';
-        echo '<p>Creator ID: ' . $gameInfo['creator_id'] . '</p>';
-        echo '<p>Price: $' . $gameInfo['price'] . '</p>';
-
-        // Echo the value of the is_published column
-        echo '<p>Is Published: ' . ($gameInfo['is_published'] == 1 ? 'Yes' : 'No') . '</p>';
-
-        // Redirect if is_published is equal to 1
-        if ($gameInfo['is_published'] == 1) {
-            header("Location: purchased_built_games_page.php");
+        // Check if the user is logged in. If not, redirect to the login page.
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: login.php");
             exit;
         }
 
-        // Display the rest of your form
-        // ...
-    } else {
-        echo '<p>No information found for the provided built game ID.</p>';
-    }
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
+            $game_id = $_GET['game_id'];
 
-    ?>
-    <!-- <form method="post" action="dump_process.php" enctype="multipart/form-data"> -->
-    <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data">
+            // Retrieve the game details from the "games" table
+            $query = "SELECT * FROM games WHERE game_id = '$game_id' AND user_id = '{$_SESSION['user_id']}'";
+            $result = mysqli_query($conn, $query);
+            $game = mysqli_fetch_assoc($result);
 
-        <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
-        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>">
-        <!-- Add this line -->
+            // Retrieve the added game components for this game from the "added_game_components" table
+            $query_components = "SELECT agc.added_component_id, agc.color_id, gc.component_id, gc.component_name, gc.price, gc.category, agc.is_custom_design, agc.custom_design_file_path, agc.quantity FROM added_game_components agc INNER JOIN game_components gc ON agc.component_id = gc.component_id WHERE agc.game_id = '$game_id'";
+            $result_components = mysqli_query($conn, $query_components);
+        }
+        ?>
 
-        <!-- Rest of your form inputs -->
+        <h2>Game Dashboard</h2>
 
-        <label for="game_name">Final Publishing Game Name:</label><br>
-        <input type="text" id="game_name" name="game_name"><br>
+        <h3>
+            <?php echo $game['name']; ?>
+        </h3>
+        <p>
+            <?php echo $game['description']; ?>
+        </p>
+        <p>Game ID:
+            <?php echo $game['game_id']; ?>
+        </p>
+        <p>Category:
+            <?php echo $game['category']; ?>
+        </p>
+        <p>Total Price:
+            <?php echo calculateTotalPrice($game_id); ?>
+        </p>
 
-        <label for="edition">Edition:</label><br>
-        <input type="text" id="edition" name="edition"><br>
+        <h4>Added Components</h4>
+        <table id="componentsTable" class="display">
+            <thead>
+                <tr>
+                    <th>Component Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Edit Quantity</th>
+                    <th>Info</th>
+                    <th>Modify</th>
+                    <th>Delete Component</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($component = mysqli_fetch_assoc($result_components)) { ?>
+                    <tr>
+                        <td>
+                            <?php echo $component['component_name']; ?>
+                        </td>
+                        <td>
+                            <?php echo $component['price']; ?>
+                        </td>
+                        <td>
+                            <?php echo $component['category']; ?>
+                        </td>
+                        <td>
+                            <input type="number" class="quantity-input" data-gameid="<?php echo $game_id; ?>"
+                                data-componentid="<?php echo $component['added_component_id']; ?>"
+                                value="<?php echo max(1, min(99, $component['quantity'])); ?>" min="1" max="99">
+                        </td>
 
-        <!-- number of players -->
-        <label for="min_players">Number of Players (Minimum):</label><br>
-        <input type="number" id="min_players" name="min_players" required><br>
+                        <td class="info-cell">
+                            <?php
 
-        <label for="max_players">Number of Players (Maximum):</label><br>
-        <input type="number" id="max_players" name="max_players" required><br>
+                            if ($component['custom_design_file_path']) {
+                                // Display the custom design filepath if available
+                                echo basename($component['custom_design_file_path']);
+                            } elseif ($component['color_id']) {
+                                // Retrieve the color details from the "component_colors" table
+                                $query_color = "SELECT color_name FROM component_colors WHERE color_id = '{$component['color_id']}'";
+                                $result_color = mysqli_query($conn, $query_color);
+                                $color = mysqli_fetch_assoc($result_color);
+                                if ($color) {
+                                    echo $color['color_name'];
+                                }
+                            } else {
+                                echo "No Info";
+                            }
+                            ?>
+                        </td>
 
-        <!-- play time -->
-        <label for="min_playtime">Play Time (Minimum):</label><br>
-        <input type="number" id="min_playtime" name="min_playtime" required><br>
+                        <td class="modify-cell">
+                            <?php if ($component['custom_design_file_path']) { ?>
+                                <!-- Add the Update Custom Design button -->
+                                <button class="update-design" data-gameid="<?php echo $game_id; ?>"
+                                    data-componentid="<?php echo $component['added_component_id']; ?>"
+                                    data-componentname="<?php echo $component['component_name']; ?>"
+                                    data-componentprice="<?php echo $component['price']; ?>"
+                                    data-componentcategory="<?php echo $component['category']; ?>"
+                                    data-filepath="<?php echo $component['custom_design_file_path']; ?>"
+                                    data-filename="<?php echo basename($component['custom_design_file_path']); ?>"
+                                    data-gamename="<?php echo $game['name']; ?>"
+                                    data-addedcomponentid="<?php echo $component['added_component_id']; ?>">Update Custom
+                                    Design</button>
+                            <?php } elseif ($component['color_id']) { ?>
+                                <?php
+                                // Retrieve the component_id and component_name
+                                $component_id = $component['component_id'];
+                                $added_component_id = $component['added_component_id'];
+                                $component_name = $component['component_name'];
 
-        <label for="max_playtime">Play Time (Maximum):</label><br>
-        <input type="number" id="max_playtime" name="max_playtime" required><br>
+                                // Retrieve all color options for the component from the component_colors table
+                                $query_colors = "SELECT color_id, color_name FROM component_colors WHERE component_id = '$component_id'";
+                                $result_colors = mysqli_query($conn, $query_colors);
+                                ?>
 
-        <!-- Age dropdown -->
-        <label for="age">Age:</label><br>
-        <select id="age" name="age">
-            <?php
-            // Retrieve age values from the Age table and populate the dropdown
-            $ageQuery = "SELECT * FROM age";
-            $ageResult = mysqli_query($conn, $ageQuery);
+                                <div class="color-links">
+                                    <!-- Echo out all available colors as clickable links -->
+                                    <?php while ($color = mysqli_fetch_assoc($result_colors)) { ?>
+                                        <a class="color-link" href="#" data-gameid="<?php echo $game_id; ?>"
+                                            data-componentid="<?php echo $component_id; ?>"
+                                            data-colorid="<?php echo $color['color_id']; ?>"
+                                            data-addedcomponentid="<?php echo $added_component_id; ?>">
+                                            <?php echo $color['color_name']; ?>
+                                        </a>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                        </td>
 
-            while ($ageRow = mysqli_fetch_assoc($ageResult)) {
-                echo '<option value="' . $ageRow['age_id'] . '">' . $ageRow['age_value'] . '</option>';
-            }
-            ?>
-        </select><br>
+                        <td>
+                            <button class="delete-component" data-gameid="<?php echo $game_id; ?>"
+                                data-componentid="<?php echo $component['added_component_id']; ?>">Delete</button>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
 
-        <!-- others -->
-        <label for="short_description">Short Description:</label><br>
-        <textarea id="short_description" name="short_description" required></textarea><br>
+        <form method="post" action="add_custom_component.php">
+            <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
+            <input type="hidden" name="game_name" value="<?php echo $game['name']; ?>">
+            <input type="submit" name="add_custom_component" value="Add Custom Game Component">
 
-        <label for="long_description">Long Description:</label><br>
-        <textarea id="long_description" name="long_description" required></textarea><br>
 
-        <label for="website">Website:</label><br>
-        <input type="url" id="website" name="website"><br>
+        </form>
 
-        <label for="logo">Game Logo:</label><br>
-        <input type="file" id="logo" name="logo" required><br>
+        <script>
+            $(document).ready(function () {
 
-        <div id="fileContainer">
-            <!-- Multiple -->
-            <label for="order_position_1">File 1:</label>
-            <input type="file" id="order_position_1" name="multiple_files[]" class="filepond" required><br>
+                // Handle color link clicks
+                $('.color-link').click(function (e) {
+                    e.preventDefault();
 
-            <label for="order_position_2">File 2:</label>
-            <input type="file" id="order_position_2" name="multiple_files[]" class="filepond" required><br>
+                    var game_id = $(this).data('gameid');
+                    var component_id = $(this).data('componentid');
+                    var color_id = $(this).data('colorid');
+                    var added_component_id = $(this).data('addedcomponentid');
 
-            <label for="order_position_3">File 3:</label>
-            <input type="file" id="order_position_3" name="multiple_files[]" class="filepond" required><br>
-
-            <label for="order_position_4">File 4:</label>
-            <input type="file" id="order_position_4" name="multiple_files[]" class="filepond" required><br>
-        </div>
-
-        <button type="button" id="addFileButton">Add More File</button>
-
-        <!-- Repeat for files 3 to 10 -->
-
-        <button type="submit" name="update">Publish Game</button>
-
-    </form>
-
-    <script src="https://unpkg.com/filepond@4.28.2/dist/filepond.min.js"></script>
-    <script>
-        const addFileButton = document.querySelector('button[type="button"]'); // Select the button
-        const fileContainer = document.getElementById("fileContainer");
-
-        let orderPosition = 4; // Starting order_position for additional files
-
-        addFileButton.addEventListener("click", function () {
-            if (orderPosition <= 10) {
-                const newLabel = document.createElement("label");
-                newLabel.textContent = `File ${orderPosition}:`;
-
-                const newInput = document.createElement("input");
-                newInput.type = "file";
-                newInput.name = "multiple_files[]";
-                newInput.className = "filepond";
-
-                const br = document.createElement("br");
-
-                fileContainer.appendChild(newLabel);
-                fileContainer.appendChild(newInput);
-                fileContainer.appendChild(br);
-
-                // Initialize FilePond for the new input element
-                FilePond.create(newInput, {
-                    allowMultiple: false, // Each input handles a single file
-                    allowReplace: true,
-                    allowRemove: true,
-                    allowBrowse: true,
-                    storeAsFile: true,
-                    required: false, // Set required to false for the new input
+                    // Send AJAX request to process_update_color.php
+                    $.ajax({
+                        type: 'GET',
+                        url: 'process_update_color.php',
+                        data: {
+                            game_id: game_id,
+                            component_id: component_id,
+                            color_id: color_id,
+                            added_component_id: added_component_id
+                        },
+                        success: function (response) {
+                            // Handle the response if needed
+                            console.log(response);
+                        },
+                        error: function (error) {
+                            // Handle errors if needed
+                            console.error(error);
+                        }
+                    });
                 });
 
-                orderPosition++;
-            }
-        });
 
-        // Initialize FilePond for each individual input element
-        const inputElements = document.querySelectorAll('input[type="file"].filepond');
-        inputElements.forEach(inputElement => {
-            FilePond.create(inputElement, {
-                allowMultiple: false, // Each input handles a single file
-                allowReplace: true,
-                allowRemove: true,
-                allowBrowse: true,
-                storeAsFile: true,
-                required: true,
+                // Listen for update custom design button click
+                $('.update-design').click(function () {
+                    var game_id = $(this).data('gameid');
+                    var component_id = $(this).data('componentid');
+                    var component_name = $(this).data('componentname');
+                    var component_price = $(this).data('componentprice');
+                    var component_category = $(this).data('componentcategory');
+                    var file_path = $(this).data('filepath');
+                    var file_name = $(this).data('filename');
+                    var game_name = $(this).data('gamename');
+                    var added_component_id = $(this).data('addedcomponentid'); // Retrieve added_component_id
+
+                    // Redirect to the update_custom_design.php page with the necessary parameters
+                    window.location.href = 'update_custom_design.php?game_id=' + game_id +
+                        '&component_id=' + component_id +
+                        '&component_name=' + encodeURIComponent(component_name) +
+                        '&component_price=' + component_price +
+                        '&component_category=' + encodeURIComponent(component_category) +
+                        '&file_path=' + encodeURIComponent(file_path) +
+                        '&file_name=' + encodeURIComponent(file_name) +
+                        '&game_name=' + encodeURIComponent(game_name) +
+                        '&added_component_id=' + added_component_id; // Pass added_component_id
+                });
+
+
+
+                // Initialize DataTables
+                $('#componentsTable').DataTable();
+
+                // Listen for changes to quantity input
+                $('.quantity-input').change(function () {
+                    var game_id = $(this).data('gameid');
+                    var component_id = $(this).data('componentid');
+                    var quantity = $(this).val();
+
+                    // Send AJAX request to update_quantity.php
+                    $.ajax({
+                        type: 'POST',
+                        url: 'update_quantity.php',
+                        data: {
+                            game_id: game_id,
+                            added_component_id: component_id,
+                            quantity: quantity
+                        },
+                        success: function (response) {
+                            console.log(response);
+                        }
+                    });
+                });
+
+                // Listen for delete button click
+                $('.delete-component').click(function () {
+                    var game_id = $(this).data('gameid');
+                    var component_id = $(this).data('componentid');
+
+                    // Send AJAX request to delete_component.php
+                    $.ajax({
+                        type: 'POST',
+                        url: 'delete_component.php',
+                        data: {
+                            game_id: game_id,
+                            added_component_id: component_id
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            // Reload the page after successful deletion
+                            location.reload();
+                        }
+                    });
+                });
             });
-        });
+        </script>
+        <?php
+        // Function to calculate the total price of the game based on added components
+        function calculateTotalPrice($game_id)
+        {
+            global $conn;
 
-    </script>
+            $total_price = 0;
 
+            // Retrieve the added game components for this game from the "added_game_components" table
+            $query_components = "SELECT gc.price, agc.quantity FROM added_game_components agc
+                        INNER JOIN game_components gc ON agc.component_id = gc.component_id
+                        WHERE agc.game_id = '$game_id'";
+            $result_components = mysqli_query($conn, $query_components);
 
+            // Calculate the total price by summing up the prices of all added components, considering quantity
+            while ($component = mysqli_fetch_assoc($result_components)) {
+                $total_price += $component['price'] * $component['quantity'];
+            }
 
-
+            return $total_price;
+        }
+        ?>
+    </div>
 </body>
 
 </html>
