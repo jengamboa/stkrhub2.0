@@ -20,17 +20,23 @@
   <link rel="stylesheet" href="../../css/nouislider.min.css">
   <link rel="stylesheet" href="../../css/bootstrap.css">
   <link rel="stylesheet" href="../../css/main.css">
+
+  <style>
+    <?php
+    include '../../css/body.css';
+    ?>
+  </style>
 </head>
 
 <body>
   <div class="container">
-    <h1 class="title">FILTER.JS</h1>
+
     <div class="sidebar col-md-3">
       <div>
-        <h4 class='col-md-6'>Movies (<span id="total_movies">0</span>)</h4>
-        <div class="col-md-6 progress">
-          <div class="progress-bar" id="stream_progress" style="width: 0%;">0%</div>
-        </div>
+        <h4 class='col-md-6'>
+          Movies
+          <!-- (<span id="total_movies">0</span>) -->
+        </h4>
       </div>
       <div>
         <label class="sr-only" for="searchbox">Search</label>
@@ -38,6 +44,17 @@
         <span class="glyphicon glyphicon-search search-icon"></span>
       </div>
       <br>
+
+      <div class="well">
+        <fieldset id="stars_criteria">
+          <legend>Price</legend>
+          <span id="stars_range_label" class="slider-label">0 - 2500</span>
+          <div id="stars_slider" class="slider">
+          </div>
+          <input type="hidden" id="stars_filter" value="0-2500">
+        </fieldset>
+      </div>
+
       <div class="well">
         <fieldset id="rating_criteria">
           <legend>Rating</legend> <span id="rating_range_label" class="slider-label">0 - 5</span>
@@ -46,6 +63,7 @@
           <input type="hidden" id="rating_filter" value="0-5">
         </fieldset>
       </div>
+
       <div class="well">
         <fieldset id="runtime_criteria">
           <legend>Runtime</legend> <span id="runtime_range_label" class="slider-label">50 mins - 250 mins</span>
@@ -93,11 +111,10 @@
               echo '</div>';
             }
           }
-
           ?>
-
         </fieldset>
       </div>
+
     </div>
 
     <!-- /.col-md-3 -->
@@ -118,6 +135,9 @@
   <script id="movie-template" type="text/html">
     <div class="col-md-4 movie">
 
+
+
+
       <!-- single item -->
       <div class="thumbnail" style="border: 5px solid red;">
       
@@ -127,6 +147,8 @@
         
         <div class="caption">
           <h4><%= name %></h4>
+
+          <!-- hover -->
           <div class="outline">
             <%= outline %>
             <span class="runtime">
@@ -134,15 +156,14 @@
               <%= runtime %> mins.
             </span>
           </div>
+          <!-- !-hover -->
+
         </div>
             
         <div class="detail">
           <dl>
-            <dt>Director</dt>
-            <dd><%= director %></dd>
-            <dt>Actors</dt>
-            <dd><%= stars %></dt>
-            <dt>Year</dt>
+            <dd>Creator ID: <%= director %></dd>
+            <dd>Price: <%= stars %></dt>
             <dd><%= year %></dd>
           </dl>
         </div>
@@ -150,7 +171,41 @@
       </div> 
       <!-- /single item -->
 
+
+
+
+
+
     </div>  
+
+    <!-- single product -->
+    <div class="col-lg-4 col-md-6" style="border: 5px solid yellow;">
+      <div class="single-product" style="border: 5px solid green;">
+          <img class="img-fluid" src="../../img/product/p1.jpg" alt="">
+          <div class="product-details">
+              <h6>addidas New Hammer sole
+                  for Sports person
+              </h6>
+              <div class="price">
+                  <h6>$150.00</h6>
+                  <h6 class="l-through">$210.00</h6>
+              </div>
+              <div class="prd-bottom">
+
+                  <a href="" class="social-info">
+                      <span class="ti-bag"></span>
+                      <p class="hover-text">add to bag</p>
+                  </a>
+
+                  <a href="" class="social-info">
+                      <span class="lnr lnr-move"></span>
+                      <p class="hover-text">view more</p>
+                  </a>
+              </div>
+          </div>
+      </div>
+    </div>
+                        
   </script>
 
   <script id="genre_template" type="text/html">

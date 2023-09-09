@@ -19,7 +19,7 @@
 
     <!--
             CSS
-            ============================================= -->
+              =============================================     -->
     <link rel="stylesheet" href="css/linearicons.css">
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -29,37 +29,112 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         <?php
         include 'css/body.css';
         ?>
+
+        @import url(https://fonts.googleapis.com/css?family=Raleway);
+
+
+
+
+        .content {
+            position: relative;
+
+
+        }
+
+        .content-overlay {
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            opacity: 0;
+            -webkit-transition: all 0.4s ease-in-out 0s;
+            -moz-transition: all 0.4s ease-in-out 0s;
+            transition: all 0.4s ease-in-out 0s
+        }
+
+        .content:hover .content-overlay {
+            opacity: 1
+        }
+
+        img {
+            box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+            border-radius: 5px
+        }
+
+        .content-details {
+            position: absolute;
+            text-align: center;
+            padding-left: 1em;
+            padding-right: 1em;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            opacity: 0;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            -webkit-transition: all 0.3s ease-in-out 0s;
+            -moz-transition: all 0.3s ease-in-out 0s;
+            transition: all 0.3s ease-in-out 0s
+        }
+
+        .content:hover .content-details {
+            top: 50%;
+            left: 50%;
+            opacity: 1
+        }
+
+        .content-details h3 {
+            color: #fff;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5em;
+            text-transform: uppercase
+        }
+
+        .content-details p {
+            color: #fff;
+            font-size: 0.8em
+        }
+
+        .fadeIn-bottom {
+            top: 70%
+        }
     </style>
+
 </head>
 
 <body id="category">
 
-<?php
-include 'connection.php';
-include 'html/page_header2.php';
-?>
+    <?php
+    include 'connection.php';
+    include 'html/page_header2.php';
+    ?>
 
     <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
-        <!-- <div class="container">
+        <div class="container">
             <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
                 <div class="col-first">
-                    <h1>Shop Category page</h1>
+                    <!-- <h1>Shop Category page</h1>
                     <nav class="d-flex align-items-center">
                         <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
                         <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
                         <a href="category.html">Fashon Category</a>
-                    </nav>
+                    </nav> -->
                 </div>
             </div>
-        </div> -->
+        </div>
     </section>
     <!-- End Banner Area -->
-    
+
+
     <div class="container">
         <div class="row">
             <div class="col-xl-3 col-lg-4 col-md-5">
@@ -102,7 +177,7 @@ include 'html/page_header2.php';
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li class="main-nav-list"><a class="border-bottom-0" data-toggle="collapse" href="#babyCare"
                                 aria-expanded="false" aria-controls="babyCare"><span
                                     class="lnr lnr-arrow-right"></span>Baby Care<span class="number">(48)</span></a>
@@ -179,171 +254,6 @@ include 'html/page_header2.php';
             <div class="col-xl-9 col-lg-8 col-md-7">
                 <!-- Start Filter Bar -->
                 <div class="filter-bar d-flex flex-wrap align-items-center">
-                    <div class="sorting">
-                        asd
-                    </div>
-                    
-                    
-                </div>
-                <!-- End Filter Bar -->
-                <!-- Start Best Seller -->
-                <section class="lattest-product-area pb-40 category-list">
-                    <div class="row">
-                        <!-- single product -->
-                        <div class="col-lg-4 col-md-6" style="border: 5px solid yellow;">
-                            <div class="single-product" style="border: 5px solid green;">
-                                <img class="img-fluid" src="img/product/p1.jpg" alt="">
-                                <div class="product-details">
-                                    <h6>addidas New Hammer sole
-                                        for Sports person
-                                    </h6>
-                                    <div class="price">
-                                        <h6>$150.00</h6>
-                                        <h6 class="l-through">$210.00</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-
-                                        <a href="" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- single product -->
-                        <div class="col-lg-4 col-md-6" style="border: 5px solid yellow;">
-                            <div class="single-product" style="border: 5px solid green;">
-                                <img class="img-fluid" src="img/product/p1.jpg" alt="">
-                                <div class="product-details">
-                                    <h6>addidas New Hammer sole
-                                        for Sports person</h6>
-                                    <div class="price">
-                                        <h6>$150.00</h6>
-                                        <h6 class="l-through">$210.00</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-
-                                        <a href="" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- single product -->
-                        <div class="col-lg-4 col-md-6" style="border: 5px solid yellow;">
-                            <div class="single-product" style="border: 5px solid green;">
-                                <img class="img-fluid" src="img/product/p1.jpg" alt="">
-                                <div class="product-details">
-                                    <h6>addidas New Hammer sole
-                                        for Sports person</h6>
-                                    <div class="price">
-                                        <h6>$150.00</h6>
-                                        <h6 class="l-through">$210.00</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-
-                                        <a href="" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- single product -->
-                        <div class="col-lg-4 col-md-6" style="border: 5px solid yellow;">
-                            <div class="single-product" style="border: 5px solid green;">
-                                <img class="img-fluid" src="img/product/p1.jpg" alt="">
-                                <div class="product-details">
-                                    <h6>addidas New Hammer sole
-                                        for Sports person</h6>
-                                    <div class="price">
-                                        <h6>$150.00</h6>
-                                        <h6 class="l-through">$210.00</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-
-                                        <a href="" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- single product -->
-                        <div class="col-lg-4 col-md-6">
-                            <div class="single-product">
-                                <img class="img-fluid" src="img/product/p3.jpg" alt="">
-                                <div class="product-details">
-                                    <h6>addidas New Hammer sole
-                                        for Sports person</h6>
-                                    <div class="price">
-                                        <h6>$150.00</h6>
-                                        <h6 class="l-through">$210.00</h6>
-                                    </div>
-                                    <div class="prd-bottom">
-
-                                        <a href="" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-heart"></span>
-                                            <p class="hover-text">Wishlist</p>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-sync"></span>
-                                            <p class="hover-text">compare</p>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- End Best Seller -->
-                
-                <!-- Start Filter Bar -->
-                <div class="filter-bar d-flex flex-wrap align-items-center">
-                    <div class="sorting mr-auto">
-                        <select>
-                            <option value="1">Show 12</option>
-                            <option value="1">Show 12</option>
-                            <option value="1">Show 12</option>
-                        </select>
-                    </div>
                     <div class="pagination">
                         <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
                         <a href="#" class="active">1</a>
@@ -353,7 +263,92 @@ include 'html/page_header2.php';
                         <a href="#">6</a>
                         <a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                     </div>
+
+
                 </div>
+                <!-- End Filter Bar -->
+
+                <!-- Start Best Seller -->
+                <section class="lattest-product-area pb-40 category-list">
+                    <div class="row">
+
+
+                        <!-- single product -->
+                        <div class="col-lg-4 col-md-7" style="border: 5px solid yellow; ">
+
+
+
+
+                            <div class="single-product" style="border: 5px solid green;">
+
+                                <div class="content">
+                                    <div class="content-overlay" style="height: 132px; width: 100%;"></div>
+
+                                    <img src="img/16x9.jpg" class="card-img-top" alt="..."
+                                        style="height: 132px !important; width: 100%;">
+
+                                    <div class="content-details fadeIn-bottom">
+                                        <p class="card-subtitle mb-2 text-muted h6" style="font-size: 0.58rem;">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta praesentium
+                                            veniam quod sint maxime hic quia voluptatibus exercitationem, dolores
+                                            corporis! Excepturi explicabo porro dignissimos aliquam molestiae id labore
+                                            amet in?
+                                        </p>
+
+                                        <i class="fa-solid fa-clock"></i>
+                                        <small>mins</small>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-details">
+                                    <div>
+                                        <i class="fa fa-star text-primary"></i>
+
+                                        <span class="rating-number">4.8 <span class="rating-count">(20)</span></span>
+
+                                        <h5 class="card-title">The Star on the shine and the boom boom
+                                            powasdjadskjkjasdasd</h5>
+                                    </div>
+
+                                    <div>
+                                        <h6 class="card-subtitle mb-2 text-muted"><small>Creator</small></h6>
+                                        <h6 class="card-subtitle mb-2 text-muted"><small>Date Published</small></h6>
+                                    </div>
+
+
+
+                                    <span class="lnr"
+                                        style="color: #26d3e0; padding-left: 5px; padding-right: 5px; border-radius: 10%;">
+                                        <i class="fa-solid fa-peso-sign"> 10,000</i>
+                                    </span>
+
+                                    <div class="prd-bottom">
+
+                                        <a href="" class="social-info">
+                                            <span class="ti-bag"></span>
+                                            <p class="hover-text">add to bag</p>
+                                        </a>
+
+                                        <a href="" class="social-info view">
+                                            <span class="lnr lnr-move"></span>
+                                            <p class="hover-text">View</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </section>
+                <!-- End Best Seller -->
+
+
+                <!-- Start Filter Bar -->
+
                 <!-- End Filter Bar -->
             </div>
         </div>
@@ -535,8 +530,8 @@ include 'html/page_header2.php';
                                             type="text">
                                     </div>
 
-                                    <!-- <div class="col-lg-4 col-md-4">
-                                                    <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+                                    <!--    <div class = "col-lg-4 col-md-4">
+                                    <button class      = "bb-btn btn"><span class = "lnr lnr-arrow-right"></span></button>
                                                 </div>  -->
                                 </div>
                                 <div class="info"></div>

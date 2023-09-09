@@ -56,7 +56,7 @@ $(document).ready(function(){
   });
 
   FJS.setStreaming({
-    data_url: 'data/json_published_games.php',
+    data_url: 'json_published_games.php',
     stream_after: 1,
     batch_size: 50
   });

@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 
 // Replace 'your_username', 'your_password', and 'your_database_name' with your actual database credentials
