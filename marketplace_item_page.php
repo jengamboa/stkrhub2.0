@@ -16,38 +16,131 @@
     <meta charset="UTF-8">
     <!-- Site Title -->
     <title>Karma Shop</title>
-    <!--
-            CSS
-            ============================================= -->
-    <link rel="stylesheet" href="css/linearicons.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/nouislider.min.css">
-    <link rel="stylesheet" href="css/ion.rangeSlider.css" />
-    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
-    <link rel="stylesheet" href="css/main.css">
+    
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css?<?php echo time(); ?>" />
 
 
+
+
+    <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
+
+    <!-- Demo styles -->
     <style>
         <?php
-            include 'css/body.css';
+        include 'css/body.css';
         ?>
+
+        .swiper-container {
+            position: relative;
+            height: 480px;
+        }
+
+        .swiper-container {
+            
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .mySwiper2 {
+            height: 80%;
+            width: 100%;
+        }
+
+        .mySwiper {
+            height: 20%;
+            box-sizing: border-box;
+            padding: 10px 0;
+        }
+
+        .mySwiper .swiper-slide {
+            width: 25%;
+            height: 100%;
+            opacity: 0.4;
+        }
+
+        .mySwiper .swiper-slide-thumb-active {
+            opacity: 1;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper-slide .img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        p {
+            color: #A7A7A7;
+        }
+
     </style>
 </head>
 
 <body>
+    <?php include 'html/page_header2.php' ?>
 
-<?php
-include 'html/page_header2.php'
-?>
     <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
-        
+
     </section>
     <!-- End Banner Area -->
+
 
     <!--================Single Product Area =================-->
     <div class="product_image_area">
@@ -55,8 +148,51 @@ include 'html/page_header2.php'
             <div class="row s_product_inner">
 
                 <div class="col-lg-9" style="margin-right: 20px;">
-                    <div class="s_Product_carousel" style="border: 5px solid red;">
-                        asjhdjasd
+                    <div class="s_Product_carousel" style="border: 5px solid red; width: 100%;">
+
+
+                        <div class="swiper-container">
+
+
+                            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff;border: 5px solid yellow; width: 100%; height: 383px;"
+                                class="swiper mySwiper2">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <video controls>
+                                            <source src="img/stock_video.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="img/16x9.jpg" />
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+
+                            <div thumbsSlider="" class="swiper mySwiper">
+                                <div class="swiper-wrapper">
+
+                                    <div class="swiper-slide">
+                                        <video class="img">
+                                            <source src="img/stock_video.mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <img src="img/16x9.jpg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -68,31 +204,28 @@ include 'html/page_header2.php'
                             <li><a class="active" href="#"><span>Category</span> : Household</a></li>
                             <li><a href="#"><span>Availibility</span> : In Stock</a></li>
                         </ul>
-                        <p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are
-                            looking for
-                            something that can make your interior look awesome, and at the same time give you the
-                            pleasant warm feeling
-                            during the winter.</p>
+
+
+
                         <div class="product_count">
                             <label for="qty">Quantity:</label>
-                            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                            <input type="number" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
                                 class="input-text qty">
-                            <button
-                                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                            <button
-                                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+
                         </div>
+
                         <div class="card_area d-flex align-items-center">
                             <a class="primary-btn" href="#">Add to Cart</a>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!--================End Single Product Area =================-->
+
+
 
     <!--================Product Description Area =================-->
     <section class="product_description_area">
@@ -465,21 +598,52 @@ include 'html/page_header2.php'
     <!--================End Product Description Area =================-->
 
 
-    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+
+
+
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js?<?php echo time(); ?>"></script>
+
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
+    </script>
+
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
         integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
         crossorigin="anonymous"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/nouislider.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <!--gmaps Js-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-    <script src="js/gmaps.min.js"></script>
-    <script src="js/main.js"></script>
+
+
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
 
 </body>
 

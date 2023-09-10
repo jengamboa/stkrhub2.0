@@ -4756,7 +4756,7 @@ label {
 }
 
 .l_w_title {
-  background: #e8f0f2;
+  background: #0f0f1e;
   padding-left: 30px;
 }
 .l_w_title h3 {
@@ -4848,10 +4848,10 @@ label {
 .p_filter_widgets .range_item .ui-slider {
   height: 6px;
   border: none;
-  background: #e8f0f2;
+  background: #0f0f1e;
 }
 .p_filter_widgets .range_item .ui-slider .ui-slider-range {
-  background: #e8f0f2;
+  background: #0f0f1e;
 }
 .p_filter_widgets .range_item .ui-slider .ui-slider-handle {
   height: 16px;
@@ -4904,7 +4904,7 @@ label {
 }
 
 .product_top_bar {
-  background: #e8f0f2;
+  background: #0f0f1e;
   clear: both;
   display: flex;
   padding: 10px 20px;
@@ -5176,11 +5176,12 @@ label {
   margin-top: 60px;
 }
 .product_description_area .nav.nav-tabs {
-  background: #e8f0f2;
+  background: #0f0f1e;
   text-align: center;
   display: block;
   border: none;
   padding: 10px 0px;
+  
 }
 .product_description_area .nav.nav-tabs li {
   display: inline-block;
@@ -5198,8 +5199,8 @@ label {
   padding: 0px;
   border: none;
   line-height: 38px;
-  background: #fff;
-  border: 1px solid #eeeeee;
+  background: #272a4e;
+  /* border: 1px solid #eeeeee; */
   border-radius: 0px;
   padding: 0px 30px;
   color: #ffffff;
@@ -5213,16 +5214,18 @@ label {
 }
 .product_description_area .nav.nav-tabs li a.active {
   color: #fff;
-  border: 1px solid transparent;
+  
+  /* border: 1px solid transparent; */
 }
 .product_description_area .tab-content {
-  border-left: 1px solid #eee;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border-left: 2px solid #0f0f1e;
+  border-right: 2px solid #0f0f1e;
+  border-bottom: 2px solid #0f0f1e;
   padding: 30px;
+  
 }
 .product_description_area .tab-content .total_rate .box_total {
-  background: #e8f0f2;
+  background: #0f0f1e;
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -5461,7 +5464,7 @@ label {
 }
 .cart_inner .table tbody tr.bottom_button .gray_btn {
   line-height: 38px;
-  background: #e8f0f2;
+  background: #0f0f1e;
   border: 1px solid #eeeeee;
   border-radius: 3px;
   padding: 0px 40px;
@@ -5612,7 +5615,7 @@ label {
 .cart_inner .table tbody tr.shipping_area .shipping_box .shipping_select {
   display: block;
   width: 100%;
-  background: #e8f0f2;
+  background: #0f0f1e;
   border: 1px solid #eeeeee;
   height: 40px;
   margin-bottom: 20px;
@@ -5637,7 +5640,7 @@ label {
   height: 40px;
   outline: none;
   border: 1px solid #eeeeee;
-  background: #e8f0f2;
+  background: #0f0f1e;
   width: 100%;
   padding: 0px 15px;
   margin-bottom: 20px;
@@ -5663,7 +5666,7 @@ label {
 
 .gray_btn {
   line-height: 38px;
-  background: #e8f0f2;
+  background: #0f0f1e;
   border: 1px solid #eeeeee;
   border-radius: 3px;
   padding: 0px 40px;
@@ -5681,7 +5684,7 @@ label {
   font-size: 14px;
   font-weight: normal;
   font-family: "Roboto", sans-serif;
-  background: #e8f0f2;
+  background: #0f0f1e;
   line-height: 40px !important;
   padding-left: 30px;
   margin-bottom: 0px;

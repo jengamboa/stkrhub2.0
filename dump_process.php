@@ -3,61 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slick.js Carousel Example</title>
-    
-    <!-- Include jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
 
-    <!-- Include Slick.js and Slick CSS CDNs -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <style>
-        /* Add your custom CSS styles here */
-        .slick-slide {
-            text-align: center;
-            background: #f8f8f8;
-            padding: 20px;
-        }
-    </style>
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
+    
+<ul class="nav nav-tabs" id="myTabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#tab1">Tab 1</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tab2">Tab 2</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tab3">Tab 3</a>
+    </li>
+</ul>
 
-<div class="carousel-container">
-    <div class="carousel">
-        <div><img src="https://placeimg.com/400/200/nature" alt="Image 1"></div>
-        <div><img src="https://placeimg.com/400/200/animals" alt="Image 2"></div>
-        <div><img src="https://placeimg.com/400/200/architecture" alt="Image 3"></div>
-        <div><img src="https://placeimg.com/400/200/food" alt="Image 4"></div>
+<div class="tab-content">
+    <div id="tab1" class="tab-pane fade show active">
+        <!-- Content for Tab 1 goes here -->
+        <p>This is the content of Tab 1.</p>
+    </div>
+    <div id="tab2" class="tab-pane fade">
+        <!-- Content for Tab 2 goes here -->
+        <p>This is the content of Tab 2.</p>
+    </div>
+    <div id="tab3" class="tab-pane fade">
+        <!-- Content for Tab 3 goes here -->
+        <p>This is the content of Tab 3.</p>
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
-        $('.carousel').slick({
-            autoplay: true,
-            autoplaySpeed: 2000, // Slide duration in milliseconds
-            dots: true, // Show navigation dots
-        });
 
-        $('.carousel').slick({
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: false,
-  fade: true,
-  asNavFor: '.slider-nav'
-});
-$('.carousel').slick({
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  asNavFor: '.slider-for',
-  dots: true,
-  centerMode: true,
-  focusOnSelect: true
-});
+<script>
+$(document).ready(function() {
+    $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
     });
+});
 </script>
+
 
 </body>
 </html>
