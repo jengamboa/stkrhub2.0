@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'connection.php'; // Include your database connection
 
 // Fetch all records from the published_built_games table

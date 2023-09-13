@@ -5,55 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  text-decoration: none;
+  list-style: none;
+}
 
-<!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 4px 20px hsla(207, 24%, 35%, 0.1);
+  background-color: #151418;
+  z-index: 1;
+}
 
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
 
+.logo a {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.logo a span {
+  color: #8739fa;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu a {
+  display: block;
+  padding: 7px 15px;
+  font-size: 17px;
+  font-weight: 500;
+  transition: 0.2s all ease-in-out;
+  color: #fff;
+}
+
+.menu:hover a {
+  opacity: 0.4;
+}
+
+.menu a:hover {
+  opacity: 1;
+  color: #fff;
+}
+
+.menu-icon {
+  display: none;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+#menu-toggle:checked ~ .menu {
+  transform: scale(1, 1);
+}
+
+@media only screen and (max-width: 950px) {
+  .menu {
+    flex-direction: column;
+    background-color: #151418;
+    align-items: start;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+
+  .menu a {
+    margin-left: 12px;
+  }
+
+  .menu li {
+    margin-bottom: 10px;
+  }
+
+  .menu-icon {
+    display: block;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+  }
+}
+
+    </style>
 </head>
 <body>
-    
-<ul class="nav nav-tabs" id="myTabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#tab1">Tab 1</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tab2">Tab 2</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tab3">Tab 3</a>
-    </li>
-</ul>
-
-<div class="tab-content">
-    <div id="tab1" class="tab-pane fade show active">
-        <!-- Content for Tab 1 goes here -->
-        <p>This is the content of Tab 1.</p>
+<header class="header">
+  <nav>
+    <div class="logo">
+      <a href="index.html">Humayun.<span>K</span></a>
     </div>
-    <div id="tab2" class="tab-pane fade">
-        <!-- Content for Tab 2 goes here -->
-        <p>This is the content of Tab 2.</p>
-    </div>
-    <div id="tab3" class="tab-pane fade">
-        <!-- Content for Tab 3 goes here -->
-        <p>This is the content of Tab 3.</p>
-    </div>
-</div>
-
-
-<script>
-$(document).ready(function() {
-    $('#myTabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-});
-</script>
-
-
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    <ul class="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Skills</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Connect</a></li>
+    </ul>
+  </nav>
+</header>
 </body>
 </html>

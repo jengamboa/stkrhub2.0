@@ -17,25 +17,30 @@
   <!-- Site Title -->
   <title>Karma Shop</title>
 
+  <!-- jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   <link href="jquery-ui-1.10.2.custom.min.css" media="screen" rel="stylesheet" type="text/css">
+  
   <script src="jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="jquery-ui-1.10.2.custom.min.js" type="text/javascript"></script>
   <script src="filter.js" type="text/javascript"></script>
   <script src="pagination.js?<?php echo time(); ?>" type="text/javascript"></script>
 
-  <!-- CSS ============================     -->
   <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
-  <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
-  <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
-
+    <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
+    <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -119,6 +124,18 @@
 </head>
 
 <body id="category">
+
+<?php include "html/page_header2.php"; ?>
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+
+</section>
+<!-- End Banner Area -->
+
+
+
+
   <div class="container">
     <div class="row">
       <div class="col-xl-3 col-lg-4 col-md-5">
@@ -294,8 +311,6 @@
           </h6>
         </div>
 
-
-
         <span class="lnr" style="color: #26d3e0; padding-left: 5px; padding-right: 5px; border-radius: 10%;">
           <i class="fa-solid fa-peso-sign">
             <%= stars %>
@@ -304,7 +319,7 @@
 
         <div class="prd-bottom">
 
-          <a href="" class="social-info">
+          <a href="process_add_published_game_to_cart.php?id=<%= id %>" class="social-info">
             <span class="ti-bag"></span>
             <p class="hover-text">add to bag</p>
           </a>
@@ -328,6 +343,8 @@
       </label>
     </div>
   </script>
+
+
 
 
 </body>

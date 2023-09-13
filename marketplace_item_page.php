@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
     <!-- Demo styles -->
     <style>
@@ -133,15 +133,45 @@
 </head>
 
 <body>
+    <?php
+        session_start();
+        include 'connection.php';
+            if (isset($_GET['id'])) {
+                $published_game_id = $_GET['id'];
+            }
+        $sql = "SELECT * FROM published_built_games WHERE published_game_id = $published_game_id";
+        $query = $conn->query($sql);
+        while ($fetched = $query->fetch_assoc()){
+            $published_game_id = $fetched['published_game_id'];
+            $game_name = $fetched['game_name'];
+            $category = $fetched['category'];
+            $edition = $fetched['edition'];
+            $published_date = $fetched['published_date'];
+            $creator_id = $fetched['creator_id'];
+            $age_id = $fetched['age_id'];
+            $short_description = $fetched['short_description'];
+            $long_description = $fetched['long_description'];
+            $website = $fetched['website'];
+            $logo_path = $fetched['logo_path'];
+            $min_players = $fetched['min_players'];
+            $max_players = $fetched['max_players'];
+            $min_playtime = $fetched['min_playtime'];
+            $max_playtime = $fetched['max_playtime'];
+            $marketplace_price = $fetched['marketplace_price'];
+        }
+
+
+    ?>
     <?php include 'html/page_header2.php' ?>
 
     <!-- Start Banner Area -->
-    <section class="banner-area organic-breadcrumb">
+    <!-- <section class="banner-area organic-breadcrumb">
 
-    </section>
+    </section> -->
     <!-- End Banner Area -->
 
 
+    <form method="post" action="process_add_published_game_page_to_cart.php">
     <!--================Single Product Area =================-->
     <div class="product_image_area">
         <div class="container">
@@ -198,24 +228,34 @@
 
                 <div class="col-lg offset-lg">
                     <div class="s_product_text">
-                        <h3>Faded SkyBlu Denims and the Beans on the and of the boom boom powpow</h3>
-                        <h2>$149.99</h2>
+                        <h3>
+                            <?php echo $game_name; ?>
+                        </h3>
+                        
+                        <h2>
+                            &#8369 <?php echo $marketplace_price; ?>
+                        </h2>
                         <ul class="list">
-                            <li><a class="active" href="#"><span>Category</span> : Household</a></li>
-                            <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+                            <li><a class="active" href="#"><span>Category</span> : <?php echo $category; ?> </a></li>
+                            <!-- <li><a href="#"><span>Availibility</span> : In Stock</a></li> -->
                         </ul>
 
 
 
                         <div class="product_count">
                             <label for="qty">Quantity:</label>
-                            <input type="number" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                            <input type="number" name="quantity" id="sst" maxlength="12" value="1" title="Quantity:"
                                 class="input-text qty">
 
+                                <input type="hidden" name="published_game_id" value="<?php echo $published_game_id; ?>"><br>
+                                <input type="hidden" name="marketplace_price" value="<?php echo $marketplace_price; ?>"><br>
                         </div>
 
+                        <input type="hidden" name="" id="">
+
                         <div class="card_area d-flex align-items-center">
-                            <a class="primary-btn" href="#">Add to Cart</a>
+                            
+                            <button class="primary-btn" type="submit">Add to Cart</button>
                         </div>
 
                     </div>
@@ -224,6 +264,7 @@
         </div>
     </div>
     <!--================End Single Product Area =================-->
+    </form>
 
 
 
@@ -250,25 +291,12 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women
-                        of all shapes
-                        and sizes enjoying themselves .Born between the two world wars, Beryl Cook eventually left
-                        Kendrick School in
-                        Reading at the age of 15, where she went to secretarial school and then into an insurance
-                        office. After moving to
-                        London and then Hampton, she eventually married her next door neighbour from Reading, John Cook.
-                        He was an
-                        officer in the Merchant Navy and after he left the sea in 1956, they bought a pub for a year
-                        before John took a
-                        job in Southern Rhodesia with a motor company. Beryl bought their young son a box of
-                        watercolours, and when
-                        showing him how to use it, she decided that she herself quite enjoyed painting. John
-                        subsequently bought her a
-                        child’s painting set for her birthday and it was with this that she produced her first
-                        significant work, a
-                        half-length portrait of a dark-skinned lady with a vacant expression and large drooping breasts.
-                        It was aptly
-                        named ‘Hangover’ by Beryl’s husband and</p>
+                    <strong>Short Description:</strong>
+                    <p>
+                    <?php echo $short_description; ?>
+                    </p>
+
+                    <strong>Long Description:</strong>
                     <p>It is often frustrating to attempt to plan meals that are designed for one. Despite this fact, we
                         are seeing
                         more and more recipe books and Internet websites that are dedicated to the act of cooking for

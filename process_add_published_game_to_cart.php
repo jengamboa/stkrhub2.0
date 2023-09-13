@@ -1,30 +1,29 @@
 <?php
-include 'connection.php'; // Include your database connection
+session_start();
+include 'connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
-    $user_id = $_POST['user_id'];
-    $published_game_id = $_POST['published_game_id'];
-    $game_price = $_POST['price'];
-
-    // Insert data into the cart table
-    $insert_query = "INSERT INTO cart (user_id, published_game_id, quantity, price) VALUES ('$user_id', '$published_game_id', 1, '$game_price')";
-
-    if (mysqli_query($conn, $insert_query)) {
-        $cart_id = mysqli_insert_id($conn); // Get the auto-generated cart_id
-
-        // Echo the inserted data
-        echo "Cart ID: $cart_id<br>";
-        echo "User ID: $user_id<br>";
-        echo "Game ID: $published_game_id<br>";
-        echo "Game Price: $game_price<br>";
-
-        echo "</ul>";
-
-    } else {
-        echo "Error adding to cart: " . mysqli_error($conn);
-    }
-
-} else {
-    echo "Invalid request";
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
 }
-?>
+
+if (isset($_GET['id'])) {
+    $published_game_id = $_GET['id'];
+}
+
+$getPrice = "SELECT marketplace_price FROM published_built_games WHERE published_game_id = $published_game_id";
+$sqlGetPrice = $conn->query($getPrice);
+
+while ($fetchedPrice = $sqlGetPrice->fetch_assoc()){
+    $price = $fetchedPrice['marketplace_price'];
+}
+
+$quantity = 1;
+
+echo $user_id;
+echo $published_game_id;
+echo $price;
+echo $quantity;
+
+
+$sql = "INSERT INTO cart (user_id, published_game_id, quantity, price) VALUES ($user_id, $published_game_id, $quantity, $price)";
+mysqli_query($conn, $sql);

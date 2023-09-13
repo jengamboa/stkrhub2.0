@@ -2,88 +2,83 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List.js UI with External JSON</title>
+    <meta charset="utf-8" />
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-
+    <!-- Demo styles -->
     <style>
-        .pagination {
-            margin-top: 10px;
+
+        .swiper-container{
+            height: 100vh;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
             text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .pagination li {
-            display: inline-block;
-            padding: 5px;
-            margin: 0 5px;
-            background-color: #e0e0e0;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .pagination li.active {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .pagination li:hover {
-            background-color: #007bff;
-            color: #fff;
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 
 <body>
-    <div id="test-list">
-        <input type="text" class="search" />
-        <ul class="list"></ul>
-        <div class="pagination">
+
+    <div class="swiper-container">
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 2</div>
+                <div class="swiper-slide">Slide 3</div>
+                <div class="swiper-slide">Slide 4</div>
+                <div class="swiper-slide">Slide 5</div>
+                <div class="swiper-slide">Slide 6</div>
+                <div class="swiper-slide">Slide 7</div>
+                <div class="swiper-slide">Slide 8</div>
+                <div class="swiper-slide">Slide 9</div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+    <!-- Initialize Swiper -->
     <script>
-        $.ajax({
-            url: 'json_list.php',
-            dataType: 'json',
-            success: function (data) {
-
-                var itemTemplate =
-                    '<li style="">' +
-                    '    <p class="published_game_id"></p>' +
-                    '    <p class="game_name"></p>' +
-                    '    <img class="image" src="" alt="Image" />' +
-                    '    <p class="marketplace_price"></p>' +
-                    '</li>';
-
-                var monkeyList = new List('test-list', {
-                    valueNames: [
-                        'published_game_id',
-                        'game_name',
-                        'image',
-                        'marketplace_price',
-                    ],
-                    page: 3,
-                    pagination: {
-                        left:1,
-                        right:1,
-                        center: true,
-                    },
-                    item: itemTemplate
-
-                });
-
-                // Add data to the list
-                monkeyList.add(data);
-
-                // Set the image source based on the data using jQuery
-                $('.image').each(function (index) {
-                    $(this).attr('src', data[index].image); // Set the src attribute
-                });
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
             },
         });
     </script>
