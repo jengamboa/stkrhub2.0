@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <!-- Site Title -->
     <title>Karma Shop</title>
-    
+
 
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css?<?php echo time(); ?>" />
@@ -40,68 +40,7 @@
     <style>
         <?php
         include 'css/body.css';
-        ?>
-
-        .swiper-container {
-            position: relative;
-            height: 480px;
-        }
-
-        .swiper-container {
-            
-            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-            font-size: 14px;
-            color: #000;
-            margin: 0;
-            padding: 0;
-
-        }
-
-        .swiper {
-            width: 100%;
-            height: 100%;
-        }
-
-        .swiper-slide {
-            text-align: center;
-            font-size: 18px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .swiper {
-            width: 100%;
-            height: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .swiper-slide {
-            background-size: cover;
-            background-position: center;
-        }
-
-        .mySwiper2 {
-            height: 80%;
-            width: 100%;
-        }
-
-        .mySwiper {
-            height: 20%;
-            box-sizing: border-box;
-            padding: 10px 0;
-        }
-
-        .mySwiper .swiper-slide {
+        ?>.mySwiper .swiper-slide {
             width: 25%;
             height: 100%;
             opacity: 0.4;
@@ -111,58 +50,79 @@
             opacity: 1;
         }
 
-        .swiper-slide img {
-            display: block;
+        .image-carousel-container {
+            overflow: hidden;
             width: 100%;
+
+
+            position: relative;
+            padding-top: 45.25%;
+            /* 9/16 aspect ratio (16:9) */
+        }
+
+        .image-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+
             height: 100%;
+            width: 100%;
             object-fit: cover;
         }
 
-        .swiper-slide .img {
-            display: block;
+        .image-slide-container {
+            overflow: hidden;
             width: 100%;
+
+
+            position: relative;
+            padding-top: 45.25%;
+            /* 9/16 aspect ratio (16:9) */
+        }
+
+        .image-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+
             height: 100%;
+            width: 100%;
             object-fit: cover;
         }
-
-        p {
-            color: #A7A7A7;
-        }
-
     </style>
 </head>
 
 <body>
     <?php
-        session_start();
-        include 'connection.php';
-            if (isset($_GET['id'])) {
-                $published_game_id = $_GET['id'];
-            }
-        $sql = "SELECT * FROM published_built_games WHERE published_game_id = $published_game_id";
-        $query = $conn->query($sql);
-        while ($fetched = $query->fetch_assoc()){
-            $published_game_id = $fetched['published_game_id'];
-            $game_name = $fetched['game_name'];
-            $category = $fetched['category'];
-            $edition = $fetched['edition'];
-            $published_date = $fetched['published_date'];
-            $creator_id = $fetched['creator_id'];
-            $age_id = $fetched['age_id'];
-            $short_description = $fetched['short_description'];
-            $long_description = $fetched['long_description'];
-            $website = $fetched['website'];
-            $logo_path = $fetched['logo_path'];
-            $min_players = $fetched['min_players'];
-            $max_players = $fetched['max_players'];
-            $min_playtime = $fetched['min_playtime'];
-            $max_playtime = $fetched['max_playtime'];
-            $marketplace_price = $fetched['marketplace_price'];
-        }
+    session_start();
+    include 'connection.php';
+    if (isset($_GET['id'])) {
+        $published_game_id = $_GET['id'];
+    }
+    $sql = "SELECT * FROM published_built_games WHERE published_game_id = $published_game_id";
+    $query = $conn->query($sql);
+    while ($fetched = $query->fetch_assoc()) {
+        $published_game_id = $fetched['published_game_id'];
+        $game_name = $fetched['game_name'];
+        $category = $fetched['category'];
+        $edition = $fetched['edition'];
+        $published_date = $fetched['published_date'];
+        $creator_id = $fetched['creator_id'];
+        $age_id = $fetched['age_id'];
+        $short_description = $fetched['short_description'];
+        $long_description = $fetched['long_description'];
+        $website = $fetched['website'];
+        $logo_path = $fetched['logo_path'];
+        $min_players = $fetched['min_players'];
+        $max_players = $fetched['max_players'];
+        $min_playtime = $fetched['min_playtime'];
+        $max_playtime = $fetched['max_playtime'];
+        $marketplace_price = $fetched['marketplace_price'];
+    }
 
 
     ?>
-    <?php include 'html/page_header2.php' ?>
+
 
     <!-- Start Banner Area -->
     <!-- <section class="banner-area organic-breadcrumb">
@@ -172,98 +132,165 @@
 
 
     <form method="post" action="process_add_published_game_page_to_cart.php">
-    <!--================Single Product Area =================-->
-    <div class="product_image_area">
-        <div class="container">
-            <div class="row s_product_inner">
+        <!--================Single Product Area =================-->
+        <div class="product_image_area">
+            <div class="container">
+                <div class="row s_product_inner">
 
-                <div class="col-lg-9" style="margin-right: 20px;">
-                    <div class="s_Product_carousel" style="border: 5px solid red; width: 100%;">
-
-
-                        <div class="swiper-container">
+                    <div class="col-lg-9" style="margin-right: 20px;">
+                        <div class="s_Product_carousel">
 
 
-                            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff;border: 5px solid yellow; width: 100%; height: 383px;"
-                                class="swiper mySwiper2">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <video controls>
-                                            <source src="img/stock_video.mp4" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
+                            <div class="swiper-container">
+
+
+
+                                <div class="swiper mySwiper2" style="margin-bottom: 10px;">
+                                    <div class="swiper-wrapper">
+
+                                        <?php
+                                        $sqlBig = "SELECT * FROM published_multiple_files WHERE published_built_game_id = $published_game_id";
+                                        $resultBig = $conn->query($sqlBig);
+
+                                        while ($fetchedBig = $resultBig->fetch_assoc()) {
+                                            $published_file_id = $fetchedBig['published_file_id'];
+                                            $file_path = $fetchedBig['file_path'];
+
+                                            $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+                                            $file_extension = strtolower($extension);
+
+                                            // Check if the file extension is "mp4"
+                                            if ($file_extension === "mp4") {
+                                                echo '
+                                                    <div class="swiper-slide">
+                                                        <div class="image-carousel-container">
+                                                            <video class="image-carousel" controls>
+                                                                <source src="' . $file_path . '" type="video/mp4">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                ';
+                                            } else {
+                                                echo '
+                                                    <div class="swiper-slide">
+                                                        <div class="image-carousel-container">
+                                                            <img class="image-carousel" src="' . $file_path . '" />
+                                                        </div>
+                                                    </div>
+                                                ';
+                                            }
+                                        }
+                                        ?>
+
                                     </div>
-                                    <div class="swiper-slide">
-                                        <img src="img/16x9.jpg" />
-                                    </div>
-                                    
+
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
                                 </div>
 
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
-                            </div>
+                                <div thumbsSlider="" class="swiper mySwiper">
+                                    <div class="swiper-wrapper">
 
-                            <div thumbsSlider="" class="swiper mySwiper">
-                                <div class="swiper-wrapper">
+                                        <?php
+                                        $sqlSmall = "SELECT * FROM published_multiple_files WHERE published_built_game_id = $published_game_id";
+                                        $resultSmall = $conn->query($sqlSmall);
 
-                                    <div class="swiper-slide">
-                                        <video class="img">
-                                            <source src="img/stock_video.mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
+                                        while ($fetchedSmall = $resultSmall->fetch_assoc()) {
+                                            $published_file_id = $fetchedSmall['published_file_id'];
+                                            $file_path = $fetchedSmall['file_path'];
 
-                                    <div class="swiper-slide">
-                                        <img src="img/16x9.jpg" />
+                                            $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+                                            $file_extension = strtolower($extension);
+
+                                            // Check if the file extension is "mp4"
+                                            if ($file_extension === "mp4") {
+                                                echo '
+                                                    <div class="swiper-slide">
+                                                        <div class="image-slide-container">
+                                                            <video class="image-slide">
+                                                                <source src="'.$file_path.'">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                ';
+                                            } else {
+                                                echo '
+                                                    <div class="swiper-slide">
+                                                        <div class="image-slide-container">
+                                                            <img class="image-slide" src="'.$file_path.'" />
+                                                        </div>
+                                                    </div>
+    
+                                                ';
+                                            }
+                                        }
+                                        ?>
+
+                                        <!-- duplicate -->
+                                        <!-- <div class="swiper-slide">
+                                            <div class="image-slide-container">
+                                                <video class="image-slide">
+                                                    <source src="img/stock_video.mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="swiper-slide">
+                                            <div class="image-slide-container">
+                                                <img class="image-slide" src="img/16x9.jpg" />
+                                            </div>
+                                        </div> -->
+
                                     </div>
                                 </div>
+
                             </div>
+
+
 
                         </div>
-
-
-
                     </div>
-                </div>
 
-                <div class="col-lg offset-lg">
-                    <div class="s_product_text">
-                        <h3>
-                            <?php echo $game_name; ?>
-                        </h3>
-                        
-                        <h2>
-                            &#8369 <?php echo $marketplace_price; ?>
-                        </h2>
-                        <ul class="list">
-                            <li><a class="active" href="#"><span>Category</span> : <?php echo $category; ?> </a></li>
-                            <!-- <li><a href="#"><span>Availibility</span> : In Stock</a></li> -->
-                        </ul>
+                    <div class="col-lg offset-lg">
+                        <div class="s_product_text">
+                            <h3>
+                                <?php echo $game_name; ?>
+                            </h3>
 
+                            <h2>
+                                &#8369 <?php echo $marketplace_price; ?>
+                            </h2>
+                            <ul class="list">
+                                <li><a class="active" href="#"><span>Category</span> : <?php echo $category; ?> </a></li>
+                                <!-- <li><a href="#"><span>Availibility</span> : In Stock</a></li> -->
+                            </ul>
 
 
-                        <div class="product_count">
-                            <label for="qty">Quantity:</label>
-                            <input type="number" name="quantity" id="sst" maxlength="12" value="1" title="Quantity:"
-                                class="input-text qty">
+
+                            <div class="product_count">
+                                <label for="qty">Quantity:</label>
+                                <input type="number" name="quantity" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
 
                                 <input type="hidden" name="published_game_id" value="<?php echo $published_game_id; ?>"><br>
                                 <input type="hidden" name="marketplace_price" value="<?php echo $marketplace_price; ?>"><br>
+                            </div>
+
+                            <input type="hidden" name="" id="">
+
+                            <div class="card_area d-flex align-items-center">
+
+                                <button class="primary-btn" type="submit">Add to Cart</button>
+                            </div>
+
                         </div>
-
-                        <input type="hidden" name="" id="">
-
-                        <div class="card_area d-flex align-items-center">
-                            
-                            <button class="primary-btn" type="submit">Add to Cart</button>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--================End Single Product Area =================-->
+        <!--================End Single Product Area =================-->
     </form>
 
 
@@ -273,27 +300,23 @@
         <div class="container">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                        aria-selected="true">Description</a>
+                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                        aria-controls="profile" aria-selected="false">Specification</a>
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Specification</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                        aria-controls="contact" aria-selected="false">Comments</a>
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Comments</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
-                        aria-controls="review" aria-selected="false">Reviews</a>
+                    <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <strong>Short Description:</strong>
                     <p>
-                    <?php echo $short_description; ?>
+                        <?php echo $short_description; ?>
                     </p>
 
                     <strong>Long Description:</strong>
@@ -439,30 +462,25 @@
                         <div class="col-lg-6">
                             <div class="review_box">
                                 <h4>Post a comment</h4>
-                                <form class="row contact_form" action="contact_process.php" method="post"
-                                    id="contactForm" novalidate="novalidate">
+                                <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Your Full name">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Email Address">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number"
-                                                placeholder="Phone Number">
+                                            <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1"
-                                                placeholder="Message"></textarea>
+                                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Message"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">
@@ -488,21 +506,11 @@
                                     <div class="rating_list">
                                         <h3>Based on 3 Reviews</h3>
                                         <ul class="list">
-                                            <li><a href="#">5 Star <i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">4 Star <i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">3 Star <i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">2 Star <i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">1 Star <i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            <li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            <li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            <li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            <li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            <li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -582,34 +590,25 @@
                                     <li><a href="#"><i class="fa fa-star"></i></a></li>
                                 </ul>
                                 <p>Outstanding</p>
-                                <form class="row contact_form" action="contact_process.php" method="post"
-                                    id="contactForm" novalidate="novalidate">
+                                <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Your Full name" onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = 'Your Full name'">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Full name'">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Email Address" onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = 'Email Address'">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number"
-                                                placeholder="Phone Number" onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = 'Phone Number'">
+                                            <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1"
-                                                placeholder="Review" onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = 'Review'"></textarea></textarea>
+                                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">
@@ -659,16 +658,14 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 
 
-<!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 

@@ -117,7 +117,6 @@
 
 
 
-
     .image-mini-container {
       overflow: hidden;
       width: 100%;

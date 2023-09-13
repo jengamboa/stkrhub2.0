@@ -86,8 +86,20 @@
 								<li class="nav-item">
 								<a class="nav-link" href="contact.html">
 									<span class="cart-icon">
-										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>
-										<span class="cart-count">(3)</span>
+										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>';
+
+								$sqlCart = "SELECT * FROM cart WHERE user_id = $user_id";
+								$resultCart = $conn->query($sqlCart);
+
+								$count = 0;
+
+								while ($fetchedCart = $resultCart->fetch_assoc()) {
+									$cart_id = $fetchedCart['cart_id'];
+									$count++; //
+								}
+
+
+							echo '<span class="cart-count">('.$count.')</span>
 									</span>
 								</a>
 							</li>

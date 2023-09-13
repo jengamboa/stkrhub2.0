@@ -37,6 +37,25 @@ session_start();
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(document).on("click", "#ajax-link", function(event) {
+                event.preventDefault();
+
+                var published_game_id = $(this).data("published-game-id");
+
+                $.ajax({
+                    url: "process_add_published_game_to_cart.php?published_game_id=" + published_game_id,
+                    type: "GET",
+                    success: function(data) {
+                        $(".cart-count").html(data);
+                    },
+                });
+            });
+        });
+    </script>
+
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
@@ -186,6 +205,8 @@ session_start();
             top: 70%
         }
     </style>
+
+
 </head>
 
 <body>
@@ -283,31 +304,45 @@ session_start();
 
     <!-- Start category Area -->
     <section class="category-area">
-        <div class="container">
 
-            <div class="row s_product_inner">
+        <div class="container" style="display:flex; flex-direction:column; gap: 20px;">
 
-                <div class="col-lg-8">
-                    <div class="iframe-container">
-                        <iframe class="iframe" src="https://www.youtube.com/embed/il_t1WVLNxk" style="border: none;">
-                        </iframe>
+
+
+            <?php
+            $sqlTutorials = "SELECT * FROM tutorials WHERE is_primary = 1";
+            $result = $conn->query($sqlTutorials);
+
+            while ($fetchedTutorials = $result->fetch_assoc()) {
+                $tutorial_id = $fetchedTutorials['tutorial_id'];
+                $tutorial_title = $fetchedTutorials['tutorial_title'];
+                $tutorial_description = $fetchedTutorials['tutorial_description'];
+                $tutorial_link = $fetchedTutorials['tutorial_link'];;
+                $is_primary = $fetchedTutorials['is_primary'];
+                $time_added = $fetchedTutorials['time_added'];
+
+                echo '
+                    <div class="row s_product_inner">
+                        <div class="col-lg-8">
+                            <div class="iframe-container">
+                            <iframe class="iframe" src="' . $tutorial_link . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 offset-lg-1" style="margin-left: 0px; margin-top: 0px;">
+                            <div class="s_product_text" style="margin-top: 20px;">
+                                <h3>' . $tutorial_title . '</h3>
+
+                                <p>
+                                    ' . $tutorial_description . '
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4 offset-lg-1" style="margin-left: 0px; margin-top: 0px;">
-                    <div class="s_product_text" style="margin-top: 20px;">
-                        <h3>Faded SkyBlu Denim Jeans</h3>
-
-                        <p>
-                            Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
-                            something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
-                            during the winter.
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-
+                    ';
+            }
+            ?>
 
         </div>
     </section>
@@ -436,10 +471,15 @@ session_start();
 
                         if (isset($_SESSION['user_id'])) {
                             echo '
-                            <a href="process_add_published_game_to_cart.php?id= ' . $published_game_id . ' " class="social-info">
+                            <a href="#" id="ajax-link" data-published-game-id="' . $published_game_id . '" class="social-info">
                               <span class="ti-bag"></span>
                               <p class="hover-text">add to bag</p>
                             </a>
+
+                            <!--<a href="#" id="ajax-link" data-published-game-id="' . $published_game_id . '">
+                                Click me to trigger AJAX
+                            </a>-->
+                            
                             ';
                         } else {
                             echo '
