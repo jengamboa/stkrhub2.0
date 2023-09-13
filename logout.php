@@ -5,6 +5,8 @@ include 'html/header.html.php';
 
 <?php
 
+session_start();
+
 // Insert logout event into the user_logs table
 if (isset($_SESSION['users_id'])) {
     $user_id = $_SESSION['users_id'];

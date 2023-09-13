@@ -1,27 +1,49 @@
+<link href="https://fonts.cdnfonts.com/css/akira-expanded" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+
 <!-- Start Header Area -->
 <header class="header_area sticky-header">
 	<div class="main_menu">
 		<nav class="navbar navbar-expand-lg navbar-light main_box" style="
 				
-				background: rgba(39, 42, 78, 0.83);
+				background: rgba(39, 42, 78, 0.57);
 				border-radius: 0px 0px 15px 15px;
-				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 				backdrop-filter: blur(5.7px);
 				-webkit-backdrop-filter: blur(5.7px);
 			">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
-				<a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+				<a class="navbar-brand logo_h" href="index.html">
+					<h4 style="
+						font-family: 'Akira Expanded', sans-serif;
+						padding-top: 10px;
+					">
+						STKR HUB
+					</h4>
+					<!-- <img src="img/logo.png" alt=""> -->
+				</a>
+
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color: none; border: none;">
+					<span class="icon-bar" style="background-color: white;"></span>
+					<span class="icon-bar" style="background-color: white;"></span>
+					<span class="icon-bar" style="background-color: white;"></span>
 				</button>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-					<ul class="nav navbar-nav menu_nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-						<li class="nav-item submenu dropdown active">
+					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex;
+							
+							align-items: center;
+						">
+
+
+						<li class="nav-item <?php echo $header_home ?> ">
+							<a class="nav-link" href="index.php">Home</a>
+						</li>
+
+						<li class="nav-item submenu dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
@@ -32,6 +54,7 @@
 								<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
 							</ul>
 						</li>
+
 						<li class="nav-item submenu dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
 							<ul class="dropdown-menu">
@@ -39,6 +62,7 @@
 								<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
 							</ul>
 						</li>
+
 						<li class="nav-item submenu dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
 							<ul class="dropdown-menu">
@@ -47,14 +71,74 @@
 								<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
 							</ul>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+						<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
-						<li class="nav-item">
-							<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+
+					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center">
+
+						<?php
+						if (isset($_SESSION['user_id'])) {
+							$user_id = $_SESSION['user_id'];
+
+							echo '
+								<li class="nav-item">
+								<a class="nav-link" href="contact.html">
+									<span class="cart-icon">
+										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>
+										<span class="cart-count">(3)</span>
+									</span>
+								</a>
+							</li>
+								';
+						} else {
+							echo '
+								
+								';
+						}
+						?>
+
+
+
+
+						<li class="nav-item" style="display: flex; align-items: center;">
+
+							<?php
+							if (isset($_SESSION['user_id'])) {
+								$user_id = $_SESSION['user_id'];
+
+								echo '
+								<a class="nav-link" href="contact.html">
+									<div style="position: relative; display: inline-block; width: 37px; height: 37px; border-radius: 50%; background-color: #333;">
+										<img src="img/16x9.jpg" alt="" style="
+												position: absolute;
+												top: 0;
+												left: 0;
+
+												height: 100%;
+												width: 100%;
+												object-fit: cover;
+												border-radius: 50%;
+										">
+
+									</div>
+								</a>
+								';
+							} else {
+								echo '
+								<a class="primary-btn keychainify-checked" href="#" style="left: 0px; line-height: 20px; width:auto; font-size: 14px;">Login / Sign Up</a>
+								';
+							}
+							?>
+
+
 						</li>
+
 					</ul>
+
+
+
 				</div>
 			</div>
 		</nav>

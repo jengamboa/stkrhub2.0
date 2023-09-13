@@ -20,36 +20,33 @@
   <!-- jQuery library -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <link href="jquery-ui-1.10.2.custom.min.css" media="screen" rel="stylesheet" type="text/css">
-  
+
   <script src="jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="jquery-ui-1.10.2.custom.min.js" type="text/javascript"></script>
   <script src="filter.js" type="text/javascript"></script>
   <script src="pagination.js?<?php echo time(); ?>" type="text/javascript"></script>
 
   <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
-    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
-    <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/bootstrap.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/owl.carousel.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/nice-select.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/nouislider.min.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
+  <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
+  <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
+  <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     <?php
     include 'css/body.css';
-    ?>
-    @import url(https://fonts.googleapis.com/css?family=Raleway);
+    ?>@import url(https://fonts.googleapis.com/css?family=Raleway);
 
 
 
@@ -119,19 +116,40 @@
     }
 
 
-      
+
+
+    .image-mini-container {
+      overflow: hidden;
+      width: 100%;
+
+
+      position: relative;
+      padding-top: 45.25%;
+      /* 9/16 aspect ratio (16:9) */
+    }
+
+    .image-mini {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
   </style>
 </head>
 
 <body id="category">
 
-<?php include "html/page_header2.php"; ?>
+  <?php include "html/page_header2.php"; ?>
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
+  <!-- Start Banner Area -->
+  <section class="banner-area organic-breadcrumb">
 
-</section>
-<!-- End Banner Area -->
+  </section>
+  <!-- End Banner Area -->
 
 
 
@@ -229,7 +247,7 @@
 
 
         <!-- Start Best Seller -->
-        <section class="lattest-product-area pb-40 category-list">
+        <section class="lattest-product-area pb-40 category-list" style="border: 5px solid white;">
           <div class="row" id="movies" style="border: 5px solid blue;">
             <!-- single product -->
 
@@ -253,8 +271,7 @@
 
 
   <script id="movie-template" type="text/html">
-
-  <!-- single product -->
+    <!-- single product -->
   <div class="col-lg-4 col-md-7" style="border: 5px solid yellow; ">
 
     <div class="single-product" style="border: 5px solid green;">
@@ -262,7 +279,10 @@
       <div class="content">
         <div class="content-overlay" style="height: 132px; width: 100%;"></div>
 
-        <img src="img/16x9.jpg" class="card-img-top" alt="..." style="height: 132px !important; width: 100%;">
+        <!-- <img src="img/16x9.jpg" class="card-img-top" alt="..." style="height: 132px !important; width: 100%;"> -->
+        <div class="image-mini-container">
+          <img class="image-mini" src="img/16x9.jpg" class="card-img-top" alt="...">
+        </div>
 
         <div class="content-details fadeIn-bottom">
           <p class="card-subtitle mb-2 text-muted h6" style="font-size: 0.58rem;">

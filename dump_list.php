@@ -1,85 +1,71 @@
+<?php
+    session_start();
+
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Swiper demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Demo styles -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <title>Document</title>
+
     <style>
-
-        .swiper-container{
-            height: 100vh;
+        .pagination li {
+            display: inline-block;
+            padding: 5px;
         }
 
-        .swiper {
-            width: 100%;
-            height: 100%;
-        }
-
-        .swiper-slide {
-            text-align: center;
-            font-size: 18px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        
     </style>
 </head>
 
 <body>
 
-    <div class="swiper-container">
-        <!-- Swiper -->
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 6</div>
-                <div class="swiper-slide">Slide 7</div>
-                <div class="swiper-slide">Slide 8</div>
-                <div class="swiper-slide">Slide 9</div>
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-        </div>
+
+    <div id="test-list">
+        <input type="text" class="search" />
+        <ul class="list">
+
+            <?php
+            include 'connection.php';
+
+            $sql = "SELECT * FROM games WHERE user_id = $user_id";
+            $result = $conn->query($sql);
+
+            while ($fetched = $result->fetch_assoc()) {
+                $game_id = $fetched['game_id'];
+                $name = $fetched['name'];
+                $description = $fetched['description'];
+                $user_id = $fetched['user_id'];
+                $created_at = $fetched['created_at'];
+
+                echo '
+                <li style="background-color: red;">
+                    <p class="name">'. $name .'</p>
+                </li>
+                ';
+            }
+
+            ?>
+
+            
+        </ul>
+        <ul class="pagination"></ul>
     </div>
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
-    <!-- Initialize Swiper -->
     <script>
-        var swiper = new Swiper(".mySwiper", {
-            spaceBetween: 30,
-            centeredSlides: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
+        var monkeyList = new List('test-list', {
+            valueNames: ['name'],
+            page: 3,
+            pagination: true
         });
     </script>
 </body>
