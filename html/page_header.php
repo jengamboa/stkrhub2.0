@@ -74,6 +74,8 @@
 
 						<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
 
+						<li class="nav-item"></li>
+
 					</ul>
 
 					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center">
@@ -88,18 +90,18 @@
 									<span class="cart-icon">
 										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>';
 
-								$sqlCart = "SELECT * FROM cart WHERE user_id = $user_id";
-								$resultCart = $conn->query($sqlCart);
+							$sqlCart = "SELECT * FROM cart WHERE user_id = $user_id";
+							$resultCart = $conn->query($sqlCart);
 
-								$count = 0;
+							$count = 0;
 
-								while ($fetchedCart = $resultCart->fetch_assoc()) {
-									$cart_id = $fetchedCart['cart_id'];
-									$count++; //
-								}
+							while ($fetchedCart = $resultCart->fetch_assoc()) {
+								$cart_id = $fetchedCart['cart_id'];
+								$count++; //
+							}
 
 
-							echo '<span class="cart-count">('.$count.')</span>
+							echo '<span class="cart-count">(' . $count . ')</span>
 									</span>
 								</a>
 							</li>
@@ -120,23 +122,45 @@
 							if (isset($_SESSION['user_id'])) {
 								$user_id = $_SESSION['user_id'];
 
-								echo '
-								<a class="nav-link" href="contact.html">
-									<div style="position: relative; display: inline-block; width: 37px; height: 37px; border-radius: 50%; background-color: #333;">
-										<img src="img/16x9.jpg" alt="" style="
-												position: absolute;
-												top: 0;
-												left: 0;
+								$avatar = "SELECT * FROM users WHERE user_id = $user_id";
+								$result = $conn->query($avatar);
+								while ($fetchedAvatar = $result->fetch_assoc()) {
+									$avatar = $fetchedAvatar['avatar'];
+									$username = $fetchedAvatar['username'];
 
-												height: 100%;
-												width: 100%;
-												object-fit: cover;
-												border-radius: 50%;
-										">
+									$firstLetter = substr($username, 0, 1);
+								}
 
-									</div>
-								</a>
-								';
+								if (!is_null($avatar)) {
+									echo '
+									<a class="nav-link" href="contact.html">
+										<div style="position: relative; display: inline-block; width: 37px; height: 37px; border-radius: 50%; background-color: #333;">
+											<img src="' . $avatar . '" alt="" style="
+													position: absolute;
+													top: 0;
+													left: 0;
+
+													height: 100%;
+													width: 100%;
+													object-fit: cover;
+													border-radius: 50%;
+											">
+
+										</div>
+									</a>
+									';
+								} else {
+									echo '
+									<a class="nav-link" href="contact.html">
+										<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 37px; height: 37px; border-radius: 50%;
+										background: rgb(38,211,224);
+										background: linear-gradient(90deg, rgba(38,211,224,1) 0%, rgba(182,96,232,1) 100%);">
+											<p style="font-family: sans-serif; font-weight: bold; font-size:17px; padding-top: 18px;">'.$firstLetter.'</p>
+
+										</div>
+									</a>
+									';
+								}
 							} else {
 								echo '
 								<a class="primary-btn keychainify-checked" href="#" style="left: 0px; line-height: 20px; width:auto; font-size: 14px;">Login / Sign Up</a>

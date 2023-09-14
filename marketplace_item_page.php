@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -94,7 +98,7 @@
 
 <body>
     <?php
-    session_start();
+
     include 'connection.php';
     if (isset($_GET['id'])) {
         $published_game_id = $_GET['id'];
@@ -142,8 +146,6 @@
 
 
                             <div class="swiper-container">
-
-
 
                                 <div class="swiper mySwiper2" style="margin-bottom: 10px;">
                                     <div class="swiper-wrapper">
@@ -209,7 +211,7 @@
                                                     <div class="swiper-slide">
                                                         <div class="image-slide-container">
                                                             <video class="image-slide">
-                                                                <source src="'.$file_path.'">
+                                                                <source src="' . $file_path . '">
                                                                 Your browser does not support the video tag.
                                                             </video>
                                                         </div>
@@ -219,7 +221,7 @@
                                                 echo '
                                                     <div class="swiper-slide">
                                                         <div class="image-slide-container">
-                                                            <img class="image-slide" src="'.$file_path.'" />
+                                                            <img class="image-slide" src="' . $file_path . '" />
                                                         </div>
                                                     </div>
     
