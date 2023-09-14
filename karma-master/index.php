@@ -16,9 +16,9 @@
 	<meta charset="UTF-8">
 	<!-- Site Title -->
 	<title>Karma Shop</title>
-	<!--
-		CSS
-		============================================= -->
+
+
+	<!-- CSS ================================ -->
 	<link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
 	<link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
 	<link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">

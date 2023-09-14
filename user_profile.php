@@ -1,4 +1,7 @@
-<!-- user_profile.php -->
+<?php
+session_start();
+?>
+
 <?php
 // Include the connection.php file to access the existing database connection
 require_once 'connection.php';

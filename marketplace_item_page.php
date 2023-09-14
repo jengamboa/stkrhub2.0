@@ -25,6 +25,11 @@ session_start();
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css?<?php echo time(); ?>" />
 
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 
 
 
@@ -93,6 +98,7 @@ session_start();
             width: 100%;
             object-fit: cover;
         }
+
     </style>
 </head>
 
@@ -107,6 +113,7 @@ session_start();
     $query = $conn->query($sql);
     while ($fetched = $query->fetch_assoc()) {
         $published_game_id = $fetched['published_game_id'];
+        $built_game_id = $fetched['built_game_id'];
         $game_name = $fetched['game_name'];
         $category = $fetched['category'];
         $edition = $fetched['edition'];
@@ -123,16 +130,17 @@ session_start();
         $max_playtime = $fetched['max_playtime'];
         $marketplace_price = $fetched['marketplace_price'];
     }
+    ?>
 
-
+    <?php
+    include 'html/page_header.php';
     ?>
 
 
-    <!-- Start Banner Area -->
     <!-- <section class="banner-area organic-breadcrumb">
 
     </section> -->
-    <!-- End Banner Area -->
+
 
 
     <form method="post" action="process_add_published_game_page_to_cart.php">
@@ -275,6 +283,7 @@ session_start();
                             <div class="product_count">
                                 <label for="qty">Quantity:</label>
                                 <input type="number" name="quantity" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                                
 
                                 <input type="hidden" name="published_game_id" value="<?php echo $published_game_id; ?>"><br>
                                 <input type="hidden" name="marketplace_price" value="<?php echo $marketplace_price; ?>"><br>
@@ -302,20 +311,19 @@ session_start();
         <div class="container">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Specification</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Comments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews</a>
+                    <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <strong>Short Description:</strong>
                     <p>
                         <?php echo $short_description; ?>
@@ -332,9 +340,11 @@ session_start();
                         before into a
                         streamlined plan of cooking that is more efficient for one person creating less</p>
                 </div>
+
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive">
-                        <table class="table">
+
+                        <!-- <table class="table">
                             <tbody>
                                 <tr>
                                     <td>
@@ -401,226 +411,179 @@ session_start();
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> -->
+                        <div class="table-responsive" style="overflow-x: auto; max-width: 100%;">
+                            <table id="componentTable" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Game Components</th>
+                                        <th>Category</th>
+                                        <th>Quantity</th>
+                                        <th>Size</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <!-- User data will be displayed here -->
+                                </tbody>
+
+                            </table>
+                        </div>
+
                     </div>
                 </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="comment_list">
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/review-1.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <h5>12th Feb, 2018 at 05:56 pm</h5>
-                                            <a class="reply_btn" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                        laboris nisi ut aliquip ex ea
-                                        commodo</p>
-                                </div>
-                                <div class="review_item reply">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/review-2.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <h5>12th Feb, 2018 at 05:56 pm</h5>
-                                            <a class="reply_btn" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                        laboris nisi ut aliquip ex ea
-                                        commodo</p>
-                                </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/review-3.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <h5>12th Feb, 2018 at 05:56 pm</h5>
-                                            <a class="reply_btn" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                        laboris nisi ut aliquip ex ea
-                                        commodo</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="review_box">
-                                <h4>Post a comment</h4>
-                                <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Message"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
-                    <div class="row">
-                        <div class="col-lg-6">
+
+
+                        <div class="col-lg">
+
                             <div class="row total_rate">
-                                <div class="col-6">
-                                    <div class="box_total">
+                                <div class="col-3">
+                                    <div class="box_total" style="
+                                        /* <!-- glass morph--> */
+                                        background: rgba(39, 42, 78, 0.57);
+                                        border-radius: 15px 15px 15px 15px;
+                                        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+                                        backdrop-filter: blur(5.7px);
+                                        -webkit-backdrop-filter: blur(5.7px);
+                                    ">
+
+                                        <?php
+                                        $rating = "SELECT rating FROM ratings WHERE published_game_id = $published_game_id";
+                                        $sqlGetRating = $conn->query($rating);
+                                        $ratingsArray = [];
+                                        while ($fetchedRating = $sqlGetRating->fetch_assoc()) {
+                                            $ratingsArray[] = $fetchedRating['rating'];
+                                        }
+
+
+                                        $ratingCounts = array(
+                                            '5' => 0,
+                                            '4' => 0,
+                                            '3' => 0,
+                                            '2' => 0,
+                                            '1' => 0
+                                        );
+
+                                        foreach ($ratingsArray as $ratingValue) {
+                                            if (array_key_exists($ratingValue, $ratingCounts)) {
+                                                $ratingCounts[$ratingValue]++;
+                                            }
+                                        }
+
+                                        // Now you have the count of each rating value
+                                        $count5 = $ratingCounts['5'];
+                                        $count4 = $ratingCounts['4'];
+                                        $count3 = $ratingCounts['3'];
+                                        $count2 = $ratingCounts['2'];
+                                        $count1 = $ratingCounts['1'];
+
+
+                                        $ratingSum = array_sum($ratingsArray);
+                                        $ratingCount = count($ratingsArray);
+                                        $averageRating = ($ratingCount > 0) ? ($ratingSum / $ratingCount) : 0;
+                                        ?>
+
                                         <h5>Overall</h5>
-                                        <h4>4.0</h4>
-                                        <h6>(03 Reviews)</h6>
+                                        <h4><?php echo $averageRating ?></h4>
+                                        <h6>
+                                            <?php
+                                            if ($ratingCount === 0) {
+                                                echo "No Ratings Yet";
+                                            } else {
+                                                echo '(' . $ratingCount . ')';
+                                            }
+                                            ?>
+                                        </h6>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="rating_list">
-                                        <h3>Based on 3 Reviews</h3>
+                                        <h3>Based on <?php echo $ratingCount ?> Review/s</h3>
                                         <ul class="list">
-                                            <li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                                            <li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                            <li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <?php echo $count5 ?></a></li>
+                                            <li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <?php echo $count4 ?></a></li>
+                                            <li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <?php echo $count3 ?></a></li>
+                                            <li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <?php echo $count2 ?></a></li>
+                                            <li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <?php echo $count1 ?></a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="review_list">
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/review-1.png" alt="">
+                                <?php
+                                $sqlReview = "SELECT * FROM ratings WHERE published_game_id = $published_game_id";
+                                $resultReview = $conn->query($sqlReview);
+                                while ($fetchedReview = $resultReview->fetch_assoc()) {
+                                    $rating_id = $fetchedReview['rating_id'];
+                                    $rating = $fetchedReview['rating'];
+                                    $comment = $fetchedReview['comment'];
+                                    $user_id = $fetchedReview['user_id'];
+                                    $date_time = $fetchedReview['date_time'];
+
+                                    $sqlReviewInfo = "SELECT * FROM users WHERE user_id = $user_id";
+                                    $resultReviewInfo = $conn->query($sqlReviewInfo);
+                                    while ($fetchedUserReview = $resultReviewInfo->fetch_assoc()) {
+                                        $username = $fetchedUserReview['username'];
+                                        $email = $fetchedUserReview['email'];
+                                        $avatar = $fetchedUserReview['avatar'];
+                                    }
+
+
+                                    echo '
+                                        <div class="review_item" style="
+                                            padding: 20px;    
+
+                                            background: rgba(39, 42, 78, 0.27);
+                                            border-radius: 15px 15px 15px 15px;
+                                            box-shadow: 0 4px 1px rgba(0, 0, 0, 0.2);
+                                            backdrop-filter: blur(5.7px);
+                                            -webkit-backdrop-filter: blur(5.7px);
+                                        ">
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <div style="position: relative; display: inline-block; width: 50px; height: 50px; border-radius: 50%; background-color: #333;">
+                                                        <img src="' . $avatar . '" alt="" style="
+                                                        position: absolute;
+                                                        top: 0;
+                                                        left: 0;
+    
+                                                        height: 100%;
+                                                        width: 100%;
+                                                        object-fit: cover;
+                                                        border-radius: 50%;
+                                                        ">
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4>' . $username . '</h4>';
+
+                                    for ($i = 0; $i < $rating; $i++) {
+                                        echo '<i class="fa fa-star"></i>';
+                                    }
+
+                                    echo '
+                                                </div>
+                                            </div>
+
+                                            <p>
+                                                ' . $comment . '
+                                            </p>
                                         </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                        laboris nisi ut aliquip ex ea
-                                        commodo</p>
-                                </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/review-2.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                        laboris nisi ut aliquip ex ea
-                                        commodo</p>
-                                </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/review-3.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                        laboris nisi ut aliquip ex ea
-                                        commodo</p>
-                                </div>
+                                    ';
+                                }
+                                ?>
+
                             </div>
+
                         </div>
-                        <div class="col-lg-6">
-                            <div class="review_box">
-                                <h4>Add a Review</h4>
-                                <p>Your Rating:</p>
-                                <ul class="list">
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                </ul>
-                                <p>Outstanding</p>
-                                <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Full name'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" value="submit" class="primary-btn">Submit Now</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -634,6 +597,42 @@ session_start();
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js?<?php echo time(); ?>"></script>
+
+    <script>
+        var built_game_id = <?php echo $built_game_id; ?>;
+
+        $('#componentTable').DataTable({
+            responsive: true,
+            "ajax": {
+                "url": "json_game_components_item.php",
+                data: {
+                    built_game_id: built_game_id,
+                },
+                "dataSrc": ""
+            },
+            "paging": false,
+            "info": false,
+            "searching": false,
+
+            "columns": [{
+                    "data": "component_name",
+                    "orderable": false
+                },
+                {
+                    "data": "component_category",
+                    "orderable": false
+                },
+                {
+                    "data": "quantity",
+                    "orderable": false
+                },
+                {
+                    "data": "size",
+                    "orderable": false
+                },
+            ]
+        });
+    </script>
 
 
     <!-- Initialize Swiper -->
@@ -660,9 +659,6 @@ session_start();
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-
-
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
@@ -670,7 +666,20 @@ session_start();
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/nouislider.min.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="js/gmaps.min.js"></script>
+    <!-- <script src="js/main.js"></script> -->
 
 </body>
 

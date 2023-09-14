@@ -7,7 +7,7 @@
 <header class="header_area sticky-header">
 	<div class="main_menu">
 		<nav class="navbar navbar-expand-lg navbar-light main_box" style="
-				
+				/* <!-- glass morph--> */
 				background: rgba(39, 42, 78, 0.57);
 				border-radius: 0px 0px 15px 15px;
 				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
@@ -133,7 +133,7 @@
 
 								if (!is_null($avatar)) {
 									echo '
-									<a class="nav-link" href="contact.html">
+									<a class="nav-link" href="user_profile_testing.php">
 										<div style="position: relative; display: inline-block; width: 37px; height: 37px; border-radius: 50%; background-color: #333;">
 											<img src="' . $avatar . '" alt="" style="
 													position: absolute;
@@ -151,7 +151,7 @@
 									';
 								} else {
 									echo '
-									<a class="nav-link" href="contact.html">
+									<a class="nav-link" href="user_profile.php">
 										<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 37px; height: 37px; border-radius: 50%;
 										background: rgb(38,211,224);
 										background: linear-gradient(90deg, rgba(38,211,224,1) 0%, rgba(182,96,232,1) 100%);">
