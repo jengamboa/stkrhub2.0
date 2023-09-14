@@ -104,7 +104,7 @@ session_start();
                                                 and polywrap sitting on your doorstep? You need to create eye-popping artwork and have your project replicated.
                                                 Using a reputable full service DVD Replication company like PacificDisc, Inc. to partner with is certainly a
                                                 helpful option to ensure a professional end result, but to help with your DVD replication project, here are 4 easy
-                                                steps to follow for good DVD replication results:
+                                                steps to follow for good DVD replication results: <br>asdasd<br>asdasd<br>asdasd<br>asdasd
 
                                             </p>
                                         </div>
@@ -228,6 +228,37 @@ session_start();
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
     <script src="js/gmaps.min.js"></script>
     <script src="js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Retrieve the last active tab for the main navigation
+            var lastActiveTabMain = sessionStorage.getItem('lastActiveTabMain');
+            if (lastActiveTabMain) {
+                $('.nav-pills a[href="' + lastActiveTabMain + '"]').tab('show');
+            }
+
+            // Retrieve the last active tab for the nested tabs
+            var lastActiveTabNested = sessionStorage.getItem('lastActiveTabNested');
+            if (lastActiveTabNested) {
+                $('.nav-tabs a[href="' + lastActiveTabNested + '"]').tab('show');
+            }
+
+            // Store the active tab for the main navigation when a tab is clicked
+            $('.nav-pills a').on('shown.bs.tab', function(e) {
+                var target = e.target.getAttribute('href');
+                sessionStorage.setItem('lastActiveTabMain', target);
+            });
+
+            // Store the active tab for the nested tabs when a tab is clicked
+            $('.nav-tabs a').on('shown.bs.tab', function(e) {
+                var target = e.target.getAttribute('href');
+                sessionStorage.setItem('lastActiveTabNested', target);
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>
