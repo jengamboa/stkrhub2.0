@@ -57,6 +57,25 @@ $result = mysqli_query($conn, $query);
     <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
+
+    <!--
+        pagination script
+        ============================================= -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+
+
+    <!--
+        pagination css
+        ============================================= -->
+    <style>
+        .pagination li {
+        display:inline-block;
+        padding:5px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -65,37 +84,60 @@ $result = mysqli_query($conn, $query);
     <br><br><br><br>
     <div class="panel">
         <h2>All Created Games</h2>
-        <ul>
-            <?php
-            while ($game = mysqli_fetch_assoc($result)) {
-                echo '<li>';
-                echo '<a href="game_dashboard.php?game_id=' . $game['game_id'] . '">' . $game['name'] . '</a>';
-                echo '<br> Total Price: $' . calculateTotalPrice($game['game_id']); // Call the function here
+        
 
-                echo '<form method="post" action="process_build_game.php">';
-                echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
-                echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
-                echo '<input type="hidden" name="game_name" value="' . $game['name'] . '">';
-                echo '<input type="hidden" name="game_price" value="' . calculateTotalPrice($game['game_id']) . '">'; // Add this line
+    <!--
+        pagination start
+        ============================================= -->
+        <div id="test-list"> 
+            <input type="text" class="search" />
+                <ul class="list">
 
-                // Additional hidden fields
-                echo '<input type="hidden" name="description" value="' . $game['description'] . '">';
+                    <?php
+                        while ($game = mysqli_fetch_assoc($result)) {
+                            echo '<li>';
+                            echo '<a href="game_dashboard.php?game_id=' . $game['game_id'] . '" class="name">' . $game['name'] . '</a>';
+                            echo '<br> Total Price: $' . calculateTotalPrice($game['game_id']); // Call the function here
+
+                            echo '<form method="post" action="process_build_game.php">';
+                            echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
+                            echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
+                            echo '<input type="hidden" name="game_name" value="' . $game['name'] . '">';
+                            echo '<input type="hidden" name="game_price" value="' . calculateTotalPrice($game['game_id']) . '">'; // Add this line
+
+                            // Additional hidden fields
+                            echo '<input type="hidden" name="description" value="' . $game['description'] . '">';
 
 
-                echo 'Is Built: ' . ($game['is_built'] == 1 ? 'Yes' : 'No'); // Display is_built here
+                            echo 'Is Built: ' . ($game['is_built'] == 1 ? 'Yes' : 'No'); // Display is_built here
 
-                echo '<br><button type="submit" name="build_game">Build Game</button>';
-                echo '</form>';
+                            echo '<br><button type="submit" name="build_game">Build Game</button>';
+                            echo '</form>';
 
-                echo '</li>';
-            }
-            ?>
-        </ul>
+                            echo '</li>';
+                        }
+                    ?>
+                </ul>
+            <ul class="pagination"></ul>
+        </div>
+
+    <!--
+        pagination end
+        ============================================= -->
+
     </div>
 
 
 
+    <script> 
+    // pagination jscript
 
+         var monkeyList = new List('test-list', {
+            valueNames: ['name'],
+            page: 3,
+            pagination: true
+         });
+    </script>
 
 </body>
 
