@@ -140,8 +140,9 @@ session_start();
 
                                             <!-- laman -->
                                             <div id="test-list">
-                                                <input type="text" class="search" />
-                                                <ul class="list">
+                                                <!-- <input type="text" class="search" /> -->
+                                                <ul class="pagination" style="padding-bottom: 10px;"></ul>
+                                                <ul class="list" style="display: flex; flex-direction: column; gap: 20px;">
 
                                                     <?php
                                                     $sqlAll = "SELECT * FROM orders WHERE user_id = $user_id";
@@ -174,12 +175,11 @@ session_start();
                                                         $uniqueId = 'collapseCard_' . $order_id;
 
                                                         echo '
-                                                            <br>
+                                                            
                                                             <div class="card">
                                                                 <div class="card-header">';
 
                                                         if ($published_game_id !== null) {
-
                                                             echo 'Published Game';
                                                         } elseif ($built_game_id !== null) {
                                                             echo 'Built Game';
@@ -190,18 +190,74 @@ session_start();
                                                         }
 
                                                         echo '
+                                                                <button style="margin-left: 20px">
+                                                                    View
+                                                                </button>
+
                                                                 </div>
 
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">Special title treatment</h5>
+                                                                <div class="card-body">';
+
+
+
+                                                        
+
+                                                            if ($published_game_id) {
+
+                                                                $sqlPublished = "SELECT * FROM published_built_games WHERE published_game_id = $published_game_id";
+                                                                $queryPublished = $conn->query($sqlPublished);
+                                                                while ($fetchedPublished = $queryPublished->fetch_assoc()) {
+                                                                    $built_game_id = $fetchedPublished['built_game_id'];
+                                                                    $game_name = $fetchedPublished['game_name'];
+
+                                                                    echo '
+                                                                        <h5 class="card-title">'.$game_name.'</h5>
+                                                                    ';
+                                                                }
+                                                                
+                                                            } elseif ($built_game_id) {
+                                                                
+                                                                $sqlBuilt = "SELECT * FROM built_games WHERE built_game_id = $built_game_id";
+                                                                $queryBuilt = $conn->query($sqlBuilt);
+                                                                while ($fetchedBuilt = $queryBuilt->fetch_assoc()) {
+                                                                    $game_id = $fetchedBuilt['game_id'];
+                                                                    $name = $fetchedBuilt['name'];
+
+                                                                    echo '
+                                                                        <h5 class="card-title">'.$name.'</h5>
+                                                                    ';
+                                                                }
+
+                                                            } elseif ($added_component_id) {
+                                                                $sqlComponent = "SELECT * FROM built_games_added_game_components WHERE added_component_id = $added_component_id";
+                                                                $queryComponent = $conn->query($sqlComponent);
+                                                                while ($fetchedComponent = $queryComponent->fetch_assoc()){
+
+                                                                    $component_id = $fetchedComponent['component_id'];
+
+                                                                    
+
+
+                                                                }
+
+                                                                
+                                                            } else {
+                                                                echo '
+                                                                        <h5 class="card-title">'.$component_id.'</h5>
+                                                                    ';
+                                                            }
+                                                        
+
+                                                        echo '
+                                                                    
                                                                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                                                                     <a href="#" class="btn btn-primary">Go somewhere</a>
                                                                 </div>';
 
 
-                                                                if ($published_game_id){
+                                                        if ($published_game_id) {
 
-                                                                    echo '
+                                                            echo '
                                                                         <div class="card-footer">
                                                                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' . $uniqueId . '">
                                                                                 Toggle Card
@@ -222,17 +278,16 @@ session_start();
                                                                             </div>
                                                                         </div>
                                                                     ';
+                                                        }
 
-                                                                }
-
-                                                                echo '
+                                                        echo '
                                                             </div>
                                                         ';
                                                     }
                                                     ?>
 
                                                 </ul>
-                                                <ul class="pagination"></ul>
+
                                             </div>
                                             <!-- /laman -->
 
@@ -291,7 +346,8 @@ session_start();
         var monkeyList = new List('test-list', {
             valueNames: ['name'],
             page: 7,
-            pagination: true
+            pagination: true,
+
         });
     </script>
 
