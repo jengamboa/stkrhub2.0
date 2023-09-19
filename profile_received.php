@@ -122,9 +122,9 @@ session_start();
 
                                     <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
 
-                                    <a class="nav-item nav-link " href="profile_received.php">Received</a>
+                                    <a class="nav-item nav-link active" href="profile_received.php">Received</a>
 
-                                    <a class="nav-item nav-link active" href="profile_canceled.php">Canceled</a>
+                                    <a class="nav-item nav-link " href="profile_canceled.php">Canceled</a>
                                 </div>
                             </nav>
 
@@ -133,7 +133,7 @@ session_start();
                                 <div class="tab-pane fade show active">
                                     <section style="padding: 20px;">
                                         <div class="container">
-                                            Canceled
+                                            Received
                                         </div>
                                     </section>
                                 </div>

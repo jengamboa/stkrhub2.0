@@ -114,29 +114,32 @@ session_start();
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link " href="profile_all.php">All</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_pay.php">To Pay</a>
+                                    <a class="nav-item nav-link" href="profile_pending.php">Pending</a>
+
+                                    <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
 
                                     <a class="nav-item nav-link active" href="profile_to_ship.php">To Ship</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_receive.php">To Receive</a>
+                                    <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_completed.php">Completed</a>
+                                    <a class="nav-item nav-link " href="profile_received.php">Received</a>
 
                                     <a class="nav-item nav-link " href="profile_canceled.php">Canceled</a>
                                 </div>
                             </nav>
 
                             <div class="tab-content" id="nav-tabContent">
-                                
+
+
                                 <div class="tab-pane fade show active">
                                     <section style="padding: 20px;">
                                         <div class="container">
-                                            To sShip
+                                            To Ship
                                         </div>
                                     </section>
                                 </div>
 
-                                
+
 
                             </div>
                             <!-- /laman -->

@@ -23,7 +23,7 @@ while ($fetched = $resultUsers->fetch_assoc()) {
                     <h6>Username: </h6>
                 </div>
                 <div class="col-md-auto">
-                    <input value="'.$username.'" readonly style="border: none;"> 
+                    <input class="username-input" value="'.$username.'" readonly style="border: none;"> 
                     <button type="button" class="btn edit-btn">Edit</button>
                 </div>
             </div> <br>

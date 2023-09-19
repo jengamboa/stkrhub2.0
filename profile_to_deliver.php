@@ -104,33 +104,6 @@ session_start();
                                 </div>
                             </nav>
 
-                            <div class="tab-content" id="nav-tabContent">
-
-                                <div class="tab-pane fade ">
-                                    <section style="padding: 20px;">
-                                        <div class="container">
-                                            Home
-                                        </div>
-                                    </section>
-                                </div>
-
-                                <div class="tab-pane fade ">
-                                    <section style="padding: 20px;">
-                                        <div class="container">
-                                            addreses
-                                        </div>
-                                    </section>
-                                </div>
-
-                                <div class="tab-pane fade show active">
-                                    <section style="padding: 20px;">
-                                        <div class="container">
-                                            change pass
-                                        </div>
-                                    </section>
-                                </div>
-
-                            </div>
                             <!-- /laman -->
 
                         </div>
@@ -141,43 +114,41 @@ session_start();
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link " href="profile_all.php">All</a>
 
-                                    <a class="nav-item nav-link active" href="profile_to_pay.php">To Pay</a>
+                                    <a class="nav-item nav-link" href="profile_pending.php">Pending</a>
+
+                                    <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
 
                                     <a class="nav-item nav-link " href="profile_to_ship.php">To Ship</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_receive.php">To Receive</a>
+                                    <a class="nav-item nav-link active" href="profile_to_deliver.php">To Deliver</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_completed.php">Completed</a>
+                                    <a class="nav-item nav-link " href="profile_received.php">Received</a>
 
                                     <a class="nav-item nav-link " href="profile_canceled.php">Canceled</a>
                                 </div>
                             </nav>
 
-                            <div class="tab-content" id="nav-tabContent">
-                                
-
-                                <div class="tab-pane fade show active">
-                                    <section style="padding: 20px;">
-                                        <div class="container">
-                                            To Pay
-                                        </div>
-                                    </section>
-                                </div>
-
-                                
-
+                            <div class="tab-pane fade show active">
+                                <section style="padding: 20px;">
+                                    <div class="container">
+                                        To Deliver
+                                    </div>
+                                </section>
                             </div>
-                            <!-- /laman -->
+
+
                         </div>
-
-                        <div class="tab-pane fade" id="v-pills-logout" role="tabpanel" aria-labelledby="v-pills-logout-tab">
-                            logout
-                        </div>
-
-
+                        <!-- /laman -->
                     </div>
+
+                    <div class="tab-pane fade" id="v-pills-logout" role="tabpanel" aria-labelledby="v-pills-logout-tab">
+                        logout
+                    </div>
+
+
                 </div>
             </div>
+        </div>
 
         </div>
     </section>

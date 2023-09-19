@@ -44,6 +44,10 @@ session_start();
     <!-- Filepond -->
     <link href="https://unpkg.com/filepond@4.23.1/dist/filepond.min.css" rel="stylesheet">
 
+    <!-- List JS -->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
 
 
 
@@ -104,7 +108,7 @@ session_start();
                                 </div>
                             </nav>
 
-                            
+
                             <!-- /laman -->
 
                         </div>
@@ -115,13 +119,15 @@ session_start();
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link active" href="profile_all.php">All</a>
 
-                                    <a class="nav-item nav-link" href="profile_to_pay.php">To Pay</a>
+                                    <a class="nav-item nav-link" href="profile_pending.php">Pending</a>
+
+                                    <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
 
                                     <a class="nav-item nav-link " href="profile_to_ship.php">To Ship</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_receive.php">To Receive</a>
+                                    <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_completed.php">Completed</a>
+                                    <a class="nav-item nav-link " href="profile_received.php">Received</a>
 
                                     <a class="nav-item nav-link " href="profile_canceled.php">Canceled</a>
                                 </div>
@@ -131,12 +137,110 @@ session_start();
                                 <div class="tab-pane fade show active">
                                     <section style="padding: 20px;">
                                         <div class="container">
-                                            All
+
+                                            <!-- laman -->
+                                            <div id="test-list">
+                                                <input type="text" class="search" />
+                                                <ul class="list">
+
+                                                    <?php
+                                                    $sqlAll = "SELECT * FROM orders WHERE user_id = $user_id";
+                                                    $queryAll = $conn->query($sqlAll);
+                                                    while ($fetchedAll = $queryAll->fetch_assoc()) {
+                                                        $order_id = $fetchedAll['order_id'];
+                                                        $cart_id = $fetchedAll['cart_id'];
+                                                        $published_game_id = $fetchedAll['published_game_id'];
+                                                        $built_game_id = $fetchedAll['built_game_id'];
+                                                        $added_component_id = $fetchedAll['added_component_id'];
+                                                        $quantity = $fetchedAll['quantity'];
+                                                        $price = $fetchedAll['price'];
+                                                        $order_date = $fetchedAll['order_date'];
+                                                        $desired_markup = $fetchedAll['desired_markup'];
+                                                        $manufacturer_profit = $fetchedAll['manufacturer_profit'];
+                                                        $creator_profit = $fetchedAll['creator_profit'];
+                                                        $marketplace_price = $fetchedAll['marketplace_price'];
+                                                        $is_rated = $fetchedAll['is_rated'];
+
+                                                        // address
+                                                        $fullname = $fetchedAll['fullname'];
+                                                        $number = $fetchedAll['number'];
+                                                        $region = $fetchedAll['region'];
+                                                        $province = $fetchedAll['province'];
+                                                        $city = $fetchedAll['city'];
+                                                        $barangay = $fetchedAll['barangay'];
+                                                        $zip = $fetchedAll['zip'];
+                                                        $street = $fetchedAll['street'];
+
+                                                        $uniqueId = 'collapseCard_' . $order_id;
+
+                                                        echo '
+                                                            <br>
+                                                            <div class="card">
+                                                                <div class="card-header">';
+
+                                                        if ($published_game_id !== null) {
+
+                                                            echo 'Published Game';
+                                                        } elseif ($built_game_id !== null) {
+                                                            echo 'Built Game';
+                                                        } elseif ($added_component_id !== null) {
+                                                            echo 'Game Component';
+                                                        } else {
+                                                            echo 'Error';
+                                                        }
+
+                                                        echo '
+                                                                </div>
+
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">Special title treatment</h5>
+                                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                                                </div>';
+
+
+                                                                if ($published_game_id){
+
+                                                                    echo '
+                                                                        <div class="card-footer">
+                                                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' . $uniqueId . '">
+                                                                                Toggle Card
+                                                                            </button>
+                                                                        </div>
+                                                                        
+                                                                        <div id="' . $uniqueId . '" class="collapse">
+                                                                            <div class="card-body">
+                                                                                <!-- Content for the collapsed card goes here -->
+                                                                                <div class="card">
+                                                                                    <div class="card-header">
+                                                                                        <!-- Header for the inner card -->
+                                                                                    </div>
+                                                                                    <div class="card-body">
+                                                                                        <!-- Content for the inner card goes here -->
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    ';
+
+                                                                }
+
+                                                                echo '
+                                                            </div>
+                                                        ';
+                                                    }
+                                                    ?>
+
+                                                </ul>
+                                                <ul class="pagination"></ul>
+                                            </div>
+                                            <!-- /laman -->
+
                                         </div>
                                     </section>
                                 </div>
 
-                                
+
 
                             </div>
                             <!-- /laman -->
@@ -181,6 +285,15 @@ session_start();
 
     <!-- Filepond JavaScript -->
     <script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
+
+
+    <script>
+        var monkeyList = new List('test-list', {
+            valueNames: ['name'],
+            page: 7,
+            pagination: true
+        });
+    </script>
 
 
 </body>
