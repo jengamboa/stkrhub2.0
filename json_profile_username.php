@@ -9,26 +9,43 @@ $sql = "SELECT * FROM users WHERE user_id = $user_id";
 $resultUsers = $conn->query($sql);
 
 while ($fetched = $resultUsers->fetch_assoc()) {
-    $title = '<h6>Username: </h6>';
 
     $username = $fetched['username'];
+    $avatar = $fetched['avatar'];
 
-    $input = '
-        <input 
-            type="text" 
-            value="'.$username.'" 
-            readonly>
-    ';
 
-    $edit = '
-        <button type="button">Edit</button>
+    $row = '
+    
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Username: </h6>
+                </div>
+                <div class="col-md-auto">
+                    <input value="'.$username.'" readonly style="border: none;"> 
+                    <button type="button" class="btn edit-btn">Edit</button>
+                </div>
+            </div> <br>
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <h6>Avatar: </h6>
+                </div>
+                <div class="col-md-auto">
+                    <image src="'.$avatar.'" style="width: 200px;">
+                    <button type="button" class="btn edit-btn-avatar">Edit</button>
+                </div>
+            </div>
+
+        </div>
+    
     ';
 
 
     $json[] = array(
-        "title" => $title,
-        "input" => $input,
-        "edit" => $edit,
+        "row" => $row,
+
     );
 }
 

@@ -38,6 +38,14 @@ session_start();
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
+    <!-- sweetalert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Filepond -->
+    <link href="https://unpkg.com/filepond@4.23.1/dist/filepond.min.css" rel="stylesheet">
+
+
+
 
 </head>
 
@@ -87,10 +95,12 @@ session_start();
 
                             <!-- laman -->
                             <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
-                                    <a class="nav-item nav-link" id="nav-addresses-tab" data-toggle="tab" href="#nav-addresses" role="tab" aria-controls="nav-addresses" aria-selected="false">Addresses</a>
-                                    <a class="nav-item nav-link" id="nav-changepassword-tab" data-toggle="tab" href="#nav-changepassword" role="tab" aria-controls="nav-changepassword" aria-selected="false">Change Password</a>
+                                <div class="nav nav-tabs">
+                                    <a class="nav-item nav-link active" href="asdasd.php">Profasdile</a>
+
+                                    <a class="nav-item nav-link" href="asdasd.php">Addresses</a>
+
+                                    <a class="nav-item nav-link" href="asdasd.php">Change Password</a>
                                 </div>
                             </nav>
 
@@ -99,34 +109,7 @@ session_start();
                                 <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                     <section style="padding: 20px;">
                                         <div class="container">
-
-                                            <!-- DataTables email  -->
-                                            <table id="profileUsername" class="display">
-                                                <!-- <thead>
-                                                    <tr>
-                                                        <th>Title</th>
-                                                        <th>Input</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead> -->
-                                                <tbody>
-                                                    <!-- User data will be displayed here -->
-                                                </tbody>
-                                            </table>
-
-                                            <table id="profilePassword" class="display">
-                                                <!-- <thead>
-                                                    <tr>
-                                                        <th>Title</th>
-                                                        <th>Input</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead> -->
-                                                <tbody>
-                                                    <!-- User data will be displayed here -->
-                                                </tbody>
-                                            </table>
-
+                                            Home
                                         </div>
                                     </section>
                                 </div>
@@ -134,19 +117,7 @@ session_start();
                                 <div class="tab-pane fade" id="nav-addresses" role="tabpanel" aria-labelledby="nav-addresses-tab">
                                     <section style="padding: 20px;">
                                         <div class="container">
-                                            <h3 class="text-heading">Text Sample</h3>
-                                            <p class="sample-text">
-                                                Every avid independent filmmaker has <b>Bold</b> about making that <i>Italic</i> interest documentary, or short
-                                                film to show off their creative prowess. Many have great ideas and want to “wow” the<sup>Superscript</sup> scene,
-                                                or video renters with their big project. But once you have the<sub>Subscript</sub> “in the can” (no easy feat), how
-                                                do you move from a <del>Strike</del> through of master DVDs with the <u>“Underline”</u> marked hand-written title
-                                                inside a secondhand CD case, to a pile of cardboard boxes full of shiny new, retail-ready DVDs, with UPC barcodes
-                                                and polywrap sitting on your doorstep? You need to create eye-popping artwork and have your project replicated.
-                                                Using a reputable full service DVD Replication company like PacificDisc, Inc. to partner with is certainly a
-                                                helpful option to ensure a professional end result, but to help with your DVD replication project, here are 4 easy
-                                                steps to follow for good DVD replication results:
-
-                                            </p>
+                                            addreses
                                         </div>
                                     </section>
                                 </div>
@@ -154,19 +125,7 @@ session_start();
                                 <div class="tab-pane fade" id="nav-changepassword" role="tabpanel" aria-labelledby="nav-changepassword-tab">
                                     <section style="padding: 20px;">
                                         <div class="container">
-                                            <h3 class="text-heading">Text Sample</h3>
-                                            <p class="sample-text">
-                                                Every avid independent filmmaker has <b>Bold</b> about making that <i>Italic</i> interest documentary, or short
-                                                film to show off their creative prowess. Many have great ideas and want to “wow” the<sup>Superscript</sup> scene,
-                                                or video renters with their big project. But once you have the<sub>Subscript</sub> “in the can” (no easy feat), how
-                                                do you move from a <del>Strike</del> through of master DVDs with the <u>“Underline”</u> marked hand-written title
-                                                inside a secondhand CD case, to a pile of cardboard boxes full of shiny new, retail-ready DVDs, with UPC barcodes
-                                                and polywrap sitting on your doorstep? You need to create eye-popping artwork and have your project replicated.
-                                                Using a reputable full service DVD Replication company like PacificDisc, Inc. to partner with is certainly a
-                                                helpful option to ensure a professional end result, but to help with your DVD replication project, here are 4 easy
-                                                steps to follow for good DVD replication results:
-
-                                            </p>
+                                            change pass
                                         </div>
                                     </section>
                                 </div>
@@ -252,14 +211,23 @@ session_start();
     <!-- Include DataTables JavaScript -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Filepond JavaScript -->
+    <script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
+
 
             //DataTables
             var user_id = <?php echo $user_id; ?>;
 
             $('#profileUsername').DataTable({
+                "dom": '<"compact"lfrtip>',
+
                 searching: false,
                 info: false,
                 paging: false,
@@ -278,10 +246,46 @@ session_start();
                     {
                         "data": "input"
                     },
-                    {
-                        "data": "edit"
-                    }
                 ]
+            });
+
+            $('#profileUsername').on('click', 'button.edit-btn', function() {
+                var currentUsername = $(this).closest('tr').find('.username-input').val();
+
+                Swal.fire({
+                    title: 'Update Username',
+                    input: 'text',
+                    inputValue: currentUsername,
+                    showCancelButton: true,
+                    confirmButtonText: 'Update',
+                    cancelButtonText: 'Cancel',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Username is required';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var newUsername = result.value;
+
+                        $.ajax({
+                            url: 'swal_process_update_username.php',
+                            method: 'POST',
+                            data: {
+                                user_id: user_id,
+                                new_username: newUsername
+                            },
+                            success: function(response) {
+                                Swal.fire('Updated!', 'Username has been updated.', 'success');
+
+                                $('#profileUsername').DataTable().ajax.reload();
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'Failed to update username', 'error');
+                            }
+                        });
+                    }
+                });
             });
 
             $('#profilePassword').DataTable({
@@ -303,11 +307,76 @@ session_start();
                     {
                         "data": "input"
                     },
-                    {
-                        "data": "edit"
-                    }
                 ]
             });
+
+            // Add a click event handler for "Edit" buttons in the profilePassword table
+            $('#profilePassword').on('click', 'button.edit-btn', function() {
+                Swal.fire({
+                    title: 'Update Avatar',
+                    input: 'file',
+                    inputAttributes: {
+                        accept: 'image/*',
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Upload',
+                    cancelButtonText: 'Cancel',
+                    inputValidator: (file) => {
+                        if (!file) {
+                            return 'Avatar file is required';
+                        }
+                    },
+                    preConfirm: async (file) => {
+                        const formData = new FormData();
+                        formData.append('user_id', user_id);
+                        formData.append('avatar', file);
+
+                        try {
+                            const response = await fetch('swal_process_update_avatar.php', {
+                                method: 'POST',
+                                body: formData,
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Failed to upload avatar');
+                            }
+
+                            return response.json();
+                        } catch (error) {
+                            Swal.showValidationMessage(`Error: ${error.message}`);
+                        }
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Updated!', 'Avatar has been updated.', 'success');
+                        $('#profilePassword').DataTable().ajax.reload();
+                    }
+                });
+            });
+
+
+            $('#profileAddress').DataTable({
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
+
+                "ajax": {
+                    "url": "json_profile_addresses.php",
+                    data: {
+                        user_id: user_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "address"
+                    },
+                    {
+                        "data": "editButton"
+                    },
+                ]
+            });
+
 
 
 

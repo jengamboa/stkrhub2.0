@@ -13,17 +13,29 @@ while ($fetchedAvatar = $resultAvatar->fetch_assoc()) {
 
     $avatar = $fetchedAvatar['avatar'];
 
-    $input = $avatar;
-
     $edit = '
-        <button type="button">Edit</button>
+        <button type="button" class="edit-btn">Edit</button>
     ';
+
+    $input = '
+        <img 
+            src="' . $avatar . '" 
+            class="user-avatar"
+            
+            style="
+                width:100px
+            "
+        >
+
+        ' . $edit . '
+    ';
+
+
 
 
     $json[] = array(
         "title" => $title,
         "input" => $input,
-        "edit" => $edit,
     );
 }
 
