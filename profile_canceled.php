@@ -118,8 +118,6 @@ session_start();
 
                                     <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
 
-                                    <a class="nav-item nav-link " href="profile_to_ship.php">To Ship</a>
-
                                     <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
 
                                     <a class="nav-item nav-link " href="profile_received.php">Received</a>

@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Redirect to a success page or display a success message
-    header("Location: cart.php");
+    // header("Location: cart.php");
     exit;
 } else {
     echo "Invalid request method";
