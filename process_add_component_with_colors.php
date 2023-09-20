@@ -1,6 +1,10 @@
 <?php
+session_start();
 include 'connection.php';
-include 'html/header.html.php';
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_with_colors'])) {
     $game_id = $_POST['game_id'];
@@ -13,13 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_with_colors'])) {
     $selected_color_id = $_POST['selected_color'];
     $quantity = $_POST['quantity']; // Include quantity
 
-    // Get the user_id from the session
-    $user_id = $_SESSION['user_id'];
-
     // Check if game_id exists (it's part of a game) or not
     if ($game_id !== '') {
 
-        // Echo the values passed from the previous page
+        // // Echo the values passed from the previous page
         echo "Game ID: " . $game_id . "<br>";
         echo "Component ID: " . $component_id . "<br>";
         echo "Selected Size: " . $selected_size . "<br>";
@@ -43,7 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_with_colors'])) {
     } else {
         echo "It is a single game component.<br>";
 
-        // Insert the single game component into the added_game_components table
+        echo $quantity;
+        echo $component_id;
+        echo $selected_color_id;
+        echo $selected_size;
+        echo $user_id;
+    
         $insert_query = "INSERT INTO added_game_components (game_id, component_id, color_id, quantity, size, user_id) 
         VALUES (NULL, '$component_id', '$selected_color_id', '$quantity', '$selected_size', '$user_id')";
 
@@ -59,12 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_with_colors'])) {
 
             if (mysqli_query($conn, $cart_insert_query)) {
                 echo "Single game component inserted into cart successfully with quantity $quantity.";
-            } else {
-                echo "Error inserting single game component into cart: " . mysqli_error($conn);
-            }
-        } else {
-            echo "Error inserting single game component into added_game_components: " . mysqli_error($conn);
-        }
+            } 
+
+            header('location: cart.php');
+        } 
     }
 }
 ?>

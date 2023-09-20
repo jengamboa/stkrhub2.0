@@ -1,5 +1,6 @@
 <?php
 // show_games.php
+session_start();
 include 'connection.php';
 include 'html/header.html.php';
 

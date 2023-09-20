@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'connection.php';
 include 'html/header.html.php';
 
@@ -31,6 +32,10 @@ $result_assets = mysqli_query($conn, $query_assets);
 </head>
 
 <body>
+    <?php
+        include 'html/page_header.php';
+        echo $user_id;
+    ?>
     <h2>Game Component Details</h2>
 
     <!-- Display the game ID and game name -->
