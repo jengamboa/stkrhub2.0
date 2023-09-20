@@ -96,7 +96,7 @@ session_start();
                             <!-- laman -->
                             <nav>
                                 <div class="nav nav-tabs">
-                                    <a class="nav-item nav-link " href="profile_index.php">Profasdile</a>
+                                    <a class="nav-item nav-link " href="profile_index.php">Profile</a>
 
                                     <a class="nav-item nav-link " href="profile_addresses.php">Addresses</a>
 
