@@ -58,12 +58,11 @@ $result = mysqli_query($conn, $query);
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
 
-    <!--
-        pagination script
-        ============================================= -->
+    <!-- pagination script ============================================= -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
-    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <!--sweetalert script============================================= -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <!--
@@ -137,6 +136,7 @@ $result = mysqli_query($conn, $query);
             page: 3,
             pagination: true
          });
+  
     </script>
 
 </body>

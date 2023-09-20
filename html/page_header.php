@@ -46,7 +46,7 @@
 						<li class="nav-item submenu dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
 							<ul class="dropdown-menu">
-								<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
+								<li class="nav-item"><a class="nav-link" href="category.html">Game Components</a></li>
 								<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a>
 								</li>
 								<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
@@ -71,8 +71,6 @@
 								<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
 							</ul>
 						</li>
-
-						<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
 
 						<li class="nav-item"></li>
 
@@ -163,7 +161,7 @@
 								}
 							} else {
 								echo '
-								<a class="primary-btn keychainify-checked" href="#" style="left: 0px; line-height: 20px; width:auto; font-size: 14px;">Login / Sign Up</a>
+								<a class="primary-btn keychainify-checked" href="login_page.php" style="left: 0px; line-height: 20px; width:auto; font-size: 14px;">Login / Sign Up</a>
 								';
 							}
 							?>

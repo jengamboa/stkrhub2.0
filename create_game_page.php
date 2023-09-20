@@ -1,13 +1,16 @@
 <?php
-// create_game.php
+session_start();
+
 include 'connection.php';
 include 'html/page_header2.php';
 
-// Check if the user is logged in. If not, redirect to the login page.
 if (!isset($_SESSION['user_id'])) {
     header("Location: login_page.php");
     exit;
 }
+
+$user_id = $_SESSION['user_id'];
+
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +49,7 @@ if (!isset($_SESSION['user_id'])) {
     <form method="post" action="process_create_game.php">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
+        <?php echo $user_id ?>
         <br>
 
         <label for="description">Description:</label>

@@ -62,7 +62,7 @@ session_start();
     
 
     <style>
-        <?php include 'css/body.css'; ?>
+        <?php //include 'css/body.css'; ?>
         .header_area {
             position: relative;
         }
@@ -358,10 +358,6 @@ session_start();
                     <div class="col-lg-6 text-center">
                         <div class="section-title">
                             <h1>Latest Products</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et
-                                dolore
-                                magna aliqua.</p>
                         </div>
                     </div>
                 </div>
@@ -405,12 +401,12 @@ session_start();
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             
-                        <div class="single-product" style="border: 5px solid green;">
+                        <div class="single-product" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);">
 
                         <div class="content">
                           <div class="content-overlay" style="height: 132px; width: 100%;"></div>
                   
-                          <div class="image-mini-container">
+                          <div class="image-mini-container" style = "style = "border: 1px solid #000; padding: 2cm;"";>
                             <img class="image-mini" src="img/16x9.jpg" class="card-img-top" alt="...">
                           </div>
                   

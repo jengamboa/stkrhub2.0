@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+include 'connection.php';
+include 'html/page_header2.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login_page.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +32,14 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+    <!-- SweetAlert Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+<?php //nclude'css/body.css';?>
+</style>
 </head>
 
 <body>
@@ -42,6 +72,7 @@
 
     <h3>
         <?php echo $game['name']; ?>
+        <button type="button" id="name_edit" name="edit"> Edit </button>
     </h3>
     <p>
         <?php echo $game['description']; ?>
@@ -49,9 +80,7 @@
     <p>Game ID:
         <?php echo $game['game_id']; ?>
     </p>
-    <p>Category:
-        <?php echo $game['category']; ?>
-    </p>
+
 
     <p>Total Price:
         <?php echo calculateTotalPrice($game_id); ?>
@@ -103,7 +132,7 @@
 
     <!-- Custom JavaScript -->
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var user_id = <?php echo $user_id; ?>;
             var game_id = <?php echo $game_id; ?>;
 
@@ -116,20 +145,33 @@
                     },
                     "dataSrc": ""
                 },
-                "columns": [
-                    { "data": "component_name" },
-                    { "data": "category" },
-                    { "data": "price" },
-                    { "data": "edit_quantity" },
-                    { "data": "info" },
-                    { "data": "modify" },
-                    { "data": "delete" },
+                "columns": [{
+                        "data": "component_name"
+                    },
+                    {
+                        "data": "category"
+                    },
+                    {
+                        "data": "price"
+                    },
+                    {
+                        "data": "edit_quantity"
+                    },
+                    {
+                        "data": "info"
+                    },
+                    {
+                        "data": "modify"
+                    },
+                    {
+                        "data": "delete"
+                    },
                 ]
             });
 
 
             // Handle color link clicks within the DataTable context
-            $('#userTable').on('click', '.color-link', function () {
+            $('#userTable').on('click', '.color-link', function() {
 
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
@@ -149,14 +191,14 @@
                         color_id: color_id,
                         added_component_id: added_component_id
                     },
-                    success: function (response) {
+                    success: function(response) {
                         // Handle the response if needed
                         console.log(response);
 
                         // Refresh the DataTable
                         table.ajax.reload();
                     },
-                    error: function (error) {
+                    error: function(error) {
                         // Handle errors if needed
                         console.error(error);
                     }
@@ -165,7 +207,7 @@
 
 
             // Listen for delete button click using event delegation
-            $('#userTable').on('click', '.delete-component', function () {
+            $('#userTable').on('click', '.delete-component', function() {
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
 
@@ -180,7 +222,7 @@
                         game_id: game_id,
                         added_component_id: component_id
                     },
-                    success: function (response) {
+                    success: function(response) {
                         console.log(response);
 
                         // Refresh the DataTable after successful deletion
@@ -191,7 +233,7 @@
 
 
             // Listen for changes to quantity input using event delegation
-            $('#userTable').on('change', '.quantity-input', function () {
+            $('#userTable').on('change', '.quantity-input', function() {
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
                 var quantity = $(this).val();
@@ -205,7 +247,7 @@
                         added_component_id: component_id,
                         quantity: quantity
                     },
-                    success: function (response) {
+                    success: function(response) {
                         console.log(response);
                         // Call calculateTotalPrice function and update the total price display
                         var total_price = calculateTotalPrice(game_id);
@@ -225,7 +267,7 @@
 
 
             // Listen for update custom design button click using event delegation
-            $('#userTable').on('click', '.update-design', function () {
+            $('#userTable').on('click', '.update-design', function() {
                 var game_id = $(this).data('gameid');
                 var component_id = $(this).data('componentid');
                 var component_name = $(this).data('componentname');
@@ -248,6 +290,61 @@
                     '&added_component_id=' + added_component_id; // Pass added_component_id
             });
 
+        });
+
+
+        //sweetalert editing script
+
+        $(document).ready(function() {
+            $('#name_edit').click(function() {
+                // Get the current game name and game ID
+                const currentGameName = "<?php echo $game['name']; ?>";
+                const gameId = "<?php echo $game['game_id']; ?>";
+
+                Swal.fire({
+                    title: 'Change Game Name',
+                    input: 'text',
+                    inputValue: currentGameName,
+                    inputPlaceholder: 'Type a new name',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'You need to enter something!';
+                        }
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const updatedGameName = result.value;
+
+                        // Perform an AJAX request to update the game name
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_game_name_change.php', // Replace with the actual PHP script
+                            data: {
+                                game_id: gameId,
+                                game_name: updatedGameName
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    // Update the displayed game name
+                                    $('#gameName').text(updatedGameName);
+                                    Swal.fire('Success', 'Game name updated successfully.', 'success');
+                                    console.log(response)
+                                } else {
+                                    Swal.fire('Error', 'Error updating game name.', 'error');
+                                    console.log(response)
+                                }
+                            },
+                            error: function(error) {
+                                console.error(error);
+                                Swal.fire('Error', 'AJAX request failed.', 'error');
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 

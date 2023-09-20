@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+include 'connection.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login_page.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +33,18 @@
 
   <!-- jQuery library -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+      <!--
+            CSS
+            ============================================= -->
+            <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/nouislider.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
 
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -44,9 +70,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    <?php
-    include 'css/body.css';
-    ?>@import url(https://fonts.googleapis.com/css?family=Raleway);
+    
 
 
 
@@ -142,12 +166,28 @@
 
 <body id="category">
 
-  <?php include "html/page_header2.php"; ?>
+  <?php 
+  $header_home = 'active';
+  include "html/page_header.php"; 
+  ?>
 
   <!-- Start Banner Area -->
   <section class="banner-area organic-breadcrumb">
-
-  </section>
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1></h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Element</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <br>
   <!-- End Banner Area -->
 
 
@@ -160,7 +200,7 @@
 
           <div>
             <h4 class='col-md-6'>
-              Movies
+              
               <!-- (<span id="total_movies">0</span>) -->
             </h4>
           </div>
