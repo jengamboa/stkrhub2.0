@@ -1,10 +1,14 @@
 <?php
+session_start();
 include 'connection.php';
-include 'html/header.html.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_design'])) {
-    // Get the game ID, component ID, and size from the form data
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+    }
+
+    echo $user_id;
 
     $component_price = $_POST['component_price'];
     
