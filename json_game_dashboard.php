@@ -40,6 +40,11 @@ while ($added_game_components = $result->fetch_assoc()) {
     >
     ';
 
+    $individual_price = $quantity * $price;
+
+    $individual_price_value = $individual_price;
+
+
     $info = "";
     if ($added_game_components['custom_design_file_path']) {
         $info = basename($custom_design_file_path);
@@ -135,6 +140,7 @@ while ($added_game_components = $result->fetch_assoc()) {
         "component_id" => $component_id,
         "component_name" => $component_name,
         "price" => $price,
+        "individual_price" => $individual_price,
         "category" => $category,
         "edit_quantity" => $edit_quantity,
         "info" => $info,
