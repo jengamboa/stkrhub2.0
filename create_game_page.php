@@ -288,7 +288,7 @@ include 'connection.php';
                             <th>Price</th>
                             <th>Date Built</th>
                             <th>Status</th>
-                            <th>View Admin Comment</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -298,14 +298,69 @@ include 'connection.php';
                 </table>
                 <!-- /DataTables canceledGameTable  -->
             </div>
+
             <div id="section5" class="section-step">
-                5
+                <!-- DataTables approvedGameTable  -->
+                <table id="approvedGameTable" class="display" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Built Game Name</th>
+                            <th>Description</th>
+                            <th>From what game</th>
+                            <th>Price</th>
+                            <th>Date Built</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- User data will be displayed here -->
+                    </tbody>
+                </table>
+                <!-- /DataTables approvedGameTable  -->
             </div>
             <div id="section6" class="section-step">
-                6
+                <!-- DataTables purchasedGameTable  -->
+                <table id="purchasedGameTable" class="display" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Built Game Name</th>
+                            <th>Description</th>
+                            <th>From what game</th>
+                            <th>Price</th>
+                            <th>Date Built</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- User data will be displayed here -->
+                    </tbody>
+                </table>
+                <!-- /DataTables purchasedGameTable  -->
             </div>
             <div id="section7" class="section-step">
-                7
+                <!-- DataTables publishedGameTable  -->
+                <table id="publishedGameTable" class="display" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Built Game Name</th>
+                            <th>Description</th>
+                            <th>From what game</th>
+                            <th>Price</th>
+                            <th>Date Built</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- User data will be displayed here -->
+                    </tbody>
+                </table>
+                <!-- /DataTables publishedGameTable  -->
             </div>
         </div>
     </section>
@@ -908,6 +963,128 @@ include 'connection.php';
 
                 "ajax": {
                     "url": "json_canceled_games.php",
+                    data: {
+                        user_id: user_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "built_game_link"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "from_what_game"
+                    },
+                    {
+                        "data": "total_price"
+                    },
+                    {
+                        "data": "formatted_date"
+                    },
+                    {
+                        "data": "status"
+                    },
+                    {
+                        "data": "actions"
+                    },
+
+                ]
+            });
+
+
+
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+            $('#approvedGameTable').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "json_approved_games.php",
+                    data: {
+                        user_id: user_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "built_game_link"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "from_what_game"
+                    },
+                    {
+                        "data": "total_price"
+                    },
+                    {
+                        "data": "formatted_date"
+                    },
+                    {
+                        "data": "status"
+                    },
+                    {
+                        "data": "actions"
+                    },
+
+                ]
+            });
+
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+            $('#purchasedGameTable').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "json_purchased_games.php",
+                    data: {
+                        user_id: user_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "built_game_link"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "from_what_game"
+                    },
+                    {
+                        "data": "total_price"
+                    },
+                    {
+                        "data": "formatted_date"
+                    },
+                    {
+                        "data": "status"
+                    },
+                    {
+                        "data": "actions"
+                    },
+
+                ]
+            });
+
+
+
+
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+            $('#publishedGameTable').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "json_published_games_table.php",
                     data: {
                         user_id: user_id,
                     },
