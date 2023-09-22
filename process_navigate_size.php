@@ -1,15 +1,15 @@
+
+
 <?php
 include 'connection.php';
-include 'html/header.html.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-// Retrieve the selected component ID from the form submission
-if (isset($_POST['selected_component_id'])) {
-    $selected_component_id = $_POST['selected_component_id'];
+    if (isset($_POST['value']) && isset($_POST['game_id'])) {
+        $select_component_id = $_POST['value'];
+        $game_id = $_POST['game_id'];
 
-    // Redirect to the respective game component details page with parameters
-    header("Location: game_component_details.php?game_id={$_POST['game_id']}&game_name={$_POST['game_name']}&component_id={$selected_component_id}");
-    exit;
-} else {
-    echo '<p>No component selected.</p>';
+        echo "Selected value: " . $select_component_id;
+        echo "Game ID received: " . $game_id; 
+    }
 }
 ?>

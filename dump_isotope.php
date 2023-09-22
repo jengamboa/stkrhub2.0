@@ -1,20 +1,10 @@
-<?php
-session_start();
-include 'connection.php';
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login_page.php");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isotope.js Search and Filter</title>
+    <title>Bootstrap Carousel in Modal</title>
 
 
     <!--CSS================================== -->
@@ -31,6 +21,11 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -41,89 +36,6 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Include jQuery and Isotope.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/css/isotope.min.css">
-</head>
-
-<body>
-    <section style="background-color: #eee;">
-        <div class="container py-5">
-            <div class="row">
-
-                <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
-                    
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                    <div class="card">
-                        <div class="d-flex justify-content-between p-3">
-                            <p class="lead mb-0">Today's Combo Offer</p>
-                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong" style="width: 35px; height: 35px;">
-                                <p class="text-white mb-0 small">x2</p>
-                            </div>
-                        </div>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp" class="card-img-top" alt="Laptop" />
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
-                                <p class="small text-danger"><s>$1199</s></p>
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-3">
-                                <h5 class="mb-0">HP Envy</h5>
-                                <h5 class="text-dark mb-0">$1099</h5>
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-2">
-                                <p class="text-muted mb-0">Available: <span class="fw-bold">7</span></p>
-                                <div class="ms-auto text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                    <div class="card">
-                        <div class="d-flex justify-content-between p-3">
-                            <p class="lead mb-0">Today's Combo Offer</p>
-                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong" style="width: 35px; height: 35px;">
-                                <p class="text-white mb-0 small">x3</p>
-                            </div>
-                        </div>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp" class="card-img-top" alt="Gaming Laptop" />
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
-                                <p class="small text-danger"><s>$1399</s></p>
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-3">
-                                <h5 class="mb-0">Toshiba B77</h5>
-                                <h5 class="text-dark mb-0">$1299</h5>
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-2">
-                                <p class="text-muted mb-0">Available: <span class="fw-bold">5</span></p>
-                                <div class="ms-auto text-warning">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -144,84 +56,116 @@ if (!isset($_SESSION['user_id'])) {
     <script src="js/gmaps.min.js"></script>
     <script src="js/main.js"></script>
 
+    <style>
+        <?php include 'css/body.css'; ?>.swiper-slide {
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-banner-container {
+            overflow: hidden;
+            width: 100%;
 
 
+            position: relative;
+            padding-top: 45.25%;
+            /* 9/16 aspect ratio (16:9) */
+        }
+
+        .image-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <button class="btn btn-primary" data-component_id="777" data-toggle="modal" data-target="#imageModal" onclick="displayComponentId(this)">Show Carousel</button>
 
 
-    <!-- sweetalert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Component ID: <span id="componentIdPlaceholder"></span></p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="swiper-container" style="width: 200px;">
+                        <!-- Swiper -->
+                        <div class="swiper-outer">
+                            <div class="swiper mySwiper">
+                                <div class="swiper-wrapper">
+                                    <?php
+                                    include 'connection.php';
+                                    $sql = "SELECT * FROM index_banner";
+                                    $result = $conn->query($sql);
+
+                                    while ($fetched_banner = $result->fetch_assoc()) {
+                                        $banner = $fetched_banner['image_path'];
+
+                                        echo '<div class="swiper-slide">';
+
+                                        echo '<div class="image-banner-container">';
+                                        echo '<img class="image-banner" src="' . $banner . '" alt="">';
+                                        echo '</div>';
+
+                                        echo '</div>';
+                                    }
+                                    ?>
+                                </div>
+
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <script>
-        $(document).ready(function() {
-            var $container = $('.portfolioContainer');
-            var $buttons = $('.categories');
+        function displayComponentId(button) {
+            const componentId = button.getAttribute("data-component_id");
+            document.getElementById("componentIdPlaceholder").textContent = componentId;
+        }
 
-            $container.isotope({
-                filter: '*',
-                layoutMode: 'masonry',
-                animationOptions: {
-                    duration: 750,
-                    easing: 'linear'
-                }
-            });
-
-
-            function loadData() {
-                $.ajax({
-                    url: 'dump_json_list.php', // Adjust the URL to your PHP script
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        var html = '';
-
-                        // Loop through the JSON data and create HTML elements
-                        $.each(data, function(index, item) {
-                            html += '<div class="item ' + item.category + '">';
-                            html += '   <div class="card">';
-                            html += '       <h5>' + item.title + '</h5>';
-                            html += '   </div>';
-                            html += '</div>';
-                        });
-
-                        // Update the Isotope container with new content
-                        $('#dynamicContent').html(html);
-
-                        // Reinitialize Isotope after updating the content
-                        $container.isotope('destroy').isotope({
-                            filter: '*',
-                            layoutMode: 'masonry',
-                            animationOptions: {
-                                duration: 750,
-                                easing: 'linear',
-                            },
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching data:', error);
-                    },
-                });
-            }
-
-            loadData();
-
-            $('.categories').on('click', function() {
-                var filterValue = $(this).data('filter');
-
-                $buttons.removeClass('active');
-                $(this).addClass('active');
-
-                $container.isotope({
-                    filter: filterValue,
-                    animationOptions: {
-                        duration: 750,
-                        easing: 'linear',
-                        queue: false,
-                    },
-                });
-            });
+        // Initialize Swiper as you did in your previous code
+        var mySwiper = new Swiper('.mySwiper', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
         });
     </script>
+
 
 
 </body>

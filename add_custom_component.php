@@ -2,6 +2,7 @@
 session_start();
 include 'connection.php';
 
+
 if (isset($_GET['game_id'])) {
     $game_id = $_GET['game_id'];
 }
@@ -54,7 +55,20 @@ while ($fetchedGetGameInfo = $queryGetGameInfo->fetch_assoc()) {
 
 
     <style>
-        <?php include 'css/body.css' ?>
+        <?php include 'css/body.css' ?>.card-custom {
+            overflow: hidden;
+            min-height: 150px;
+            box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
+        }
+
+        .card-custom-img {
+            height: 200px;
+            min-height: 200px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            border-color: inherit;
+        }
     </style>
 </head>
 
@@ -105,29 +119,14 @@ while ($fetchedGetGameInfo = $queryGetGameInfo->fetch_assoc()) {
                 ?>
             </div>
             <!-- Add an empty container for the dynamic content -->
-            <div class="portfolioContainer mt-4" id="dynamicContent"></div>
-        </div>
-    </section>
-    <!-- End Sample Area -->
+            <input type="text" id="searchInput" placeholder="Search...">
 
-
-
-
-    <div class="" style="max-width: 18rem;">
-        <div class="card">
-            <div class="card-header py-1">
-                header ako
-            </div>
-            <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill" />
-            <div class="card-body">
-                <div class="mb-2 text-muted small">
-                    <h5>asd</h5>
-                    <span>Size</span><br>
-                    <span>Price</span>
+            <div class="container">
+                <div class="portfolioContainer row pt-5 m-auto" id="dynamicContent">
                 </div>
             </div>
-        </div>
-    </div>
+    </section>
+    <!-- End Sample Area -->
 
 
 
@@ -160,89 +159,176 @@ while ($fetchedGetGameInfo = $queryGetGameInfo->fetch_assoc()) {
 
 
     <script>
-        $(document).ready(function() {
-            var $container = $('.portfolioContainer');
-            var $buttons = $('.categories');
+        function showSweetAlert() {
+            fetch('your_php_script.php', {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Sample Form',
+                            html: data.form, // Display the form HTML
+                            icon: 'info',
+                            showCancelButton: true,
+                            confirmButtonText: 'Submit',
+                            cancelButtonText: 'Cancel',
+                            preConfirm: () => {
+                                // Handle form submission here if needed
+                                const form = document.getElementById('sampleForm');
+                                const formData = new FormData(form);
+
+                                // Example: send formData to server using fetch for form submission
+
+                                // You can customize this part based on your requirements
+                            }
+                        });
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+
+
+
+
+
+        var $container = $('.portfolioContainer');
+        var $buttons = $('.categories');
+
+        // $container.isotope({
+        //     filter: '*',
+        //     layoutMode: 'masonry',
+        //     animationOptions: {
+        //         duration: 750,
+        //         easing: 'linear'
+        //     }
+        // });
+
+        $container.isotope({
+            itemSelector: '.item', // Specify the item selector
+            layoutMode: 'masonry',
+            masonry: {
+                columnWidth: 210,
+                columnHeight: 210,
+                fitWidth: true,
+            },
+            animationOptions: {
+                duration: 750,
+                easing: 'linear'
+            }
+        });
+
+
+        function loadData() {
+            $.ajax({
+                url: 'json_game_component_isotope.php?game_id=<?php echo $game_id; ?>', // Adjust the URL to your PHP script
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+
+                    $.each(data, function(index, item) {
+
+
+                        html += '<div class="col-md-6 col-lg-4 pb-3 ' + item.category + '">';
+
+                        html += '<a href="game_component_details.php?game_id=<?php echo $game_id; ?>&component_id=' + item.component_id + '" class="col-md-6 col-lg-4 pb-3">';
+                        html += '   <div class="card card-custom bg-white border-white border-0" style="height: 350px">';
+
+                        html += '       <div class="card-custom-img" style="background-image: url(' + item.thumbnail + ');">';
+                        html += '       </div>';
+
+                        html += '       <div class="card-body" style="overflow-y: auto">';
+                        html += '           <h5 class="card-title">' + item.title + '</h5>';
+                        html += '           <p class="card-subtitle mb-2 text-muted small">' + item.category + '</p>';
+                        html += '           <p class="card-subtitle mb-2 text-muted">' + item.size + '</p>';
+                        html += '           <p class="card-subtitle mb-2 text-muted">' + item.price + '</p>';
+                        html += '       </div>';
+
+                        html += '   </div>';
+                        html += '</a>';
+                        html += '</div>';
+
+                    });
+
+                    // Update the Isotope container with new content
+                    $('#dynamicContent').html(html);
+
+                    // Reinitialize Isotope after updating the content
+                    $container.isotope('destroy').isotope({
+                        filter: '*',
+                        layoutMode: 'masonry',
+                        animationOptions: {
+                            duration: 750,
+                            easing: 'linear',
+                        },
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                },
+            });
+        }
+
+        loadData();
+
+        $('.categories').on('click', function() {
+            var filterValue = $(this).data('filter');
+
+            $buttons.removeClass('active');
+            $(this).addClass('active');
 
             $container.isotope({
-                filter: '*',
-                layoutMode: 'masonry',
+                filter: filterValue,
                 animationOptions: {
                     duration: 750,
-                    easing: 'linear'
+                    easing: 'linear',
+                    queue: false,
+                },
+            });
+        });
+
+        // Get a reference to the search input field
+        var $searchInput = $('#searchInput');
+
+        // Listen for keyup event on the search input
+        $searchInput.on('keyup', function() {
+            var searchValue = $(this).val().toLowerCase(); // Get the lowercase search query
+
+            // Use Isotope's filter function to filter items
+            $container.isotope({
+                filter: function() {
+                    var itemText = $(this).text().toLowerCase(); // Get lowercase text of item
+                    return itemText.includes(searchValue); // Check if item contains the search query
+                }
+            });
+        });
+
+
+        // Listen for keyup event on the search input
+        $searchInput.on('keyup', function() {
+            var searchValue = $(this).val().toLowerCase(); // Get the lowercase search query
+
+            // Use Isotope's filter function to filter items
+            $container.isotope({
+                filter: function() {
+                    var itemText = $(this).text().toLowerCase(); // Get lowercase text of item
+                    return itemText.includes(searchValue); // Check if item contains the search query
                 }
             });
 
-
-            function loadData() {
-                $.ajax({
-                    url: 'json_game_component_isotope.php', // Adjust the URL to your PHP script
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        var html = '';
-
-                        // Loop through the JSON data and create HTML elements
-                        $.each(data, function(index, item) {
-
-
-                            html += '<div class="item ' + item.category + '" style="max-width: 18rem;">';
-                            html += '   <div class="card">';
-
-                            html += '       <div class="card-header py-1">';
-                            html += '           '+ item.category +'';
-                            html += '       </div>';
-
-                            html += '       <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill" />';
-
-                            html += '       <div class="card-body">';
-                            html += '           <div class="mb-2 text-muted small">';
-                            html += '               <h5>'+ item.title +'</h5>';
-                            html += '               <span>'+ item.size +'</span><br>';
-                            html += '               <span>'+ item.price +'</span>';
-                            html += '           </div>';
-                            html += '       </div>';
-
-                            html += '   </div>';
-                            html += '</div>';
-                        });
-
-                        // Update the Isotope container with new content
-                        $('#dynamicContent').html(html);
-
-                        // Reinitialize Isotope after updating the content
-                        $container.isotope('destroy').isotope({
-                            filter: '*',
-                            layoutMode: 'masonry',
-                            animationOptions: {
-                                duration: 750,
-                                easing: 'linear',
-                            },
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching data:', error);
-                    },
+            // Reset the filter if the search input is empty
+            if (!searchValue) {
+                $container.isotope({
+                    filter: '*'
                 });
             }
-
-            loadData();
-
-            $('.categories').on('click', function() {
-                var filterValue = $(this).data('filter');
-
-                $buttons.removeClass('active');
-                $(this).addClass('active');
-
-                $container.isotope({
-                    filter: filterValue,
-                    animationOptions: {
-                        duration: 750,
-                        easing: 'linear',
-                        queue: false,
-                    },
-                });
-            });
         });
     </script>
 
