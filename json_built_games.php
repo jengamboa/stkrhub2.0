@@ -22,7 +22,7 @@ while ($fetchedBuiltGames = $resultBuiltGames->fetch_assoc()) {
     $price = $fetchedBuiltGames['price'];
 
     $built_game_link = '
-        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a>
+        <a href="built_game_dashboard.php?built_game_id=' . $built_game_id . '">' . $name . '</a>
     ';
 
 
@@ -59,23 +59,30 @@ while ($fetchedBuiltGames = $resultBuiltGames->fetch_assoc()) {
     $status = $status_value;
 
 
-    $actions = '
-    <button 
-    class="approve-built_game" 
-    data-built_game_id="' . $built_game_id . '"
-    data-name="' . $name . '"
-    >
-        Get Approved
-    </button>
+    $actions = '';
 
-    <button class="edit-built_game" data-built_game_id="' . $built_game_id . '">
-        <i class="fa-solid fa-pen-to-square"></i>
-    </button>
+    if ($is_pending == 1) {
+        $actions .= '
+            
+        ';
+    } elseif ($is_pending == 0){
+        $actions .= '
+            <button class="approve-built_game" data-built_game_id="' . $built_game_id . '" data-name="' . $name . '">
+                Get Approved
+            </button>
+        ';
+    }
 
-    <button class="delete-built_game" data-built_game_id="' . $built_game_id . '">
-        <i class="fa-solid fa-trash"></i>
-    </button>
+    $actions .= '
+        <button class="edit-built_game" data-built_game_id="' . $built_game_id . '">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+    
+        <button class="delete-built_game" data-built_game_id="' . $built_game_id . '">
+            <i class="fa-solid fa-trash"></i>
+        </button>
     ';
+
 
     $data[] = array(
         "built_game_link" => $built_game_link,

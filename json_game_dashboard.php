@@ -25,6 +25,10 @@ while ($added_game_components = $result->fetch_assoc()) {
     $color_id = $added_game_components['color_id'];
     $custom_design_file_path = $added_game_components['custom_design_file_path'];
 
+    // Extract the original filename without unique ID
+    $filenameParts = explode('_', $custom_design_file_path);
+    $originalFilename = end($filenameParts);
+
 
 
     $edit_quantity = '
@@ -47,18 +51,16 @@ while ($added_game_components = $result->fetch_assoc()) {
 
     $info = "";
     if ($added_game_components['custom_design_file_path']) {
-        // $info = basename($custom_design_file_path);
-
         $info_mahaba = basename($added_game_components['custom_design_file_path']);
+
         // Assuming the path is something like 'uploads/64ef3ead1c307_nicole.jpg'
-        // $info will now contain '64ef3ead1c307_nicole.jpg'
-
-        // To get only the original filename (without unique id), you can split it by '_' and take the last part:
         $filenameParts = explode('_', $info_mahaba);
-        $info = end($filenameParts);
+        $originalFilename = end($filenameParts);
 
-
-
+        // Create a link to the image file
+        $imageFilePath = $added_game_components['custom_design_file_path']; // Update with the correct file path
+        $info = '<a href="' . $imageFilePath . '" target="_blank">' . $originalFilename . '</a>';
+        
     } elseif ($added_game_components['color_id']) {
         $getColorName = "SELECT * FROM component_colors WHERE color_id = $color_id";
         $sqlGetColorName = $conn->query($getColorName);
@@ -88,6 +90,7 @@ while ($added_game_components = $result->fetch_assoc()) {
                 data-componentprice="' . $price . '"
                 data-componentcategory="' . $category . '"
                 data-filepath="' . $custom_design_file_path . '"
+                data-originalFilename="' . $originalFilename . '"
                 data-addedcomponentid="' . $added_component_id . '"
             >
                 Update Custom Design

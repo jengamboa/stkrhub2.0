@@ -327,26 +327,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
 
             // Listen for update custom design button click using event delegation
             $('#userTable').on('click', '.update-design', function() {
-                var game_id = $(this).data('gameid');
-                var component_id = $(this).data('componentid');
-                var component_name = $(this).data('componentname');
-                var component_price = $(this).data('componentprice');
-                var component_category = $(this).data('componentcategory');
-                var file_path = $(this).data('filepath');
-                var file_name = $(this).data('filename');
-                var game_name = $(this).data('gamename');
-                var added_component_id = $(this).data('addedcomponentid'); // Retrieve added_component_id
+                var game_id = $(this).data("gameid");
+                var component_id = $(this).data("componentid");
+                var component_name = $(this).data("componentname");
+                var component_price = $(this).data("componentprice");
+                var component_category = $(this).data("componentcategory");
+                var file_path = $(this).data("filepath");
+                var originalFilename = $(this).attr("data-originalFilename");
+                var added_component_id = $(this).data("addedcomponentid");
 
-                // Redirect to the update_custom_design.php page with the necessary parameters
-                window.location.href = 'update_custom_design.php?game_id=' + game_id +
-                    '&component_id=' + component_id +
-                    '&component_name=' + encodeURIComponent(component_name) +
-                    '&component_price=' + component_price +
-                    '&component_category=' + encodeURIComponent(component_category) +
-                    '&file_path=' + encodeURIComponent(file_path) +
-                    '&file_name=' + encodeURIComponent(file_name) +
-                    '&game_name=' + encodeURIComponent(game_name) +
-                    '&added_component_id=' + added_component_id; // Pass added_component_id
+                // Show the current file in the SweetAlert message
+                var currentFile = decodeURIComponent(file_path); // Decode the file path if needed
+
+                // Create a form with an input file element
+                var formHtml = `
+                <form id="updateCustomDesignForm">
+                    <input type="file" id="newCustomDesignFile" accept=".jpg, .png, .gif">
+                </form>
+            `;
+
+                // Show a SweetAlert confirmation dialog with the form
+                Swal.fire({
+                    title: "Update Custom Design",
+                    html: formHtml + "<p>Current File: " + originalFilename + "</p>",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Update",
+                    preConfirm: function() {
+                        // Handle the form submission
+                        var formData = new FormData();
+                        var newFile = $("#newCustomDesignFile")[0].files[0];
+                        formData.append("game_id", game_id);
+                        formData.append("component_id", component_id);
+                        formData.append("newFile", newFile);
+                        formData.append("added_component_id", added_component_id);
+
+                        return $.ajax({
+                            type: "POST",
+                            url: "update_custom_design.php",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                        });
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.value.success) {
+                            Swal.fire("Success", result.value.message, "success");
+                            // Reload the DataTable
+                            $("#userTable").DataTable().ajax.reload();
+                            $("#infoTable").DataTable().ajax.reload();
+                        } else {
+                            Swal.fire("Error", result.value.message, "error");
+                        }
+                    }
+                });
             });
 
 

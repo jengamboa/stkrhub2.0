@@ -1,79 +1,77 @@
 <?php
-include 'connection.php';
-include 'html/header.html.php';
+// Check if a file was uploaded
+if (isset($_FILES['newFile']) && $_FILES['newFile']['error'] === UPLOAD_ERR_OK) {
+    // Define the upload directory
+    $uploadDir = 'uploads/'; // Change this to your desired directory
 
-// Get the passed parameters from the URL
-$game_id = $_GET['game_id'];
-$game_name = $_GET['game_name'];
-$component_id = $_GET['component_id'];
-$component_name = $_GET['component_name'];
-$component_price = $_GET['component_price'];
-$component_category = $_GET['component_category'];
-$file_path = $_GET['file_path'];
-$file_name = $_GET['file_name'];
-$added_component_id = $_GET['added_component_id'];
+    // Generate a unique filename to prevent overwriting
+    $newFileName = uniqid() . '_' . $_FILES['newFile']['name'];
 
-// Define the target directory to upload the file
-$targetDir = 'uploads/';
+    // Define the full path to store the uploaded file
+    $uploadPath = $uploadDir . $newFileName;
 
-// Handle file upload if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the uploaded file
-    $uploadedFile = $_FILES['new_file'];
+    // Move the uploaded file to the specified directory
+    if (move_uploaded_file($_FILES['newFile']['tmp_name'], $uploadPath)) {
+        // Update the database record with the new file path
+        $added_component_id = $_POST['added_component_id'];
 
-    // Check if a file was uploaded
-    if ($uploadedFile['error'] === UPLOAD_ERR_OK) {
-        $newFileName = $targetDir . basename($uploadedFile['name']);
-        // Move the uploaded file to the target directory
-        if (move_uploaded_file($uploadedFile['tmp_name'], $newFileName)) {
-            // Update the custom design file path in the database
-            $updateQuery = "UPDATE added_game_components SET custom_design_file_path = '$newFileName' WHERE added_component_id = '$added_component_id'";
-            mysqli_query($conn, $updateQuery);
-            
-            // Redirect back to the game dashboard after successful upload
-            header("Location: game_dashboard.php?game_id=$game_id");
-            exit;
+        // Connect to your database (modify with your database connection code)
+        include 'connection.php';
+
+        // Get the current custom design file path and component_id
+        $sql = "SELECT custom_design_file_path, component_id FROM added_game_components WHERE added_component_id = $added_component_id";
+        $result = $conn->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $currentFilePath = $row['custom_design_file_path'];
+            $component_id = $row['component_id'];
+        
+            // Update the custom_design_file_path column in the added_game_components table
+            $updateSql = "UPDATE added_game_components SET custom_design_file_path = '$uploadPath' WHERE added_component_id = $added_component_id";
+        
+            if ($conn->query($updateSql) === TRUE) {
+                // Update successful
+                $response = array(
+                    'success' => true,
+                    'message' => 'Custom design updated successfully.',
+                    'current_file' => $currentFilePath,
+                    'new_file' => $newFileName,
+                    'game_id' => $_POST['game_id'],
+                    'component_id' => $component_id
+                );
+            } else {
+                // Update failed
+                $response = array(
+                    'success' => false,
+                    'message' => 'Failed to update custom design.'
+                );
+            }
         } else {
-            echo "Error uploading file.";
+            // No record found
+            $response = array(
+                'success' => false,
+                'message' => 'No record found for the specified added_component_id.'
+            );
         }
+
+        // Close the database connection
+        $conn->close();
+    } else {
+        // File upload failed
+        $response = array(
+            'success' => false,
+            'message' => 'Failed to upload the new file.'
+        );
     }
+} else {
+    // No file was uploaded
+    $response = array(
+        'success' => false,
+        'message' => 'No file was uploaded.'
+    );
 }
-?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Update Custom Design</title>
-</head>
-
-<body>
-    <h2>Update Custom Design</h2>
-
-    <p>Game ID: <?php echo $game_id; ?></p>
-    <p>Game Name: <?php echo $game_name; ?></p>
-    <p>Component ID: <?php echo $component_id; ?></p>
-    <p>Component Name: <?php echo $component_name; ?></p>
-    <p>Component Price: <?php echo $component_price; ?></p>
-    <p>Component Category: <?php echo $component_category; ?></p>
-    <p>Current File Path: <?php echo $file_path; ?></p>
-
-    <!-- Form for updating custom design file -->
-    <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
-        <input type="hidden" name="game_name" value="<?php echo $game_name; ?>">
-        <input type="hidden" name="component_id" value="<?php echo $component_id; ?>">
-        <input type="hidden" name="component_name" value="<?php echo $component_name; ?>">
-        <input type="hidden" name="component_price" value="<?php echo $component_price; ?>">
-        <input type="hidden" name="component_category" value="<?php echo $component_category; ?>">
-        <input type="hidden" name="added_component_id" value="<?php echo $added_component_id; ?>">
-        <label for="new_file">Upload New File:</label>
-        <input type="file" name="new_file" id="new_file">
-        <input type="submit" name="submit" value="Upload">
-    </form>
-
-    <!-- Link to go back to the game dashboard -->
-    <a href="game_dashboard.php?game_id=<?php echo $game_id; ?>">Go Back</a>
-</body>
-
-</html>
+// Send JSON response
+header('Content-Type: application/json');
+echo json_encode($response);
