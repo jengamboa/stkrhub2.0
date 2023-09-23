@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2023 at 05:31 PM
+-- Generation Time: Sep 23, 2023 at 06:50 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,32 +44,20 @@ CREATE TABLE `added_game_components` (
 --
 
 INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`, `user_id`) VALUES
-(358, NULL, 4, 0, '', 1, NULL, '10x10', 0),
-(359, NULL, 4, 0, '', 1, NULL, '10x10', 0),
-(360, NULL, 4, 0, '', 1, NULL, '10x10', 0),
-(361, NULL, 4, 0, '', 1, NULL, '10x10', 3),
-(362, NULL, 4, 0, '', 1, NULL, '10x10', 3),
-(363, NULL, 4, 0, '', 4, NULL, '10x10', 3),
-(364, NULL, 4, 0, '', 4, NULL, '10x10', 3),
-(365, NULL, 4, 0, '', 4, NULL, '10x10', 3),
-(367, 34, 4, 0, '', 16, NULL, '10x10', 3),
-(368, 34, 4, 0, '', 12, NULL, '10x10', 3),
-(369, 34, 4, 0, '', 12, NULL, '10x10', 3),
-(371, NULL, 4, 0, '', 17, NULL, '10x10', 3),
-(372, NULL, 4, 0, '', 17, NULL, '10x10', 3),
-(373, NULL, 4, 0, '', 1, NULL, '10x10', 3),
-(374, NULL, 4, 0, '', 177, NULL, '10x10', 3),
-(375, NULL, 3, 0, NULL, 3, 2, '7x7', 0),
-(376, NULL, 3, 0, NULL, 3, 2, '7x7', 3),
-(377, NULL, 3, 0, NULL, 5, 2, '7x7', 3),
-(378, 34, 3, 0, NULL, 97, 1, '7x7', 3),
-(379, NULL, 3, 0, NULL, 1123, 3, '7x7', 3),
-(380, NULL, 3, 0, NULL, 1123, 3, '7x7', 3),
-(381, NULL, 3, 0, NULL, 143, 2, '7x7', 3),
-(382, NULL, 4, 1, 'uploads/kids award.docx', 1, NULL, '10x10', 0),
-(383, NULL, 4, 1, 'uploads/kids award.docx', 1, NULL, '10x10', 3),
-(384, 34, 1, 0, '', 1, NULL, '7x7', 3),
-(385, 34, 1, 1, 'uploads/kids award.docx', 3, NULL, '7x7', 3);
+(396, 74, 1, 1, 'uploads/650dd542e640e_ey.jpg', 7, NULL, '', 3),
+(397, NULL, 2, 1, 'uploads/kids award.pdf', 3, NULL, '7x7', 3),
+(399, NULL, 2, 1, 'uploads/kids award.pdf', 4, NULL, '7x7', 3),
+(400, 74, 1, 1, 'uploads/650dd549bd0ca_ey.jpg', 2, NULL, '7x7', 3),
+(401, 74, 1, 1, 'uploads/650dd54ec26ca_ey.jpg', 1, NULL, '7x7', 3),
+(402, NULL, 2, 0, '', 4, NULL, '7x7', 3),
+(403, NULL, 2, 0, '', 47, NULL, '7x7', 3),
+(404, 74, 1, 0, '', 11, NULL, '7x7', 3),
+(405, 74, 3, 0, NULL, 3, 3, '', 3),
+(406, 74, 3, 0, NULL, 21, 3, '7x7', 3),
+(412, NULL, 3, 0, NULL, 111, 1, '7x7', 3),
+(413, NULL, 3, 0, NULL, 1, 1, '7x7', 3),
+(414, 74, 3, 0, NULL, 2, 3, '7x7', 3),
+(415, 74, 4, 1, 'uploads/650dd53da34eb_ey.jpg', 28, NULL, '10x10', 3);
 
 -- --------------------------------------------------------
 
@@ -169,7 +157,7 @@ CREATE TABLE `built_games` (
 --
 
 INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_published`, `price`) VALUES
-(54, 34, 'game 2 na dating game 1', 'description\n', 3, '2023-09-21 19:44:42', 0, 0, 0, 0, 1, 1407.00);
+(73, 74, 'haha', 'hehe\n', 3, '2023-09-23 02:56:56', 0, 0, 0, 0, 0, 826.00);
 
 -- --------------------------------------------------------
 
@@ -189,6 +177,20 @@ CREATE TABLE `built_games_added_game_components` (
   `size` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `built_games_added_game_components`
+--
+
+INSERT INTO `built_games_added_game_components` (`added_component_id`, `built_game_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`) VALUES
+(321, 73, 74, 1, 1, 'uploads/650dd542e640e_ey.jpg', 7, 0, ''),
+(322, 73, 74, 1, 1, 'uploads/650dd549bd0ca_ey.jpg', 2, 0, '7x7'),
+(323, 73, 74, 1, 1, 'uploads/650dd54ec26ca_ey.jpg', 1, 0, '7x7'),
+(324, 73, 74, 1, 0, '', 11, 0, '7x7'),
+(325, 73, 74, 3, 0, '', 3, 2, ''),
+(326, 73, 74, 3, 0, '', 21, 2, '7x7'),
+(327, 73, 74, 3, 0, '', 2, 2, '7x7'),
+(328, 73, 74, 4, 1, 'uploads/650dd53da34eb_ey.jpg', 28, 0, '10x10');
+
 -- --------------------------------------------------------
 
 --
@@ -206,6 +208,18 @@ CREATE TABLE `cart` (
   `price` decimal(10,2) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built_game_id`, `added_component_id`, `quantity`, `price`, `is_active`) VALUES
+(269, 3, NULL, NULL, NULL, 397, 3, 11.00, 1),
+(270, 3, NULL, NULL, NULL, 399, 4, 11.00, 1),
+(271, 3, NULL, NULL, NULL, 402, 4, 11.00, 1),
+(272, 3, NULL, NULL, NULL, 403, 47, 11.00, 1),
+(273, 3, NULL, NULL, NULL, 412, 111, 7.00, 1),
+(274, 3, NULL, NULL, NULL, 413, 1, 7.00, 1);
 
 -- --------------------------------------------------------
 
@@ -248,13 +262,13 @@ CREATE TABLE `component_assets` (
 --
 
 INSERT INTO `component_assets` (`asset_id`, `component_id`, `asset_path`, `is_thumbnail`) VALUES
-(1, 2, 'assets\\component_assets/asset1.jpg', NULL),
-(2, 2, 'assets\\component_assets/asset2.jpg', NULL),
-(3, 2, 'assets\\component_assets/asset3.jpg', NULL),
-(4, 1, 'assets\\component_assets/asset4.jpg', NULL),
-(5, 1, 'assets\\component_assets/asset5.jpg', NULL),
-(6, 3, 'assets\\component_assets/asset1.jpg', '1'),
-(7, 4, 'assets\\component_assets/asset1.jpg', '1');
+(1, 2, 'assets/component_assets/asset1.jpg', NULL),
+(2, 2, 'assets/component_assets/asset2.jpg', '1'),
+(3, 2, 'assets/component_assets/asset3.jpg', NULL),
+(4, 1, 'assets/component_assets/asset4.jpg', NULL),
+(5, 1, 'assets/component_assets/asset5.jpg', '1'),
+(6, 3, 'assets/component_assets/asset1.jpg', '1'),
+(7, 4, 'assets/component_assets/asset1.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -368,7 +382,7 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`game_id`, `name`, `description`, `user_id`, `created_at`, `is_built`) VALUES
-(34, 'egit na game', 'hjhj\n', 3, '2023-08-12 20:59:18', 1),
+(34, 'legit na game', 'aahjhj', 3, '2023-08-12 20:59:18', 1),
 (35, 'jeric', NULL, 4, '2023-08-14 22:38:12', 0),
 (37, 'hehe', NULL, 4, '2023-08-16 15:10:01', 0),
 (40, 'fau\'s game', NULL, 7, '2023-08-30 11:07:16', 0),
@@ -390,6 +404,7 @@ CREATE TABLE `game_components` (
   `category` varchar(50) NOT NULL,
   `assets` varchar(255) DEFAULT NULL,
   `has_colors` tinyint(1) DEFAULT 0,
+  `is_upload_only` tinyint(1) DEFAULT 0,
   `size` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -397,11 +412,11 @@ CREATE TABLE `game_components` (
 -- Dumping data for table `game_components`
 --
 
-INSERT INTO `game_components` (`component_id`, `component_name`, `description`, `price`, `category`, `assets`, `has_colors`, `size`) VALUES
-(1, 'Tarrot Cards', NULL, 12.00, 'card', NULL, 0, '7x7'),
-(2, 'Box', 'box box', 11.00, 'box', NULL, 0, '7x7'),
-(3, 'Dice', 'dice desc', 7.00, 'game piece', NULL, 1, '7x7'),
-(4, 'Tarrot Card 2', 'desc', 14.00, 'card', NULL, 0, '10x10');
+INSERT INTO `game_components` (`component_id`, `component_name`, `description`, `price`, `category`, `assets`, `has_colors`, `is_upload_only`, `size`) VALUES
+(1, 'Tarrot Cards', 'asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddffffffffffffffffffffffffasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddffffffffffffffffffffffffasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddffffffffffffffffffffffff', 12.00, 'game card', NULL, 0, 0, '7x7'),
+(2, 'Box', 'box box', 11.00, 'box', NULL, 0, 1, '7x7'),
+(3, 'Dice', 'dice desc', 7.00, 'game piece', NULL, 1, 0, '7x7'),
+(4, 'Tarrot Card 2jkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj', 'desc', 14.00, 'game card', NULL, 0, 0, '10x10');
 
 -- --------------------------------------------------------
 
@@ -848,7 +863,8 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (136, 3, 'login', '2023-09-20 01:29:23'),
 (137, 3, 'login', '2023-09-21 04:13:37'),
 (138, 3, 'login', '2023-09-21 08:08:50'),
-(139, 3, 'login', '2023-09-21 12:06:12');
+(139, 3, 'login', '2023-09-21 12:06:12'),
+(140, 3, 'login', '2023-09-22 01:58:42');
 
 -- --------------------------------------------------------
 
@@ -1073,7 +1089,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=386;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=416;
 
 --
 -- AUTO_INCREMENT for table `addresses`
@@ -1097,19 +1113,19 @@ ALTER TABLE `age`
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
 --
 ALTER TABLE `built_games_added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1223,7 +1239,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
