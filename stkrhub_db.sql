@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2023 at 06:50 AM
+-- Generation Time: Sep 23, 2023 at 06:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -148,6 +148,7 @@ CREATE TABLE `built_games` (
   `is_canceled` tinyint(4) DEFAULT 0,
   `is_approved` tinyint(4) DEFAULT 0,
   `is_purchased` tinyint(4) DEFAULT 0,
+  `is_pending_published` tinyint(4) NOT NULL DEFAULT 0,
   `is_published` tinyint(4) DEFAULT 0,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -156,8 +157,8 @@ CREATE TABLE `built_games` (
 -- Dumping data for table `built_games`
 --
 
-INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_published`, `price`) VALUES
-(73, 74, 'haha', 'hehe\n', 3, '2023-09-23 02:56:56', 0, 0, 0, 0, 0, 826.00);
+INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_pending_published`, `is_published`, `price`) VALUES
+(73, 74, 'haha', 'hehe\n', 3, '2023-09-23 02:56:56', 0, 0, 0, 1, 1, 0, 826.00);
 
 -- --------------------------------------------------------
 
@@ -491,6 +492,66 @@ CREATE TABLE `orders` (
   `zip` varchar(10) DEFAULT NULL,
   `street` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pending_published_built_games`
+--
+
+CREATE TABLE `pending_published_built_games` (
+  `pending_published_built_game_id` int(11) NOT NULL,
+  `built_game_id` int(11) DEFAULT NULL,
+  `game_name` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `edition` varchar(255) DEFAULT NULL,
+  `published_date` date DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `age_id` int(11) DEFAULT NULL,
+  `short_description` text DEFAULT NULL,
+  `long_description` text DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `logo_path` varchar(255) DEFAULT NULL,
+  `min_players` int(11) DEFAULT NULL,
+  `max_players` int(11) DEFAULT NULL,
+  `min_playtime` int(11) DEFAULT NULL,
+  `max_playtime` int(11) DEFAULT NULL,
+  `has_pending_update` tinyint(1) DEFAULT NULL,
+  `desired_markup` decimal(10,2) DEFAULT NULL,
+  `manufacturer_profit` decimal(10,2) DEFAULT NULL,
+  `creator_profit` decimal(10,2) DEFAULT NULL,
+  `marketplace_price` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pending_published_built_games`
+--
+
+INSERT INTO `pending_published_built_games` (`pending_published_built_game_id`, `built_game_id`, `game_name`, `category`, `edition`, `published_date`, `creator_id`, `age_id`, `short_description`, `long_description`, `website`, `logo_path`, `min_players`, `max_players`, `min_playtime`, `max_playtime`, `has_pending_update`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`) VALUES
+(2, 73, '123', '2', '123', '2023-09-23', 3, 2, '123', '123', 'https://www.figma.com/file/DjBLsWy8ezwSHS3rPOj9Es/STKR-HUB?type=design&node-id=2-811&mode=design&t=4vXOGWFOjXgzU5bl-0', 'uploads/650f1350728d7_ey.jpg', 123, 123, 123, 123, NULL, 500.00, 100.00, 400.00, 1326.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pending_published_multiple_files`
+--
+
+CREATE TABLE `pending_published_multiple_files` (
+  `pending_published_file_id` int(11) NOT NULL,
+  `pending_published_built_game_id` int(11) DEFAULT NULL,
+  `built_game_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pending_published_multiple_files`
+--
+
+INSERT INTO `pending_published_multiple_files` (`pending_published_file_id`, `pending_published_built_game_id`, `built_game_id`, `creator_id`, `file_path`) VALUES
+(4, 2, 73, 3, 'uploads/650f13507392a_pxfuel.jpg'),
+(5, 2, 73, 3, 'uploads/650f135073c0a_peakpx.jpg'),
+(6, 2, 73, 3, 'uploads/650f135073dd3_desktop-1920x1080.jpg');
 
 -- --------------------------------------------------------
 
@@ -864,7 +925,8 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (137, 3, 'login', '2023-09-21 04:13:37'),
 (138, 3, 'login', '2023-09-21 08:08:50'),
 (139, 3, 'login', '2023-09-21 12:06:12'),
-(140, 3, 'login', '2023-09-22 01:58:42');
+(140, 3, 'login', '2023-09-22 01:58:42'),
+(141, 3, 'login', '2023-09-23 14:54:43');
 
 -- --------------------------------------------------------
 
@@ -1022,6 +1084,19 @@ ALTER TABLE `orders`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `built_game_id` (`built_game_id`),
   ADD KEY `added_component_id` (`added_component_id`);
+
+--
+-- Indexes for table `pending_published_built_games`
+--
+ALTER TABLE `pending_published_built_games`
+  ADD PRIMARY KEY (`pending_published_built_game_id`);
+
+--
+-- Indexes for table `pending_published_multiple_files`
+--
+ALTER TABLE `pending_published_multiple_files`
+  ADD PRIMARY KEY (`pending_published_file_id`),
+  ADD KEY `pending_published_built_game_id` (`pending_published_built_game_id`);
 
 --
 -- Indexes for table `pending_update_published_built_games`
@@ -1194,6 +1269,18 @@ ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
+-- AUTO_INCREMENT for table `pending_published_built_games`
+--
+ALTER TABLE `pending_published_built_games`
+  MODIFY `pending_published_built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pending_published_multiple_files`
+--
+ALTER TABLE `pending_published_multiple_files`
+  MODIFY `pending_published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `pending_update_published_built_games`
 --
 ALTER TABLE `pending_update_published_built_games`
@@ -1239,7 +1326,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
@@ -1329,6 +1416,12 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`built_game_id`) REFERENCES `built_games` (`built_game_id`),
   ADD CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`added_component_id`) REFERENCES `added_game_components` (`added_component_id`);
+
+--
+-- Constraints for table `pending_published_multiple_files`
+--
+ALTER TABLE `pending_published_multiple_files`
+  ADD CONSTRAINT `pending_published_multiple_files_ibfk_1` FOREIGN KEY (`pending_published_built_game_id`) REFERENCES `pending_published_built_games` (`pending_published_built_game_id`);
 
 --
 -- Constraints for table `published_built_games`
