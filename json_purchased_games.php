@@ -18,11 +18,12 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
     $is_canceled = $fetchedCanceledBuiltGames['is_canceled'];
     $is_approved = $fetchedCanceledBuiltGames['is_approved'];
     $is_purchased = $fetchedCanceledBuiltGames['is_purchased'];
+    $is_pending_published = $fetchedCanceledBuiltGames['is_pending_published'];
     $is_published = $fetchedCanceledBuiltGames['is_published'];
     $price = $fetchedCanceledBuiltGames['price'];
 
     $built_game_link = '
-        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a>
+        <a href="built_game_dashboard.php?built_game_id=' . $built_game_id . '">' . $name . '</a>
     ';
 
 
@@ -48,6 +49,11 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
         $status_value = 'CANCELED';
     } elseif ($is_approved == 1) {
         $status_value = 'APPROVED';
+    } elseif ($is_pending_published == 1) {
+        $status_value = '
+            <p>PURCHASED</p>
+            <p>Reviewing publish request</p>
+        ';
     } elseif ($is_purchased == 1) {
         $status_value = 'PURCHASED';
     } elseif ($is_published == 1) {
@@ -59,20 +65,24 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
     $status = $status_value;
 
 
-    $actions = '
-    <a href="">
-        Buy Again
-    </a>
 
-    <br>
 
-    <button class="cancel-built_game"
-    data-built_game_id="' . $built_game_id . '"
-    data-name="' . $name . '"
-    >
-        Publish Game
-    </button>
-    ';
+
+    if ($is_pending_published == 1) {
+        $actions = '
+            <a href="">
+                Buy Again
+            </a>
+            reviewing publish request
+        ';
+    } else {
+        $actions = '
+        <a href="">
+            Buy Again
+        </a>
+        <a href="edit_game_page.php?built_game_id=' . $built_game_id . '">Publish</a>
+        ';
+    }
 
     $data[] = array(
         "built_game_link" => $built_game_link,
