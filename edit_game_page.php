@@ -24,7 +24,7 @@ if (mysqli_num_rows($result_categories) > 0) {
 if (mysqli_num_rows($result) > 0) {
     $gameInfo = mysqli_fetch_assoc($result);
 
-} 
+}
 
 ?>
 
@@ -46,6 +46,12 @@ if (mysqli_num_rows($result) > 0) {
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
 
+    <!-- sweetalert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
@@ -56,7 +62,9 @@ if (mysqli_num_rows($result) > 0) {
     <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.css" rel="stylesheet">
 
     <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         <?php include 'css/body.css'; ?>
@@ -100,27 +108,35 @@ if (mysqli_num_rows($result) > 0) {
                                 <li>
                                     <a class=" justify-content-between">
                                         <p>Built Game Name: </p>
-                                        <p><?php echo $gameInfo['name'] ?></p>
+                                        <p>
+                                            <?php echo $gameInfo['name'] ?>
+                                        </p>
                                     </a>
                                 </li>
                                 <li>
                                     <a class=" justify-content-between">
                                         <p>Description: </p>
-                                        <p><?php echo $gameInfo['description'] ?></p>
+                                        <p>
+                                            <?php echo $gameInfo['description'] ?>
+                                        </p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex justify-content-between">
                                         <p>Price: </p>
-                                        <p><?php echo $gameInfo['price'] ?></p>
+                                        <p>
+                                            <?php echo $gameInfo['price'] ?>
+                                        </p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex justify-content-between">
                                         <p>Status: </p>
-                                        <p><?php if ($gameInfo['is_purchased'] == 1) {
+                                        <p>
+                                            <?php if ($gameInfo['is_purchased'] == 1) {
                                                 echo 'PURCHASED';
-                                            } ?></p>
+                                            } ?>
+                                        </p>
                                     </a>
                                 </li>
 
@@ -140,10 +156,14 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="row">
                                 <div class="col-lg-12 mt-25">
 
-                                    <form method="post" action="process_publish_built_game.php" enctype="multipart/form-data">
+                                    <!-- <form method="post" action="process_publish_built_game.php"
+                                        enctype="multipart/form-data"> -->
+                                    <form id="uploadForm" enctype="multipart/form-data">
 
                                         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
-                                        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>">
+
+                                        <input type="hidden" name="creator_id"
+                                            value="<?php echo $gameInfo['creator_id']; ?>">
                                         <!-- Add this line -->
 
                                         <!-- Rest of your form inputs -->
@@ -195,7 +215,8 @@ if (mysqli_num_rows($result) > 0) {
 
                                         <!-- others -->
                                         <label for="short_description">Short Description:</label><br>
-                                        <textarea id="short_description" name="short_description" required></textarea><br>
+                                        <textarea id="short_description" name="short_description"
+                                            required></textarea><br>
 
                                         <label for="long_description">Long Description:</label><br>
                                         <textarea id="long_description" name="long_description" required></textarea><br>
@@ -213,7 +234,7 @@ if (mysqli_num_rows($result) > 0) {
 
                                         <div id="partitions">
                                             <p>Percentage: <span id="cost">
-                                                    <?php echo $markup_percentage.'%';  ?>
+                                                    <?php echo $markup_percentage . '%'; ?>
                                                 </span></p>
 
                                             <label for="desired_markup">Desired Markup:</label>
@@ -221,13 +242,15 @@ if (mysqli_num_rows($result) > 0) {
 
                                             <!-- Hidden input fields to store calculated values -->
                                             <label for="manufacturer_profit">STKR:</label>
-                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
+                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit"
+                                                readonly>
 
                                             <label for="creator_profit">Creator:</label>
                                             <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
 
                                             <label for="marketplace_price">Marketplace Price:</label>
-                                            <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
+                                            <input type="number" id="marketplacePriceInput" name="marketplace_price"
+                                                readonly>
                                         </div>
 
 
@@ -259,7 +282,9 @@ if (mysqli_num_rows($result) > 0) {
     <!-- new jquery version -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -275,57 +300,87 @@ if (mysqli_num_rows($result) > 0) {
 
 
     <script>
-        // Initialize FilePond with the specified settings
-        const inputElement = document.querySelector('input[name="logo"]');
-        const pond = FilePond.create(inputElement, {
-            allowMultiple: false, // Each input handles a single file
-            allowReplace: true,
-            allowRemove: true,
-            allowBrowse: true,
-            storeAsFile: true,
-            required: true
-        });
+        $(document).ready(function () {
 
-        // Initialize FilePond for the game images input
-        const imageInput = document.querySelector('input[name="game_images[]"]');
-        const imagePond = FilePond.create(imageInput, {
-            allowMultiple: true, // Allow multiple files to be uploaded
-            allowReplace: true,
-            allowRemove: true,
-            allowBrowse: true,
-            storeAsFile: true,
-            required: true,
-            maxFiles: 10,
-        });
+            $('#uploadForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: 'process_publish_built_game.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log(response);
+
+                        // Display a SweetAlert success notification
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                        }).then(function () {
+                            window.location.href = 'create_game_page.php#section6';
+                        });
+                    },
+                });
+            });
+
+
+
+            // Initialize FilePond with the specified settings
+            const inputElement = document.querySelector('input[name="logo"]');
+            const pond = FilePond.create(inputElement, {
+                allowMultiple: false, // Each input handles a single file
+                allowReplace: true,
+                allowRemove: true,
+                allowBrowse: true,
+                storeAsFile: true,
+                required: true
+            });
+
+            // Initialize FilePond for the game images input
+            const imageInput = document.querySelector('input[name="game_images[]"]');
+            const imagePond = FilePond.create(imageInput, {
+                allowMultiple: true, // Allow multiple files to be uploaded
+                allowReplace: true,
+                allowRemove: true,
+                allowBrowse: true,
+                storeAsFile: true,
+                required: true,
+                maxFiles: 10,
+            });
 
 
 
 
 
-        // Get the initial cost from PHP variable
-        var cost = <?php echo $gameInfo['price']; ?>;
-        var markupPercentage = <?php echo $markup_percentage; ?>; // Get the markup percentage
+            // Get the initial cost from PHP variable
+            var cost = <?php echo $gameInfo['price']; ?>;
+            var markupPercentage = <?php echo $markup_percentage; ?>; // Get the markup percentage
 
-        // Set up event listener for desired markup change
-        $('#desired_markup').on('input', function() {
-            var desiredMarkup = parseFloat($(this).val()); // Parse the input value as a float
+            // Set up event listener for desired markup change
+            $('#desired_markup').on('input', function () {
+                var desiredMarkup = parseFloat($(this).val()); // Parse the input value as a float
 
-            // STKR Hub
-            var manufacturerProfit = desiredMarkup * (markupPercentage / 100);
-            $('#manufacturerProfit').text(manufacturerProfit.toFixed(2));
+                // STKR Hub
+                var manufacturerProfit = desiredMarkup * (markupPercentage / 100);
+                $('#manufacturerProfit').text(manufacturerProfit.toFixed(2));
 
-            // Creator
-            var creatorProfit = desiredMarkup * ((100 - markupPercentage) / 100);
-            $('#creatorProfit').text(creatorProfit.toFixed(2));
+                // Creator
+                var creatorProfit = desiredMarkup * ((100 - markupPercentage) / 100);
+                $('#creatorProfit').text(creatorProfit.toFixed(2));
 
-            // Marketplace Price
-            var marketplacePrice = desiredMarkup + cost;
-            $('#marketplacePrice').text(marketplacePrice.toFixed(2));
+                // Marketplace Price
+                var marketplacePrice = desiredMarkup + cost;
+                $('#marketplacePrice').text(marketplacePrice.toFixed(2));
 
-            // Update the hidden input fields with calculated values
-            $('#manufacturerProfitInput').val(manufacturerProfit.toFixed(2));
-            $('#creatorProfitInput').val(creatorProfit.toFixed(2));
-            $('#marketplacePriceInput').val(marketplacePrice.toFixed(2));
+                // Update the hidden input fields with calculated values
+                $('#manufacturerProfitInput').val(manufacturerProfit.toFixed(2));
+                $('#creatorProfitInput').val(creatorProfit.toFixed(2));
+                $('#marketplacePriceInput').val(marketplacePrice.toFixed(2));
+            });
         });
     </script>
 </body>

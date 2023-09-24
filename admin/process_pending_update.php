@@ -1,5 +1,5 @@
 <?php
-include '../connection.php'; // Include your database connection
+include 'connection.php'; // Include your database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_update'])) {
     $published_game_id = $_POST['published_game_id'];

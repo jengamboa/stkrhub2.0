@@ -163,7 +163,7 @@
 								}
 							} else {
 								echo '
-								<a class="primary-btn keychainify-checked" href="#" style="left: 0px; line-height: 20px; width:auto; font-size: 14px;">Login / Sign Up</a>
+								<a class="primary-btn keychainify-checked" href="login_page.php" style="left: 0px; line-height: 20px; width:auto; font-size: 14px;">Login / Sign Up</a>
 								';
 							}
 							?>

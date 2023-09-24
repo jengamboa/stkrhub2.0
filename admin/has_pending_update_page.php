@@ -10,7 +10,7 @@
 
 <body>
     <?php
-    include '../connection.php';
+    include 'connection.php';
     include '../html/header.html.php';
 
     // Retrieve published games with pending updates

@@ -53,6 +53,7 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
         $status_value = '
             <p>PURCHASED</p>
             <p>Reviewing publish request</p>
+            <a href="pending_publish_request_page.php?built_game_id=' . $built_game_id . '">View Publish Request</a>
         ';
     } elseif ($is_purchased == 1) {
         $status_value = 'PURCHASED';
