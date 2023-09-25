@@ -2,7 +2,7 @@
 include 'connection.php'; // Include your database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     $built_game_id = $_POST['built_game_id'];
     $creator_id = $_POST['creator_id'];
     $game_name = $_POST['game_name'];
@@ -75,7 +75,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $isPublihsedQuery = "UPDATE built_games SET is_pending_published = 1 WHERE built_game_id = '$built_game_id'";
             mysqli_query($conn, $isPublihsedQuery);
 
+            $isRePublihsedQuery = "UPDATE built_games SET is_request_denied = 0 WHERE built_game_id = '$built_game_id'";
+            mysqli_query($conn, $isRePublihsedQuery);
+
+            $deleteDenyQuery = "DELETE FROM denied_publish_requests WHERE built_game_id = $built_game_id";
+            mysqli_query($conn, $deleteDenyQuery);
         }
     }
-
 }

@@ -2,52 +2,6 @@
 session_start();
 include 'connection.php';
 
-$built_game_id = $_GET['built_game_id'];
-
-// Retrieve the markup percentage from the database
-$query_markup = "SELECT percentage FROM markup_percentage";
-$result_markup = mysqli_query($conn, $query_markup);
-$markup_percentage = mysqli_fetch_assoc($result_markup)['percentage'];
-
-$query = "SELECT built_game_id, name, description, game_id, creator_id, price, is_published, is_purchased, is_pending_published FROM built_games WHERE built_game_id = '$built_game_id'";
-$result = mysqli_query($conn, $query);
-
-$sqlGetPendingPublishRequest = "SELECT * FROM pending_published_built_games WHERE built_game_id = $built_game_id";
-$queryGetPendingPublishRequest = $conn->query($sqlGetPendingPublishRequest);
-while ($fetchedPendingPublishRequest = $queryGetPendingPublishRequest->fetch_assoc()) {
-    $pending_published_built_game_id = $fetchedPendingPublishRequest['pending_published_built_game_id'];
-    $game_name = $fetchedPendingPublishRequest['game_name'];
-    $category = $fetchedPendingPublishRequest['category'];
-    $edition = $fetchedPendingPublishRequest['edition'];
-    $published_date = $fetchedPendingPublishRequest['published_date'];
-    $age_id = $fetchedPendingPublishRequest['age_id'];
-    $short_description = $fetchedPendingPublishRequest['short_description'];
-    $long_description = $fetchedPendingPublishRequest['long_description'];
-    $website = $fetchedPendingPublishRequest['website'];
-    $logo_path = $fetchedPendingPublishRequest['logo_path'];
-    $min_players = $fetchedPendingPublishRequest['min_players'];
-    $max_players = $fetchedPendingPublishRequest['max_players'];
-    $min_playtime = $fetchedPendingPublishRequest['min_playtime'];
-    $max_playtime = $fetchedPendingPublishRequest['max_playtime'];
-    $has_pending_update = $fetchedPendingPublishRequest['has_pending_update'];
-    $desired_markup = $fetchedPendingPublishRequest['desired_markup'];
-    $manufacturer_profit = $fetchedPendingPublishRequest['manufacturer_profit'];
-    $creator_profit = $fetchedPendingPublishRequest['creator_profit'];
-    $marketplace_price = $fetchedPendingPublishRequest['marketplace_price'];
-}
-
-// Fetch category data from the categories table
-$query_categories = "SELECT category_id, category_name FROM categories";
-$result_categories = mysqli_query($conn, $query_categories);
-
-// Check if there are categories available
-if (mysqli_num_rows($result_categories) > 0) {
-    $categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
-}
-
-if (mysqli_num_rows($result) > 0) {
-    $gameInfo = mysqli_fetch_assoc($result);
-}
 
 ?>
 
@@ -106,7 +60,7 @@ if (mysqli_num_rows($result) > 0) {
             <div class="row py-5">
                 <div class="col-lg-4">
                     <div class="details_item">
-                        <h4>Make Game Page</h4>
+                        <h4>List of all Publish Request</h4>
                         <ul class="list">
                             <!-- <li><a href="#"><span>Order number</span> : 60235</a></li> -->
                         </ul>
@@ -117,191 +71,27 @@ if (mysqli_num_rows($result) > 0) {
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <div class="row">
-
-
-                            <div class="blog_right_sidebar">
-
-                                <aside class="single_sidebar_widget post_category_widget">
-                                    <h4 class="widget_title">Post Catgories</h4>
-                                    <ul class="list cat-list">
-                                        <li>
-                                            <a class=" justify-content-between">
-                                                <p>Built Game Name: </p>
-                                                <p>
-                                                    <?php echo $gameInfo['name'] ?>
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class=" justify-content-between">
-                                                <p>Description: </p>
-                                                <p>
-                                                    <?php echo $gameInfo['description'] ?>
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex justify-content-between">
-                                                <p>Price: </p>
-                                                <p>
-                                                    <?php echo $gameInfo['price'] ?>
-                                                </p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex justify-content-between">
-                                                <p>Status: </p>
-                                                <p>
-                                                    <?php if ($gameInfo['is_purchased'] == 1) {
-                                                        echo 'PURCHASED';
-                                                    } ?>
-                                                </p>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-
-                                </aside>
-
-
-                            </div>
-
-
-                            <div class="single-post row">
-
-                                <div class="col-lg-12">
-
-                                    <div class="row">
-                                        <div class="col-lg-12 mt-25">
-
-                                            <div class="container">
-                                                <h3>Your Page Info Requests:</h3>
-                                                <br>
-
-                                                <h5>Final Game Name:</h5>
-                                                <h6>
-                                                    <?php echo $game_name ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Category:</h5>
-                                                <h6>
-                                                    <?php echo $category ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Edition:</h5>
-                                                <h6>
-                                                    <?php echo $edition ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Age:</h5>
-                                                <h6>
-                                                    <?php echo $age_id ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Short Description:</h5>
-                                                <h6>
-                                                    <?php echo $short_description ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Long Description:</h5>
-                                                <h6>
-                                                    <?php echo $long_description ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Website:</h5>
-                                                <h6>
-                                                    <?php echo $website ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Logo:</h5>
-                                                <img src="<?php echo $logo_path ?>" alt="">
-                                                <br>
-
-                                                <h5>Minimum Players:</h5>
-                                                <h6>
-                                                    <?php echo $min_players ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Maximum Players:</h5>
-                                                <h6>
-                                                    <?php echo $max_players ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Minimum Playtime:</h5>
-                                                <h6>
-                                                    <?php echo $min_playtime ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Maximum Playtime:</h5>
-                                                <h6>
-                                                    <?php echo $max_playtime ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Desired Markup:</h5>
-                                                <h6>
-                                                    <?php echo $desired_markup ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Manufacturer Profit:</h5>
-                                                <h6>
-                                                    <?php echo $manufacturer_profit ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Creator Profit:</h5>
-                                                <h6>
-                                                    <?php echo $creator_profit ?>
-                                                </h6>
-                                                <br>
-
-                                                <h5>Marketplace Profit:</h5>
-                                                <h6>
-                                                    <?php echo $marketplace_price ?>
-                                                </h6>
-                                                <br>
-
-                                                <?php
-                                                $imageQuery = "SELECT * FROM pending_published_multiple_files WHERE built_game_id = '$built_game_id'";
-                                                $imageResult = mysqli_query($conn, $imageQuery);
-
-                                                echo '<h2>Game Images</h2>';
-                                                while ($imageRow = mysqli_fetch_assoc($imageResult)) {
-                                                    $imagePath = $imageRow['file_path'];
-                                                    echo '<img src="' . $imagePath . '" alt="Game Image">';
-                                                }
-                                                ?>
-
-                                                <button id="cancelButton" data-built-game-id="<?php echo $built_game_id; ?>">Cancel Details
-                                                    Request</button>
-
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
 
 
 
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        One of three columns
+                            <!-- DataTables Game Components -->
+                            <table id="hasRequest" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Built Game Name</th>
+                                        <th>Category</th>
+                                        <th>Edition</th>
+                                        <th>Creator</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- User data will be displayed here -->
+                                </tbody>
+                            </table>
+                            <!-- /DataTables Game Components -->
+
                     </div>
                 </div>
             </div>
@@ -345,14 +135,14 @@ if (mysqli_num_rows($result) > 0) {
             //DataTables
             var user_id = <?php echo $user_id; ?>;
 
-            $('#createGameTable').DataTable({
+            $('#hasRequest').DataTable({
                 searching: true,
                 info: false,
                 paging: true,
                 ordering: true,
 
                 "ajax": {
-                    "url": "json_created_games.php",
+                    "url": "admin_json_request_details_page.php",
                     data: {
                         user_id: user_id,
                     },
@@ -362,24 +152,72 @@ if (mysqli_num_rows($result) > 0) {
                         "data": "game_link"
                     },
                     {
-                        "data": "description"
+                        "data": "category"
                     },
                     {
-                        "data": "total_price"
+                        "data": "edition"
                     },
                     {
-                        "data": "formatted_date"
+                        "data": "creator_id"
                     },
                     {
-                        "data": "build"
+                        "data": "status"
                     },
                     {
-                        "data": "edit"
+                        "data": "actions"
                     },
 
 
                 ]
             });
+
+
+
+
+            $('#approvePublish').click(function() {
+
+                var built_game_id = $(this).data('built-game-id');
+
+                // Show a SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Are You Sure?',
+                    text: 'Are you sure to Approve this?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // User confirmed, send an AJAX request to process_cancel_details_request.php
+                        $.ajax({
+                            url: 'admin_process_approve_publish_request.php',
+                            type: 'POST',
+                            data: {
+                                built_game_id: built_game_id
+                            },
+                            success: function(response) {
+                                // Display a SweetAlert to inform success
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Your request has been Published.',
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK'
+                                }).then(function() {
+
+                                });
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'Failed to cancel the request.', 'error');
+                            }
+                        });
+                    } else {
+                        // User canceled, do nothing or provide feedback if needed
+                        Swal.fire('Cancelled', 'Your request is still active.', 'info');
+                    }
+                });
+            });
+
 
         });
     </script>

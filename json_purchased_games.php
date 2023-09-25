@@ -19,8 +19,17 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
     $is_approved = $fetchedCanceledBuiltGames['is_approved'];
     $is_purchased = $fetchedCanceledBuiltGames['is_purchased'];
     $is_pending_published = $fetchedCanceledBuiltGames['is_pending_published'];
+    $is_request_denied = $fetchedCanceledBuiltGames['is_request_denied'];
     $is_published = $fetchedCanceledBuiltGames['is_published'];
     $price = $fetchedCanceledBuiltGames['price'];
+
+    $sqlReason = "SELECT * FROM denied_publish_requests WHERE built_game_id = $built_game_id";
+    $queryReason = $conn->query($sqlReason);
+    while ($fetchedReason = $queryReason->fetch_assoc()) {
+        $denied_publish_request_id = $fetchedReason['denied_publish_request_id'];
+        $reason = $fetchedReason['reason'];
+        $file_path = $fetchedReason['file_path'];
+    }
 
     $built_game_link = '
         <a href="built_game_dashboard.php?built_game_id=' . $built_game_id . '">' . $name . '</a>
@@ -45,6 +54,14 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
 
     if ($is_pending == 1) {
         $status_value = 'Wait until the admin approves this';
+    } elseif ($is_request_denied == 1) {
+        $status_value = '
+            <p>PURCHASED</p>
+            <p>Your Request Denied</p>
+            <button class="view-reason" data-built_game_id="' . $built_game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
+                View
+            </button>
+        ';
     } elseif ($is_canceled == 1) {
         $status_value = 'CANCELED';
     } elseif ($is_approved == 1) {
@@ -74,7 +91,6 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
             <a href="">
                 Buy Again
             </a>
-            reviewing publish request
         ';
     } else {
         $actions = '

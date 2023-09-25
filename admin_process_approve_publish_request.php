@@ -109,4 +109,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Delete the rows from pending_published_built_games table
     $deleteQuery = "DELETE FROM pending_published_built_games WHERE built_game_id = '$built_game_id'";
     mysqli_query($conn, $deleteQuery);
+
+    $updateQuery1 = "UPDATE built_games SET is_pending_published = 0 WHERE built_game_id = $built_game_id";
+    mysqli_query($conn, $updateQuery1);
+
+    $updateQuery2 = "UPDATE built_games SET is_published = 1 WHERE built_game_id = $built_game_id";
+    mysqli_query($conn, $updateQuery2);
 }

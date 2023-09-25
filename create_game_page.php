@@ -368,6 +368,9 @@ include 'connection.php';
 
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
@@ -1072,6 +1075,33 @@ include 'connection.php';
 
                 ]
             });
+
+            // Add click event handler for "build" buttons
+            $('#purchasedGameTable').on('click', '.view-reason', function() {
+                var built_game_id = $(this).data('built_game_id');
+                var reason = $(this).data('reason');
+                var file_path = $(this).data('file_path');
+
+                // Create an HTML string for the download link
+                const downloadLink = `<a href="${file_path}" download>Download Attachment</a>`;
+
+
+                Swal.fire({
+                    title: 'View Reason',
+                    html: 'Reason: ' + reason + '<br>Attachment: ' + downloadLink,
+                    icon: 'info',
+                    confirmButtonText: 'Request Publish Again',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        window.location.href = 'edit_game_page.php?built_game_id=' + built_game_id;
+
+                    }
+                });
+
+            });
+
 
 
 
