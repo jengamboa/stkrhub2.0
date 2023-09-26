@@ -3,88 +3,131 @@ include "connection.php";
 
 $user_id = $_GET['user_id'];
 
-$sqlCanceledBuiltGames = "SELECT * FROM built_games WHERE creator_id = $user_id AND is_published = 1";
-$resultCanceledBuiltGames = $conn->query($sqlCanceledBuiltGames);
+$sql = "SELECT * FROM published_built_games WHERE creator_id = $user_id";
+$result = $conn->query($sql);
 
 $data = array();
 
-while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
-    $built_game_id = $fetchedCanceledBuiltGames['built_game_id'];
-    $game_id = $fetchedCanceledBuiltGames['game_id'];
-    $name = $fetchedCanceledBuiltGames['name'];
-    $description = $fetchedCanceledBuiltGames['description'];
-    $build_date = $fetchedCanceledBuiltGames['build_date'];
-    $is_pending = $fetchedCanceledBuiltGames['is_pending'];
-    $is_canceled = $fetchedCanceledBuiltGames['is_canceled'];
-    $is_approved = $fetchedCanceledBuiltGames['is_approved'];
-    $is_purchased = $fetchedCanceledBuiltGames['is_purchased'];
-    $is_published = $fetchedCanceledBuiltGames['is_published'];
-    $price = $fetchedCanceledBuiltGames['price'];
+while ($fetched = $result->fetch_assoc()) {
 
-    $built_game_link = '
-        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a>
-    ';
+    $published_game_id = $fetched['published_game_id'];
+    $built_game_id = $fetched['built_game_id'];
+    $game_name = $fetched['game_name'];
+    $category = $fetched['category'];
+    $edition = $fetched['edition'];
+    $published_date = $fetched['published_date'];
+    $logo_path = $fetched['logo_path'];
+    $desired_markup = $fetched['desired_markup'];
+    $manufacturer_profit = $fetched['manufacturer_profit'];
+    $creator_profit = $fetched['creator_profit'];
+    $marketplace_price = $fetched['marketplace_price'];
 
+    $has_pending_update = $fetched['has_pending_update'];
+    $is_hidden = $fetched['is_hidden'];
 
-    $sqlGetGameName = "SELECT * FROM games WHERE game_id = $game_id";
-    $queryGetGameName = $conn->query($sqlGetGameName);
-    while ($fetchedGameName = $queryGetGameName->fetch_assoc()) {
-        $game_name = $fetchedGameName['name'];
+    // Initialize variables before the nested loop
+    $game_id = '';
+    $built_game_name = '';
+    $price = '';
+
+    $sqlGetBuiltGames = "SELECT * FROM built_games WHERE built_game_id = $built_game_id";
+    $resultGetBuiltGames = $conn->query($sqlGetBuiltGames);
+    while ($fetchedBuiltGames = $resultGetBuiltGames->fetch_assoc()) {
+        $game_id = $fetchedBuiltGames['game_id'];
+        $built_game_name = $fetchedBuiltGames['name'];
+        $price = $fetchedBuiltGames['price'];
     }
 
-    $from_what_game = '
-        ' . $game_name . ' <br>
-        <small>Game ID: ' . $game_id . '</small>
+    $published_game_link = '
+        <a href="marketplace_item_page.php?id=' . $published_game_id . '">' . $game_name . '</a>
     ';
 
-    $total_price = $price;
+    $info_value = '
+        <p>Built Game Name: ' . $built_game_name . '</p>
+        <p>From what Game ID: ' . $game_id . '</p>
+    ';
+    $info = $info_value;
 
-    $formatted_date = date('F j, Y', strtotime($build_date));
+    $price_and_markup_value = '
+        <p>Cost: ' . $price . '</p>
+        <p>desired_markup: ' . $desired_markup . '</p>
+        <p>manufacturer_profit: ' . $manufacturer_profit . '</p>
+        <p>creator_profit: ' . $creator_profit . '</p>
+        <p>marketplace_price: ' . $marketplace_price . '</p>
+    ';
+    $price_and_markup = $price_and_markup_value;
 
 
-    if ($is_pending == 1) {
-        $status_value = 'Wait until the admin approves this';
-    } elseif ($is_canceled == 1) {
-        $status_value = 'CANCELED';
-    } elseif ($is_approved == 1) {
-        $status_value = 'APPROVED';
-    } elseif ($is_purchased == 1) {
-        $status_value = 'PURCHASED';
-    } elseif ($is_published == 1) {
-        $status_value = 'PUBLISHED';
+
+    $total_price = 0;
+    $total_desired_markup = 0;
+    $total_manufacturer_profit = 0;
+    $total_creator_profit = 0;
+    $total_marketplace_price = 0;
+
+    $sqlCalculate = "SELECT * FROM orders WHERE published_game_id = $published_game_id AND to_deliver = 1";
+    $queryCalculate = $conn->query($sqlCalculate);
+    while ($fetchedCalculate = $queryCalculate->fetch_assoc()) {
+        $calculate_quantity = $fetchedCalculate['quantity'];
+
+        $calculate_price = $fetchedCalculate['price'] * $calculate_quantity;
+        $calculate_desired_markup = $fetchedCalculate['desired_markup'] * $calculate_quantity;
+        $calculate_manufacturer_profit = $fetchedCalculate['manufacturer_profit'] * $calculate_quantity;
+        $calculate_creator_profit = $fetchedCalculate['creator_profit'] * $calculate_quantity;
+        $calculate_marketplace_price = $fetchedCalculate['marketplace_price'] * $calculate_quantity;
+
+        $total_price += $calculate_price;
+        $total_desired_markup += $calculate_desired_markup;
+        $total_manufacturer_profit += $calculate_manufacturer_profit;
+        $total_creator_profit += $calculate_creator_profit;
+        $total_marketplace_price += $calculate_marketplace_price;
+    }
+
+    $total_earnings_value = '
+        <p>Total Manufacturer\'s Earnings: ' . $total_manufacturer_profit . '</p>
+        <p>Total Creator\'s Earnings: ' . $total_creator_profit . '</p>
+        <p>Total Creator\'s Received: Coming Soon</p>
+        <a href="___.php?id=' . $published_game_id . '">View More (Coming Soon)</a>
+    ';
+    $total_earnings = $total_earnings_value;
+
+
+    if ($is_hidden === '1') {
+        $action1 = '
+            <button id="unhideButton" data-published_game_id="' . $published_game_id . '">Unhide</button>
+
+        ';
     } else {
-        $status_value = '';
+        $action1 = '
+            <button id="hideButton" data-published_game_id="' . $published_game_id . '">Hide</button>
+
+        ';
     }
 
-    $status = $status_value;
+    if ($has_pending_update === '1') {
+        $action2 = '
+            <button id="viewEditButton" data-published_game_id="' . $published_game_id . '">View Edit Request</button>
+        ';
+    } else {
+        $action2 = '
+            <button id="editButton" data-published_game_id="' . $published_game_id . '">Edit</button>
+
+        ';
+    }
+
+    $actions = $action1 . $action2;
 
 
-    $actions = '
-    <a href="">
-        View Page
-    </a>
 
-    <br>
-
-    <button class="edit-published_game" data-built_game_id="' . $built_game_id . '">
-        <i class="fa-solid fa-pen-to-square"></i>
-    </button>
-
-    <button class="hide-published_game"
-    data-built_game_id="' . $built_game_id . '"
-    data-name="' . $name . '"
-    >
-        Hide Game
-    </button>
-    ';
 
     $data[] = array(
-        "built_game_link" => $built_game_link,
-        "description" => $description,
-        "from_what_game" => $from_what_game,
-        "total_price" => $total_price,
-        "formatted_date" => $formatted_date,
-        "status" => $status,
+        "published_game_link" => $published_game_link,
+        "edition" => $edition,
+        "category" => $category,
+        "info" => $info,
+        "published_date" => $published_date,
+        "price_and_markup" => $price_and_markup,
+        "total_earnings" => $total_earnings,
         "actions" => $actions,
 
     );

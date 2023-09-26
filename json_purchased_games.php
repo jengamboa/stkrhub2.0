@@ -58,35 +58,39 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
     $formatted_date = date('F j, Y', strtotime($build_date));
 
 
-    if ($is_pending == 1) {
-        $status_value = 'Wait until the admin approves this';
+
+
+    $status_value = '';
+    $status_actions = '';
+
+
+    if ($is_pending_published == 1) {
+        $status_value = '
+            <p>Reviewing publish request</p>
+        ';
     } elseif ($is_request_denied == 1) {
         $status_value = '
-            <p>PURCHASED</p>
             <p>Your Request Denied</p>
-            <button class="view-reason" data-built_game_id="' . $built_game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
-                View
-            </button>
-        ';
-    } elseif ($is_canceled == 1) {
-        $status_value = 'CANCELED';
-    } elseif ($is_approved == 1) {
-        $status_value = 'APPROVED';
-    } elseif ($is_pending_published == 1) {
-        $status_value = '
-            <p>PURCHASED</p>
-            <p>Reviewing publish request</p>
-            <a href="pending_publish_request_page.php?built_game_id=' . $built_game_id . '">View Publish Request</a>
         ';
     } elseif ($is_published == 1) {
         $status_value = 'PUBLISHED';
     } elseif ($is_purchased == 1) {
-        $status_value = 'PURCHASED';
-    } else {
-        $status_value = '';
+        $status_value = 'READY TO PUBLISH';
     }
 
-    $status = $status_value;
+    if ($is_pending_published == 1) {
+        $status_actions = '
+            <a href="pending_publish_request_page.php?built_game_id=' . $built_game_id . '">View Publish Request</a>
+        ';
+    } elseif ($is_request_denied == 1) {
+        $status_actions = '
+            <button class="view-reason" data-built_game_id="' . $built_game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
+                View Reason
+            </button>
+        ';
+    }
+
+    $status = $status_value . $status_actions;
 
 
 

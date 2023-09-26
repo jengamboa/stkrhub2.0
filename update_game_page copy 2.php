@@ -12,8 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-
-
 // Retrieve the markup percentage from the database
 $query_markup = "SELECT percentage FROM markup_percentage";
 $result_markup = mysqli_query($conn, $query_markup);
@@ -55,19 +53,6 @@ while ($fetchedPublished = $queryPublished->fetch_assoc()) {
     $marketplace_price = $fetchedPublished['marketplace_price'];
 
     $is_hidden = $fetchedPublished['is_hidden'];
-
-    $sqlGetPrice = "SELECT * FROM built_games WHERE built_game_id = $built_game_id";
-    $queryGetPrice = $conn->query($sqlGetPrice);
-    while ($FetchedPrice = $queryGetPrice->fetch_assoc()) {
-        $price = (int)$FetchedPrice = ['price'];
-    }
-}
-
-$query = "SELECT built_game_id, name, description, game_id, creator_id, price, is_published, is_purchased FROM built_games WHERE built_game_id = '$built_game_id'";
-$result = mysqli_query($conn, $query);
-
-if (mysqli_num_rows($result) > 0) {
-    $gameInfo = mysqli_fetch_assoc($result);
 }
 
 
@@ -216,7 +201,6 @@ if (mysqli_num_rows($result_categories) > 0) {
                                             max_playtime: <?php echo $max_playtime ?>
                                         </h6>
 
-
                                         <h6>
                                             desired_markup: <?php echo $desired_markup ?>
                                         </h6>
@@ -261,6 +245,8 @@ if (mysqli_num_rows($result_categories) > 0) {
 
                 </div>
 
+                <input type="file" class="filepond" name="filepond" multiple data-max-file-size="3MB" data-max-files="3" />
+
 
 
                 <!-- NEW FORM -->
@@ -272,108 +258,109 @@ if (mysqli_num_rows($result_categories) > 0) {
                             <div class="row">
                                 <div class="col-lg-12 mt-25">
 
+                                    <div class="content">
+                                        <h4>Edit:</h4>
 
 
-                                    <!-- <form method="post" action="process_publish_built_game.php"
+                                        <!-- <form method="post" action="process_publish_built_game.php"
                                         enctype="multipart/form-data"> -->
-                                    <form id="uploadForm" enctype="multipart/form-data">
+                                        <form id="uploadForm" enctype="multipart/form-data">
 
-                                        <input type="hidden" name="published_game_id" value="<?php echo $published_game_id; ?>">
+                                            <input type="hidden" name="published_built_game_id" value="<?php echo $published_built_game_id; ?>">
 
-                                        <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
-                                        <input type="hidden" name="creator_id" value="<?php echo $user_id; ?>">
-
-
-                                        <label for="game_name">Final Publishing Game Name:</label><br>
-                                        <input type="text" id="game_name" name="game_name"><br>
-
-                                        <label for="category">Category:</label><br>
-                                        <select id="category" name="category" required>
-                                            <option value="" disabled selected>Select a category</option>
-                                            <?php
-                                            // Loop through the categories and populate the dropdown
-                                            foreach ($categories as $category) {
-                                                echo '<option value="' . $category['category_id'] . '">' . $category['category_name'] . '</option>';
-                                            }
-                                            ?>
-                                        </select><br>
-
-                                        <label for="edition">Edition:</label><br>
-                                        <input type="text" id="edition" name="edition"><br>
-
-                                        <!-- number of players -->
-                                        <label for="min_players">Number of Players (Minimum):</label><br>
-                                        <input type="number" id="min_players" name="min_players" required><br>
-
-                                        <label for="max_players">Number of Players (Maximum):</label><br>
-                                        <input type="number" id="max_players" name="max_players" required><br>
-
-                                        <!-- play time -->
-                                        <label for="min_playtime">Play Time (Minimum):</label><br>
-                                        <input type="number" id="min_playtime" name="min_playtime" required><br>
-
-                                        <label for="max_playtime">Play Time (Maximum):</label><br>
-                                        <input type="number" id="max_playtime" name="max_playtime" required><br>
-
-                                        <!-- Age dropdown -->
-                                        <label for="age">Age:</label><br>
-                                        <select id="age" name="age">
-                                            <?php
-                                            // Retrieve age values from the Age table and populate the dropdown
-                                            $ageQuery = "SELECT * FROM age";
-                                            $ageResult = mysqli_query($conn, $ageQuery);
-
-                                            while ($ageRow = mysqli_fetch_assoc($ageResult)) {
-                                                echo '<option value="' . $ageRow['age_id'] . '">' . $ageRow['age_value'] . '</option>';
-                                            }
-                                            ?>
-                                        </select><br>
-
-                                        <!-- others -->
-                                        <label for="short_description">Short Description:</label><br>
-                                        <textarea id="short_description" name="short_description" required></textarea><br>
-
-                                        <label for="long_description">Long Description:</label><br>
-                                        <textarea id="long_description" name="long_description" required></textarea><br>
-
-                                        <label for="website">Website:</label><br>
-                                        <input type="url" id="website" name="website"><br>
-
-                                        <label for="logo">Logo:</label><br>
-                                        <input type="file" class="filepond" name="logo" accept="image/*" required>
+                                            <input type="hidden" name="creator_id" value="<?php echo $user_id; ?>">
 
 
-                                        <label for="game_images">Game Images:</label><br>
-                                        <input type="file" class="filepond" name="game_images[]" multiple required>
+                                            <label for="game_name">Final Publishing Game Name:</label><br>
+                                            <input type="text" id="game_name" name="game_name"><br>
+
+                                            <label for="category">Category:</label><br>
+                                            <select id="category" name="category" required>
+                                                <option value="" disabled selected>Select a category</option>
+                                                <?php
+                                                // Loop through the categories and populate the dropdown
+                                                foreach ($categories as $category) {
+                                                    echo '<option value="' . $category['category_id'] . '">' . $category['category_name'] . '</option>';
+                                                }
+                                                ?>
+                                            </select><br>
+
+                                            <label for="edition">Edition:</label><br>
+                                            <input type="text" id="edition" name="edition"><br>
+
+                                            <!-- number of players -->
+                                            <label for="min_players">Number of Players (Minimum):</label><br>
+                                            <input type="number" id="min_players" name="min_players" required><br>
+
+                                            <label for="max_players">Number of Players (Maximum):</label><br>
+                                            <input type="number" id="max_players" name="max_players" required><br>
+
+                                            <!-- play time -->
+                                            <label for="min_playtime">Play Time (Minimum):</label><br>
+                                            <input type="number" id="min_playtime" name="min_playtime" required><br>
+
+                                            <label for="max_playtime">Play Time (Maximum):</label><br>
+                                            <input type="number" id="max_playtime" name="max_playtime" required><br>
+
+                                            <!-- Age dropdown -->
+                                            <label for="age">Age:</label><br>
+                                            <select id="age" name="age">
+                                                <?php
+                                                // Retrieve age values from the Age table and populate the dropdown
+                                                $ageQuery = "SELECT * FROM age";
+                                                $ageResult = mysqli_query($conn, $ageQuery);
+
+                                                while ($ageRow = mysqli_fetch_assoc($ageResult)) {
+                                                    echo '<option value="' . $ageRow['age_id'] . '">' . $ageRow['age_value'] . '</option>';
+                                                }
+                                                ?>
+                                            </select><br>
+
+                                            <!-- others -->
+                                            <label for="short_description">Short Description:</label><br>
+                                            <textarea id="short_description" name="short_description" required></textarea><br>
+
+                                            <label for="long_description">Long Description:</label><br>
+                                            <textarea id="long_description" name="long_description" required></textarea><br>
+
+                                            <label for="website">Website:</label><br>
+                                            <input type="url" id="website" name="website"><br>
+
+                                            <label for="logo">Logo:</label><br>
+                                            <input type="file" class="filepond" name="logo" accept="image/*" required>
+
+
+                                            <label for="game_images">Game Images:</label><br>
+                                            <input type="file" class="filepond" name="game_images[]" multiple required>
 
 
 
-                                        <div id="partitions">
-                                            <p>Percentage: <span id="cost">
-                                                    <?php echo $markup_percentage . '%'; ?>
-                                                </span></p>
+                                            <div id="partitions">
+                                                <p>Percentage: <span id="cost">
+                                                        <?php echo $markup_percentage . '%'; ?>
+                                                    </span></p>
 
-                                            <label for="desired_markup">Desired Markup:</label>
-                                            <input type="number" name="desired_markup" id="desired_markup" required>
+                                                <label for="desired_markup">Desired Markup:</label>
+                                                <input type="number" name="desired_markup" id="desired_markup" required>
 
-                                            <!-- Hidden input fields to store calculated values -->
-                                            <label for="manufacturer_profit">STKR:</label>
-                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
+                                                <!-- Hidden input fields to store calculated values -->
+                                                <label for="manufacturer_profit">STKR:</label>
+                                                <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
 
-                                            <label for="creator_profit">Creator:</label>
-                                            <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
+                                                <label for="creator_profit">Creator:</label>
+                                                <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
 
-                                            <label for="marketplace_price">Marketplace Price:</label>
-                                            <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
-                                        </div>
+                                                <label for="marketplace_price">Marketplace Price:</label>
+                                                <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
+                                            </div>
 
 
-                                        <br>
+                                            <br>
 
-                                        <button type="submit" name="update">Publish Game</button>
+                                            <button type="submit" name="update">Publish Game</button>
 
-                                    </form>
-
+                                        </form>
+                                    </div>
 
                                 </div>
                             </div>
@@ -415,42 +402,59 @@ if (mysqli_num_rows($result_categories) > 0) {
     <script>
         $(document).ready(function() {
 
+            /*
+We want to preview images, so we need to register the Image Preview plugin
+*/
+            FilePond.registerPlugin(
+
+                // encodes the file as base64 data
+                FilePondPluginFileEncode,
+
+                // validates the size of the file
+                FilePondPluginFileValidateSize,
+
+                // corrects mobile image orientation
+                FilePondPluginImageExifOrientation,
+
+                // previews dropped images
+                FilePondPluginImagePreview
+            );
+
+            // Select the file input and use create() to turn it into a pond
+            FilePond.create(
+                document.querySelector('input')
+            );
+
+
+
+
+
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault();
 
                 var formData = new FormData(this);
 
-                Swal.fire({
-                    title: '',
-                    text: 'Are you sure?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'Cancel',
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: 'process_update_publish_built_game.php',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                console.log(response);
+                $.ajax({
+                    url: 'process_publish_built_game.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log(response);
 
-                                // Display a SweetAlert success notification
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success',
-                                }).then(function() {
-                                    window.location.href = 'create_game_page.php#section7';
-                                });
-                            },
+                        // Display a SweetAlert success notification
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                        }).then(function() {
+                            window.location.href = 'create_game_page.php#section6';
                         });
-                    }
+                    },
                 });
-
             });
+
+
 
 
 
@@ -506,9 +510,6 @@ if (mysqli_num_rows($result_categories) > 0) {
                 $('#creatorProfitInput').val(creatorProfit.toFixed(2));
                 $('#marketplacePriceInput').val(marketplacePrice.toFixed(2));
             });
-
-
-
         });
     </script>
 </body>

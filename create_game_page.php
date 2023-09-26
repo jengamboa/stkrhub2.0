@@ -346,13 +346,14 @@ include 'connection.php';
                 <table id="publishedGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Built Game Name</th>
-                            <th>Description</th>
-                            <th>From what game</th>
-                            <th>Price</th>
-                            <th>Date Built</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Published Game Name</th>
+                            <th>Edition</th>
+                            <th>Category</th>
+                            <th>Info</th>
+                            <th>Published Date</th>
+                            <th>Price and Markup</th>
+                            <th>Total Earnings</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -425,6 +426,11 @@ include 'connection.php';
                             $('#createGameTable').DataTable().ajax.reload();
                             $('#builtGameTable').DataTable().ajax.reload();
                             $('#pendingGameTable').DataTable().ajax.reload();
+
+                            $('#canceledGameTable').DataTable().ajax.reload();
+                            $('#approvedGameTable').DataTable().ajax.reload();
+                            $('#purchasedGameTable').DataTable().ajax.reload();
+                            $('#publishedGameTable').DataTable().ajax.reload();
 
                             // Show a success SweetAlert
                             Swal.fire({
@@ -535,12 +541,22 @@ include 'connection.php';
                                         $('#createGameTable').DataTable().ajax.reload();
                                         $('#builtGameTable').DataTable().ajax.reload();
                                         $('#pendingGameTable').DataTable().ajax.reload();
+
+                                        $('#canceledGameTable').DataTable().ajax.reload();
+                                        $('#approvedGameTable').DataTable().ajax.reload();
+                                        $('#purchasedGameTable').DataTable().ajax.reload();
+                                        $('#publishedGameTable').DataTable().ajax.reload();
                                     } else {
                                         Swal.fire('Success', result.value.message, 'success');
                                         // Reload the DataTable
                                         $('#createGameTable').DataTable().ajax.reload();
                                         $('#builtGameTable').DataTable().ajax.reload();
                                         $('#pendingGameTable').DataTable().ajax.reload();
+
+                                        $('#canceledGameTable').DataTable().ajax.reload();
+                                        $('#approvedGameTable').DataTable().ajax.reload();
+                                        $('#purchasedGameTable').DataTable().ajax.reload();
+                                        $('#publishedGameTable').DataTable().ajax.reload();
                                     }
                                 }
                             });
@@ -588,6 +604,11 @@ include 'connection.php';
                                     $('#createGameTable').DataTable().ajax.reload();
                                     $('#builtGameTable').DataTable().ajax.reload();
                                     $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -643,6 +664,11 @@ include 'connection.php';
                                     $('#createGameTable').DataTable().ajax.reload();
                                     $('#builtGameTable').DataTable().ajax.reload();
                                     $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -753,12 +779,22 @@ include 'connection.php';
                                         $('#createGameTable').DataTable().ajax.reload();
                                         $('#builtGameTable').DataTable().ajax.reload();
                                         $('#pendingGameTable').DataTable().ajax.reload();
+
+                                        $('#canceledGameTable').DataTable().ajax.reload();
+                                        $('#approvedGameTable').DataTable().ajax.reload();
+                                        $('#purchasedGameTable').DataTable().ajax.reload();
+                                        $('#publishedGameTable').DataTable().ajax.reload();
                                     } else {
                                         Swal.fire('Success', result.value.message, 'success');
                                         // Reload the DataTable
                                         $('#createGameTable').DataTable().ajax.reload();
                                         $('#builtGameTable').DataTable().ajax.reload();
                                         $('#pendingGameTable').DataTable().ajax.reload();
+
+                                        $('#canceledGameTable').DataTable().ajax.reload();
+                                        $('#approvedGameTable').DataTable().ajax.reload();
+                                        $('#purchasedGameTable').DataTable().ajax.reload();
+                                        $('#publishedGameTable').DataTable().ajax.reload();
                                     }
                                 }
                             });
@@ -805,6 +841,11 @@ include 'connection.php';
                                     $('#createGameTable').DataTable().ajax.reload();
                                     $('#builtGameTable').DataTable().ajax.reload();
                                     $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -850,6 +891,11 @@ include 'connection.php';
                                     $('#createGameTable').DataTable().ajax.reload();
                                     $('#builtGameTable').DataTable().ajax.reload();
                                     $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -941,6 +987,11 @@ include 'connection.php';
                                     $('#createGameTable').DataTable().ajax.reload();
                                     $('#builtGameTable').DataTable().ajax.reload();
                                     $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -1125,22 +1176,25 @@ include 'connection.php';
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "built_game_link"
+                        "data": "published_game_link"
                     },
                     {
-                        "data": "description"
+                        "data": "edition"
                     },
                     {
-                        "data": "from_what_game"
+                        "data": "category"
                     },
                     {
-                        "data": "total_price"
+                        "data": "info"
                     },
                     {
-                        "data": "formatted_date"
+                        "data": "published_date"
                     },
                     {
-                        "data": "status"
+                        "data": "price_and_markup"
+                    },
+                    {
+                        "data": "total_earnings"
                     },
                     {
                         "data": "actions"
@@ -1148,6 +1202,196 @@ include 'connection.php';
 
                 ]
             });
+
+
+            // Add click event handler for "build" buttons
+            $('#publishedGameTable').on('click', '#hideButton', function() {
+
+                var published_game_id = $(this).data('published_game_id');
+
+
+                Swal.fire({
+                    title: 'Confirmation',
+                    text: 'Are you sure you want to hide published game ID ' + published_game_id + '?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'Cancel'
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        // User clicked "Yes," send an AJAX request
+                        $.ajax({
+                            url: 'process_hide_published_game.php', // URL to your PHP script
+                            type: 'POST',
+                            data: {
+                                published_game_id: published_game_id
+                            },
+                            success: function(response) {
+                                // Handle the response from the PHP script
+                                if (response === 'success') {
+                                    Swal.fire('Hidden!', 'The published game has been hidden.', 'success');
+
+                                    // Optionally, you can refresh the DataTables table after building
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+                                } else {
+                                    Swal.fire('Error', 'An error occurred while hiding the game.', 'error');
+
+                                    // Optionally, you can refresh the DataTables table after building
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'An error occurred while processing your request.', 'error');
+                            }
+                        });
+                    } else {
+                        // User clicked "Cancel" or closed the dialog
+                        Swal.fire('Cancelled', 'The action was cancelled.', 'info');
+                    }
+                });
+
+
+            });
+
+
+
+
+            // Add click event handler for "build" buttons
+            $('#publishedGameTable').on('click', '#unhideButton', function() {
+
+                var published_game_id = $(this).data('published_game_id');
+
+
+                Swal.fire({
+                    title: 'Confirmation',
+                    text: 'Are you sure you want to unhide published game ID ' + published_game_id + '?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'Cancel'
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        // User clicked "Yes," send an AJAX request
+                        $.ajax({
+                            url: 'process_unhide_published_game.php',
+                            type: 'POST',
+                            data: {
+                                published_game_id: published_game_id
+                            },
+                            success: function(response) {
+                                // Handle the response from the PHP script
+                                if (response === 'success') {
+                                    Swal.fire('Hidden!', 'The published game has been unhidden.', 'success');
+
+                                    // Optionally, you can refresh the DataTables table after building
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+                                } else {
+                                    Swal.fire('Error', 'An error occurred while unhiding the game.', 'error');
+
+                                    // Optionally, you can refresh the DataTables table after building
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'An error occurred while processing your request.', 'error');
+                            }
+                        });
+                    } else {
+                        // User clicked "Cancel" or closed the dialog
+                        Swal.fire('Cancelled', 'The action was cancelled.', 'info');
+                    }
+                });
+
+
+            });
+
+
+
+
+
+
+            // Add click event handler for "build" buttons
+            $('#publishedGameTable').on('click', '#editButton', function() {
+                var publishedGameId = $(this).data('published_game_id');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'update_game_page.php',
+                    data: {
+                        published_game_id: publishedGameId
+                    },
+                    success: function(response) {
+                        // Redirect to update_game_page.php with the publishedGameId as a query parameter
+                        window.location.href = 'update_game_page.php?published_game_id=' + publishedGameId;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error: ' + status, error);
+                    }
+                });
+            });
+
+
+
+
+
+            // Add click event handler for "build" buttons
+            $('#publishedGameTable').on('click', '#viewEditButton', function() {
+                var publishedGameId = $(this).data('published_game_id');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'update_game_page.php',
+                    data: {
+                        published_game_id: publishedGameId
+                    },
+                    success: function(response) {
+                        // Redirect to update_game_page.php with the publishedGameId as a query parameter
+                        window.location.href = 'pending_update_publish_request_page.php?published_game_id=' + publishedGameId;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error: ' + status, error);
+                    }
+                });
+            });
+
+
+
+
+
+
+
+
+
+
+
 
         });
     </script>

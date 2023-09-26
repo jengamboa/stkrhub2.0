@@ -23,7 +23,6 @@ if (mysqli_num_rows($result_categories) > 0) {
 
 if (mysqli_num_rows($result) > 0) {
     $gameInfo = mysqli_fetch_assoc($result);
-
 }
 
 ?>
@@ -62,9 +61,7 @@ if (mysqli_num_rows($result) > 0) {
     <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.css" rel="stylesheet">
 
     <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         <?php include 'css/body.css'; ?>
@@ -162,8 +159,7 @@ if (mysqli_num_rows($result) > 0) {
 
                                         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
 
-                                        <input type="hidden" name="creator_id"
-                                            value="<?php echo $gameInfo['creator_id']; ?>">
+                                        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>">
                                         <!-- Add this line -->
 
                                         <!-- Rest of your form inputs -->
@@ -215,8 +211,7 @@ if (mysqli_num_rows($result) > 0) {
 
                                         <!-- others -->
                                         <label for="short_description">Short Description:</label><br>
-                                        <textarea id="short_description" name="short_description"
-                                            required></textarea><br>
+                                        <textarea id="short_description" name="short_description" required></textarea><br>
 
                                         <label for="long_description">Long Description:</label><br>
                                         <textarea id="long_description" name="long_description" required></textarea><br>
@@ -242,15 +237,13 @@ if (mysqli_num_rows($result) > 0) {
 
                                             <!-- Hidden input fields to store calculated values -->
                                             <label for="manufacturer_profit">STKR:</label>
-                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit"
-                                                readonly>
+                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
 
                                             <label for="creator_profit">Creator:</label>
                                             <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
 
                                             <label for="marketplace_price">Marketplace Price:</label>
-                                            <input type="number" id="marketplacePriceInput" name="marketplace_price"
-                                                readonly>
+                                            <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
                                         </div>
 
 
@@ -282,9 +275,7 @@ if (mysqli_num_rows($result) > 0) {
     <!-- new jquery version -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -300,30 +291,59 @@ if (mysqli_num_rows($result) > 0) {
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
-            $('#uploadForm').on('submit', function (e) {
+            $('#uploadForm').on('submit', function(e) {
                 e.preventDefault();
 
                 var formData = new FormData(this);
 
-                $.ajax({
-                    url: 'process_publish_built_game.php',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        console.log(response);
+                // $.ajax({
+                //     url: 'process_publish_built_game.php',
+                //     type: 'POST',
+                //     data: formData,
+                //     processData: false,
+                //     contentType: false,
+                //     success: function(response) {
+                //         console.log(response);
+                //         Swal.fire({
+                //             icon: 'success',
+                //             title: 'Success',
+                //         }).then(function() {
+                //             window.location.href = 'create_game_page.php#section6';
+                //         });
+                //     },
+                // });
 
-                        // Display a SweetAlert success notification
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                        }).then(function () {
-                            window.location.href = 'create_game_page.php#section6';
+
+                Swal.fire({
+                    title: '',
+                    text: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'process_publish_built_game.php',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(response);
+
+                                // Display a SweetAlert success notification
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                }).then(function() {
+                                    window.location.href = 'create_game_page.php#section6';
+                                });
+                            },
                         });
-                    },
+                    }
                 });
             });
 
@@ -361,7 +381,7 @@ if (mysqli_num_rows($result) > 0) {
             var markupPercentage = <?php echo $markup_percentage; ?>; // Get the markup percentage
 
             // Set up event listener for desired markup change
-            $('#desired_markup').on('input', function () {
+            $('#desired_markup').on('input', function() {
                 var desiredMarkup = parseFloat($(this).val()); // Parse the input value as a float
 
                 // STKR Hub

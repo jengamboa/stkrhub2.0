@@ -48,10 +48,10 @@ while ($fetchedBuiltGames = $resultBuiltGames->fetch_assoc()) {
         $status_value = 'CANCELED';
     } elseif ($is_approved == 1) {
         $status_value = 'APPROVED';
-    } elseif ($is_purchased == 1) {
-        $status_value = 'PURCHASED';
     } elseif ($is_published == 1) {
         $status_value = 'PUBLISHED';
+    } elseif ($is_purchased == 1) {
+        $status_value = 'PURCHASED';
     } else {
         $status_value = '';
     }
@@ -65,7 +65,7 @@ while ($fetchedBuiltGames = $resultBuiltGames->fetch_assoc()) {
         $actions .= '
             
         ';
-    } elseif ($is_pending == 0){
+    } elseif ($is_pending == 0 && $is_approved == 0) {
         $actions .= '
             <button class="approve-built_game" data-built_game_id="' . $built_game_id . '" data-name="' . $name . '">
                 Get Approved
