@@ -1082,13 +1082,18 @@ include 'connection.php';
                 var reason = $(this).data('reason');
                 var file_path = $(this).data('file_path');
 
-                // Create an HTML string for the download link
-                const downloadLink = `<a href="${file_path}" download>Download Attachment</a>`;
+                var downloadLink = '';
 
+                // Check if file_path is not NULL before creating the download link
+                if (file_path === 0) {
+                    downloadLink = 'wala attachment';
+                } else {
+                    downloadLink = '<br><a href="' + file_path + '" download>Download Attachment</a>';
+                }
 
                 Swal.fire({
                     title: 'View Reason',
-                    html: 'Reason: ' + reason + '<br>Attachment: ' + downloadLink,
+                    html: 'Reason: ' + reason + downloadLink,
                     icon: 'info',
                     confirmButtonText: 'Request Publish Again',
                     showCancelButton: true,
@@ -1096,7 +1101,6 @@ include 'connection.php';
                 }).then(function(result) {
                     if (result.isConfirmed) {
                         window.location.href = 'edit_game_page.php?built_game_id=' + built_game_id;
-
                     }
                 });
 

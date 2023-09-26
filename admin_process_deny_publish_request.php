@@ -14,23 +14,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $uploadDirectory = 'uploads/denied_publish_requests/';
 
-    // Check if a file was uploaded
-    if (!empty($file['name'])) {
+    if (isset($_FILES['file'])) {
         $uniqueFilename = time() . '_' . $file['name'];
         $uploadPath = $uploadDirectory . $uniqueFilename;
 
-        // Move the uploaded file to the specified directory
         if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-            // File uploaded successfully
         } else {
-            // Handle file upload error
             echo "File upload failed.";
             exit;
         }
     } else {
-        // No file was uploaded, set $uploadPath to NULL
-        $uploadPath = NULL;
+        $uploadPath = 0;
     }
+
 
     // Insert data into the database
     $insertQuery = "INSERT INTO denied_publish_requests (built_game_id, reason, file_path) VALUES ('$builtGameId', '$reason', '$uploadPath')";
@@ -45,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $deleteQuery2 = "DELETE FROM pending_published_built_games WHERE built_game_id = $builtGameId";
         mysqli_query($conn, $deleteQuery2);
+
+        echo $uploadPath;
 
         echo 'success';
     } else {

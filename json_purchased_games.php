@@ -28,8 +28,14 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
     while ($fetchedReason = $queryReason->fetch_assoc()) {
         $denied_publish_request_id = $fetchedReason['denied_publish_request_id'];
         $reason = $fetchedReason['reason'];
-        $file_path = $fetchedReason['file_path'];
+
+        if ($fetchedReason['file_path'] === null) {
+            $file_path = 'null';
+        } else {
+            $file_path = $fetchedReason['file_path'];
+        }
     }
+
 
     $built_game_link = '
         <a href="built_game_dashboard.php?built_game_id=' . $built_game_id . '">' . $name . '</a>
@@ -72,10 +78,10 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
             <p>Reviewing publish request</p>
             <a href="pending_publish_request_page.php?built_game_id=' . $built_game_id . '">View Publish Request</a>
         ';
-    } elseif ($is_purchased == 1) {
-        $status_value = 'PURCHASED';
     } elseif ($is_published == 1) {
         $status_value = 'PUBLISHED';
+    } elseif ($is_purchased == 1) {
+        $status_value = 'PURCHASED';
     } else {
         $status_value = '';
     }
@@ -84,22 +90,41 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
 
 
 
-
-
-    if ($is_pending_published == 1) {
+    if ($is_request_denied == 1) {
+        $actions = '
+            <a href="">
+                Buy Again
+            </a><br>
+            <a href="edit_game_page.php?built_game_id=' . $built_game_id . '">Try Publish Again</a>
+        ';
+    } elseif ($is_pending_published == 1) {
         $actions = '
             <a href="">
                 Buy Again
             </a>
         ';
+    } elseif ($is_published == 1) {
+        $actions = '
+            <a href="">
+                Buy Again
+            </a>
+        ';
+    } elseif ($is_purchased == 1) {
+        $actions = '
+            <a href="">
+                Buy Again   
+            </a><br>
+            <a href="edit_game_page.php?built_game_id=' . $built_game_id . '">Publish</a>
+        ';
     } else {
         $actions = '
-        <a href="">
-            Buy Again
-        </a>
-        <a href="edit_game_page.php?built_game_id=' . $built_game_id . '">Publish</a>
+            <a href="">
+                Buy Again
+            </a>
         ';
     }
+
+
 
     $data[] = array(
         "built_game_link" => $built_game_link,
