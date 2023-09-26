@@ -1385,6 +1385,35 @@ include 'connection.php';
 
 
 
+            // Add click event handler for "build" buttons
+            $('#publishedGameTable').on('click', '#viewReason', function() {
+                var published_game_id = $(this).data('published_game_id');
+                var reason = $(this).data('reason');
+                var file_path = $(this).data('file_path');
+
+                var downloadLink = '';
+
+                // Check if file_path is not NULL before creating the download link
+                if (file_path === 0) {
+                    downloadLink = 'wala attachment';
+                } else {
+                    downloadLink = '<br><a href="' + file_path + '" download>Download Attachment</a>';
+                }
+
+                Swal.fire({
+                    title: 'View Reason',
+                    html: 'Reason: ' + reason + downloadLink,
+                    icon: 'info',
+                    confirmButtonText: 'Request Publish Again',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        window.location.href = 'update_game_page.php?published_game_id=' + published_game_id;
+                    }
+                });
+
+            });
 
 
 

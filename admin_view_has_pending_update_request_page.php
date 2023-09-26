@@ -474,7 +474,7 @@ if (mysqli_num_rows($result_categories) > 0) {
                 }).then(function(result) {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: 'process_update_publish_built_game.php',
+                            url: 'admin_process_update_publish_built_game.php',
                             type: 'POST',
                             data: formData,
                             processData: false,
@@ -576,7 +576,7 @@ if (mysqli_num_rows($result_categories) > 0) {
                     if (result.isConfirmed) {
                         // User confirmed, send an AJAX request to process_cancel_details_request.php
                         $.ajax({
-                            url: 'admin_process_approve_publish_request.php',
+                            url: 'admin_process_approve_update_request.php',
                             type: 'POST',
                             data: {
                                 published_game_id: published_game_id
@@ -590,19 +590,80 @@ if (mysqli_num_rows($result_categories) > 0) {
                                     showCancelButton: false,
                                     confirmButtonText: 'OK'
                                 }).then(function() {
-                                    window.location.href = 'admin_has_pending_details_request_page.php';
+                                    window.location.href = 'admin_has_pending_update_request_page.php';
                                 });
                             },
                             error: function() {
                                 Swal.fire('Error', 'Failed to cancel the request.', 'error');
                             }
                         });
-                    } else {
-                        // User canceled, do nothing or provide feedback if needed
-                        Swal.fire('Cancelled', 'Your request is still active.', 'info');
                     }
                 });
             });
+
+
+
+            // Attach a click event handler to the button by its id
+            $('#cancelUpdate').on('click', function() {
+                
+                var published_game_id = $(this).data('published-game-id');
+
+                // Create a SweetAlert pop-up with an input field for reasons and a file upload field
+                Swal.fire({
+                    title: 'Deny Publish Request',
+                    html: '<input type="text" id="denyReason" class="swal2-input" placeholder="Enter reasons for denial" required>' +
+                        '<input type="file" id="fileUpload" class="swal2-input" accept=".pdf,.jpg,.jpeg,.png">',
+                    showCancelButton: true,
+                    confirmButtonText: 'Deny',
+                    cancelButtonText: 'Cancel',
+                    showLoaderOnConfirm: true,
+                    preConfirm: () => {
+                        // Handle the input (reason and file) here, e.g., send them to the server
+                        const denyReason = $('#denyReason').val();
+                        const file = $('#fileUpload').prop('files')[0];
+
+                        // Check if the input field is empty
+                        if (!denyReason) {
+                            Swal.showValidationMessage('Reason is required');
+                            return false; // Prevent the SweetAlert from closing
+                        }
+
+                        // Create a FormData object to send both text and file data
+                        const formData = new FormData();
+                        formData.append('gameId', published_game_id);
+                        formData.append('reason', denyReason);
+                        formData.append('file', file);
+
+                        // Send the AJAX request to the server
+                        return $.ajax({
+                            url: 'admin_process_deny_update_publish_request.php',
+                            type: 'POST',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function(response) {
+                                // Display a SweetAlert to inform success
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Your request has been Published.',
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK'
+                                }).then(function() {
+                                    window.location.href = 'admin_has_pending_update_request_page.php';
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire('Error', 'An error occurred while processing the request.', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
+
 
 
         });

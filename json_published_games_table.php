@@ -23,6 +23,7 @@ while ($fetched = $result->fetch_assoc()) {
     $marketplace_price = $fetched['marketplace_price'];
 
     $has_pending_update = $fetched['has_pending_update'];
+    $is_update_request_denied = $fetched['is_update_request_denied'];
     $is_hidden = $fetched['is_hidden'];
 
     // Initialize variables before the nested loop
@@ -104,9 +105,31 @@ while ($fetched = $result->fetch_assoc()) {
         ';
     }
 
+
+
+    $sqlReason = "SELECT * FROM denied_update_publish_requests WHERE published_built_game_id = $published_game_id";
+    $queryReason = $conn->query($sqlReason);
+    while ($fetchedReason = $queryReason->fetch_assoc()) {
+        $denied_update_publish_request_id = $fetchedReason['denied_update_publish_request_id'];
+        $reason = $fetchedReason['reason'];
+
+        if ($fetchedReason['file_path'] === null) {
+            $file_path = 'null';
+        } else {
+            $file_path = $fetchedReason['file_path'];
+        }
+    }
+
+
     if ($has_pending_update === '1') {
         $action2 = '
             <button id="viewEditButton" data-published_game_id="' . $published_game_id . '">View Edit Request</button>
+        ';
+    } elseif ($is_update_request_denied === '1') {
+        $action2 = '
+        <button id="viewReason" data-published_game_id="' . $published_game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
+            View Reason
+        </button>
         ';
     } else {
         $action2 = '

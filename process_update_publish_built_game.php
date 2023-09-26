@@ -78,6 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (mysqli_query($conn, $updateHasPendingQuery)) {
                 echo 'has_pending_update updated successfully.';
+
+                $deleteQuery1 = "DELETE FROM denied_update_publish_requests WHERE published_built_game_id = $published_built_game_id";
+                mysqli_query($conn, $deleteQuery1);
             } else {
                 echo "Error updating has_pending_update: " . mysqli_error($conn);
             }
