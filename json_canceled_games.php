@@ -32,10 +32,18 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
         $game_name = $fetchedGameName['name'];
     }
 
-    $from_what_game = '
-        ' . $game_name . ' <br>
-        <small>Game ID: ' . $game_id . '</small>
-    ';
+    if ($game_id == 0) {
+        $from_what_game_value = '
+            <small>deleted</small>
+        ';
+    } else {
+        $from_what_game_value = '
+            ' . $game_name . ' <br>
+            <small>Game ID: ' . $game_id . '</small>
+        ';
+    }
+
+    $from_what_game = $from_what_game_value;
 
     $total_price = $price;
 

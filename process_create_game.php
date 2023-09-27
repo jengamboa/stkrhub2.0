@@ -10,8 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $name = $_POST["name"];
     $description = $_POST["description"];
-    
-    $user_id = 3;
 
     $sqlCreateGame = "INSERT INTO games (name, description, user_id) VALUES ('$name', '$description', '$user_id')";
     

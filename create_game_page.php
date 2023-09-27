@@ -200,7 +200,7 @@ include 'connection.php';
                             <br>
 
                             <label for="description">Description:</label>
-                            <textarea id="description" name="description" required></textarea> <!-- Added closing tag </textarea> -->
+                            <textarea id="description" name="description"></textarea> <!-- Added closing tag </textarea> -->
                             <br>
 
                             <input type="submit" value="Submit">
