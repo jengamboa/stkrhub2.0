@@ -166,9 +166,55 @@ if (isset($_SESSION['user_id'])) {
                     dataSrc: ""
                 },
                 columns: [{
-                    data: "item"
-                }]
+                        data: "sub_total"
+                    },
+                    {
+                        "data": "actions"
+                    }
+                ]
             });
+
+            // Listen for changes to quantity input using event delegation
+            $('#infoTable').on('click', '.delete-selected', function() {
+
+                Swal.fire({
+                    title: 'Delete Cart',
+                    text: 'Are you sure you want to delete these items?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_delete_selected_cart.php',
+                            data: {
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire('Success', response.message, 'success');
+
+                                    $('#infoTable').DataTable().ajax.reload();
+                                    $('#cartTable').DataTable().ajax.reload();
+
+                                } else {
+                                    Swal.fire('Error', response.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                            }
+                        });
+                    }
+                });
+
+                
+            });
+
+
 
 
 

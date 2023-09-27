@@ -1,13 +1,16 @@
 <?php
+session_start();
 include 'connection.php';
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $cart_id = $_POST['cart_id'];
 
     $conn->begin_transaction();
 
     try {
-        $sqlDeleteCart = "DELETE FROM cart WHERE cart_id = $cart_id AND is_active = 1";
+        $sqlDeleteCart = "DELETE FROM cart WHERE user_id = $user_id AND is_active = 1";
         $conn->query($sqlDeleteCart);
 
         $conn->commit();
@@ -24,4 +27,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = ["success" => false, "message" => "Invalid request method"];
     echo json_encode($response);
 }
-?>

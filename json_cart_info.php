@@ -24,9 +24,26 @@ while ($fetched = $result->fetch_assoc()) {
 
 $sub_total = '<h6>' . $sub_total . '</h6>';
 
+$actions = '
+    <button 
+        class="delete-selected"
+    >
+        Delete
+    </button>
+
+    
+
+    <button
+        id="purchase-selected"
+    >
+        Purchase
+    </button>
+';
+
 
 $json[] = array(
-    "item" => $sub_total,
+    "sub_total" => $sub_total,
+    "actions" => $actions,
 );
 
 echo json_encode($json);
