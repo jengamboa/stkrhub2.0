@@ -69,9 +69,9 @@ while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
 
 
     $actions = '
-    <a href="">
-        Add to Cart
-    </a>
+    <button id="built_game_buy" data-built_game_id="' . $built_game_id . '" class="social-info">
+        <span class="ti-bag"></span> Add to Cart
+    </button>
     ';
 
     $data[] = array(

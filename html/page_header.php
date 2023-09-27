@@ -86,7 +86,7 @@
 
 							echo '
 								<li class="nav-item">
-								<a class="nav-link" href="contact.html">
+								<a class="nav-link" href="cart_page.php">
 									<span class="cart-icon">
 										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>';
 

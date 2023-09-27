@@ -1,24 +1,27 @@
 <?php
 include 'connection.php';
 
-echo 'DELETEE';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $cart_id = $_POST['cart_id'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
-    echo '<h2>Selected Cart IDs:</h2>';
-    echo '<ul>';
-    foreach ($_POST['selectedItems'] as $cartId) {
-        echo '<li>Cart ID: ' . $cartId . '</li>';
+    $conn->begin_transaction();
 
-        // Delete the cart item from the database
-        $delete_query = "DELETE FROM cart WHERE cart_id = '$cartId'";
-        if (mysqli_query($conn, $delete_query)) {
-            echo 'Deleted from database.';
-        } else {
-            echo 'Error deleting from database: ' . mysqli_error($conn);
-        }
+    try {
+        $sqlDeleteCart = "DELETE FROM cart WHERE cart_id = $cart_id";
+        $conn->query($sqlDeleteCart);
+
+        $conn->commit();
+
+        $response = ["success" => true, "message" => "Game and related records deleted successfully"];
+    } catch (mysqli_sql_exception $e) {
+        $conn->rollback();
+
+        $response = ["success" => false, "message" => "Database error: " . $e->getMessage()];
     }
-    echo '</ul>';
+
+    echo json_encode($response);
 } else {
-    echo 'No items selected.';
+    $response = ["success" => false, "message" => "Invalid request method"];
+    echo json_encode($response);
 }
 ?>

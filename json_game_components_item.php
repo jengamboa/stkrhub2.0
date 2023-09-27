@@ -3,8 +3,7 @@ include "connection.php";
 
 $json = array();
 
-// $built_game_id = $_GET['built_game_id'];
-$built_game_id = 33;
+$built_game_id = $_GET['built_game_id'];
 
 $sql = "SELECT * FROM built_games_added_game_components WHERE built_game_id = $built_game_id";
 $result = $conn->query($sql);
@@ -19,10 +18,10 @@ while ($game_components = $result->fetch_assoc()) {
     $component_quantity = $game_components['quantity'];
     $color_id = $game_components['color_id'];
     $component_size = $game_components['size'];
-    
+
     $sqlName = "SELECT * FROM game_components WHERE component_id = $component_id";
     $resultName = $conn->query($sqlName);
-    while ($fetchedName = $resultName->fetch_assoc()){
+    while ($fetchedName = $resultName->fetch_assoc()) {
         $name = $fetchedName['component_name'];
         $description = $fetchedName['description'];
         $price = $fetchedName['price'];

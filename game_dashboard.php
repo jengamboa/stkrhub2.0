@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
         <div class="container">
 
             <!-- DataTables Game Components -->
-            <table id="userTable" class="display">
+            <table id="userTable" class="display" style="width: 100%;">
                 <thead>
                     <tr>
                         <th>Component Name</th>

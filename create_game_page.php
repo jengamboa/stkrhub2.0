@@ -671,7 +671,7 @@ include 'connection.php';
                                     $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
-                                    
+
                                 }
                             },
                             error: function() {
@@ -1089,6 +1089,23 @@ include 'connection.php';
                 ]
             });
 
+
+            // Add click event handler for "build" buttons
+            $('#approvedGameTable').on('click', '#built_game_buy', function() {
+
+                var built_game_id = $(this).data("built_game_id");
+
+                $.ajax({
+                    url: "process_add_built_game_to_cart.php?built_game_id=" + built_game_id,
+                    type: "GET",
+                    success: function(data) {
+                        $(".cart-count").html(data);
+                    },
+                });
+            });
+
+
+
             // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
             $('#purchasedGameTable').DataTable({
                 searching: true,
@@ -1415,6 +1432,9 @@ include 'connection.php';
                 });
 
             });
+
+
+
 
 
 
