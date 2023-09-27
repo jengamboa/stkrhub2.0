@@ -34,7 +34,7 @@ $actions = '
     
 
     <button
-        id="purchase-selected"
+        class="purchase-selected"
     >
         Purchase
     </button>

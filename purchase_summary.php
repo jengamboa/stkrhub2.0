@@ -71,7 +71,7 @@ if (isset($_SESSION['user_id'])) {
             <div class="cart_inner">
 
                 <!-- DataTables Game Components -->
-                <table id="cartTable" class="display" style="width: 100%;">
+                <table id="purchaseTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>Item</th>
@@ -198,7 +198,7 @@ if (isset($_SESSION['user_id'])) {
                                     Swal.fire('Success', response.message, 'success');
 
                                     $('#infoTable').DataTable().ajax.reload();
-                                    $('#cartTable').DataTable().ajax.reload();
+                                    $('#purchaseTable').DataTable().ajax.reload();
 
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
@@ -250,7 +250,7 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-            $('#cartTable').DataTable({
+            $('#purchaseTable').DataTable({
                 "ajax": {
                     "url": "json_cart.php",
                     data: {
@@ -265,7 +265,7 @@ if (isset($_SESSION['user_id'])) {
 
 
             // Listen for changes to quantity input using event delegation
-            $('#cartTable').on('change', '.quantity-input', function() {
+            $('#purchaseTable').on('change', '.quantity-input', function() {
                 var cart_id = $(this).data('cart_id');
                 var quantity = $(this).val();
 
@@ -278,14 +278,14 @@ if (isset($_SESSION['user_id'])) {
                     },
                     success: function(response) {
                         $('#infoTable').DataTable().ajax.reload();
-                        $('#cartTable').DataTable().ajax.reload();
+                        $('#purchaseTable').DataTable().ajax.reload();
                     }
                 });
             });
 
 
             // Add click event handler for "delete" buttons
-            $('#cartTable').on('click', '.delete-cart-item', function() {
+            $('#purchaseTable').on('click', '.delete-cart-item', function() {
                 var cart_id = $(this).data('cart_id');
 
                 Swal.fire({
@@ -310,7 +310,7 @@ if (isset($_SESSION['user_id'])) {
                                     Swal.fire('Success', response.message, 'success');
 
                                     $('#infoTable').DataTable().ajax.reload();
-                                    $('#cartTable').DataTable().ajax.reload();
+                                    $('#purchaseTable').DataTable().ajax.reload();
 
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
@@ -328,7 +328,7 @@ if (isset($_SESSION['user_id'])) {
 
 
             // Add click event handler for "delete" buttons
-            $('#cartTable').on('click', '#checkbox-active', function() {
+            $('#purchaseTable').on('click', '#checkbox-active', function() {
                 var cart_id = $(this).data('cart_id');
 
                 $.ajax({

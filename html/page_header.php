@@ -16,7 +16,7 @@
 			">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
-				<a class="navbar-brand logo_h" href="index.html">
+				<a class="navbar-brand logo_h" href="index.php">
 					<h4 style="
 						font-family: 'Akira Expanded', sans-serif;
 						padding-top: 10px;
