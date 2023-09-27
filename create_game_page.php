@@ -671,6 +671,7 @@ include 'connection.php';
                                     $('#publishedGameTable').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
+                                    
                                 }
                             },
                             error: function() {
