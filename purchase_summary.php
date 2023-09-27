@@ -5,6 +5,10 @@ include 'connection.php';
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
+
+if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
+    $selectedCartIds = $_POST['cart_id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +52,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/body.css'; ?>#infoTable tbody tr {
+        <?php include 'css/body.css'; ?>#infoPurhaseTable tbody tr {
             background-color: transparent !important;
         }
     </style>
@@ -68,38 +72,31 @@ if (isset($_SESSION['user_id'])) {
     <!--================Cart Area =================-->
     <section class="cart_area">
         <div class="container">
-            <div class="cart_inner">
-
-                <!-- DataTables Game Components -->
-                <table id="purchaseTable" class="display" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
 
 
-            </div>
+            <!-- DataTables Game Components -->
+            <table id="purchaseTable" class="display" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+
         </div>
-    </section>
-    <!--================End Cart Area =================-->
 
-
-
-
-    <nav class="navbar fixed-bottom navbar-expand-lg bg-primary navbar-dark">
 
         <div class="container">
             <div class="row">
 
                 <div class="col">
                     <!-- DataTables Build Game  -->
-                    <table id="infoTable" class="display">
+                    <table id="profileAddress" class="display" style="width: 100%;">
 
                         <tbody>
                         </tbody>
@@ -107,11 +104,21 @@ if (isset($_SESSION['user_id'])) {
                 </div>
 
 
+                <div class="col">
+                    <!-- DataTables Build Game  -->
+                    <table id="infoPurhaseTable" class="display" style="width: 100%;">
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
+    </section>
+    <!--================End Cart Area =================-->
 
 
-    </nav>
 
 
 
@@ -153,16 +160,20 @@ if (isset($_SESSION['user_id'])) {
 
 
             var user_id = <?php echo $user_id; ?>;
+            var selectedCartIds = <?php echo json_encode($selectedCartIds); ?>;
 
-            $('#infoTable').DataTable({
+
+            $('#infoPurhaseTable').DataTable({
                 searching: false, // Disable search bar
                 info: false, // Disable info (i.e., "Showing X of Y entries")
                 paging: false, // Disable paging
                 ordering: false, // Disable column sorting
                 ajax: {
-                    url: "json_cart_info.php",
+                    url: "json_purchase_info.php",
+                    method: "POST",
                     data: {
                         user_id: user_id,
+                        selectedCartIds: selectedCartIds,
                     },
                     dataSrc: ""
                 },
@@ -170,154 +181,192 @@ if (isset($_SESSION['user_id'])) {
                         data: "sub_total"
                     },
                     {
-                        "data": "actions"
+                        "data": "chosen_address"
+                    },
+                    {
+                        "data": "shipping"
                     }
                 ]
             });
 
-            // Listen for changes to quantity input using event delegation
-            $('#infoTable').on('click', '.delete-selected', function() {
-
-                Swal.fire({
-                    title: 'Delete Cart',
-                    text: 'Are you sure you want to delete these items?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Delete',
-                    cancelButtonText: 'Cancel',
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-
-                        $.ajax({
-                            type: 'POST',
-                            url: 'process_delete_selected_cart.php',
-                            data: {},
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.success) {
-                                    Swal.fire('Success', response.message, 'success');
-
-                                    $('#infoTable').DataTable().ajax.reload();
-                                    $('#purchaseTable').DataTable().ajax.reload();
-
-                                } else {
-                                    Swal.fire('Error', response.message, 'error');
-                                }
-                            },
-                            error: function() {
-                                Swal.fire('Error', 'Failed to delete the game', 'error');
-                            }
-                        });
-                    }
-                });
-            });
-
-
-            // Listen for changes to quantity input using event delegation
-            $('#infoTable').on('click', '.purchase-selected', function() {
-                var checkedCartIds = [];
-                $('input[data-cart_id]:checked').each(function() {
-                    checkedCartIds.push($(this).data('cart_id'));
-                });
-
-                if (checkedCartIds.length === 0) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'You don\'t have any selected!',
-                    });
-                } else {
-                    var form = $('<form>', {
-                        method: 'POST',
-                        action: 'purchase_summary.php',
-                    });
-
-                    checkedCartIds.forEach(function(cartId) {
-                        $('<input>', {
-                            type: 'hidden',
-                            name: 'cart_id[]',
-                            value: cartId,
-                        }).appendTo(form);
-                    });
-
-                    // Append the form to the document and submit it
-                    form.appendTo('body').submit();
-                }
-            });
 
 
 
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
 
+            $('#profileAddress').DataTable({
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
 
-
-            $('#purchaseTable').DataTable({
                 "ajax": {
-                    "url": "json_cart.php",
+                    "url": "json_address_purchase_summary.php",
                     data: {
                         user_id: user_id,
                     },
                     "dataSrc": ""
                 },
                 "columns": [{
-                    "data": "item"
-                }, ]
+                        "data": "item"
+                    },
+
+                ]
             });
 
 
-            // Listen for changes to quantity input using event delegation
-            $('#purchaseTable').on('change', '.quantity-input', function() {
-                var cart_id = $(this).data('cart_id');
-                var quantity = $(this).val();
 
+            // Add a click event listener to the "Edit" buttons
+            $('#profileAddress').on('click', '.edit-btn', function() {
+                // Get the address ID associated with the clicked "Edit" button
+                var addressId = $(this).data('address-id');
+
+                // Fetch the address details for the specified address ID from the server
                 $.ajax({
-                    type: 'POST',
-                    url: 'process_update_cart_quantity.php',
+                    url: "swal_get_address_details.php", // Create this PHP file to fetch address details by ID
+                    method: "GET",
                     data: {
-                        cart_id: cart_id,
-                        quantity: quantity
+                        addressId: addressId,
                     },
                     success: function(response) {
-                        $('#infoTable').DataTable().ajax.reload();
-                        $('#purchaseTable').DataTable().ajax.reload();
+                        // Handle the response and show a SweetAlert for editing
+                        Swal.fire({
+                            title: "Edit Address",
+                            html: response, // Include the fetched address details in the SweetAlert content
+                            showCancelButton: true,
+                            confirmButtonText: "Save",
+                            cancelButtonText: "Cancel",
+                            preConfirm: () => {
+                                // Handle the "Save" button click here
+                                var formData = {
+                                    addressId: addressId,
+                                    // Retrieve and collect edited address details from the SweetAlert form fields
+                                    fullname: $('#editedFullname').val(),
+                                    number: $('#editedNumber').val(),
+                                    region: $('#editedRegion').val(),
+                                    province: $('#editedProvince').val(),
+                                    city: $('#editedCity').val(),
+                                    barangay: $('#editedBarangay').val(),
+                                    zip: $('#editedZip').val(),
+                                    street: $('#editedStreet').val(),
+                                    setDefaultAddress: $('#setDefaultAddress').prop('checked'),
+
+                                };
+
+                                // Send an AJAX request to update the address information in the database
+                                $.ajax({
+                                    url: "swal_update_address.php", // Create this PHP file to update the address
+                                    method: "POST",
+                                    data: formData,
+                                    success: function() {
+                                        // Reload the DataTable after the address is updated
+                                        $('#infoPurhaseTable').DataTable().ajax.reload();
+                                        $('#profileAddress').DataTable().ajax.reload();
+                                        $('#purchaseTable').DataTable().ajax.reload();
+
+                                        // Show a success message with Swal
+                                        Swal.fire({
+                                            title: "Success",
+                                            text: "Address updated successfully!",
+                                            icon: "success",
+                                        });
+                                    },
+                                    error: function() {
+                                        // Handle any AJAX errors here
+                                    },
+                                });
+                            },
+                        });
+                    },
+                    error: function() {
+                        // Handle any AJAX errors here
+                    },
+                });
+            });
+
+
+
+
+            // Add a click event listener to the "Delete" buttons
+            $('#profileAddress').on('click', '.delete-btn', function() {
+                var addressId = $(this).data('address-id');
+
+                Swal.fire({
+                    title: "Confirm Delete",
+                    text: "Are you sure you want to delete this address?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Delete",
+                    cancelButtonText: "Cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // User clicked "Delete," send AJAX request to delete the address
+                        $.ajax({
+                            url: "swal_delete_address.php", // Create this PHP file to delete the address
+                            method: "POST",
+                            data: {
+                                addressId: addressId,
+                            },
+                            success: function(response) {
+                                // Reload the DataTable after the address is updated
+                                $('#infoPurhaseTable').DataTable().ajax.reload();
+                                $('#profileAddress').DataTable().ajax.reload();
+                                $('#purchaseTable').DataTable().ajax.reload();
+
+                                // Show a success message with Swal
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "Deleted successfully!",
+                                    icon: "success",
+                                });
+                            },
+                            error: function() {
+                                // Handle any AJAX errors here
+                            },
+                        });
                     }
                 });
             });
 
 
-            // Add click event handler for "delete" buttons
-            $('#purchaseTable').on('click', '.delete-cart-item', function() {
-                var cart_id = $(this).data('cart_id');
 
+
+            // Add a click event listener to the "swal_process_default_address.php" buttons
+            $('#profileAddress').on('click', '.radio-chosen', function() {
+                var addressId = $(this).data('address-id');
+
+                // Show a confirmation dialog
                 Swal.fire({
-                    title: 'Delete Cart (ID: ' + cart_id + ')',
-                    text: 'Are you sure you want to delete this item?',
-                    icon: 'warning',
+                    title: "Confirm Change",
+                    text: "Are you sure you want to change the default address?",
+                    icon: "question",
                     showCancelButton: true,
-                    confirmButtonText: 'Delete',
-                    cancelButtonText: 'Cancel',
-                }).then(function(result) {
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                }).then((result) => {
                     if (result.isConfirmed) {
-
+                        // User clicked "Yes," send an AJAX request to update the default address
                         $.ajax({
-                            type: 'POST',
-                            url: 'process_delete_cart.php',
+                            url: "swal_process_default_address.php",
+                            method: "POST",
                             data: {
-                                cart_id: cart_id
+                                user_id: user_id,
+                                addressId: addressId
                             },
-                            dataType: 'json',
                             success: function(response) {
-                                if (response.success) {
-                                    Swal.fire('Success', response.message, 'success');
+                                // Reload the DataTable after the address is updated
+                                $('#infoPurhaseTable').DataTable().ajax.reload();
+                                $('#profileAddress').DataTable().ajax.reload();
+                                $('#purchaseTable').DataTable().ajax.reload();
 
-                                    $('#infoTable').DataTable().ajax.reload();
-                                    $('#purchaseTable').DataTable().ajax.reload();
-
-                                } else {
-                                    Swal.fire('Error', response.message, 'error');
-                                }
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "You changed the default address",
+                                    icon: "success",
+                                });
                             },
                             error: function() {
-                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                                // Handle any AJAX errors here
                             }
                         });
                     }
@@ -327,30 +376,51 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-            // Add click event handler for "delete" buttons
-            $('#purchaseTable').on('click', '#checkbox-active', function() {
-                var cart_id = $(this).data('cart_id');
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'process_change_is_active.php',
-                    data: {
-                        cart_id: cart_id
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                            $('#infoTable').DataTable().ajax.reload();
-                            $('#cartTable').DataTable().ajax.reload();
-                        }
-                    },
-                    error: function() {
-                        Swal.fire('Error', 'Failed to delete the game', 'error');
-                    }
-                });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+
+
+            $('#purchaseTable').DataTable({
+                "ajax": {
+                    "url": "json_purchase_summary.php",
+                    "data": {
+                        user_id: user_id,
+                        selectedCartIds: selectedCartIds,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                    "data": "item"
+                }]
             });
-
 
 
 

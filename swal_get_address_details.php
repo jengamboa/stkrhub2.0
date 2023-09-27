@@ -14,6 +14,8 @@ if (isset($_GET['addressId'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
+        $isDefault = $row['is_default'];
+
         // Create a form with input fields for editing address details
         echo '
             <form id="editAddressForm">
@@ -41,6 +43,26 @@ if (isset($_GET['addressId'])) {
                 
                 <label for="editedStreet">Street:</label>
                 <input type="text" id="editedStreet" name="editedStreet" value="' . htmlspecialchars($row['street']) . '" required><br>
+
+                ';
+
+                if ($isDefault == 1){
+                    echo '
+                    <label for="setDefaultAddress">This is your Default Address:</label>
+                    <input type="checkbox" id="setDefaultAddress" name="setDefaultAddress" checked disabled><br>
+
+                    ';
+                } else {
+                    echo '
+                    <label for="setDefaultAddress">Set this as the default address:</label>
+                    <input type="checkbox" id="setDefaultAddress" name="setDefaultAddress"><br>
+                    ';
+                }
+
+
+                echo'
+
+                
             </form>
         ';
     } else {

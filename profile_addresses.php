@@ -302,6 +302,13 @@ session_start();
                                     success: function() {
                                         // Reload the DataTable after the address is updated
                                         $('#profileAddress').DataTable().ajax.reload();
+
+                                        // Show a success message with Swal
+                                        Swal.fire({
+                                            title: "Success",
+                                            text: "Address updated successfully!",
+                                            icon: "success",
+                                        });
                                     },
                                     error: function() {
                                         // Handle any AJAX errors here
