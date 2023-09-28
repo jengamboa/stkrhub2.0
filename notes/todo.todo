@@ -33,3 +33,33 @@ published built games page:
 ADMIN:
 ☐ set % for commisions
 ☐ CMS
+
+☐ Monthly and yearly sales summaries.
+☐ Graphs and charts displaying revenue trends.
+☐ Comparison of sales to previous periods.
+
+Top-selling games and categories.
+number of created games, approved games, purchased, games, published games
+
+number of to approve games, publish request, edit request
+
+number of games that is not published / hidden
+
+total earnings STKRHUB
+total earnings of all users
+
+constants
+
+TABLE all created games, approved games, purchased, published (has power to delete)
+
+Access to user profiles and accounts
+User activity logs and history.
+Ability to suspend or ban users if necessary.
+
+Overview of pending, shipped, and completed orders.
+Ability to process orders, print shipping labels, and track shipments.
+Order history and details for customer support.
+
+SEND PAYPAL TO canceled, earnings etc...
+
+FAQs and knowledge base management.

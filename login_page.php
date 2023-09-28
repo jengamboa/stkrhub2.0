@@ -60,6 +60,7 @@
                 <div class="col-lg-6">
                     <div class="login_form_inner">
                         <h3>Log in to enter</h3>
+
                         <form class="row login_form" action="process_login.php" method="post" id="contactForm"
                             novalidate="novalidate">
                             <div class="col-md-12 form-group">
@@ -84,6 +85,7 @@
                                 <a href="#">Forgot Password?</a>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>
