@@ -67,6 +67,17 @@ while ($fetchedBuiltGames = $resultBuiltGames->fetch_assoc()) {
     $status = $status_value;
 
 
+    $ticket_price = '';
+    $sqlTicket = "SELECT * FROM constants WHERE constant_id = 2";
+    $resultTicket = $conn->query($sqlTicket);
+    while ($fetchedTicket = $resultTicket->fetch_assoc()) {
+        $ticket_percentage = $fetchedTicket['percentage'];
+    }
+
+    $ticket_price = $price / $ticket_percentage;
+
+
+
     $actions = '';
 
     if ($is_pending == 1) {
@@ -75,7 +86,7 @@ while ($fetchedBuiltGames = $resultBuiltGames->fetch_assoc()) {
         ';
     } elseif ($is_pending == 0 && $is_approved == 0) {
         $actions .= '
-            <button class="approve-built_game" data-built_game_id="' . $built_game_id . '" data-name="' . $name . '">
+            <button class="approve-built_game" data-built_game_id="' . $built_game_id . '" data-ticket_price="' . $ticket_price . '" data-name="' . $name . '">
                 Get Approved
             </button>
         ';

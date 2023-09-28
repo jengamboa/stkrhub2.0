@@ -96,7 +96,10 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                 <div class="col">
                     <!-- DataTables Build Game  -->
+
+                    <button id="addAddressBtn">Add Address</button>
                     <table id="profileAddress" class="display" style="width: 100%;">
+
 
                         <tbody>
                         </tbody>
@@ -369,6 +372,81 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                 // Handle any AJAX errors here
                             }
                         });
+                    } else {
+                        // Reload the DataTable after the address is updated
+                        $('#infoPurhaseTable').DataTable().ajax.reload();
+                        $('#profileAddress').DataTable().ajax.reload();
+                        $('#purchaseTable').DataTable().ajax.reload();
+                    }
+                });
+            });
+
+
+
+
+
+
+
+
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+
+            // Add a click event listener to the "Add Address" button
+            $('#addAddressBtn').on('click', function() {
+                Swal.fire({
+                    title: "Add Address",
+                    html: '<div class="form-container">' +
+                        '<label for="fullname">Fullname:</label>' +
+                        '<input type="text" id="fullname" name="fullname" required><br>' +
+                        '<label for="number">Number:</label>' +
+                        '<input type="text" id="number" name="number" required><br>' +
+                        '<label for="region">Region:</label>' +
+                        '<input type="text" id="region" name="region" required><br>' +
+                        '<label for="province">Province:</label>' +
+                        '<input type="text" id="province" name="province" required><br>' +
+                        '<label for="city">City:</label>' +
+                        '<input type="text" id="city" name="city" required><br>' +
+                        '<label for="barangay">Barangay:</label>' +
+                        '<input type="text" id="barangay" name="barangay" required><br>' +
+                        '<label for="zip">ZIP Code:</label>' +
+                        '<input type="text" id="zip" name="zip" required><br>' +
+                        '<label for="street">Street:</label>' +
+                        '<input type="text" id="street" name="street" required><br>' +
+                        '</div>',
+                    showCancelButton: true,
+                    confirmButtonText: "Add",
+                    cancelButtonText: "Cancel",
+                    preConfirm: () => {
+                        // Handle the "Add" button click here
+                        var formData = {
+                            fullname: $('#fullname').val(),
+                            number: $('#number').val(),
+                            region: $('#region').val(),
+                            province: $('#province').val(),
+                            city: $('#city').val(),
+                            barangay: $('#barangay').val(),
+                            zip: $('#zip').val(),
+                            street: $('#street').val(),
+                        };
+
+                        // Send an AJAX request to add the address
+                        return $.ajax({
+                            url: "swal_add_address.php", // Create this PHP file to add the address
+                            method: "POST",
+                            data: formData,
+                        });
+                    },
+                }).then((result) => {
+                    // Handle the AJAX response
+                    if (result.isConfirmed) {
+                        if (result.value === "success") {
+                            // Address added successfully
+                            Swal.fire("Success", "Address added successfully", "success");
+                            // Reload the DataTable to display the new address
+                            $('#profileAddress').DataTable().ajax.reload();
+                        } else {
+                            // Error occurred while adding the address
+                            Swal.fire("Error", "Error adding address", "error");
+                        }
                     }
                 });
             });

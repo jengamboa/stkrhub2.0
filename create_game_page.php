@@ -864,24 +864,25 @@ include 'connection.php';
             $('#builtGameTable').on('click', '.approve-built_game', function() {
                 var built_game_id = $(this).data('built_game_id');
                 var name = $(this).data('name');
+                var ticket_price = $(this).data('ticket_price');
 
                 Swal.fire({
-                    title: 'Built Game (ID: ' + built_game_id + ')',
-                    text: 'Name: ' + name + '\nDescription: ' +
-                        '\nAre you sure you want to Get Approved this game?',
+                    title: 'Buy A Ticket',
+                    html: 'Ticket Price: ' + ticket_price,
                     icon: 'info',
                     showCancelButton: true,
-                    confirmButtonText: 'Get Approved',
+                    confirmButtonText: 'Buy',
                     cancelButtonText: 'Cancel',
                 }).then(function(result) {
                     if (result.isConfirmed) {
-                        // Send an AJAX request to build the game
+
                         $.ajax({
                             type: 'POST',
-                            url: 'process_get_approved_game.php', // Create a PHP script for building the game
+                            url: 'process_get_approved_game.php', // Create a PHP script to check balance and deduct cost
                             data: {
                                 built_game_id: built_game_id,
                                 name: name,
+                                ticket_price: ticket_price
                             },
                             dataType: 'json',
                             success: function(response) {
@@ -892,7 +893,6 @@ include 'connection.php';
                                     $('#createGameTable').DataTable().ajax.reload();
                                     $('#builtGameTable').DataTable().ajax.reload();
                                     $('#pendingGameTable').DataTable().ajax.reload();
-
                                     $('#canceledGameTable').DataTable().ajax.reload();
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
@@ -902,12 +902,13 @@ include 'connection.php';
                                 }
                             },
                             error: function() {
-                                Swal.fire('Error', 'Failed to build the game', 'error');
+                                Swal.fire('Error', 'Failed to deduct the cost', 'error');
                             }
                         });
                     }
                 });
             });
+
 
 
 

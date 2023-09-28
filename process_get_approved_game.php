@@ -11,13 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $built_game_id = $_POST['built_game_id'];
     $name = $_POST['name'];
+    $ticket_price = $_POST['ticket_price'];
 
     // Begin a transaction
     $conn->begin_transaction();
 
     try {
         // Update the 'is_built' flag in the 'games' table
-        $sqlUpdateIsPending = "UPDATE built_games SET is_pending = 1 WHERE built_game_id = $built_game_id";
+        $sqlInsertTicket = "UPDATE built_games SET is_pending = 1 WHERE built_game_id = $built_game_id";
         $conn->query($sqlUpdateIsPending);
 
         // Commit the transaction

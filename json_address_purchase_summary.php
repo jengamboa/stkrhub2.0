@@ -58,6 +58,7 @@ while ($row = $resultAddresses->fetch_assoc()) {
 
 
     $actions = $editButton . $deleteButton;
+    
 
     $item = '
     <div class="card border border-primary shadow-0 ">';
