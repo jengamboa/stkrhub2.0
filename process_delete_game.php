@@ -17,6 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->query($sqlUpdateBuiltGames);
 
         // Delete related records in 'added_game_components' table
+        $sqlDeleteRelatedComponentsA = "DELETE FROM cart WHERE game_id = $game_id";
+        $conn->query($sqlDeleteRelatedComponentsA);
+
+        $sqlDeleteRelatedComponentsB = "DELETE FROM tickets WHERE game_id = $game_id";
+        $conn->query($sqlDeleteRelatedComponentsB);
+
+        // Delete related records in 'added_game_components' table
         $sqlDeleteRelatedComponents = "DELETE FROM added_game_components WHERE game_id = $game_id";
         $conn->query($sqlDeleteRelatedComponents);
 

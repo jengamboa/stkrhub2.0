@@ -109,6 +109,7 @@ if (isset($_SESSION['user_id'])) {
 
             </div>
         </div>
+        
 
 
     </nav>
@@ -260,7 +261,8 @@ if (isset($_SESSION['user_id'])) {
                 },
                 "columns": [{
                     "data": "item"
-                }, ]
+                }],
+                "pageLength": 500 // Set the default page length to 3
             });
 
 

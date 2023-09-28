@@ -116,7 +116,11 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                     </table>
                 </div>
 
+
+
             </div>
+
+
         </div>
     </section>
     <!--================End Cart Area =================-->
@@ -181,15 +185,22 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                     dataSrc: ""
                 },
                 columns: [{
-                        data: "sub_total"
+                        data: "item1"
                     },
                     {
-                        "data": "chosen_address"
+                        data: "item2"
                     },
-                    {
-                        "data": "shipping"
-                    }
+
                 ]
+            });
+
+
+            // Add a click event listener to the "Delete" buttons
+            $('#infoPurhaseTable').on('click', '#purchase_payment', function() {
+
+                var selectedCartIds = $(this).data('carts_selected');
+
+                window.location.href = 'process_payment.php?selectedCartIds='+selectedCartIds;
             });
 
 

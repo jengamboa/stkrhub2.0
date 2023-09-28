@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id'])) {
+if ($_SERVER['REQUEST_METHOD']) {
     $game_id = $_GET['game_id'];
 }
 

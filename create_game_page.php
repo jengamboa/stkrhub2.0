@@ -218,8 +218,8 @@ include 'connection.php';
                                     <th>Description</th>
                                     <th>Price</th>
                                     <th>Date Created</th>
-                                    <th>Edit</th>
-                                    <th>Build</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
@@ -234,8 +234,8 @@ include 'connection.php';
             </div>
 
             <div id="section2" class="section-step">
-                <!-- DataTables Build Game  -->
-                <table id="builtGameTable" class="display" style="width: 100%;">
+
+                <!-- <table id="builtGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>Built Game Name</th>
@@ -249,10 +249,10 @@ include 'connection.php';
                     </thead>
 
                     <tbody>
-                        <!-- User data will be displayed here -->
+
                     </tbody>
-                </table>
-                <!-- /DataTables Build Game  -->
+                </table> -->
+
             </div>
 
             <div id="section3" class="section-step">
@@ -481,10 +481,10 @@ include 'connection.php';
                         "data": "formatted_date"
                     },
                     {
-                        "data": "build"
+                        "data": "status"
                     },
                     {
-                        "data": "edit"
+                        "data": "actions"
                     },
 
 
@@ -626,34 +626,38 @@ include 'connection.php';
 
 
 
+            // ANDITO AKOO
             // Add click event handler for "build" buttons
-            $('#createGameTable').on('click', '.build-game', function() {
+            $('#createGameTable').on('click', '.approve-game', function() {
                 var gameId = $(this).data('gameid');
                 var gameName = $(this).data('name');
                 var gameDescription = $(this).data('description');
                 var total_price = $(this).data('total_price');
+                var ticket_price = $(this).data('ticket_price');
 
 
                 // Create a SweetAlert2 confirmation dialog for building a game
                 Swal.fire({
-                    title: 'Build Game (ID: ' + gameId + ')',
-                    text: 'Name: ' + gameName + '\nDescription: ' + gameDescription +
-                        '\nAre you sure you want to build this game?',
+                    title: 'Approve Game (Ticket Price: ' + ticket_price + ')',
+                    text: 'Total Price: ' + total_price + '\gameId: ' + gameId +
+                        '\nAre you sure you want to Approve this game?',
                     icon: 'info',
                     showCancelButton: true,
-                    confirmButtonText: 'Build',
+                    confirmButtonText: 'Buy Ticket',
                     cancelButtonText: 'Cancel',
                 }).then(function(result) {
                     if (result.isConfirmed) {
                         // Send an AJAX request to build the game
                         $.ajax({
                             type: 'POST',
-                            url: 'process_build_game.php', // Create a PHP script for building the game
+                            // url: 'process_build_game.php',
+                            url: 'process_get_approved_game.php',
                             data: {
                                 game_id: gameId,
                                 name: gameName,
                                 description: gameDescription,
                                 total_price: total_price,
+                                ticket_price: ticket_price,
                             },
                             dataType: 'json',
                             success: function(response) {
@@ -682,6 +686,32 @@ include 'connection.php';
                 });
             });
 
+
+
+
+            // Add click event handler for "build" buttons
+            $('#createGameTable').on('click', '.view-reason', function() {
+                var game_id = $(this).data('game_id');
+                var reason = $(this).data('reason');
+                var file_path = $(this).data('file_path');
+
+                var downloadLink = '';
+
+                // Check if file_path is not NULL before creating the download link
+                if (file_path === 0) {
+                    downloadLink = 'wala attachment';
+                } else {
+                    downloadLink = '<br><a href="' + file_path + '" download>Download Attachment</a>';
+                }
+
+                Swal.fire({
+                    title: 'View Reason',
+                    html: 'Reason: ' + reason + downloadLink,
+                    icon: 'info',
+                    showCancelButton: false,
+                    cancelButtonText: 'Cancel',
+                })
+            });
 
 
 
@@ -861,53 +891,53 @@ include 'connection.php';
 
 
             // Add click event handler for "build" buttons
-            $('#builtGameTable').on('click', '.approve-built_game', function() {
-                var built_game_id = $(this).data('built_game_id');
-                var name = $(this).data('name');
-                var ticket_price = $(this).data('ticket_price');
+            // $('#builtGameTable').on('click', '.approve-built_game', function() {
+            //     var built_game_id = $(this).data('built_game_id');
+            //     var name = $(this).data('name');
+            //     var ticket_price = $(this).data('ticket_price');
 
-                Swal.fire({
-                    title: 'Buy A Ticket',
-                    html: 'Ticket Price: ' + ticket_price,
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonText: 'Buy',
-                    cancelButtonText: 'Cancel',
-                }).then(function(result) {
-                    if (result.isConfirmed) {
+            //     Swal.fire({
+            //         title: 'Buy A Ticket',
+            //         html: 'Ticket Price: ' + ticket_price,
+            //         icon: 'info',
+            //         showCancelButton: true,
+            //         confirmButtonText: 'Buy',
+            //         cancelButtonText: 'Cancel',
+            //     }).then(function(result) {
+            //         if (result.isConfirmed) {
 
-                        $.ajax({
-                            type: 'POST',
-                            url: 'process_get_approved_game.php', // Create a PHP script to check balance and deduct cost
-                            data: {
-                                built_game_id: built_game_id,
-                                name: name,
-                                ticket_price: ticket_price
-                            },
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.success) {
-                                    Swal.fire('Success', response.message, 'success');
+            //             $.ajax({
+            //                 type: 'POST',
+            //                 url: 'process_get_approved_game.php', // Create a PHP script to check balance and deduct cost
+            //                 data: {
+            //                     built_game_id: built_game_id,
+            //                     name: name,
+            //                     ticket_price: ticket_price
+            //                 },
+            //                 dataType: 'json',
+            //                 success: function(response) {
+            //                     if (response.success) {
+            //                         Swal.fire('Success', response.message, 'success');
 
-                                    // Optionally, you can refresh the DataTables table after building
-                                    $('#createGameTable').DataTable().ajax.reload();
-                                    $('#builtGameTable').DataTable().ajax.reload();
-                                    $('#pendingGameTable').DataTable().ajax.reload();
-                                    $('#canceledGameTable').DataTable().ajax.reload();
-                                    $('#approvedGameTable').DataTable().ajax.reload();
-                                    $('#purchasedGameTable').DataTable().ajax.reload();
-                                    $('#publishedGameTable').DataTable().ajax.reload();
-                                } else {
-                                    Swal.fire('Error', response.message, 'error');
-                                }
-                            },
-                            error: function() {
-                                Swal.fire('Error', 'Failed to deduct the cost', 'error');
-                            }
-                        });
-                    }
-                });
-            });
+            //                         // Optionally, you can refresh the DataTables table after building
+            //                         $('#createGameTable').DataTable().ajax.reload();
+            //                         $('#builtGameTable').DataTable().ajax.reload();
+            //                         $('#pendingGameTable').DataTable().ajax.reload();
+            //                         $('#canceledGameTable').DataTable().ajax.reload();
+            //                         $('#approvedGameTable').DataTable().ajax.reload();
+            //                         $('#purchasedGameTable').DataTable().ajax.reload();
+            //                         $('#publishedGameTable').DataTable().ajax.reload();
+            //                     } else {
+            //                         Swal.fire('Error', response.message, 'error');
+            //                     }
+            //                 },
+            //                 error: function() {
+            //                     Swal.fire('Error', 'Failed to deduct the cost', 'error');
+            //                 }
+            //             });
+            //         }
+            //     });
+            // });
 
 
 
@@ -1104,6 +1134,149 @@ include 'connection.php';
                     },
                 });
             });
+
+
+
+
+
+
+
+
+            $('#approvedGameTable').on('click', '.edit-built_game', function() {
+                var built_game_id = $(this).data('built_game_id');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'get_built_game_details.php',
+                    data: {
+                        built_game_id: built_game_id
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            var currentName = response.name;
+                            var currentDescription = response.description;
+
+                            Swal.fire({
+                                title: 'Edit Game (ID: ' + built_game_id + ')',
+                                html: '<label for="editName">Name:</label>' +
+                                    '<input type="text" id="editName" class="swal2-input" placeholder="New Name" value="' + currentName + '">' +
+                                    '<label for="editDescription">Description:</label>' +
+                                    '<textarea id="editDescription" class="swal2-input" placeholder="New Description">' + currentDescription + '</textarea>',
+                                icon: 'info',
+                                showCancelButton: true,
+                                confirmButtonText: 'Save',
+                                cancelButtonText: 'Cancel',
+                                preConfirm: function() {
+                                    var newName = $('#editName').val();
+                                    var newDescription = $('#editDescription').val();
+
+                                    return $.ajax({
+                                        type: 'POST',
+                                        url: 'process_edit_built_game_details.php',
+                                        data: {
+                                            built_game_id: built_game_id,
+                                            name: newName,
+                                            description: newDescription
+                                        },
+                                    });
+                                },
+                            }).then(function(result) {
+                                if (result.isConfirmed) {
+                                    if (result.value.success) {
+                                        Swal.fire('Success', result.value.message, 'success');
+                                        // Reload the DataTable
+                                        $('#createGameTable').DataTable().ajax.reload();
+                                        $('#builtGameTable').DataTable().ajax.reload();
+                                        $('#pendingGameTable').DataTable().ajax.reload();
+
+                                        $('#canceledGameTable').DataTable().ajax.reload();
+                                        $('#approvedGameTable').DataTable().ajax.reload();
+                                        $('#purchasedGameTable').DataTable().ajax.reload();
+                                        $('#publishedGameTable').DataTable().ajax.reload();
+                                    } else {
+                                        Swal.fire('Success', result.value.message, 'success');
+                                        // Reload the DataTable
+                                        $('#createGameTable').DataTable().ajax.reload();
+                                        $('#builtGameTable').DataTable().ajax.reload();
+                                        $('#pendingGameTable').DataTable().ajax.reload();
+
+                                        $('#canceledGameTable').DataTable().ajax.reload();
+                                        $('#approvedGameTable').DataTable().ajax.reload();
+                                        $('#purchasedGameTable').DataTable().ajax.reload();
+                                        $('#publishedGameTable').DataTable().ajax.reload();
+                                    }
+                                }
+                            });
+                        } else {
+                            Swal.fire('Error', 'Failed to retrieve game details', 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Failed to retrieve game details', 'error');
+                    }
+                });
+            });
+
+
+
+
+            // Add click event handler for "delete" buttons
+            $('#approvedGameTable').on('click', '.delete-built_game', function() {
+                var built_game_id = $(this).data('built_game_id');
+
+                // Create a SweetAlert2 confirmation dialog for deleting a game
+                Swal.fire({
+                    title: 'Delete Game (ID: ' + built_game_id + ')',
+                    text: 'Are you sure you want to delete this game?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_delete_built_game.php',
+                            data: {
+                                built_game_id: built_game_id
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire('Success', response.message, 'success');
+
+                                    // Optionally, you can refresh the DataTables table after deletion
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+                                } else {
+                                    Swal.fire('Error', response.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
+
+
+
+
+
+
+
 
 
 

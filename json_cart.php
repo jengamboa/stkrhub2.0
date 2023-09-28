@@ -13,6 +13,7 @@ while ($fetched = $result->fetch_assoc()) {
     $published_game_id = $fetched['published_game_id'];
     $built_game_id = $fetched['built_game_id'];
     $added_component_id = $fetched['added_component_id'];
+    $ticket_id = $fetched['ticket_id'];
     $quantity = $fetched['quantity'];
     $price = $fetched['price'];
     $is_active = $fetched['is_active'];
@@ -32,6 +33,8 @@ while ($fetched = $result->fetch_assoc()) {
             $item .= 'BUILT GAME';
         } elseif ($added_component_id) {
             $item .= 'GAME COMPONENT';
+        } elseif ($ticket_id) {
+            $item .= 'GAME TICKET';
         }
         
         $item .= '        
@@ -142,6 +145,24 @@ while ($fetched = $result->fetch_assoc()) {
                         ';
                         }
                         }
+                    } elseif ($ticket_id) {
+
+                        $sqlConstantBuiltG = "SELECT * FROM constants WHERE constant_id = 1";
+                        $queryConstantBuiltG = $conn->query($sqlConstantBuiltG);
+                        while ($fetchedConstantBuiltG = $queryConstantBuiltG->fetch_assoc()) {
+                            $constant_id = $fetchedConstantBuiltG['constant_id'];
+                            $image_path = $fetchedConstantBuiltG['image_path'];
+
+                            $item .= '
+                                <img src="'.$image_path.'" 
+                                style="
+                                    height: 100%;
+                                    width: 50%;
+                                    object-fit: cover;
+                                "/>
+                            ';
+
+                        }
                     }
 
                     $item .= ' 
@@ -186,6 +207,21 @@ while ($fetched = $result->fetch_assoc()) {
                                         <h5>'.$fetched_title.'</h5>
                                     ';
                                     }
+                            }
+                        } elseif ($ticket_id) {
+                            $sqlGetTitle = "SELECT * FROM tickets WHERE ticket_id = $ticket_id";
+                            $queryGetTitle = $conn->query($sqlGetTitle);
+                            while ($fetchedGetTitle = $queryGetTitle->fetch_assoc()) {
+                                $fetched_game_id = $fetchedGetTitle['game_id'];
+
+                                $getGameName = "SELECT * FROM games WHERE game_id = $fetched_game_id";
+                                $queryGetName = $conn->query($getGameName);
+                                while ($fetchedGetTitleA = $queryGetName->fetch_assoc()) {
+                                    $fetched_game_name = $fetchedGetTitleA['name'];
+                                    $item .= '                                                                   
+                                        <h5>Game Name:'.$fetched_game_name.'</h5>
+                                    ';
+                                }
                             }
                         }
 
@@ -233,6 +269,11 @@ while ($fetched = $result->fetch_assoc()) {
                             </div>
                             ';
 
+                        } elseif ($ticket_id){
+                            $item .= '
+                                Please Buy this so that you can Admin Review the Game
+                            ';
+
                         }
 
                     $item .= '
@@ -241,12 +282,29 @@ while ($fetched = $result->fetch_assoc()) {
 
                     <div class="col">
                         <h5 class="mb-0">P' . $price . '</h5>
-                    </div>
-                    
-                    <div class="col">
-                        <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control-sm quantity-input" />
-                    </div>
+                    </div>';
 
+                    if ($ticket_id){        
+
+                        $item .= '
+                        <div class="col">
+                            <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control-sm quantity-input" readonly/>
+                        </div>
+
+                        ';
+                    } else {
+                        $item .= '
+                        <div class="col">
+                            <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control-sm quantity-input" />
+                        </div>
+
+                        ';
+                    }
+                    
+                    
+
+
+                    $item .= '
                     <div class="col">
                         <h5 class="mb-0">P' . $total_price . '</h5>
                     </div>

@@ -34,7 +34,7 @@ $result_cart = mysqli_query($conn, $query_cart);
 <body>
     <div class="panel">
         <h2>Cart</h2>
-        <form id="cartForm" method="post" action="process_purchase_cart.php">
+        <form id="cartForm" method="post" action="process_payment.php">
             <?php
             while ($item = mysqli_fetch_assoc($result_cart)) {
 
