@@ -117,6 +117,9 @@ include 'connection.php';
 
                     <div class="container">
                         <div class="row">
+
+                            <!-- steps -->
+
                             <div class="col-sm">
                                 <a href="#section1">
                                     <li class="step">
@@ -126,33 +129,32 @@ include 'connection.php';
                                 </a>
                             </div>
 
-                            <div class="col-sm">
+                            <!-- <div class="col-sm">
                                 <a href="#section2">
                                     <li class="step">
                                         <i class="fa-solid fa-puzzle-piece"></i>
                                         <p>Built Games</p>
                                     </li>
                                 </a>
-                            </div>
+                            </div> -->
 
-                            <div class="col-sm">
+                            <!-- <div class="col-sm">
                                 <a href="#section3">
                                     <li class="step">
                                         <i class="fa-solid fa-hourglass-start"></i>
                                         <p>Pending Games</p>
                                     </li>
                                 </a>
-                            </div>
+                            </div> -->
 
-
-                            <div class="col-sm">
+                            <!-- <div class="col-sm">
                                 <a href="#section4">
                                     <li class="step">
                                         <i class="fa-solid fa-road-barrier"></i>
                                         <p>Canceled Games</p>
                                     </li>
                                 </a>
-                            </div>
+                            </div> -->
 
                             <div class="col-sm">
                                 <a href="#section5">
@@ -181,12 +183,14 @@ include 'connection.php';
                                 </a>
                             </div>
 
+                            <!-- /steps -->
+
                         </div>
                     </div>
                 </ul>
             </nav>
 
-
+            <!-- sections -->
 
             <div id="section1" class="section-step">
                 <div class="row">
@@ -233,9 +237,9 @@ include 'connection.php';
                 </div>
             </div>
 
-            <div id="section2" class="section-step">
+            <!-- <div id="section2" class="section-step">
 
-                <!-- <table id="builtGameTable" class="display" style="width: 100%;">
+                <table id="builtGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>Built Game Name</th>
@@ -251,12 +255,11 @@ include 'connection.php';
                     <tbody>
 
                     </tbody>
-                </table> -->
+                </table>
 
-            </div>
+            </div> -->
 
-            <div id="section3" class="section-step">
-                <!-- DataTables pendingGameTable  -->
+            <!-- <div id="section3" class="section-step">
                 <table id="pendingGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
@@ -271,14 +274,11 @@ include 'connection.php';
                     </thead>
 
                     <tbody>
-                        <!-- User data will be displayed here -->
                     </tbody>
                 </table>
-                <!-- /DataTables pendingGameTable  -->
-            </div>
+            </div> -->
 
-            <div id="section4" class="section-step">
-                <!-- DataTables canceledGameTable  -->
+            <!-- <div id="section4" class="section-step">
                 <table id="canceledGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
@@ -293,11 +293,9 @@ include 'connection.php';
                     </thead>
 
                     <tbody>
-                        <!-- User data will be displayed here -->
                     </tbody>
                 </table>
-                <!-- /DataTables canceledGameTable  -->
-            </div>
+            </div> -->
 
             <div id="section5" class="section-step">
                 <!-- DataTables approvedGameTable  -->
@@ -320,6 +318,7 @@ include 'connection.php';
                 </table>
                 <!-- /DataTables approvedGameTable  -->
             </div>
+
             <div id="section6" class="section-step">
                 <!-- DataTables purchasedGameTable  -->
                 <table id="purchasedGameTable" class="display" style="width: 100%;">
@@ -341,6 +340,7 @@ include 'connection.php';
                 </table>
                 <!-- /DataTables purchasedGameTable  -->
             </div>
+
             <div id="section7" class="section-step">
                 <!-- DataTables publishedGameTable  -->
                 <table id="publishedGameTable" class="display" style="width: 100%;">
@@ -363,6 +363,9 @@ include 'connection.php';
                 </table>
                 <!-- /DataTables publishedGameTable  -->
             </div>
+
+            <!-- /sections -->
+
         </div>
     </section>
 
