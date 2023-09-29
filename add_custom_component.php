@@ -5,6 +5,8 @@ include 'connection.php';
 
 if (isset($_GET['game_id'])) {
     $game_id = $_GET['game_id'];
+} else {
+    $game_id = 0;
 }
 
 
@@ -55,20 +57,7 @@ while ($fetchedGetGameInfo = $queryGetGameInfo->fetch_assoc()) {
 
 
     <style>
-        <?php include 'css/body.css' ?>.card-custom {
-            overflow: hidden;
-            min-height: 150px;
-            box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
-        }
-
-        .card-custom-img {
-            height: 200px;
-            min-height: 200px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            border-color: inherit;
-        }
+        <?php include 'css/body.css' ?>
     </style>
 </head>
 
@@ -86,47 +75,187 @@ while ($fetchedGetGameInfo = $queryGetGameInfo->fetch_assoc()) {
     <!-- Start Sample Area -->
     <section class="sample-text-area">
         <div class="container">
-            <h5>Game Id: <?php echo $game_id ?></h5>
-            <h5>Game Name: <?php echo $name ?></h5>
-            <h5>Game Description: <?php echo $description ?></h5>
-        </div>
 
-        <div class="container">
-            <div class="text-center">
-                <!-- Filter buttons -->
-                <button class="categories active" data-filter="*">All</button>
-
-                <?php
-                $sqlGetCategory = "SELECT * FROM game_components";
-                $resultGetCategory = $conn->query($sqlGetCategory);
-
-                while ($fetchedGetCategory = $resultGetCategory->fetch_assoc()) {
-                    $fetched_component_id = $fetchedGetCategory['component_id'];
-                    $fetched_component_name = $fetchedGetCategory['component_name'];
-                    $fetched_description = $fetchedGetCategory['description'];
-                    $fetched_price = $fetchedGetCategory['price'];
-                    $fetched_category = $fetchedGetCategory['category'];
-                    $fetched_assets = $fetchedGetCategory['assets'];
-                    $fetched_has_colors = $fetchedGetCategory['has_colors'];
-                    $fetched_size = $fetchedGetCategory['size'];
-
-                    $fetched_category = str_replace(' ', '', $fetched_category);
-
-                    echo '
-                        <button class="categories" data-filter=".' . $fetched_category . '">' . $fetched_category . '</button>
+            <?php
+            if ($game_id == 0) {
+                echo '';
+            } else {
+                echo '
+                    <h5>Game Id: ' . $game_id . '</h5>
+                    <h5>Game Name: ' . $name . '</h5>
+                    <h5>Game Description: ' . $description . '</h5>
                     ';
-                }
-                ?>
-            </div>
-            <!-- Add an empty container for the dynamic content -->
-            <input type="text" id="searchInput" placeholder="Search...">
+            }
+            ?>
 
-            <div class="container">
-                <div class="portfolioContainer row pt-5 m-auto" id="dynamicContent">
+
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-1-tab" data-toggle="pill" href="#pills-1" role="tab" aria-controls="pills-1" aria-selected="true">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-2-tab" data-toggle="pill" href="#pills-2" role="tab" aria-controls="pills-2" aria-selected="false">Game Card</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-3-tab" data-toggle="pill" href="#pills-3" role="tab" aria-controls="pills-3" aria-selected="false">Box</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-4-tab" data-toggle="pill" href="#pills-4" role="tab" aria-controls="pills-4" aria-selected="false">Game Piece</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
+                    <?php
+                    $sql = "SELECT * FROM game_components";
+                    $query = $conn->query($sql);
+                    while ($row = $query->fetch_assoc()) {
+                        $component_id = $row["component_id"];
+                        $component_name = $row["component_name"];
+                        $description = $row["description"];
+                        $price = $row["price"];
+                        $has_colors = $row["has_colors"];
+                        $is_upload_only = $row["is_upload_only"];
+                        $size = $row["size"];
+
+                        $sqlA = "SELECT * FROM component_assets WHERE component_id = $component_id";
+                        $queryA = $conn->query($sqlA);
+                        while ($rowA = $queryA->fetch_assoc()) {
+                            $asset_id = $rowA["asset_id"];
+                            $asset_path = $rowA["asset_path"];
+                            $is_thumbnail = $rowA["is_thumbnail"];
+                        }
+
+                        echo '
+                            <a href="game_component_details.php?game_id=' . $game_id . '&component_id=' . $component_id . '">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="' . $asset_path . '" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">' . $component_name . '</h5>
+                                        <p class="card-text">' . $description . '</p>
+                                    </div>
+                                </div>
+                            </a>';
+                    }
+                    ?>
+                </div>
+
+                <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-2-tab">
+                    <?php
+                    $sql = "SELECT * FROM game_components WHERE category = 'game card'";
+                    $query = $conn->query($sql);
+                    while ($row = $query->fetch_assoc()) {
+                        $component_id = $row["component_id"];
+                        $component_name = $row["component_name"];
+                        $description = $row["description"];
+                        $price = $row["price"];
+                        $has_colors = $row["has_colors"];
+                        $is_upload_only = $row["is_upload_only"];
+                        $size = $row["size"];
+
+                        $sqlA = "SELECT * FROM component_assets WHERE component_id = $component_id";
+                        $queryA = $conn->query($sqlA);
+                        while ($rowA = $queryA->fetch_assoc()) {
+                            $asset_id = $rowA["asset_id"];
+                            $asset_path = $rowA["asset_path"];
+                            $is_thumbnail = $rowA["is_thumbnail"];
+                        }
+
+                        echo '
+                            <a href="game_component_details.php?game_id=' . $game_id . '&component_id=' . $component_id . '">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="' . $asset_path . '" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">' . $component_name . '</h5>
+                                        <p class="card-text">' . $description . '</p>
+                                    </div>
+                                </div>
+                            </a>';
+                    }
+                    ?>
+                </div>
+
+                <div class="tab-pane fade" id="pills-3" role="tabpanel" aria-labelledby="pills-3-tab">
+                    <?php
+                    $sql = "SELECT * FROM game_components WHERE category = 'box'";
+                    $query = $conn->query($sql);
+                    while ($row = $query->fetch_assoc()) {
+                        $component_id = $row["component_id"];
+                        $component_name = $row["component_name"];
+                        $description = $row["description"];
+                        $price = $row["price"];
+                        $has_colors = $row["has_colors"];
+                        $is_upload_only = $row["is_upload_only"];
+                        $size = $row["size"];
+
+                        $sqlA = "SELECT * FROM component_assets WHERE component_id = $component_id";
+                        $queryA = $conn->query($sqlA);
+                        while ($rowA = $queryA->fetch_assoc()) {
+                            $asset_id = $rowA["asset_id"];
+                            $asset_path = $rowA["asset_path"];
+                            $is_thumbnail = $rowA["is_thumbnail"];
+                        }
+
+                        echo '
+                            <a href="game_component_details.php?game_id=' . $game_id . '&component_id=' . $component_id . '">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="' . $asset_path . '" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">' . $component_name . '</h5>
+                                        <p class="card-text">' . $description . '</p>
+                                    </div>
+                                </div>
+                            </a>';
+                    }
+                    ?>
+
+                </div>
+                <div class="tab-pane fade" id="pills-4" role="tabpanel" aria-labelledby="pills-4-tab">
+                    <?php
+                    $sql = "SELECT * FROM game_components WHERE category = 'game piece'";
+                    $query = $conn->query($sql);
+                    while ($row = $query->fetch_assoc()) {
+                        $component_id = $row["component_id"];
+                        $component_name = $row["component_name"];
+                        $description = $row["description"];
+                        $price = $row["price"];
+                        $has_colors = $row["has_colors"];
+                        $is_upload_only = $row["is_upload_only"];
+                        $size = $row["size"];
+
+                        $sqlA = "SELECT * FROM component_assets WHERE component_id = $component_id";
+                        $queryA = $conn->query($sqlA);
+                        while ($rowA = $queryA->fetch_assoc()) {
+                            $asset_id = $rowA["asset_id"];
+                            $asset_path = $rowA["asset_path"];
+                            $is_thumbnail = $rowA["is_thumbnail"];
+                        }
+
+                        echo '
+                            <a href="game_component_details.php?game_id=' . $game_id . '&component_id=' . $component_id . '">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="' . $asset_path . '" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">' . $component_name . '</h5>
+                                        <p class="card-text">' . $description . '</p>
+                                    </div>
+                                </div>
+                            </a>';
+                    }
+                    ?>
                 </div>
             </div>
+        </div>
+        </div>
+
+
+
     </section>
     <!-- End Sample Area -->
+
+
+
+
 
 
 
@@ -159,177 +288,6 @@ while ($fetchedGetGameInfo = $queryGetGameInfo->fetch_assoc()) {
 
 
     <script>
-        function showSweetAlert() {
-            fetch('your_php_script.php', {
-                    method: 'GET',
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            title: 'Sample Form',
-                            html: data.form, // Display the form HTML
-                            icon: 'info',
-                            showCancelButton: true,
-                            confirmButtonText: 'Submit',
-                            cancelButtonText: 'Cancel',
-                            preConfirm: () => {
-                                // Handle form submission here if needed
-                                const form = document.getElementById('sampleForm');
-                                const formData = new FormData(form);
-
-                                // Example: send formData to server using fetch for form submission
-
-                                // You can customize this part based on your requirements
-                            }
-                        });
-                    } else {
-                        console.error('Error:', data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-
-
-
-
-
-
-        var $container = $('.portfolioContainer');
-        var $buttons = $('.categories');
-
-        // $container.isotope({
-        //     filter: '*',
-        //     layoutMode: 'masonry',
-        //     animationOptions: {
-        //         duration: 750,
-        //         easing: 'linear'
-        //     }
-        // });
-
-        $container.isotope({
-            itemSelector: '.item', // Specify the item selector
-            layoutMode: 'masonry',
-            masonry: {
-                columnWidth: 210,
-                columnHeight: 210,
-                fitWidth: true,
-            },
-            animationOptions: {
-                duration: 750,
-                easing: 'linear'
-            }
-        });
-
-
-        function loadData() {
-            $.ajax({
-                url: 'json_game_component_isotope.php?game_id=<?php echo $game_id; ?>', // Adjust the URL to your PHP script
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var html = '';
-
-                    $.each(data, function(index, item) {
-
-
-                        html += '<div class="col-md-6 col-lg-4 pb-3 ' + item.category + '">';
-
-                        html += '<a href="game_component_details.php?game_id=<?php echo $game_id; ?>&component_id=' + item.component_id + '" class="col-md-6 col-lg-4 pb-3">';
-                        html += '   <div class="card card-custom bg-white border-white border-0" style="height: 350px">';
-
-                        html += '       <div class="card-custom-img" style="background-image: url(' + item.thumbnail + ');">';
-                        html += '       </div>';
-
-                        html += '       <div class="card-body" style="overflow-y: auto">';
-                        html += '           <h5 class="card-title">' + item.title + '</h5>';
-                        html += '           <p class="card-subtitle mb-2 text-muted small">' + item.category + '</p>';
-                        html += '           <p class="card-subtitle mb-2 text-muted">' + item.size + '</p>';
-                        html += '           <p class="card-subtitle mb-2 text-muted">' + item.price + '</p>';
-                        html += '       </div>';
-
-                        html += '   </div>';
-                        html += '</a>';
-                        html += '</div>';
-
-                    });
-
-                    // Update the Isotope container with new content
-                    $('#dynamicContent').html(html);
-
-                    // Reinitialize Isotope after updating the content
-                    $container.isotope('destroy').isotope({
-                        filter: '*',
-                        layoutMode: 'masonry',
-                        animationOptions: {
-                            duration: 750,
-                            easing: 'linear',
-                        },
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                },
-            });
-        }
-
-        loadData();
-
-        $('.categories').on('click', function() {
-            var filterValue = $(this).data('filter');
-
-            $buttons.removeClass('active');
-            $(this).addClass('active');
-
-            $container.isotope({
-                filter: filterValue,
-                animationOptions: {
-                    duration: 750,
-                    easing: 'linear',
-                    queue: false,
-                },
-            });
-        });
-
-        // Get a reference to the search input field
-        var $searchInput = $('#searchInput');
-
-        // Listen for keyup event on the search input
-        $searchInput.on('keyup', function() {
-            var searchValue = $(this).val().toLowerCase(); // Get the lowercase search query
-
-            // Use Isotope's filter function to filter items
-            $container.isotope({
-                filter: function() {
-                    var itemText = $(this).text().toLowerCase(); // Get lowercase text of item
-                    return itemText.includes(searchValue); // Check if item contains the search query
-                }
-            });
-        });
-
-
-        // Listen for keyup event on the search input
-        $searchInput.on('keyup', function() {
-            var searchValue = $(this).val().toLowerCase(); // Get the lowercase search query
-
-            // Use Isotope's filter function to filter items
-            $container.isotope({
-                filter: function() {
-                    var itemText = $(this).text().toLowerCase(); // Get lowercase text of item
-                    return itemText.includes(searchValue); // Check if item contains the search query
-                }
-            });
-
-            // Reset the filter if the search input is empty
-            if (!searchValue) {
-                $container.isotope({
-                    filter: '*'
-                });
-            }
-        });
     </script>
 
 </body>

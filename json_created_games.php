@@ -143,7 +143,19 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         
         ';
     } else {
-        $extra_acion = '';
+        $extra_acion = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        >
+            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+        </button>
+
+        
+        ';
     }
 
     $actions = '
@@ -158,8 +170,11 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
     ' . $extra_acion;
 
 
+    $description = 'Game Id: '.$game_id.'<br>'.$description;
+
 
     $data[] = array(
+        "game_id" => $game_id,
         "game_link" => $game_link,
         "description" => $description,
         "total_price" => $total_price,

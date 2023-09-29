@@ -108,16 +108,32 @@ while ($fetched = $result->fetch_assoc()) {
 
                         }
                     } elseif ($added_component_id) {
+                        $sqlGetComponentId = "SELECT * FROM added_game_components WHERE added_component_id = $added_component_id";
+                        $queryGetComponentId = $conn->query($sqlGetComponentId);
+
+                        if ($queryGetComponentId) {
+                        $fetchedGetComponent = $queryGetComponentId->fetch_assoc();
+                        $fetched_component_id = $fetchedGetComponent['component_id'];
+                        $is_custom_design = $fetchedGetComponent['is_custom_design'];
+                        $custom_design_file_path = $fetchedGetComponent['custom_design_file_path'];
+
+                        $sqlConstantComponent = "SELECT * FROM component_assets WHERE component_id = $fetched_component_id AND is_thumbnail = 1";
+                        $queryConstantComponent = $conn->query($sqlConstantComponent);
+
+                        if ($queryConstantComponent) {
+                        $fetchedConstantComponent = $queryConstantComponent->fetch_assoc();
+                        $asset_path = $fetchedConstantComponent['asset_path'];
 
                         $item .= '
-                            <img src="" 
+                            <img src="'.$asset_path.'" 
                                 style="
                                     height: 100%;
                                     width: 50%;
                                     object-fit: cover;
                                 "/>
                         ';
-
+                        }
+                        }
                     } elseif ($ticket_id) {
 
                         $sqlConstantBuiltG = "SELECT * FROM constants WHERE constant_id = 1";
@@ -167,10 +183,19 @@ while ($fetched = $result->fetch_assoc()) {
                             $sqlGetComponentID = "SELECT * FROM added_game_components WHERE added_component_id = $added_component_id";
                             $queryGetComponentID = $conn->query($sqlGetComponentID);
                             while ($fetchedGetComponentID = $queryGetComponentID->fetch_assoc()) {
+                                $fetched_component_id = $fetchedGetComponentID['component_id'];
+
+                                $sqlGetTitle = "SELECT * FROM game_components WHERE component_id = $fetched_component_id";
+                                $queryGetTitle = $conn->query($sqlGetTitle);
+                                while ($fetchedGetTitle = $queryGetTitle->fetch_assoc()) {
+                                    $fetched_title = $fetchedGetTitle['component_name'];
+                                    $fetched_category = $fetchedGetTitle['category'];
+                                    $fetched_size = $fetchedGetTitle['size'];
 
                                     $item .= '                                                                   
-                                        <h5>title</h5>
+                                        <h5>'.$fetched_title.'</h5>
                                     ';
+                                    }
                             }
                         } elseif ($ticket_id) {
                             $sqlGetTitle = "SELECT * FROM tickets WHERE ticket_id = $ticket_id";
@@ -210,18 +235,25 @@ while ($fetched = $result->fetch_assoc()) {
                         } elseif ($added_component_id){
                             $item .= '
                             <div class="mt-1 mb-0 text-muted">
-                                <span>Category: category</span>
+                                <span>Category: '.$fetched_category.'</span>
                             </div>
 
                             <div class="mt-1 mb-0 text-muted">
-                                <span>Size: size</span>
+                                <span>Size: '.$fetched_size.'</span>
                             </div>
 
                             <div class="mt-1 mb-0 text-muted">
-                                <span>Custom Design: 
+                                <span>Custom Design: ';
 
-                                    <a href="" download=""><i class="fa-solid fa-download"></i></a>
+                                    if ($is_custom_design == 0) {
+                                        $item .= 'None';
+                                    } elseif ($is_custom_design == 1) {
 
+                                        $filename = basename($custom_design_file_path);
+                                        $item .= '<a href="' . $custom_design_file_path . '" download="' . $filename . '"><i class="fa-solid fa-download"></i> ' . $filename . '</a>';
+                                    }
+
+                                $item .= '
                                 </span>
                             </div>
                             ';
@@ -255,6 +287,17 @@ while ($fetched = $result->fetch_assoc()) {
         </div>
     ';
     
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -43,9 +43,6 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     $zip = $fetchedActive['zip'];
     $street = $fetchedActive['street'];
 
-
-
-
     $chosen_address = '
     <p class="card-text text-muted">
     ' . $region . ' | ' . $province . ' | ' . $city . ' | ' . $barangay . ' | ' . $zip . ' | ' . $street . '
@@ -75,17 +72,16 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     $weight_price = 0;
 
     if ($numSelectedCarts >= 1 && $numSelectedCarts <= 10) {
-        $weight_price = (float)$weight_price_1;
+        $weight_price = (double)$weight_price_1;
     } elseif ($numSelectedCarts >= 11 && $numSelectedCarts <= 20) {
-        $weight_price = (float)$weight_price_2;
+        $weight_price = (double)$weight_price_2;
     } elseif ($numSelectedCarts >= 21 && $numSelectedCarts <= 30) {
-        $weight_price = (float)$weight_price_3;
+        $weight_price = (double)$weight_price_3;
     } elseif ($numSelectedCarts >= 31 && $numSelectedCarts <= 40) {
-        $weight_price = (float)$weight_price_4;
+        $weight_price = (double)$weight_price_4;
     } elseif ($numSelectedCarts >= 41) {
-        $weight_price = (float)$weight_price_5;
+        $weight_price = (double)$weight_price_5;
     }
-
 
     $shipping = 'Shipping: ' . $weight_price;
     $total_payment = 'Total Payment: ' . ($sub_total + $weight_price);
@@ -93,12 +89,12 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
 
 
     $item1 = '
-    <div class="row">
-        <div class="col">' . $sub_total . '</div>
-        <div class="col">' . $chosen_address . '</div>
-        <div class="col">' . $shipping . '</div>
-        <div class="col">' . $total_payment . '</div>
-    </div>
+        <div class="row">
+            <div class="col">'.$sub_total.'</div>
+            <div class="col">'.$chosen_address.'</div>
+            <div class="col">'.$shipping.'</div>
+            <div class="col">'.$total_payment.'</div>
+        </div>
     ';
 
     $item2 = '
@@ -118,7 +114,6 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
         >Buy Paypal</button>
     ';
     
-
 
     $json[] = array(
         "item1" => $item1,

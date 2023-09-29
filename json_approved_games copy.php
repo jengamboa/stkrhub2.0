@@ -3,32 +3,34 @@ include "connection.php";
 
 $user_id = $_GET['user_id'];
 
-$sqlApproved = "SELECT * FROM built_games WHERE creator_id = $user_id AND is_approved = 1";
-$resultApproved = $conn->query($sqlApproved);
+$sqlCanceledBuiltGames = "SELECT * FROM built_games WHERE creator_id = $user_id AND is_approved = 1";
+$resultCanceledBuiltGames = $conn->query($sqlCanceledBuiltGames);
 
 $data = array();
 
-while ($fetched = $resultApproved->fetch_assoc()) {
-    $built_game_id = $fetched['built_game_id'];
-    $game_id = $fetched['game_id'];
-    $name = $fetched['name'];
-    $description = $fetched['description'];
-    $creator_id = $fetched['creator_id'];
-    $build_date = $fetched['build_date'];
-    $price = $fetched['price'];
+while ($fetchedCanceledBuiltGames = $resultCanceledBuiltGames->fetch_assoc()) {
+    $built_game_id = $fetchedCanceledBuiltGames['built_game_id'];
+    $game_id = $fetchedCanceledBuiltGames['game_id'];
+    $name = $fetchedCanceledBuiltGames['name'];
+    $description = $fetchedCanceledBuiltGames['description'];
+    $build_date = $fetchedCanceledBuiltGames['build_date'];
+    $is_pending = $fetchedCanceledBuiltGames['is_pending'];
+    $is_canceled = $fetchedCanceledBuiltGames['is_canceled'];
+    $is_approved = $fetchedCanceledBuiltGames['is_approved'];
+    $is_purchased = $fetchedCanceledBuiltGames['is_purchased'];
+    $is_published = $fetchedCanceledBuiltGames['is_published'];
+    $price = $fetchedCanceledBuiltGames['price'];
 
-    $is_pending = $fetched['is_pending'];
-    $is_canceled = $fetched['is_canceled'];
-    $is_approved = $fetched['is_approved'];
-    $is_purchased = $fetched['is_purchased'];
-    $is_pending_published = $fetched['is_pending_published'];
-    $is_request_denied = $fetched['is_request_denied'];
-    $is_published = $fetched['is_published'];
-
-
-    $game_link = '
-    <a href="built_game_dashboard.php?built_game_id=' . $built_game_id . '">' . $name . '</a>
+    $built_game_link = '
+        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a>
     ';
+
+
+    $sqlGetGameName = "SELECT * FROM games WHERE game_id = $game_id";
+    $queryGetGameName = $conn->query($sqlGetGameName);
+    while ($fetchedGameName = $queryGetGameName->fetch_assoc()) {
+        $game_name = $fetchedGameName['name'];
+    }
 
 
     if ($game_id == 0) {
@@ -37,12 +39,16 @@ while ($fetched = $resultApproved->fetch_assoc()) {
         ';
     } else {
         $from_what_game_value = '
-           ID: ' . $game_id . '
+            ' . $game_name . ' <br>
+            <small>Game ID: ' . $game_id . '</small>
         ';
     }
 
     $from_what_game = $from_what_game_value;
 
+    $total_price = $price;
+
+    $formatted_date = date('F j, Y', strtotime($build_date));
 
 
     if ($is_pending == 1) {
@@ -75,13 +81,6 @@ while ($fetched = $resultApproved->fetch_assoc()) {
         <i class="fa-solid fa-trash"></i>
     </button>
     ';
-
-
-
-    $built_game_link = $game_link;
-    $total_price = $price;
-    $formatted_date = $build_date;
-
 
     $data[] = array(
         "built_game_link" => $built_game_link,

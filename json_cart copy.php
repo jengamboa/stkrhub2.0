@@ -4,13 +4,8 @@ include "connection.php"; // Include your database connection script
 $json = array();
 
 $user_id = $_GET['user_id'];
-$selectedCartIds = $_GET['selectedCartIds'];
 
-// Create a string containing the selected cart IDs to use in the WHERE clause
-$selectedCartIdsString = implode(',', $selectedCartIds);
-
-// Modify the SQL query to include the selected cart IDs in the WHERE clause
-$sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString)";
+$sql = "SELECT * FROM cart WHERE user_id = $user_id";
 $result = $conn->query($sql);
 
 while ($fetched = $result->fetch_assoc()) {
@@ -23,11 +18,8 @@ while ($fetched = $result->fetch_assoc()) {
     $price = $fetched['price'];
     $is_active = $fetched['is_active'];
 
+
     $total_price = $quantity * $price;
-
-    
-
-
 
 
     $item = '
@@ -42,7 +34,7 @@ while ($fetched = $result->fetch_assoc()) {
         } elseif ($added_component_id) {
             $item .= 'GAME COMPONENT';
         } elseif ($ticket_id) {
-            $item .= 'TICKET';
+            $item .= 'GAME TICKET';
         }
         
         $item .= '        
@@ -51,6 +43,25 @@ while ($fetched = $result->fetch_assoc()) {
             <div class="card-body p-0">
                 <div class="row d-flex justify-content-between align-items-center">
 
+                    <div class="col" style="display: flex; justify-content: center; align-items:center;">
+
+                        <input 
+                            class="form-check-input form-check-input-lg" 
+                            type="checkbox" 
+                            value="" 
+                            data-cart_id="' . $cart_id . '"
+                            id="checkbox-active"';
+
+                            if ($is_active) {
+                                $item .= 'checked'; 
+                            } else {
+                                $item .= ''; 
+                            }
+                            
+                            $item .= ' 
+                        />
+
+                    </div>
 
 
                     <div class="col-md-3 col-lg-3 col-xl-3">';
@@ -108,16 +119,32 @@ while ($fetched = $result->fetch_assoc()) {
 
                         }
                     } elseif ($added_component_id) {
+                        $sqlGetComponentId = "SELECT * FROM added_game_components WHERE added_component_id = $added_component_id";
+                        $queryGetComponentId = $conn->query($sqlGetComponentId);
+
+                        if ($queryGetComponentId) {
+                        $fetchedGetComponent = $queryGetComponentId->fetch_assoc();
+                        $fetched_component_id = $fetchedGetComponent['component_id'];
+                        $is_custom_design = $fetchedGetComponent['is_custom_design'];
+                        $custom_design_file_path = $fetchedGetComponent['custom_design_file_path'];
+
+                        $sqlConstantComponent = "SELECT * FROM component_assets WHERE component_id = $fetched_component_id AND is_thumbnail = 1";
+                        $queryConstantComponent = $conn->query($sqlConstantComponent);
+
+                        if ($queryConstantComponent) {
+                        $fetchedConstantComponent = $queryConstantComponent->fetch_assoc();
+                        $asset_path = $fetchedConstantComponent['asset_path'];
 
                         $item .= '
-                            <img src="" 
+                            <img src="'.$asset_path.'" 
                                 style="
                                     height: 100%;
                                     width: 50%;
                                     object-fit: cover;
                                 "/>
                         ';
-
+                        }
+                        }
                     } elseif ($ticket_id) {
 
                         $sqlConstantBuiltG = "SELECT * FROM constants WHERE constant_id = 1";
@@ -167,10 +194,19 @@ while ($fetched = $result->fetch_assoc()) {
                             $sqlGetComponentID = "SELECT * FROM added_game_components WHERE added_component_id = $added_component_id";
                             $queryGetComponentID = $conn->query($sqlGetComponentID);
                             while ($fetchedGetComponentID = $queryGetComponentID->fetch_assoc()) {
+                                $fetched_component_id = $fetchedGetComponentID['component_id'];
+
+                                $sqlGetTitle = "SELECT * FROM game_components WHERE component_id = $fetched_component_id";
+                                $queryGetTitle = $conn->query($sqlGetTitle);
+                                while ($fetchedGetTitle = $queryGetTitle->fetch_assoc()) {
+                                    $fetched_title = $fetchedGetTitle['component_name'];
+                                    $fetched_category = $fetchedGetTitle['category'];
+                                    $fetched_size = $fetchedGetTitle['size'];
 
                                     $item .= '                                                                   
-                                        <h5>title</h5>
+                                        <h5>'.$fetched_title.'</h5>
                                     ';
+                                    }
                             }
                         } elseif ($ticket_id) {
                             $sqlGetTitle = "SELECT * FROM tickets WHERE ticket_id = $ticket_id";
@@ -187,7 +223,7 @@ while ($fetched = $result->fetch_assoc()) {
                                     ';
                                 }
                             }
-                        } 
+                        }
 
 
                         if ($published_game_id){        
@@ -210,18 +246,25 @@ while ($fetched = $result->fetch_assoc()) {
                         } elseif ($added_component_id){
                             $item .= '
                             <div class="mt-1 mb-0 text-muted">
-                                <span>Category: category</span>
+                                <span>Category: '.$fetched_category.'</span>
                             </div>
 
                             <div class="mt-1 mb-0 text-muted">
-                                <span>Size: size</span>
+                                <span>Size: '.$fetched_size.'</span>
                             </div>
 
                             <div class="mt-1 mb-0 text-muted">
-                                <span>Custom Design: 
+                                <span>Custom Design: ';
 
-                                    <a href="" download=""><i class="fa-solid fa-download"></i></a>
+                                    if ($is_custom_design == 0) {
+                                        $item .= 'None';
+                                    } elseif ($is_custom_design == 1) {
 
+                                        $filename = basename($custom_design_file_path);
+                                        $item .= '<a href="' . $custom_design_file_path . '" download="' . $filename . '"><i class="fa-solid fa-download"></i> ' . $filename . '</a>';
+                                    }
+
+                                $item .= '
                                 </span>
                             </div>
                             ';
@@ -239,27 +282,41 @@ while ($fetched = $result->fetch_assoc()) {
 
                     <div class="col">
                         <h5 class="mb-0">P' . $price . '</h5>
-                    </div>
-                    
-                    <div class="col">
-                        <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control-sm quantity-input" readonly/>
-                    </div>
+                    </div>';
 
+                    if ($ticket_id){        
+
+                        $item .= '
+                        <div class="col">
+                            <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control-sm quantity-input" readonly/>
+                        </div>
+
+                        ';
+                    } else {
+                        $item .= '
+                        <div class="col">
+                            <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control-sm quantity-input" />
+                        </div>
+
+                        ';
+                    }
+                    
+                    
+
+
+                    $item .= '
                     <div class="col">
                         <h5 class="mb-0">P' . $total_price . '</h5>
                     </div>
 
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <button class="text-danger delete-cart-item" data-cart_id="' . $cart_id . '"><i class="fas fa-trash fa-lg"></i></button>
+                    </div>
 
                 </div>
             </div>
         </div>
     ';
-    
-
-
-
-
-
 
 
 
@@ -269,5 +326,6 @@ while ($fetched = $result->fetch_assoc()) {
     );
 }
 
-// Echo the JSON response
+
+
 echo json_encode($json);

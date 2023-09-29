@@ -50,6 +50,29 @@ if ($resultD) {
     $rowD = $resultD->fetch_assoc();
     $orders_total_count = $rowD['total_count'];
 }
+
+$sqlBuiltGames = "SELECT COUNT(built_game_id) AS total_built_games FROM built_games";
+$sqlPublishedGames = "SELECT COUNT(published_game_id) AS total_published_games FROM published_built_games";
+$resultBuiltGames = $conn->query($sqlBuiltGames);
+$resultPublishedGames = $conn->query($sqlPublishedGames);
+
+if ($resultBuiltGames && $resultPublishedGames) {
+    $rowBuiltGames = $resultBuiltGames->fetch_assoc();
+    $rowPublishedGames = $resultPublishedGames->fetch_assoc();
+
+    $totalBuiltGames = $rowBuiltGames['total_built_games'];
+    $totalPublishedGames = $rowPublishedGames['total_published_games'];
+}
+
+// Query to count the total number of rows with added_component_id
+$sqlTotalComponents = "SELECT COUNT(*) AS total_components
+                       FROM orders
+                       WHERE in_production = 1
+                       AND added_component_id IS NOT NULL";
+$resultTotalComponents = $conn->query($sqlTotalComponents);
+$rowTotalComponents = $resultTotalComponents->fetch_assoc();
+$total_component_produced = $rowTotalComponents['total_components'];
+
 ?>
 
 <!DOCTYPE html>
@@ -69,8 +92,14 @@ if ($resultD) {
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Include DataTables CSS and JS files -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+
 
 </head>
 
@@ -152,11 +181,25 @@ if ($resultD) {
                     <div class="col-lg-4">
 
                         <div class="card">
-                            <div class="card-body">
-                                <canvas id="pieChart"></canvas>
 
+                            <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+
+
+                            <div class="card text-center">
+                                <ul class="widget-line-list m-b-15">
+                                    <li class="border-right"> <?php echo $totalPublishedGames ?>
+                                        <br>
+                                        <span class="text-success">Published Games</span>
+                                    </li>
+                                    <li><?php echo $totalBuiltGames ?>
+                                        <br><span class="text-danger">Games Not Published</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
+
 
                     </div>
                 </div>
@@ -164,122 +207,27 @@ if ($resultD) {
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">All Exam Result</h4>
+                                <h4 class="card-title">Best Seller</h4>
                             </div>
 
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table student-data-table m-t-20">
+
+                                    <table id="bestSeller" class="display" style="width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>Subject</th>
-                                                <th>Grade Point</th>
-                                                <th>Percent Form</th>
-                                                <th>Percent Upto</th>
-                                                <th>Date</th>
+                                                <th>Title</th>
+                                                <th>Category</th>
+                                                <th>Price</th>
+                                                <th>Creator</th>
+                                                <th>Status</th>
+                                                <th>Bought</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>Mathmatics</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>Mathmatics</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>English</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>Bangla</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>Mathmatics</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>English</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Class Test</td>
-                                                <td>Mathmatics</td>
-                                                <td>
-                                                    4.00
-                                                </td>
-                                                <td>
-                                                    95.00
-                                                </td>
-                                                <td>
-                                                    100
-                                                </td>
-                                                <td>20/04/2017</td>
-                                            </tr>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
 
@@ -288,177 +236,93 @@ if ($resultD) {
                     <div class="col-lg-6 col-xl-4 col-xxl-6 col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Timeline</h4>
+                                <h4 class="card-title">Most Earnings</h4>
                             </div>
                             <div class="card-body">
                                 <div class="widget-timeline">
+
                                     <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-badge primary"></div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="m-t-5">Youtube, a video-sharing website, goes live.</h6>
-                                            </a>
-                                        </li>
 
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
+                                        <table id="bestEarnings" class="display" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Avatar</th>
+                                                    <th>Name</th>
+                                                    <th>Earnings</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
 
-                                        <li>
-                                            <div class="timeline-badge danger">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="m-t-5">Google acquires Youtube.</h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge success">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="m-t-5">StumbleUpon is acquired by eBay. </h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge info">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="m-t-5">Google acquires Youtube.</h6>
-                                            </a>
-                                        </li>
                                     </ul>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-4 col-lg-6 col-xxl-6 col-md-6">
                         <div class="card">
+
                             <div class="card-header">
-                                <h4 class="card-title">Notice Board</h4>
+                                <h4 class="card-title">Most Spent and Orders</h4>
                             </div>
+
                             <div class="card-body">
                                 <div class="recent-comment m-t-15">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object mr-3" src="./images/avatar/4.png" alt="..."></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading text-primary">john doe</h4>
-                                            <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                            <p class="comment-date">10 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object mr-3" src="./images/avatar/2.png" alt="..."></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading text-success">Mr. John</h4>
-                                            <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                            <p class="comment-date">1 hour ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object mr-3" src="./images/avatar/3.png" alt="..."></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading text-danger">Mr. John</h4>
-                                            <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                            <div class="comment-date">Yesterday</div>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object mr-3" src="./images/avatar/4.png" alt="..."></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading text-primary">john doe</h4>
-                                            <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                            <p class="comment-date">10 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object mr-3" src="./images/avatar/2.png" alt="..."></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading text-success">Mr. John</h4>
-                                            <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                            <p class="comment-date">1 hour ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media no-border">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object mr-3" src="./images/avatar/3.png" alt="..."></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading text-info">Mr. John</h4>
-                                            <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                            <div class="comment-date">Yesterday</div>
-                                        </div>
-                                    </div>
+
+
+
+                                    <table id="bestOrders" class="display" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Avatar</th>
+                                                <th>Name</th>
+                                                <th>Spent</th>
+                                                <th>Orders</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-xxl-6 col-lg-6 col-md-12 col-sm-12">
+
+                    <div class="col-xl-4 col-lg-6 col-xxl-6 col-md-6">
                         <div class="card">
+
                             <div class="card-header">
-                                <h4 class="card-title">Todo</h4>
+                                <h4 class="card-title">Most Published</h4>
                             </div>
-                            <div class="card-body px-0">
-                                <div class="todo-list">
-                                    <div class="tdl-holder">
-                                        <div class="tdl-content widget-todo2 mr-4">
-                                            <ul id="todo_list">
-                                                <li><label><input type="checkbox"><i></i><span>Get up</span><a href='#' class="ti-trash"></a></label></li>
-                                                <li><label><input type="checkbox" checked><i></i><span>Stand up</span><a href='#' class="ti-trash"></a></label></li>
-                                                <li><label><input type="checkbox"><i></i><span>Don't give up the
-                                                            fight.</span><a href='#' class="ti-trash"></a></label></li>
-                                                <li><label><input type="checkbox" checked><i></i><span>Do something
-                                                            else</span><a href='#' class="ti-trash"></a></label></li>
-                                                <li><label><input type="checkbox" checked><i></i><span>Stand up</span><a href='#' class="ti-trash"></a></label></li>
-                                                <li><label><input type="checkbox"><i></i><span>Don't give up the
-                                                            fight.</span><a href='#' class="ti-trash"></a></label></li>
-                                            </ul>
-                                        </div>
-                                        <div class="px-4">
-                                            <input type="text" class="tdl-new form-control" placeholder="Write new item and hit 'Enter'...">
-                                        </div>
-                                    </div>
+
+                            <div class="card-body">
+                                <div class="recent-comment m-t-15">
+
+
+                                    <table id="bestPublished" class="display" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Avatar</th>
+                                                <th>Name</th>
+                                                <th>Published</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
 
                     <div class="col-xl-12 col-xxl-6 col-lg-6 col-md-12">
                         <div class="row">
@@ -470,7 +334,7 @@ if ($resultD) {
                                     <div class="row">
                                         <div class="col-6 border-right">
                                             <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                                <h4 class="m-1"><span class="counter">89</span> k</h4>
+                                                <h4 class="m-1"><span class="counter"><?php echo $total_component_produced ?></span> k</h4>
                                                 <p class="m-0">Friends</p>
                                             </div>
                                         </div>
@@ -677,6 +541,12 @@ if ($resultD) {
         </div>
 
         <div class="footer">
+
+
+
+
+
+
             <div class="copyright">
                 <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
                 <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p>
@@ -697,7 +567,12 @@ if ($resultD) {
 
 
 
+    <!-- Include global.min.js first -->
     <script src="./vendor/global/global.min.js"></script>
+
+    <!-- Include DataTables JS after global.min.js -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
     <script src="./js/quixnav-init.js"></script>
     <script src="./js/custom.min.js"></script>
 
@@ -712,6 +587,125 @@ if ($resultD) {
 
     <script>
         $(document).ready(function() {
+
+            $('#bestPublished').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "admin_json_best_published.php",
+                    data: {},
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "avatar"
+                    },
+                    {
+                        "data": "name"
+                    },
+                    {
+                        "data": "game_count"
+                    },
+
+                ]
+            });
+
+
+
+
+            $('#bestEarnings').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "admin_json_best_earnings.php",
+                    data: {},
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "avatar"
+                    },
+                    {
+                        "data": "name"
+                    },
+                    {
+                        "data": "earnings"
+                    },
+
+                ]
+            });
+
+
+
+
+
+
+            $('#bestSeller').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "admin_json_best_seller.php",
+                    data: {},
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "title"
+                    },
+                    {
+                        "data": "category"
+                    },
+                    {
+                        "data": "price"
+                    },
+                    {
+                        "data": "creator"
+                    },
+                    {
+                        "data": "status"
+                    },
+                    {
+                        "data": "frequency"
+                    },
+
+                ]
+            });
+
+
+
+            $('#bestOrders').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "admin_json_best_order.php",
+                    data: {},
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "avatar"
+                    },
+                    {
+                        "data": "name"
+                    },
+                    {
+                        "data": "spent"
+                    },
+                    {
+                        "data": "orders"
+                    },
+                ]
+            });
+
+
 
 
             // Load JSON data

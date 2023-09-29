@@ -218,6 +218,7 @@ include 'connection.php';
                         <table id="createGameTable" class="display" style="width: 100%;">
                             <thead>
                                 <tr>
+                                    <th>Game ID</th>
                                     <th>Game Name</th>
                                     <th>Description</th>
                                     <th>Price</th>
@@ -472,6 +473,9 @@ include 'connection.php';
                     "dataSrc": ""
                 },
                 "columns": [{
+                        "data": "game_id"
+                    },
+                    {
                         "data": "game_link"
                     },
                     {
