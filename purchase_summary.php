@@ -126,6 +126,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     <!--================End Cart Area =================-->
 
 
+    <div id="paypal-payment-button"></div>
+    <button id="clickButton">Click Me</button>
 
 
 
@@ -162,9 +164,15 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     <!-- Include Tippy.js JavaScript -->
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
 
+
+
+
+    <!-- Replace the "test" client-id value with your client-id -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AUtrxFWAdHF9RgdAqRcEjzOICrG5WaXVfckhbUYdcTVDVIz-QnvKNoYqEZ9zE-JI5ViTJEy4AoN6iCJL&currency=PHP&disable-funding=credit,card"></script>
+
+
     <script>
         $(document).ready(function() {
-
 
             var user_id = <?php echo $user_id; ?>;
             var selectedCartIds = <?php echo json_encode($selectedCartIds); ?>;
@@ -200,8 +208,42 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                 var selectedCartIds = $(this).data('carts_selected');
 
-                window.location.href = 'process_payment.php?selectedCartIds='+selectedCartIds;
+                window.location.href = 'process_payment.php?selectedCartIds=' + selectedCartIds;
             });
+
+
+
+
+
+            paypal.Buttons({
+
+                style: {
+                    color: 'blue',
+                    shape: 'pill'
+                },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: value
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        console.log(details);
+                        window.location.replace("http://localhost:63342/tutorial/paypal/success.php");
+                    });
+                },
+                onCancel: function(data) {
+                    window.location.replace("http://localhost:63342/tutorial/paypal/Oncancel.php");
+                }
+            }).render('#paypal-payment-button');
+
+
+
+
 
 
 
@@ -469,31 +511,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
 
 
@@ -514,8 +531,27 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         });
     </script>
+
+
+
+
+
+
+
+
 </body>
 
 </html>

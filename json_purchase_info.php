@@ -88,7 +88,7 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
 
 
     $shipping = 'Shipping: ' . $weight_price;
-    $total_payment = 'Total Payment: ' . ($sub_total + $weight_price);
+    $total_payment = ($sub_total + $weight_price);
 
 
 
@@ -101,23 +101,29 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     </div>
     ';
 
+    // $item2 = '
+    //     <button id="purchase_payment" 
+    //     data-fullname="'.$fullname.'"
+    //     data-number="'.$number.'"
+    //     data-region="'.$region.'"
+    //     data-province="'.$province.'"
+    //     data-city="'.$city.'"
+    //     data-barangay="'.$barangay.'"
+    //     data-zip="'.$zip.'"
+    //     data-city="'.$city.'"
+    //     data-street="'.$street.'"
+    //     data-total_payment="'.$total_payment.'"
+    //     data-carts_selected="'.implode(',', $selectedCartIds).'"
+    //     >Buy Paypal</button>
+    // ';
+
+
     $item2 = '
-        <button id="purchase_payment" 
-        data-fullname="'.$fullname.'"
-        data-number="'.$number.'"
-        data-region="'.$region.'"
-        data-province="'.$province.'"
-        data-city="'.$city.'"
-        data-barangay="'.$barangay.'"
-        data-zip="'.$zip.'"
-        data-city="'.$city.'"
-        data-street="'.$street.'"
-        data-total_payment="'.$total_payment.'"
-        data-total_payment="'.$total_payment.'"
-        data-carts_selected="'.implode(',', $selectedCartIds).'"
-        >Buy Paypal</button>
+        <div id="#sample" data-value="123">sample</div>
     ';
-    
+
+
+
 
 
     $json[] = array(
