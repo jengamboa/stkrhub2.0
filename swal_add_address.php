@@ -12,10 +12,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the data sent via POST request
     $fullname = $_POST['fullname'];
     $number = $_POST['number'];
+
     $region = $_POST['region'];
+    $region_name_qry = "SELECT * FROM region WHERE id = $region";
+    $region_qry = mysqli_query($conn,$region_name_qry);
+    $region_result = mysqli_fetch_assoc($region_qry);
+    $region_name = $region_result['region_name'];
+
     $province = $_POST['province'];
+    $province_name_qry = "SELECT * FROM province WHERE id = $province";
+    $province_qry = mysqli_query($conn,$province_name_qry);
+    $province_result = mysqli_fetch_assoc($province_qry);
+    $province_name = $province_result['province_name'];
+    
+
+
     $city = $_POST['city'];
+    $city_name_qry = "SELECT * FROM city WHERE id = $city";
+    $city_qry = mysqli_query($conn,$city_name_qry);
+    $city_result = mysqli_fetch_assoc($city_qry);
+    $city_name = $city_result['city_name'];
+
     $barangay = $_POST['barangay'];
+    $barangay_name_qry = "SELECT * FROM barangay WHERE id = $barangay";
+    $barangay_qry = mysqli_query($conn,$barangay_name_qry);
+    $barangay_result = mysqli_fetch_assoc($barangay_qry);
+    $barangay_name = $barangay_result['barangay_name'];
+
     $zip = $_POST['zip'];
     $street = $_POST['street'];
 
@@ -46,10 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_id, // You'll need to provide the user_id
         $fullname,
         $number,
-        $region,
-        $province,
-        $city,
-        $barangay,
+        $region_name,
+        $province_name,
+        $city_name,
+        $barangay_name,
         $zip,
         $street
     );

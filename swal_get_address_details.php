@@ -26,17 +26,25 @@ if (isset($_GET['addressId'])) {
                 <label for="editedNumber">Number:</label>
                 <input type="text" id="editedNumber" name="editedNumber" value="' . htmlspecialchars($row['number']) . '" required><br>
 
-                <label for="editedRegion">Region:</label>
-                <input type="text" id="editedRegion" name="editedRegion" value="' . htmlspecialchars($row['region']) . '" required><br>
-                
-                <label for="editedProvince">Province:</label>
-                <input type="text" id="editedProvince" name="editedProvince" value="' . htmlspecialchars($row['province']) . '" required><br>
-                
-                <label for="editedCity">City:</label>
-                <input type="text" id="editedCity" name="editedCity" value="' . htmlspecialchars($row['city']) . '" required><br>
-                
-                <label for="editedBarangay">Barangay:</label>
-                <input type="text" id="editedBarangay" name="editedBarangay" value="' . htmlspecialchars($row['barangay']) . '" required><br>
+                <label for="editedregion"> Region:</label>
+                <select id="region" name="region" required><br>
+                <option value=""> ' . htmlspecialchars($row['region']). '</option>
+                </select><br>
+
+                <label for="editedprovince"> Province:</label>
+                <select id="editedprovince" name="editedprovince" required><br>
+                <option value=""> ' . htmlspecialchars($row['province']). '</option>
+                </select><br>
+
+                <label for="editedcity"> City:</label>
+                <select id="editedcity" name="editedcity" required><br>
+                <option value=""> ' . htmlspecialchars($row['city']). '</option>
+                </select><br>
+
+                <label for="editedbarangay"> Barangay:</label>
+                <select id="editedbarangay" name="editedbarangay" required><br>
+                <option value=""> ' . htmlspecialchars($row['barangay']). '</option>
+                </select><br>
                 
                 <label for="editedZip">ZIP Code:</label>
                 <input type="text" id="editedZip" name="editedZip" value="' . htmlspecialchars($row['zip']) . '" required><br>
