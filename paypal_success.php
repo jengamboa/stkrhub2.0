@@ -1,5 +1,5 @@
 <?php
-// Check if the request method is POST
+include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Retrieve the data from the POST request
     $user_id = $_POST["user_id"] ?? null;
@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Extract data from the "order_data" sub-array
     $order_data_id = $_POST["order_data"]["id"] ?? null;
+
     $order_data_intent = $_POST["order_data"]["intent"] ?? null;
     $order_data_status = $_POST["order_data"]["status"] ?? null;
     $order_data_currency_code = $_POST["order_data"]["purchase_units"][0]["amount"]["currency_code"] ?? null;
@@ -41,7 +42,195 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $payer_country_code = $_POST["order_data"]["payer"]["address"]["country_code"] ?? null;
 
 
-    
+
+    // Assuming you have established a database connection named $conn
+
+    $sqlInsertPaypalTransaction = "INSERT INTO paypal_transactions (
+    payment_id,
+    paypal_transaction_id,
+    order_data_intent,
+    order_data_status,
+    order_data_currency_code,
+    order_data_amount,
+    order_data_payee_email,
+    order_data_payee_merchant_id,
+    order_data_capture_id,
+    order_data_capture_status,
+    order_data_capture_currency_code,
+    order_data_capture_amount,
+    order_data_capture_final_capture,
+    order_data_capture_seller_protection_status,
+    order_data_capture_dispute_categories,
+    order_data_capture_create_time,
+    order_data_capture_update_time,
+    payer_given_name,
+    payer_surname,
+    payer_email,
+    payer_id,
+    payer_country_code) VALUES (
+    '$payment_id',
+    '$order_data_id',
+    '$order_data_intent',
+    '$order_data_status',
+    '$order_data_currency_code',
+    '$order_data_amount',
+    '$order_data_payee_email',
+    '$order_data_payee_merchant_id',
+    '$order_data_capture_id',
+    '$order_data_capture_status',
+    '$order_data_capture_currency_code',
+    '$order_data_capture_amount',
+    '$order_data_capture_final_capture',
+    '$order_data_capture_seller_protection_status',
+    '$order_data_capture_dispute_categories',
+    '$order_data_capture_create_time',
+    '$order_data_capture_update_time',
+    '$payer_given_name',
+    '$payer_surname',
+    '$payer_email',
+    '$payer_id',
+    '$payer_country_code')";
+    $queryInsertPaypalTransaction = $conn->query($sqlInsertPaypalTransaction);
+
+    if ($queryInsertPaypalTransaction) {
+        echo "Data inserted into paypal_transactions table successfully.";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+
+
+
+    $cart_items = explode(',', $carts_selected);
+
+    // Iterate over the array of cart items
+    foreach ($cart_items as $cart_item) {
+
+        $sql = "SELECT * FROM cart WHERE cart_id = $cart_item";
+        $query = $conn->query($sql);
+
+        if ($query) {
+            while ($fetched = $query->fetch_assoc()) {
+                $user_id = $fetched['user_id'];
+                $published_game_id = $fetched['published_game_id'];
+                $built_game_id = $fetched['built_game_id'];
+                $added_component_id = $fetched['added_component_id'];
+                $ticket_id = $fetched['ticket_id'];
+                $quantity = $fetched['quantity'];
+                $price = $fetched['price'];
+
+                if ($ticket_id) {
+                    $item_type = "ticket_id";
+                    $item_id = $ticket_id;
+
+                    $status = "to_deliver";
+                    $status_value = 1;
+
+                    $desired_markup = '';
+                    $manufacturer_profit = '';
+                    $creator_profit = '';
+                    $marketplace_price = '';
+
+                    $sqlTicketGamesOK = "SELECT * FROM tickets WHERE ticket_id = $ticket_id";
+                    $queryTicketGamesOK = $conn->query($sqlTicketGamesOK);
+                    while ($resultOK = $queryTicketGamesOK->fetch_assoc()) {
+                        $game_id = $resultOK['game_id'];
+
+                        $sqlUpdateGameTicket = "UPDATE games SET is_pending = 0, to_approve = 1 WHERE game_id = $game_id";
+                        $queryUpdateGameTicket = $conn->query($sqlUpdateGameTicket);
+                        if ($queryUpdateGameTicket) {
+                            echo "Game Ticket updated successfully.";
+                        } else {
+                            echo "Failed to update game ticket.";
+                        }
+
+                        $sqlDeleteGameTicket = "DELETE FROM tickets WHERE game_id = $game_id";
+                        $queryDeleteGameTicket = $conn->query($sqlDeleteGameTicket);
+                        if ($queryDeleteGameTicket) {
+                            echo "Game Ticket deleted successfully.";
+                        } else {
+                            echo "Failed to delete game ticket.";
+                        }
+
+                    }
+                } elseif ($published_game_id) {
+                    $item_type = "published_game_id";
+                    $item_id = $published_game_id;
+
+                    $status = "is_pending";
+                    $status_value = 1;
+
+                    $sqlGetBreakdownPublished = "SELECT * FROM published_built_games WHERE published_game_id = $published_game_id";
+                    $queryGetBreakdown = $conn->query($sqlGetBreakdownPublished);
+                    while ($fetchedBreakdown = $queryGetBreakdown->fetch_assoc()) {
+                        $desired_markup = $fetchedBreakdown['desired_markup'];
+                        $manufacturer_profit = $fetchedBreakdown['manufacturer_profit'];
+                        $creator_profit = $fetchedBreakdown['creator_profit'];
+                        $marketplace_price = $fetchedBreakdown['marketplace_price'];
+                    }
+                } elseif ($built_game_id) {
+                    $item_type = "built_game_id";
+                    $item_id = $built_game_id;
+
+                    $status = "is_pending";
+                    $status_value = 1;
+
+                    $desired_markup = '';
+                    $manufacturer_profit = '';
+                    $creator_profit = '';
+                    $marketplace_price = '';
+                } elseif ($added_component_id) {
+                    $item_type = "added_component_id";
+                    $item_id = $added_component_id;
+
+                    $status = "is_pending";
+                    $status_value = 1;
+
+                    $desired_markup = '';
+                    $manufacturer_profit = '';
+                    $creator_profit = '';
+                    $marketplace_price = '';
+                }
+
+                // Insert the order into the 'orders' table
+                $sqlInsertOrders = "INSERT INTO orders 
+                (cart_id, user_id, $item_type, quantity, price, $status, desired_markup, manufacturer_profit, creator_profit, marketplace_price, fullname, number, region, province, city, barangay, zip, street, total_payment, payment_id, paypal_transaction_id, payer_id) 
+                VALUES 
+                ('$cart_item', '$user_id', '$item_id', '$quantity', '$price', '$status_value', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price', '$fullname', '$number', '$region', '$province', '$city', '$barangay', '$zip', '$street', '$paypal_payment', '$payment_id', '$order_data_id', '$payer_id' )";
+
+                $queryInsertOrders = $conn->query($sqlInsertOrders);
+
+                // Log an audit entry for the item
+                if ($queryInsertOrders) {
+                    $audit_message = "Purchase $item_type: $item_id";
+                    $sqlInsertAuditLogs = "INSERT INTO audit_logs (user_id, action, details) VALUES ('$user_id', 'PAY USING PAYPAL', '$audit_message')";
+
+                    $queryInsertAuditLogs = $conn->query($sqlInsertAuditLogs);
+
+                    if ($queryInsertAuditLogs) {
+                        echo "AUDIT LOGGED: $audit_message<br>";
+
+                        $sqlUpdateCart = "UPDATE cart SET is_visible = 0 WHERE cart_id = $cart_item";
+                        $queryUpdateCart = $conn->query($sqlUpdateCart);
+                        if ($queryUpdateCart) {
+                            echo "Cart Updated is_visible = 0";
+                        } else {
+                            echo "error";
+                        }
+                    } else {
+                        echo "Failed to log audit entry<br>";
+                    }
+                } else {
+                    echo "Failed to insert order<br>";
+                }
+            }
+        } else {
+            echo "Failed to fetch cart item data<br>";
+        }
+    }
+
+
+
+
 
 
 
@@ -114,4 +303,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Handle cases where the request method is not POST
     echo "Invalid request method.";
 }
-?>
