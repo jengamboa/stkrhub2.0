@@ -101,28 +101,20 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     </div>
     ';
 
-    // $item2 = '
-    //     <button id="purchase_payment" 
-    //     data-fullname="'.$fullname.'"
-    //     data-number="'.$number.'"
-    //     data-region="'.$region.'"
-    //     data-province="'.$province.'"
-    //     data-city="'.$city.'"
-    //     data-barangay="'.$barangay.'"
-    //     data-zip="'.$zip.'"
-    //     data-city="'.$city.'"
-    //     data-street="'.$street.'"
-    //     data-total_payment="'.$total_payment.'"
-    //     data-carts_selected="'.implode(',', $selectedCartIds).'"
-    //     >Buy Paypal</button>
-    // ';
-
-
     $item2 = '
-        <div id="#sample" data-value="123">sample</div>
+        <button id="purchase_payment" 
+        data-fullname="'.$fullname.'"
+        data-number="'.$number.'"
+        data-region="'.$region.'"
+        data-province="'.$province.'"
+        data-city="'.$city.'"
+        data-barangay="'.$barangay.'"
+        data-zip="'.$zip.'"
+        data-street="'.$street.'"
+        data-total_payment="'.$total_payment.'"
+        data-carts_selected="'.implode(',', $selectedCartIds).'"
+        >Buy Paypal</button>
     ';
-
-
 
 
 
