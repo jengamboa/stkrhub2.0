@@ -80,25 +80,26 @@
 
 					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center">
 
-						
+
 						<!-- // if (isset($_SESSION['user_id'])) {
 							// $user_id = $_SESSION['user_id'];
 
 							// echo ' -->
-								<li class="nav-item">
-								<a class="nav-link" href="cart_page.php">
-									<span class="cart-icon">
-										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>;
+						<li class="nav-item">
+							<a class="nav-link" href="cart_page.php">
+								<span class="cart-icon">
+									<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>;
 
-										<table id="cartCount" class="display" style="width: 100%;">
-											<tbody>
-											</tbody>
-										</table>
-									</span>
-								</a>
-								</li>
-										
-										<!-- ';
+									<table id="cartCount" class="display" style="width: 100%;">
+
+										<tbody>
+										</tbody>
+									</table>
+								</span>
+							</a>
+						</li>
+
+						<!-- ';
 
 							// $sqlCart = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1";
 							// $resultCart = $conn->query($sqlCart);
@@ -203,5 +204,5 @@
 <!-- End Header Area -->
 
 <script>
-	
+
 </script>

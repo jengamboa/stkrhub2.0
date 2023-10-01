@@ -38,7 +38,6 @@ session_start();
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -51,29 +50,6 @@ session_start();
 
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-    <!-- Include DataTables JavaScript -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(document).on("click", "#ajax-link", function(event) {
-                event.preventDefault();
-
-                var published_game_id = $(this).data("published-game-id");
-
-                $.ajax({
-                    url: "process_add_published_game_to_cart.php?published_game_id=" + published_game_id,
-                    type: "GET",
-                    success: function(data) {
-                        $(".cart-count").html(data);
-                    },
-                });
-            });
-        });
-    </script>
-
 
 
     <style>
@@ -531,23 +507,7 @@ session_start();
     </section>
     <!-- end product Area -->
 
-    <table id="createGameTable" class="display" style="width: 100%;">
-        <thead>
-            <tr>
-                <th>Game ID</th>
-                <th>Game Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Date Created</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            <!-- User data will be displayed here -->
-        </tbody>
-    </table>
 
 
     <!-- start footer Area -->
@@ -639,101 +599,101 @@ session_start();
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+
+
+
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/nouislider.min.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="js/gmaps.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+
+    <!-- Include DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Filepond JavaScript -->
+    <script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
+
+    <!-- Include DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+
+
     <!-- Initialize Swiper -->
     <script>
-        var swiper = new Swiper(".mySwiper", {
-            // spaceBetween: 30,
-            centeredSlides: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-    </script>
-
-
-<script src="js/vendor/jquery-2.2.4.min.js"></script>
-
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/jquery.ajaxchimp.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/jquery.sticky.js"></script>
-<script src="js/nouislider.min.js"></script>
-<script src="js/countdown.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<!--gmaps Js-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-<script src="js/gmaps.min.js"></script>
-<script src="js/main.js"></script>
-
-
-
-
-<!-- Include DataTables JavaScript -->
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-<!-- sweetalert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Filepond JavaScript -->
-<script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
-
-    <script>
         $(document).ready(function() {
+            $(document).on("click", "#ajax-link", function(event) {
+                event.preventDefault();
+
+                var published_game_id = $(this).data("published-game-id");
+
+                $.ajax({
+                    url: "process_add_published_game_to_cart.php?published_game_id=" + published_game_id,
+                    type: "GET",
+                    success: function(data) {
+                        $(".cart-count").html(data);
+                    },
+                });
+            });
+
+            var swiper = new Swiper(".mySwiper", {
+                // spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+
+
 
             var user_id = <?php echo $user_id; ?>;
-
-            $('#createGameTable').DataTable({
+            $('#cartCount').DataTable({
                 searching: true,
                 info: false,
                 paging: true,
                 ordering: true,
 
                 "ajax": {
-                    "url": "json_created_games.php",
+                    "url": "json_cart_count.php",
                     data: {
                         user_id: user_id,
                     },
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "game_id"
+                        "data": "cart_count"
                     },
-                    {
-                        "data": "game_link"
-                    },
-                    {
-                        "data": "description"
-                    },
-                    {
-                        "data": "total_price"
-                    },
-                    {
-                        "data": "formatted_date"
-                    },
-                    {
-                        "data": "status"
-                    },
-                    {
-                        "data": "actions"
-                    },
-
 
                 ]
             });
-
         });
     </script>
 </body>
