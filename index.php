@@ -195,6 +195,10 @@ session_start();
         .fadeIn-bottom {
             top: 70%
         }
+
+        #cartCount .odd{
+            background-color: transparent;
+        }
     </style>
 
 
@@ -651,6 +655,7 @@ session_start();
                     type: "GET",
                     success: function(data) {
                         $(".cart-count").html(data);
+                        $('#cartCount').DataTable().ajax.reload();
                     },
                 });
             });
@@ -676,10 +681,10 @@ session_start();
 
             var user_id = <?php echo $user_id; ?>;
             $('#cartCount').DataTable({
-                searching: true,
+                searching: false,
                 info: false,
-                paging: true,
-                ordering: true,
+                paging: false,
+                ordering: false,
 
                 "ajax": {
                     "url": "json_cart_count.php",

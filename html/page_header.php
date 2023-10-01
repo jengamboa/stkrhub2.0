@@ -90,12 +90,12 @@
 								<span class="cart-icon">
 									<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>;
 
-									<table id="cartCount" class="display" style="width: 100%;">
-
-										<tbody>
-										</tbody>
-									</table>
 								</span>
+								<table id="cartCount" class="display" style="width: 100%;">
+									<tbody>
+									</tbody>
+								</table>
+
 							</a>
 						</li>
 
