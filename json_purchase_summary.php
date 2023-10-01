@@ -10,7 +10,7 @@ $selectedCartIds = $_GET['selectedCartIds'];
 $selectedCartIdsString = implode(',', $selectedCartIds);
 
 // Modify the SQL query to include the selected cart IDs in the WHERE clause
-$sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString)";
+$sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString) AND is_visible = 1";
 $result = $conn->query($sql);
 
 while ($fetched = $result->fetch_assoc()) {

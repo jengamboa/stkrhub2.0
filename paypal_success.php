@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-    // Assuming you have established a database connection named $conn
 
     $sqlInsertPaypalTransaction = "INSERT INTO paypal_transactions (
     payment_id,
@@ -290,9 +289,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "Payer Email: " . $payer_email . "<br>";
         echo "Payer ID: " . $payer_id . "<br>";
         echo "Payer Country Code: " . $payer_country_code . "<br>";
-
-
-
 
         // You can customize the response as needed
     } else {

@@ -49,6 +49,12 @@ session_start();
     <!-- Include jQuery and Isotope.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/css/isotope.min.css">
 
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- Include DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -68,11 +74,10 @@ session_start();
         });
     </script>
 
-    
+
 
     <style>
-        <?php include 'css/body.css'; ?>
-        .header_area {
+        <?php include 'css/body.css'; ?>.header_area {
             position: relative;
         }
 
@@ -526,7 +531,23 @@ session_start();
     </section>
     <!-- end product Area -->
 
+    <table id="createGameTable" class="display" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Game ID</th>
+                <th>Game Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Date Created</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
+        <tbody>
+            <!-- User data will be displayed here -->
+        </tbody>
+    </table>
 
 
     <!-- start footer Area -->
@@ -639,20 +660,82 @@ session_start();
     </script>
 
 
-    <script src="js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/nouislider.min.js"></script>
-    <script src="js/countdown.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <!--gmaps Js-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-    <script src="js/gmaps.min.js"></script>
-    <script src="js/main.js"></script>
+<script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/countdown.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<!--gmaps Js-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="js/gmaps.min.js"></script>
+<script src="js/main.js"></script>
+
+
+
+
+<!-- Include DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<!-- sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Filepond JavaScript -->
+<script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            var user_id = <?php echo $user_id; ?>;
+
+            $('#createGameTable').DataTable({
+                searching: true,
+                info: false,
+                paging: true,
+                ordering: true,
+
+                "ajax": {
+                    "url": "json_created_games.php",
+                    data: {
+                        user_id: user_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "game_id"
+                    },
+                    {
+                        "data": "game_link"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "total_price"
+                    },
+                    {
+                        "data": "formatted_date"
+                    },
+                    {
+                        "data": "status"
+                    },
+                    {
+                        "data": "actions"
+                    },
+
+
+                ]
+            });
+
+        });
+    </script>
 </body>
 
 </html>

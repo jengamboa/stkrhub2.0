@@ -124,7 +124,7 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                                     $selectedCartIdsString = implode(',', $selectedCartIds);
 
-                                    $sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString)";
+                                    $sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString) AND is_visible = 1";
                                     $result = $conn->query($sql);
 
                                     $sub_total = 0;
@@ -196,11 +196,12 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                             $weight_price = (float)$weight_price_5;
                                         }
 
-
+                                        echo 'Sub Total: ' . $sub_total . '<br>';
                                         echo $shipping = 'Shipping: ' . $weight_price . '<br>';
 
                                         $total_payment = ($sub_total + $weight_price);
 
+                                        
                                         echo 'Total Payment: ' . $total_payment;
 
 
@@ -372,13 +373,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                 }
             }).render('#paypal-payment-button');
 
-
-
-
-
-
-
-
             $('#example').DataTable({
                 searching: false, // Disable search bar
                 info: false, // Disable info (i.e., "Showing X of Y entries")
@@ -386,15 +380,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                 ordering: false, // Disable column sorting
 
             });
-
-
-
-
-
-
-
-
-
 
             $('#infoPurhaseTable').DataTable({
                 searching: false, // Disable search bar
@@ -428,16 +413,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                 window.location.href = 'process_payment.php?selectedCartIds=' + selectedCartIds;
             });
-
-
-
-
-
-
-
-
-
-
 
 
             // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
