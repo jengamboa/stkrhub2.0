@@ -5,7 +5,7 @@ include "../connection.php";
 $sqlGames = "SELECT published_game_id, COUNT(*) AS frequency
              FROM orders
              GROUP BY published_game_id
-             ORDER BY frequency DESC";
+             ORDER BY frequency ASC";
 
 $resultGames = $conn->query($sqlGames);
 

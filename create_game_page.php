@@ -94,6 +94,16 @@ include 'connection.php';
             justify-content: center;
 
         }
+
+
+        <?php include 'css/header.css'; ?>.section-step {
+            /* <!-- glass morph--> */
+            background: rgba(39, 42, 78, 0.57);
+            border-radius: 7px 7px 7px 7px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5.7px);
+            -webkit-backdrop-filter: blur(5.7px);
+        }
     </style>
 </head>
 
@@ -195,15 +205,15 @@ include 'connection.php';
             <div id="section1" class="section-step">
                 <div class="row">
 
-                    <div class="col-4">
+                    <div class="col-3">
 
                         <h2>Create Game</h2>
                         <form id="createGameForm">
-                            <label for="name">Name:</label>
+                            <label for="name">Name:</label><br>
                             <input type="text" id="name" name="name" required>
                             <br>
 
-                            <label for="description">Description:</label>
+                            <label for="description">Description:</label><br>
                             <textarea id="description" name="description"></textarea> <!-- Added closing tag </textarea> -->
                             <br>
 
@@ -212,13 +222,12 @@ include 'connection.php';
 
 
                     </div>
-                    <div class="col-8">
+                    <div class="col">
 
                         <!-- DataTables Create Game  -->
                         <table id="createGameTable" class="display" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Game ID</th>
                                     <th>Game Name</th>
                                     <th>Description</th>
                                     <th>Price</th>
@@ -406,6 +415,8 @@ include 'connection.php';
     <script>
         $(document).ready(function() {
 
+            <?php include 'js/essential.php'; ?>
+
             $("#createGameForm").submit(function(event) {
                 event.preventDefault(); // Prevent the default form submission
 
@@ -436,6 +447,8 @@ include 'connection.php';
                             $('#purchasedGameTable').DataTable().ajax.reload();
                             $('#publishedGameTable').DataTable().ajax.reload();
 
+                            $('#cartCount').DataTable().ajax.reload();
+
                             // Show a success SweetAlert
                             Swal.fire({
                                 icon: 'success',
@@ -462,7 +475,7 @@ include 'connection.php';
             $('#createGameTable').DataTable({
                 searching: true,
                 info: false,
-                paging: true,
+                paging: false,
                 ordering: true,
 
                 "ajax": {
@@ -472,9 +485,8 @@ include 'connection.php';
                     },
                     "dataSrc": ""
                 },
-                "columns": [{
-                        "data": "game_id"
-                    },
+                "columns": [
+
                     {
                         "data": "game_link"
                     },
@@ -553,6 +565,8 @@ include 'connection.php';
                                         $('#approvedGameTable').DataTable().ajax.reload();
                                         $('#purchasedGameTable').DataTable().ajax.reload();
                                         $('#publishedGameTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
                                     } else {
                                         Swal.fire('Success', result.value.message, 'success');
                                         // Reload the DataTable
@@ -564,6 +578,8 @@ include 'connection.php';
                                         $('#approvedGameTable').DataTable().ajax.reload();
                                         $('#purchasedGameTable').DataTable().ajax.reload();
                                         $('#publishedGameTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
                                     }
                                 }
                             });
@@ -616,6 +632,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -680,6 +698,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
 
@@ -822,6 +842,8 @@ include 'connection.php';
                                         $('#approvedGameTable').DataTable().ajax.reload();
                                         $('#purchasedGameTable').DataTable().ajax.reload();
                                         $('#publishedGameTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
                                     } else {
                                         Swal.fire('Success', result.value.message, 'success');
                                         // Reload the DataTable
@@ -833,6 +855,8 @@ include 'connection.php';
                                         $('#approvedGameTable').DataTable().ajax.reload();
                                         $('#purchasedGameTable').DataTable().ajax.reload();
                                         $('#publishedGameTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
                                     }
                                 }
                             });
@@ -884,6 +908,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -1031,6 +1057,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -1201,6 +1229,8 @@ include 'connection.php';
                                         $('#approvedGameTable').DataTable().ajax.reload();
                                         $('#purchasedGameTable').DataTable().ajax.reload();
                                         $('#publishedGameTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
                                     } else {
                                         Swal.fire('Success', result.value.message, 'success');
                                         // Reload the DataTable
@@ -1212,6 +1242,8 @@ include 'connection.php';
                                         $('#approvedGameTable').DataTable().ajax.reload();
                                         $('#purchasedGameTable').DataTable().ajax.reload();
                                         $('#publishedGameTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
                                     }
                                 }
                             });
@@ -1263,6 +1295,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -1439,6 +1473,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', 'An error occurred while hiding the game.', 'error');
 
@@ -1451,6 +1487,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 }
                             },
                             error: function() {
@@ -1505,6 +1543,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 } else {
                                     Swal.fire('Error', 'An error occurred while unhiding the game.', 'error');
 
@@ -1517,6 +1557,8 @@ include 'connection.php';
                                     $('#approvedGameTable').DataTable().ajax.reload();
                                     $('#purchasedGameTable').DataTable().ajax.reload();
                                     $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
                                 }
                             },
                             error: function() {

@@ -78,7 +78,7 @@
 
 					</ul>
 
-					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center">
+					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center; padding-top:7px">
 
 
 						<!-- // if (isset($_SESSION['user_id'])) {
@@ -87,10 +87,7 @@
 							// echo ' -->
 						<li class="nav-item">
 							<a class="nav-link" href="cart_page.php">
-								<span class="cart-icon">
-									<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>;
-
-								</span>
+								
 								<table id="cartCount" class="display" style="width: 100%;">
 									<tbody>
 									</tbody>

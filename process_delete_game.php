@@ -28,7 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->query($sqlDeleteRelatedComponents);
 
         // Delete related records in 'games' table
-        $sqlDeleteRelatedGames = "DELETE FROM games WHERE game_id = $game_id";
+        // $sqlDeleteRelatedGames = "DELETE FROM games WHERE game_id = $game_id";
+        // $conn->query($sqlDeleteRelatedGames);
+        $sqlDeleteRelatedGames = "UPDATE games SET is_visible = 0 WHERE game_id = $game_id";
         $conn->query($sqlDeleteRelatedGames);
 
         // Commit the transaction if all queries succeed

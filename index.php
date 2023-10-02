@@ -196,9 +196,7 @@ session_start();
             top: 70%
         }
 
-        #cartCount .odd{
-            background-color: transparent;
-        }
+        <?php include 'css/header.css'; ?>
     </style>
 
 
@@ -645,20 +643,8 @@ session_start();
     <!-- Initialize Swiper -->
     <script>
         $(document).ready(function() {
-            $(document).on("click", "#ajax-link", function(event) {
-                event.preventDefault();
-
-                var published_game_id = $(this).data("published-game-id");
-
-                $.ajax({
-                    url: "process_add_published_game_to_cart.php?published_game_id=" + published_game_id,
-                    type: "GET",
-                    success: function(data) {
-                        $(".cart-count").html(data);
-                        $('#cartCount').DataTable().ajax.reload();
-                    },
-                });
-            });
+            
+            <?php include 'js/essential.php'; ?>
 
             var swiper = new Swiper(".mySwiper", {
                 // spaceBetween: 30,
@@ -679,26 +665,7 @@ session_start();
 
 
 
-            var user_id = <?php echo $user_id; ?>;
-            $('#cartCount').DataTable({
-                searching: false,
-                info: false,
-                paging: false,
-                ordering: false,
 
-                "ajax": {
-                    "url": "json_cart_count.php",
-                    data: {
-                        user_id: user_id,
-                    },
-                    "dataSrc": ""
-                },
-                "columns": [{
-                        "data": "cart_count"
-                    },
-
-                ]
-            });
         });
     </script>
 </body>

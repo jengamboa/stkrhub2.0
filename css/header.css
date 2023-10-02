@@ -1,0 +1,18 @@
+#cartCount .odd {
+    background-color: transparent;
+}
+
+
+#cartCount thead {
+    display: none;
+    /* Hide the table header */
+}
+
+#cartCount th {
+    display: none;
+    /* Hide table header cells */
+}
+
+table.dataTable.no-footer {
+    border-bottom: none;
+}
