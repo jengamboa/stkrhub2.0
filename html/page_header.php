@@ -13,13 +13,14 @@
 				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 				backdrop-filter: blur(5.7px);
 				-webkit-backdrop-filter: blur(5.7px);
+				line-height: 0px !important;
 			">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<a class="navbar-brand logo_h" href="index.php">
 					<h4 style="
 						font-family: 'Akira Expanded', sans-serif;
-						padding-top: 10px;
+						padding-top: 7px;
 					">
 						STKR HUB
 					</h4>
@@ -78,9 +79,7 @@
 
 					</ul>
 
-					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center; padding-top:7px">
-
-
+					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center; padding-top:0px">
 						<!-- // if (isset($_SESSION['user_id'])) {
 							// $user_id = $_SESSION['user_id'];
 

@@ -147,7 +147,7 @@ while ($row = $result->fetch_assoc()) {
 
     // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
     $actions = '
-        <button>Accept</button>
+    <button type="button" class="btn btn-primary" id="proceed_order" data-order_id="'.$order_id.'">Proceed</button>
     ';
 
     $data[] = array(

@@ -4,6 +4,7 @@ include "../connection.php";
 // Query to get the most frequent published_game_id to less frequent published_game_id
 $sqlGames = "SELECT published_game_id, COUNT(*) AS frequency
              FROM orders
+             WHERE is_pending != 1
              GROUP BY published_game_id
              ORDER BY frequency ASC";
 
@@ -48,7 +49,9 @@ while ($row = $resultGames->fetch_assoc()) {
         $status = 'visible';
     }
 
-    $actions = 'View';
+    $actions = '
+        <button type="button" class="btn btn-primary">View</button>
+    ';
 
     
     $data[] = array(

@@ -1239,7 +1239,8 @@ h6 {
 
 .sticky-wrapper {
   position: absolute;
-  top: 40px;
+  /* top: 40px; */
+  top: 0px;
   width: 100%;
 }
 @media (max-width: 991px) {
@@ -1263,7 +1264,8 @@ h6 {
 .header_area .main_menu .main_box {
   background: #fff;
   margin: 0px auto 0;
-  max-width: 1200px;
+  /* max-width: 1200px; */
+  max-width: 100%;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;

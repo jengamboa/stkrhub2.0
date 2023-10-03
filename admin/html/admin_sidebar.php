@@ -27,18 +27,13 @@
                         </ul>
                     </li>
 
-                    <li class="nav-label"></li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Pending Orders</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="pending_all.php">All Pending Orders</a></li>
-                            <li><a href="./app-calender.html">Accepted Game Components</a></li>
-                            <li><a href="./app-calender.html">Accepted Tickets</a></li>
-                            <li><a href="./app-calender.html">Accepted Built Games</a></li>
-                            <li><a href="./app-calender.html">Accepted Published Games</a></li>
-                            
-                            
-                        </ul>
-                    </li>
+                    <li class="nav-label">Orders</li>
+                    <li><a href="pending_all.php" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">All Pending Orders</span></a></li>
+                    <li><a href="in_production.php" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">In Production Orders</span></a></li>
+                    <li><a href="to_ship.php" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">To Ship</span></a></li>
+                    <li><a href="to_deliver.php" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Completed Orders</span></a></li>
+                    <li><a href="canceled.php" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Canceled Orders</span></a></li>
+
 
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>

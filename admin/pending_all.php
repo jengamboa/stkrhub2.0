@@ -28,6 +28,9 @@ include 'connection.php';
     <!-- Include DataTables CSS and JS files -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
+    <!-- sweetalert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <!-- Include SweetAlert library -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
@@ -121,6 +124,9 @@ include 'connection.php';
     <!-- Include DataTables JS after global.min.js -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="./js/quixnav-init.js"></script>
     <script src="./js/custom.min.js"></script>
 
@@ -149,10 +155,12 @@ include 'connection.php';
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "id", width: '10%', className: 'dt-center'
+                        "data": "id",
+                        width: '10%',
+                        className: 'dt-center'
                     },
                     {
-                        "data": "classification",  
+                        "data": "classification",
                     },
                     {
                         "data": "title"
@@ -177,36 +185,40 @@ include 'connection.php';
 
 
 
-            $("#myForm").submit(function(e) {
-                e.preventDefault(); // Prevent the default form submission
-                var formData = new FormData(this); // Create a FormData object
 
-                // Send an AJAX POST request
-                $.ajax({
-                    type: "POST",
-                    url: "admin_process_add_gamepiece.php", // Your server-side script URL
-                    data: formData,
-                    contentType: false, // Prevent jQuery from adding a content-type header
-                    processData: false, // Prevent jQuery from processing the data
-                    success: function(response) {
-                        // Display a SweetAlert with a success message
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data inserted successfully!',
-                        });
+            $('#allOrdersTable').on('click', '#proceed_order', function() {
+                var order_id = $(this).data('order_id');
 
-                        $('#gamePieceTable').DataTable().ajax.reload();
-
-                        // Clear the form after successful submission
-                        $("#myForm")[0].reset();
-                    },
-                    error: function(error) {
-                        // Display a SweetAlert with an error message
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Error in submitting data: ' + error.responseText,
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "When proceeded, the order will be marked as in-production, and the user cannot cancel/refund the order anymore",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, proceed",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "admin_process_proceed_order.php",
+                            method: "POST",
+                            data: {
+                                order_id: order_id
+                            },
+                            dataType: "json", // Expect JSON response
+                            success: function(response) {
+                                if (response.status === "success") {
+                                    $('#allOrdersTable').DataTable().ajax.reload();
+                                    Swal.fire("Order is in production", "", "success");
+                                } else {
+                                    $('#allOrdersTable').DataTable().ajax.reload();
+                                    Swal.fire("Failed to process order", response.message, "error");
+                                }
+                            },
+                            error: function() {
+                                $('#allOrdersTable').DataTable().ajax.reload();
+                                Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
+                                
+                            },
                         });
                     }
                 });
