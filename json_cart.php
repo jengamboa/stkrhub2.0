@@ -5,7 +5,7 @@ $json = array();
 
 $user_id = $_GET['user_id'];
 
-$sql = "SELECT * FROM cart WHERE user_id = $user_id";
+$sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1";
 $result = $conn->query($sql);
 
 while ($fetched = $result->fetch_assoc()) {

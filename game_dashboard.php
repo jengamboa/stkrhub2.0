@@ -45,7 +45,16 @@ if ($_SERVER['REQUEST_METHOD']) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        <?php include 'css/body.css' ?>
+        <?php include 'css/body.css' ?><?php include 'css/header.css'; ?>
+        
+        #infoTable td{
+            /* <!-- glass morph--> */
+            background: rgba(39, 42, 78, 0.57);
+            border-radius: 7px 7px 7px 7px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5.7px);
+            -webkit-backdrop-filter: blur(5.7px) !important;
+        }
     </style>
 </head>
 
@@ -85,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD']) {
                     <tr>
                         <th>Component Name</th>
                         <th>Category</th>
-                        <th>Price</th>
+                        <th>Unit Price</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
                         <th>Info</th>
@@ -148,11 +157,14 @@ if ($_SERVER['REQUEST_METHOD']) {
 
     <script>
         $(document).ready(function() {
+            <?php include 'js/essential.php'; ?>
+
+
             $('#infoTable').DataTable({
-                searching: true,
+                searching: false,
                 info: false,
-                paging: true,
-                ordering: true,
+                paging: false,
+                ordering: false,
                 ajax: {
                     url: "json_info_table.php",
                     data: {
@@ -171,6 +183,10 @@ if ($_SERVER['REQUEST_METHOD']) {
             var game_id = <?php echo $game_id; ?>;
 
             $('#userTable').DataTable({
+                searching: true,
+                info: false,
+                paging: false,
+                ordering: false,
                 "ajax": {
                     "url": "json_game_dashboard.php",
                     data: {

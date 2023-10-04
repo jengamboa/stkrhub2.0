@@ -38,7 +38,6 @@ session_start();
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -49,30 +48,12 @@ session_start();
     <!-- Include jQuery and Isotope.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/css/isotope.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(document).on("click", "#ajax-link", function(event) {
-                event.preventDefault();
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-                var published_game_id = $(this).data("published-game-id");
-
-                $.ajax({
-                    url: "process_add_published_game_to_cart.php?published_game_id=" + published_game_id,
-                    type: "GET",
-                    success: function(data) {
-                        $(".cart-count").html(data);
-                    },
-                });
-            });
-        });
-    </script>
-
-    
 
     <style>
-        <?php include 'css/body.css'; ?>
-        .header_area {
+        <?php include 'css/body.css'; ?>.header_area {
             position: relative;
         }
 
@@ -214,6 +195,8 @@ session_start();
         .fadeIn-bottom {
             top: 70%
         }
+
+        <?php include 'css/header.css'; ?>
     </style>
 
 
@@ -618,28 +601,13 @@ session_start();
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
-    <!-- Initialize Swiper -->
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            // spaceBetween: 30,
-            centeredSlides: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-    </script>
+
 
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
@@ -653,6 +621,53 @@ session_start();
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
     <script src="js/gmaps.min.js"></script>
     <script src="js/main.js"></script>
+
+
+
+
+    <!-- Include DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Filepond JavaScript -->
+    <script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
+
+    <!-- Include DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+
+
+    <!-- Initialize Swiper -->
+    <script>
+        $(document).ready(function() {
+            
+            <?php include 'js/essential.php'; ?>
+
+            var swiper = new Swiper(".mySwiper", {
+                // spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+
+
+
+
+        });
+    </script>
 </body>
 
 </html>

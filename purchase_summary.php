@@ -26,7 +26,7 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
 
 
 
@@ -52,7 +52,9 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/body.css'; ?>#infoPurhaseTable tbody tr {
+
+        <?php include 'css/body.css';
+        include 'css/header.css' ?>#infoPurhaseTable tbody tr {
             background-color: transparent !important;
         }
     </style>
@@ -124,7 +126,7 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                                     $selectedCartIdsString = implode(',', $selectedCartIds);
 
-                                    $sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString)";
+                                    $sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString) AND is_visible = 1";
                                     $result = $conn->query($sql);
 
                                     $sub_total = 0;
@@ -196,11 +198,12 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                             $weight_price = (float)$weight_price_5;
                                         }
 
-
+                                        echo 'Sub Total: ' . $sub_total . '<br>';
                                         echo $shipping = 'Shipping: ' . $weight_price . '<br>';
 
                                         $total_payment = ($sub_total + $weight_price);
 
+                                        
                                         echo 'Total Payment: ' . $total_payment;
 
 
@@ -296,6 +299,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     <script>
         $(document).ready(function() {
 
+            <?php include 'js/essential.php' ?>
+
             var user_id = <?php echo $user_id; ?>;
             var selectedCartIds = <?php echo json_encode($selectedCartIds); ?>;
 
@@ -372,13 +377,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                 }
             }).render('#paypal-payment-button');
 
-
-
-
-
-
-
-
             $('#example').DataTable({
                 searching: false, // Disable search bar
                 info: false, // Disable info (i.e., "Showing X of Y entries")
@@ -386,15 +384,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                 ordering: false, // Disable column sorting
 
             });
-
-
-
-
-
-
-
-
-
 
             $('#infoPurhaseTable').DataTable({
                 searching: false, // Disable search bar
@@ -428,16 +417,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                 window.location.href = 'process_payment.php?selectedCartIds=' + selectedCartIds;
             });
-
-
-
-
-
-
-
-
-
-
 
 
             // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
@@ -512,6 +491,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                         $('#profileAddress').DataTable().ajax.reload();
                                         $('#purchaseTable').DataTable().ajax.reload();
 
+                                        $('#cartCount').DataTable().ajax.reload();
+
                                         // Show a success message with Swal
                                         Swal.fire({
                                             title: "Success",
@@ -561,6 +542,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                 $('#profileAddress').DataTable().ajax.reload();
                                 $('#purchaseTable').DataTable().ajax.reload();
 
+                                $('#cartCount').DataTable().ajax.reload();
+
 
 
                                 // Show a success message with Swal
@@ -609,6 +592,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                 $('#profileAddress').DataTable().ajax.reload();
                                 $('#purchaseTable').DataTable().ajax.reload();
 
+                                $('#cartCount').DataTable().ajax.reload();
+
                                 Swal.fire({
                                     title: "Success",
                                     text: "You changed the default address",
@@ -632,6 +617,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                         $('#infoPurhaseTable').DataTable().ajax.reload();
                         $('#profileAddress').DataTable().ajax.reload();
                         $('#purchaseTable').DataTable().ajax.reload();
+
+                        $('#cartCount').DataTable().ajax.reload();
                     }
                 });
             });

@@ -11,7 +11,7 @@ $numSelectedCarts = count($selectedCartIds);
 
 $selectedCartIdsString = implode(',', $selectedCartIds);
 
-$sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString)";
+$sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString) AND is_visible = 1";
 $result = $conn->query($sql);
 
 $sub_total = 0;

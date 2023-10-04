@@ -148,13 +148,16 @@ while ($added_game_components = $result->fetch_assoc()) {
         </button>
     ';
 
+    $price_peso = '&#8369 '.$price;
+    $individual_price_peso = '&#8369 '.$individual_price;
+
 
     $json[] = array(
         "added_component_id" => $added_component_id,
         "component_id" => $component_id,
         "component_name" => $component_name,
-        "price" => $price,
-        "individual_price" => $individual_price,
+        "price" => $price_peso,
+        "individual_price" => $individual_price_peso,
         "category" => $category,
         "edit_quantity" => $edit_quantity,
         "info" => $info,

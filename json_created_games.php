@@ -3,7 +3,7 @@ include "connection.php"; // Include your database connection script
 
 $user_id = $_GET['user_id'];
 
-$sqlGames = "SELECT * FROM games WHERE user_id = $user_id";
+$sqlGames = "SELECT * FROM games WHERE user_id = $user_id AND is_visible = 1";
 $resultGames = $conn->query($sqlGames);
 
 $data = array();
@@ -12,7 +12,13 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
     $game_id  = $fetchedGames['game_id'];
     $name  = $fetchedGames['name'];
     $description  = $fetchedGames['description'];
-    $created_at  = $fetchedGames['created_at'];
+
+    $created_at = $fetchedGames['created_at'];
+    $dateTime = new DateTime($created_at);
+    $formattedDateTime = $dateTime->format('M. d, Y h:i A');
+
+    $date = $dateTime->format('M. d, Y');
+    $time = $dateTime->format('h:i A');
 
     $is_pending = $fetchedGames['is_pending'];
     $to_approve = $fetchedGames['to_approve'];
@@ -21,7 +27,8 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
 
     $game_link = '
-        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a>
+        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a><br>
+        ID: '. $game_id .'<br>
     ';
 
 
@@ -40,7 +47,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         $total_price += $component_price * $component_quantity;
     }
 
-    $formatted_date = $created_at;
+    $formatted_date = $date .'<br>' . $time;
 
 
 
@@ -68,10 +75,14 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         ';
     } elseif ($to_approve) {
         $status = 'Wait for the Admin\'s Response';
+    } elseif ($total_price == '0') {
+        $status = '
+            You can not request to approve a game if it is empty
+        ';
     } elseif ($is_pending) {
-        $status = '';
+        $status = 'Your Ticket is in the Cart, please purchase it for the admin to proceed';
     } else {
-        $status = '';
+        $status = 'Approve this Game so that you can proceed.';
     }
 
 
@@ -115,7 +126,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
 
     if ($is_approved) {
-        $extra_acion = '
+        $extra_action = '
         <button class="approve-game" 
         data-gameid="' . $game_id . '" 
         data-total_price="' . $total_price . '" 
@@ -126,10 +137,34 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
             <i class="fa-solid fa-puzzle-piece"></i> Get Approved Again
         </button>
         ';
+    } elseif ($to_approve) {
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        disabled
+        >
+            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+        </button>
+        ';
     } elseif ($is_pending) {
-        $extra_acion = 'Your Ticket is in the Cart, please purchase it for the admin to proceed';
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        disabled
+        >
+            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+        </button>
+        ';
     } elseif ($is_denied) {
-        $extra_acion = '
+        $extra_action = '
         <button class="approve-game" 
         data-gameid="' . $game_id . '" 
         data-total_price="' . $total_price . '" 
@@ -142,8 +177,21 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
         
         ';
+    } elseif ($total_price == '0') {
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        disabled
+        >
+            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+        </button>
+        ';
     } else {
-        $extra_acion = '
+        $extra_action = '
         <button class="approve-game" 
         data-gameid="' . $game_id . '" 
         data-total_price="' . $total_price . '" 
@@ -153,8 +201,6 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         >
             <i class="fa-solid fa-puzzle-piece"></i> Get Approved
         </button>
-
-        
         ';
     }
 
@@ -167,14 +213,11 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         <i class="fa-solid fa-trash"></i>
     </button>
     
-    ' . $extra_acion;
+    ' . $extra_action;
 
-
-    $description = 'Game Id: '.$game_id.'<br>'.$description;
 
 
     $data[] = array(
-        "game_id" => $game_id,
         "game_link" => $game_link,
         "description" => $description,
         "total_price" => $total_price,

@@ -48,6 +48,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
+        <?php include 'css/header.css'; ?>
         <?php include 'css/body.css'; ?>#infoTable tbody tr {
             background-color: transparent !important;
         }
@@ -152,6 +153,8 @@ if (isset($_SESSION['user_id'])) {
     <script>
         $(document).ready(function() {
 
+            <?php include 'js/essential.php'; ?>
+
 
             var user_id = <?php echo $user_id; ?>;
 
@@ -200,6 +203,8 @@ if (isset($_SESSION['user_id'])) {
 
                                     $('#infoTable').DataTable().ajax.reload();
                                     $('#cartTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
 
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
@@ -281,6 +286,8 @@ if (isset($_SESSION['user_id'])) {
                     success: function(response) {
                         $('#infoTable').DataTable().ajax.reload();
                         $('#cartTable').DataTable().ajax.reload();
+
+                        $('#cartCount').DataTable().ajax.reload();
                     }
                 });
             });
@@ -314,6 +321,8 @@ if (isset($_SESSION['user_id'])) {
                                     $('#infoTable').DataTable().ajax.reload();
                                     $('#cartTable').DataTable().ajax.reload();
 
+                                    $('#cartCount').DataTable().ajax.reload();
+
                                 } else {
                                     Swal.fire('Error', response.message, 'error');
                                 }
@@ -344,6 +353,8 @@ if (isset($_SESSION['user_id'])) {
                         if (response.success) {
                             $('#infoTable').DataTable().ajax.reload();
                             $('#cartTable').DataTable().ajax.reload();
+
+                            $('#cartCount').DataTable().ajax.reload();
                         }
                     },
                     error: function() {

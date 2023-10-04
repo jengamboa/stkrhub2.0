@@ -78,40 +78,49 @@
 
 					</ul>
 
-					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center">
-
-						<?php
-						if (isset($_SESSION['user_id'])) {
-							$user_id = $_SESSION['user_id'];
-
-							echo '
-								<li class="nav-item">
-								<a class="nav-link" href="cart_page.php">
-									<span class="cart-icon">
-										<i class="fas fa-shopping-cart" style="font-size: 20px;"></i>';
-
-							$sqlCart = "SELECT * FROM cart WHERE user_id = $user_id";
-							$resultCart = $conn->query($sqlCart);
-
-							$count = 0;
-
-							while ($fetchedCart = $resultCart->fetch_assoc()) {
-								$cart_id = $fetchedCart['cart_id'];
-								$count++; //
-							}
+					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center; padding-top:7px">
 
 
-							echo '<span class="cart-count">(' . $count . ')</span>
-									</span>
-								</a>
-							</li>
-								';
+						<!-- // if (isset($_SESSION['user_id'])) {
+							// $user_id = $_SESSION['user_id'];
+
+							// echo ' -->
+						<li class="nav-item">
+							<a class="nav-link" href="cart_page.php">
+								
+								<table id="cartCount" class="display" style="width: 100%;">
+									<tbody>
+									</tbody>
+								</table>
+
+							</a>
+						</li>
+
+						<!-- ';
+
+							// $sqlCart = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1";
+							// $resultCart = $conn->query($sqlCart);
+
+							// $count = 0;
+
+							// while ($fetchedCart = $resultCart->fetch_assoc()) {
+							// 	$cart_id = $fetchedCart['cart_id'];
+							// 	$count + 1; //
+							// }
+
+
+							// echo '
+							// <span class="cart-count">(' . $count . ')</span>
+							// 		</span>
+							// 	</a>
+							// </li>
+							// 	';
 						} else {
 							echo '
 								
 								';
 						}
-						?>
+						?> -->
 
 
 
@@ -155,7 +164,7 @@
 										<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 37px; height: 37px; border-radius: 50%;
 										background: rgb(38,211,224);
 										background: linear-gradient(90deg, rgba(38,211,224,1) 0%, rgba(182,96,232,1) 100%);">
-											<p style="font-family: sans-serif; font-weight: bold; font-size:17px; padding-top: 18px;">'.$firstLetter.'</p>
+											<p style="font-family: sans-serif; font-weight: bold; font-size:17px; padding-top: 18px;">' . $firstLetter . '</p>
 
 										</div>
 									</a>
@@ -190,3 +199,7 @@
 	</div> -->
 </header>
 <!-- End Header Area -->
+
+<script>
+
+</script>

@@ -674,7 +674,8 @@ $total_component_produced = $rowTotalComponents['total_components'];
                         "data": "frequency"
                     },
 
-                ]
+                ],
+                order: [[5, 'desc']] 
             });
 
 

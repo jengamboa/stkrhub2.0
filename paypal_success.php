@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-    // Assuming you have established a database connection named $conn
 
     $sqlInsertPaypalTransaction = "INSERT INTO paypal_transactions (
     payment_id,
@@ -122,7 +121,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $item_type = "ticket_id";
                     $item_id = $ticket_id;
 
-                    $status = "to_deliver";
+                    // $status = "to_deliver";
+                    // $status_value = 1;
+
+                    $status = "is_pending";
                     $status_value = 1;
 
                     $desired_markup = '';
@@ -143,13 +145,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             echo "Failed to update game ticket.";
                         }
 
-                        $sqlDeleteGameTicket = "DELETE FROM tickets WHERE game_id = $game_id";
-                        $queryDeleteGameTicket = $conn->query($sqlDeleteGameTicket);
-                        if ($queryDeleteGameTicket) {
-                            echo "Game Ticket deleted successfully.";
+                        $sqlUpdateGameTicket2 = "UPDATE tickets SET is_at_cart = 0, is_purchased = 1 WHERE ticket_id = $ticket_id";
+                        $queryUpdateGameTicket2 = $conn->query($sqlUpdateGameTicket2);
+                        if ($queryUpdateGameTicket2) {
+                            echo "Game Ticket updated successfully.";
                         } else {
-                            echo "Failed to delete game ticket.";
+                            echo "Failed to update game ticket.";
                         }
+
 
                     }
                 } elseif ($published_game_id) {
@@ -290,9 +293,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "Payer Email: " . $payer_email . "<br>";
         echo "Payer ID: " . $payer_id . "<br>";
         echo "Payer Country Code: " . $payer_country_code . "<br>";
-
-
-
 
         // You can customize the response as needed
     } else {
