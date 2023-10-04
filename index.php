@@ -18,9 +18,7 @@ session_start();
     <meta name="keywords" content="">
     <!-- meta character set -->
     <meta charset="UTF-8">
-
-    <!-- Site Title -->
-    <?php include 'html/page_title.php'; ?>
+    <title>STKR HUB</title>
 
     <!--CSS================================= -->
     <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
@@ -40,7 +38,6 @@ session_start();
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
 
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -195,6 +192,27 @@ session_start();
         .fadeIn-bottom {
             top: 70%
         }
+
+
+        #cartCount .odd {
+            background-color: transparent;
+        }
+
+
+        #cartCount thead {
+            display: none;
+            /* Hide the table header */
+        }
+
+        #cartCount th {
+            display: none;
+            /* Hide table header cells */
+        }
+
+        table.dataTable.no-footer {
+            border-bottom: none;
+        }
+
 
         .sticky-wrapper {
             top: 20px !important;
