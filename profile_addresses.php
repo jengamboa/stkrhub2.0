@@ -289,10 +289,10 @@ session_start();
                                     // Retrieve and collect edited address details from the SweetAlert form fields
                                     fullname: $('#editedFullname').val(),
                                     number: $('#editedNumber').val(),
-                                    region: $('#editedRegion').val(),
-                                    province: $('#editedProvince').val(),
-                                    city: $('#editedCity').val(),
-                                    barangay: $('#editedBarangay').val(),
+                                    region: $('#editedregion_').val(),
+                                    province: $('#editedprovince_').val(),
+                                    city: $('#editedcity_').val(),
+                                    barangay: $('#editedbarangay_').val(),
                                     zip: $('#editedZip').val(),
                                     street: $('#editedStreet').val(),
                                 };
@@ -319,11 +319,62 @@ session_start();
                                 });
                             },
                         });
+
+                        $('#editedregion_').on('change', function() {
+                    var region_id = $(this).val();
+                    console.log(region_id);
+                    $.ajax({
+                        url:'option_province.php',
+                        type:"POST",
+                        data:{
+                            region_data:region_id
+                        },
+                        success:function(result){
+                            $('#editedprovince_').html(result);
+                            //console.log(result);
+                        }
+                    })
+                });
+
+                $('#editedprovince_').on('change', function() {
+                    var province_id = $(this).val();
+                    //console.log(province_id); 
+                    $.ajax({
+                        url:'option_city.php',
+                        type:"POST",
+                        data:{
+                            province_data:province_id
+                        },
+                        success:function(data){
+                            $('#editedcity_').html(data);
+                            //console.log(result);
+                        }
+                    })
+                });
+
+                $('#editedcity_').on('change', function() {
+                    var city_id = $(this).val();
+                    //console.log(province_id); 
+                    $.ajax({
+                        url:'option_barangay.php',
+                        type:"POST",
+                        data:{
+                            city_data:city_id
+                        },
+                        success:function(data){
+                            $('#editedbarangay_').html(data);
+                            //console.log(result);
+                        }
+                    })
+                });
                     },
                     error: function() {
                         // Handle any AJAX errors here
                     },
                 });
+
+                
+
             });
 
 
@@ -361,7 +412,7 @@ session_start();
                             },
                         });
                     }
-                });
+                });    
             });
 
 
