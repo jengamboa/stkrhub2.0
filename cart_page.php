@@ -30,13 +30,10 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- material icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -51,9 +48,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/header.css'; ?>
-        <?php include 'css/body.css'; ?>
-        #infoTable tbody tr {
+        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>#infoTable tbody tr {
             background-color: transparent !important;
         }
 
@@ -83,19 +78,41 @@ if (isset($_SESSION['user_id'])) {
         table.dataTable tbody td {
             padding: 0px 0px;
         }
+
+        table.dataTable.no-footer {
+            border-bottom: none;
+        }
+
+        .even,
+        .odd {
+            background-color: transparent !important;
+        }
+
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto;
+            clear: both;
+            /* border-collapse: separate; */
+            border-spacing: -20px;
+        }
+
+        table.dataTable,
+        table.dataTable thead,
+        table.dataTable tbody,
+        table.dataTable tr,
+        table.dataTable td,
+        table.dataTable th,
+        table.dataTable tbody tr.even,
+        table.dataTable tbody tr.odd {
+            border: none !important;
+        }
     </style>
 </head>
 
 <body>
 
     <?php include 'html/page_header.php'; ?>
-    <!-- Start Banner Area -->
-    <section class="banner-area organic-breadcrumb">
-        <div class="container">
 
-        </div>
-    </section>
-    <!-- End Banner Area -->
 
     <!--================Cart Area =================-->
     <section class="cart_area">
@@ -103,11 +120,24 @@ if (isset($_SESSION['user_id'])) {
             <div class="cart_inner">
 
                 <div class="container">
-                    <table id="cartTable" class="display" style="width: 100%;">
-                        <tbody>
 
-                        </tbody>
-                    </table>
+                    <?php
+                    $sql = "SELECT COUNT(*) as visible_count FROM cart WHERE user_id = $user_id AND is_visible = 1";
+                    $result = $conn->query($sql);
+                    $row = $result->fetch_assoc();
+
+                    $visibleCount = $row['visible_count'];
+
+                    if ($visibleCount > 0) {
+                        echo '<table id="cartTable" class="display" style="width: 100%;">
+                                <tbody>
+                                </tbody>
+                              </table>';
+                    } else {
+                        echo 'No cart items are visible for this user.';
+                    }
+
+                    ?>
                 </div>
 
 
@@ -150,9 +180,7 @@ if (isset($_SESSION['user_id'])) {
 
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -179,7 +207,7 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             <?php include 'js/essential.php'; ?>
 
@@ -187,10 +215,10 @@ if (isset($_SESSION['user_id'])) {
             var user_id = <?php echo $user_id; ?>;
 
             $('#infoTable').DataTable({
-                searching: false, // Disable search bar
-                info: false, // Disable info (i.e., "Showing X of Y entries")
-                paging: false, // Disable paging
-                ordering: false, // Disable column sorting
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
                 ajax: {
                     url: "json_cart_info.php",
                     data: {
@@ -198,17 +226,18 @@ if (isset($_SESSION['user_id'])) {
                     },
                     dataSrc: ""
                 },
+
                 columns: [{
-                    data: "sub_total"
-                },
-                {
-                    "data": "actions"
-                }
+                        data: "sub_total"
+                    },
+                    {
+                        "data": "actions"
+                    }
                 ]
             });
 
             // Listen for changes to quantity input using event delegation
-            $('#infoTable').on('click', '.delete-selected', function () {
+            $('#infoTable').on('click', '.delete-selected', function() {
 
                 Swal.fire({
                     title: 'Delete Cart',
@@ -217,7 +246,7 @@ if (isset($_SESSION['user_id'])) {
                     showCancelButton: true,
                     confirmButtonText: 'Delete',
                     cancelButtonText: 'Cancel',
-                }).then(function (result) {
+                }).then(function(result) {
                     if (result.isConfirmed) {
 
                         $.ajax({
@@ -225,7 +254,7 @@ if (isset($_SESSION['user_id'])) {
                             url: 'process_delete_selected_cart.php',
                             data: {},
                             dataType: 'json',
-                            success: function (response) {
+                            success: function(response) {
                                 if (response.success) {
                                     Swal.fire('Success', response.message, 'success');
 
@@ -238,7 +267,7 @@ if (isset($_SESSION['user_id'])) {
                                     Swal.fire('Error', response.message, 'error');
                                 }
                             },
-                            error: function () {
+                            error: function() {
                                 Swal.fire('Error', 'Failed to delete the game', 'error');
                             }
                         });
@@ -248,9 +277,9 @@ if (isset($_SESSION['user_id'])) {
 
 
             // Listen for changes to quantity input using event delegation
-            $('#infoTable').on('click', '.purchase-selected', function () {
+            $('#infoTable').on('click', '.purchase-selected', function() {
                 var checkedCartIds = [];
-                $('input[data-cart_id]:checked').each(function () {
+                $('input[data-cart_id]:checked').each(function() {
                     checkedCartIds.push($(this).data('cart_id'));
                 });
 
@@ -266,7 +295,7 @@ if (isset($_SESSION['user_id'])) {
                         action: 'purchase_summary.php',
                     });
 
-                    checkedCartIds.forEach(function (cartId) {
+                    checkedCartIds.forEach(function(cartId) {
                         $('<input>', {
                             type: 'hidden',
                             name: 'cart_id[]',
@@ -285,6 +314,11 @@ if (isset($_SESSION['user_id'])) {
 
 
             $('#cartTable').DataTable({
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
+                
                 "ajax": {
                     "url": "json_cart.php",
                     data: {
@@ -292,15 +326,71 @@ if (isset($_SESSION['user_id'])) {
                     },
                     "dataSrc": ""
                 },
+
                 "columns": [{
                     "data": "item"
                 }],
-                "pageLength": 500 // Set the default page length to 3
+                "pageLength": 500,
+            });
+
+
+            $('#cartTable').on('change', '#select_all', function() {
+                if ($(this).prop('checked')) {
+                    $('[id="checkbox-active"]').prop('checked', true);
+                    var checkedCartIds = [];
+                    $('[id="checkbox-active"]:checked').each(function() {
+                        var cartId = $(this).data('cart_id');
+                        checkedCartIds.push(cartId);
+                    });
+
+                    $.ajax({
+                        url: 'process_select_all_cart.php',
+                        type: 'POST',
+                        data: {
+                            cartIds: checkedCartIds
+                        },
+                        success: function(response) {
+                            console.log(response);
+
+                            $('#infoTable').DataTable().ajax.reload();
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    var checkedCartIds = [];
+                    $('[id="checkbox-active"]:checked').each(function() {
+                        var cartId = $(this).data('cart_id');
+                        checkedCartIds.push(cartId);
+                    });
+                    $('[id="checkbox-active"]').prop('checked', false);
+
+
+
+                    $.ajax({
+                        url: 'process_deselect_all_cart.php',
+                        type: 'POST',
+                        data: {
+                            cartIds: checkedCartIds
+                        },
+                        success: function(response) {
+                            console.log(response);
+
+                            $('#infoTable').DataTable().ajax.reload();
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                }
             });
 
 
             // Listen for changes to quantity input using event delegation
-            $('#cartTable').on('change', '#quantity_input', function () {
+            $('#cartTable').on('change', '#quantity_input', function() {
                 var cart_id = $(this).data('cart_id');
                 var quantity = $(this).val();
 
@@ -311,7 +401,7 @@ if (isset($_SESSION['user_id'])) {
                         cart_id: cart_id,
                         quantity: quantity
                     },
-                    success: function (response) {
+                    success: function(response) {
                         $('#infoTable').DataTable().ajax.reload();
                         $('#cartTable').DataTable().ajax.reload();
 
@@ -322,7 +412,7 @@ if (isset($_SESSION['user_id'])) {
 
 
             // Add click event handler for "delete" buttons
-            $('#cartTable').on('click', '.delete-cart-item', function () {
+            $('#cartTable').on('click', '.delete-cart-item', function() {
                 var cart_id = $(this).data('cart_id');
 
                 Swal.fire({
@@ -332,7 +422,7 @@ if (isset($_SESSION['user_id'])) {
                     showCancelButton: true,
                     confirmButtonText: 'Delete',
                     cancelButtonText: 'Cancel',
-                }).then(function (result) {
+                }).then(function(result) {
                     if (result.isConfirmed) {
 
                         $.ajax({
@@ -342,7 +432,7 @@ if (isset($_SESSION['user_id'])) {
                                 cart_id: cart_id
                             },
                             dataType: 'json',
-                            success: function (response) {
+                            success: function(response) {
                                 if (response.success) {
                                     Swal.fire('Success', response.message, 'success');
 
@@ -355,7 +445,7 @@ if (isset($_SESSION['user_id'])) {
                                     Swal.fire('Error', response.message, 'error');
                                 }
                             },
-                            error: function () {
+                            error: function() {
                                 Swal.fire('Error', 'Failed to delete the game', 'error');
                             }
                         });
@@ -367,7 +457,7 @@ if (isset($_SESSION['user_id'])) {
 
 
             // Add click event handler for "delete" buttons
-            $('#cartTable').on('click', '#checkbox-active', function () {
+            $('#cartTable').on('click', '#checkbox-active', function() {
                 var cart_id = $(this).data('cart_id');
 
                 $.ajax({
@@ -377,7 +467,7 @@ if (isset($_SESSION['user_id'])) {
                         cart_id: cart_id
                     },
                     dataType: 'json',
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             $('#infoTable').DataTable().ajax.reload();
                             $('#cartTable').DataTable().ajax.reload();
@@ -385,7 +475,7 @@ if (isset($_SESSION['user_id'])) {
                             $('#cartCount').DataTable().ajax.reload();
                         }
                     },
-                    error: function () {
+                    error: function() {
                         Swal.fire('Error', 'Failed to delete the game', 'error');
                     }
                 });

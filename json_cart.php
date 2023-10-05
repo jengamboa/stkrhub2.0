@@ -5,6 +5,84 @@ $json = array();
 
 $user_id = $_GET['user_id'];
 
+
+$item = '
+';
+
+
+
+$item .=
+    '
+    <div class="row" style="padding-bottom:20px;">
+        <div class="col-0 d-flex align-items-center">';
+
+        $sql1 = "SELECT COUNT(*) as total FROM cart WHERE user_id = $user_id AND is_visible = 1";
+        $result1 = $conn->query($sql1);
+        $row1 = $result1->fetch_assoc();
+
+        $totalRows = $row1['total'];
+
+        if ($totalRows > 0) {
+            // Check if all cart_ids for this user have is_active set to 1
+            $sqlActiveCount = "SELECT COUNT(*) as active_count FROM cart WHERE user_id = $user_id AND is_visible = 1 AND is_active = 1";
+            $resultActiveCount = $conn->query($sqlActiveCount);
+            $rowActiveCount = $resultActiveCount->fetch_assoc();
+
+            $activeCount = $rowActiveCount['active_count'];
+
+            if ($activeCount == $totalRows) {
+                $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;" checked>';
+            } else {
+                $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
+            }
+        } else {
+            $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
+        }
+    $item .=
+    '
+        </div>
+
+        <div class="col">
+
+            <div class="card rounded-3 mb-0 p-0" style="background-color: #17172b; padding: 0.1rem;">
+
+                <div class="card-body p-0" style="background-color: #272a4e;">
+                    <div class="row d-flex justify-content-between align-items-center p-2">
+
+
+                        <div class="col-3">
+                            Product
+                        </div>
+
+                        <div class="col-md-2 col-lg-2 col-xl-2 p-0">
+
+                        </div>
+
+                        <div class="col">
+                            Unit Price
+                        </div>
+
+                        <div class="col-2">
+                            Quantity
+                        </div>
+
+                        <div class="col">
+                            Total
+                        </div>
+
+                        <div class="col-md-1">
+                            Actions
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    ';
+
 $sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1";
 $result = $conn->query($sql);
 
@@ -242,16 +320,12 @@ while ($fetched = $result->fetch_assoc()) {
     // $total_price
     $total_price = $quantity * $price;
 
-
-
-
-    $item = '
-
+    $item .= '
 
     <div class="row">
 
         <div class="col-0 d-flex align-items-center">
-            <input type="checkbox" style="transform: scale(2); margin-right: none;"
+            <input type="checkbox" style="transform: scale(1.7); margin-right: none;"
             value="" 
             data-cart_id="' . $cart_id . '"
             id="checkbox-active" ' . $checked . '>
@@ -259,7 +333,7 @@ while ($fetched = $result->fetch_assoc()) {
 
         <div class="col">
 
-            <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #171717; padding: 0.1rem;">
+            <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #17172b; padding: 0.1rem;">
 
                 <div class="card-header py-1">
                     <div class="row p-0">
@@ -319,16 +393,14 @@ while ($fetched = $result->fetch_assoc()) {
 
     </div>
 
-
     ';
+};;
 
 
 
-    $json[] = array(
-        "item" => $item,
-    );
-}
-
+$json[] = array(
+    "item" => $item,
+);
 
 
 echo json_encode($json);
