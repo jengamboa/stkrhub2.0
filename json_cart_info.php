@@ -4,7 +4,7 @@ $json = array();
 
 $user_id = $_GET['user_id'];
 
-$sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_active = 1";
+$sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_active = 1 AND is_visible !=0";
 $result = $conn->query($sql);
 
 $sub_total = 0; // Move the subtotal calculation outside the loop
