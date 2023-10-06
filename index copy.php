@@ -234,33 +234,6 @@ session_start();
             padding: 40px 0;
         }
 
-
-        /* card */
-        .product_card {
-
-            background-image: linear-gradient(to bottom, transparent 60%, #272a4e 100%);
-            border-radius: 10px;
-            display: flex;
-            padding: 1.7px;
-            transition: background-image 0.3s, transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        .product_card:hover {
-            background-image: linear-gradient(to bottom, transparent 60%, #8e38ba 100%);
-            transform: scale(1.03);
-        }
-
-        .product_card .card {
-            background: linear-gradient(to top, #272a4e 0%, #272a4e 25%);
-            border-radius: 10px;
-            width: 100%;
-        }
-
-        .product_card .card:hover {
-            background: linear-gradient(to top, #49265d 0%, #272a4e 20%);
-        }
-
         <?php include 'css/header.css'; ?>
     </style>
 
@@ -437,121 +410,149 @@ session_start();
                     </div>
                     <div class="row">
 
-                        <div class="container mx-auto mt-4 justify-content-around">
-                            <div class="row d-flex justify-content-around">
+                        <?php
+                        $sql = "SELECT * FROM published_built_games ORDER BY published_date DESC LIMIT 8";
+                        $result = $conn->query($sql);
 
-                                <?php
-                                $sql = "SELECT * FROM published_built_games ORDER BY published_date DESC LIMIT 9";
-                                $result = $conn->query($sql);
+                        while ($fetched = $result->fetch_assoc()) {
+                            $published_game_id = $fetched['published_game_id'];
+                            $game_name = $fetched['game_name'];
+                            $category = $fetched['category'];
+                            $edition = $fetched['edition'];
+                            $published_date = $fetched['published_date'];
+                            $creator_id = $fetched['creator_id'];
+                            $age_id = $fetched['age_id'];
+                            $short_description = $fetched['short_description'];
+                            $long_description = $fetched['long_description'];
+                            $category = $fetched['category'];
+                            $website = $fetched['website'];
+                            $logo_path = $fetched['logo_path'];
+                            $min_players = $fetched['min_players'];
+                            $max_players = $fetched['max_players'];
+                            $min_playtime = $fetched['min_playtime'];
+                            $max_playtime = $fetched['max_playtime'];
+                            $marketplace_price = $fetched['marketplace_price'];
 
-                                while ($fetched = $result->fetch_assoc()) {
-                                    $published_game_id = $fetched['published_game_id'];
-                                    $game_name = $fetched['game_name'];
-                                    $category = $fetched['category'];
-                                    $edition = $fetched['edition'];
-                                    $published_date = $fetched['published_date'];
-                                    $creator_id = $fetched['creator_id'];
-                                    $age_id = $fetched['age_id'];
-                                    $short_description = $fetched['short_description'];
-                                    $long_description = $fetched['long_description'];
-                                    $category = $fetched['category'];
-                                    $website = $fetched['website'];
-                                    $logo_path = $fetched['logo_path'];
-                                    $min_players = $fetched['min_players'];
-                                    $max_players = $fetched['max_players'];
-                                    $min_playtime = $fetched['min_playtime'];
-                                    $max_playtime = $fetched['max_playtime'];
-                                    $marketplace_price = $fetched['marketplace_price'];
+                            $rating = "SELECT rating FROM ratings WHERE published_game_id = $published_game_id";
+                            $sqlGetRating = $conn->query($rating);
+                            $ratingsArray = [];
+                            while ($fetchedRating = $sqlGetRating->fetch_assoc()) {
+                                $ratingsArray[] = $fetchedRating['rating'];
+                            }
+                            $ratingSum = array_sum($ratingsArray);
+                            $ratingCount = count($ratingsArray);
+                            $averageRating = ($ratingCount > 0) ? ($ratingSum / $ratingCount) : 0;
 
-                                    $rating = "SELECT rating FROM ratings WHERE published_game_id = $published_game_id";
-                                    $sqlGetRating = $conn->query($rating);
-                                    $ratingsArray = [];
-                                    while ($fetchedRating = $sqlGetRating->fetch_assoc()) {
-                                        $ratingsArray[] = $fetchedRating['rating'];
-                                    }
-                                    $ratingSum = array_sum($ratingsArray);
-                                    $ratingCount = count($ratingsArray);
-                                    $averageRating = ($ratingCount > 0) ? ($ratingSum / $ratingCount) : 0;
-
-                                    if (isset($_SESSION['user_id'])) {
-                                        $a_cart = '
-                                            <a href="#" id="ajax-link" data-published-game-id="' . $published_game_id . '" class="social-info">
-                                        ';
-                                    } else {
-                                        $a_cart = '
-                                            <a href="login_page.php" class="social-info">
-                                        ';
-                                    }
-
-                                    echo '
+                            echo '
                 
-                            <div class="product_card m-3" style="width: 20rem;">
-                                <div class="card" style="border: none;">
+                        <!-- single product -->
+                        <div class="col-lg-3 col-md-6">
                             
-                                    <div class="container p-0" style="margin-bottom: 3rem;">
+                        <div class="single-product" style="border: 5px solid green;">
 
-                                        <div class="image-mini-container" style="overflow: hidden; width: 100%; border-radius: 10px; position: relative; padding-top: 45.25%;">
-
-                                            <img class="card-img-top image-mini" src="img/16x9.jpg" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(to top, transparent 0%, black 40%); mask-image: linear-gradient(to bottom, transparent 0%, black 40%);">
-                                        
-                                        </div>
-
-                                    </div>
-                                
-                                    <div class="title-subtitle-container px-2 py-0" style="position: absolute; top: 0; right: 0; width: 100%;">
-                                        <div class="single-product">
-                                            <div class="product-details">
-                                                <div class="prd-bottom">
-                                                    '.$a_cart.'
-                                                        <span class="ti-bag"></span>
-                                                        <p class="hover-text text-capitalize" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);">Add to Cart</p>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="title-subtitle-container px-2" style="position: absolute; bottom: 0; left: 0; width: 100%;">
-                                        <div class="row" style="width: 100%;">
-                                            <div class="col-1">
-                                                <div class="p-0" style="position: relative; display: inline-block; width: 34px; height: 34px; border-radius: 50%; background-color: #333;">
-                                                <img src="img/i2.jpg" style="
-                                                    position: absolute;
-                                                    top: 0;
-                                                    left: 0;
-                                    
-                                                    height: 100%;
-                                                    width: 100%;
-                                                    object-fit: cover;
-                                                    border-radius: 50%;">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col" style="margin-left: 30px;">
-                                                <div class="row">
-                                                    <h5 class="d-inline-block text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
-                                                        Praeterea iter est quasdam res quas ex communi.asdadaksjdkjaskdasdjkasldjalksdlalsdasdaslkdj
-                                                    </h5>
-                                                </div>
-                                                <div class="row">
-                                                    <h6 class="d-inline-block text-muted text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
-                                                        Category
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="content">
+                          <div class="content-overlay" style="height: 132px; width: 100%;"></div>
+                  
+                          <div class="image-mini-container">
+                            <img class="image-mini" src="img/16x9.jpg" class="card-img-top" alt="...">
+                          </div>
+                  
+                          <div class="content-details fadeIn-bottom">
+                            <p class="card-subtitle mb-2 text-muted h6" style="font-size: 0.58rem;">
+                                ' . $short_description . '
+                            </p>
+                  
+                            <i class="fa-solid fa-clock"></i>
+                            <small>
+                              ' . $max_playtime . '
+                            </small>
+                          </div>
+                  
+                        </div>
+                  
+                        <div class="product-details">
+                          <div>
+                            <i class="fa fa-star text-primary"></i>
+                  
+                            <span class="rating-number">
+                              ' . $averageRating . '
+                            </span>
+                  
+                            <h5 class="card-title">
+                              ' . $game_name . '
+                            </h5>
                             
-                                </div>
-                            </div>
+                          </div>
+                  
+                          <div>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                              <small>
+                                Genre: ' . $category . '
+                              </small>
+                            </h6>
+                  
+                            <h6 class="card-subtitle mb-2 text-muted">
+                              <small>
+                                Creator ID: ' . $creator_id . '
+                              </small>
+                            </h6>
+                  
+                            <h6 class="card-subtitle mb-2 text-muted">
+                              <small>
+                                ' . $published_date . '
+                              </small>
+                            </h6>
+                          </div>
+                  
+                          <span class="lnr" style="color: #26d3e0; padding-left: 5px; padding-right: 5px; border-radius: 10%;">
+                            <i class="fa-solid fa-peso-sign">
+                              ' . $marketplace_price . '
+                            </i>
+                          </span>
+                  
+                          <div class="prd-bottom">';
+
+
+                            if (isset($_SESSION['user_id'])) {
+                                echo '
+                            <a href="#" id="ajax-link" data-published-game-id="' . $published_game_id . '" class="social-info">
+                              <span class="ti-bag"></span>
+                              <p class="hover-text">add to bag</p>
+                            </a>
+
+                            <!--<a href="#" id="ajax-link" data-published-game-id="' . $published_game_id . '">
+                                Click me to trigger AJAX
+                            </a>-->
+                            
+                            ';
+                            } else {
+                                echo '
+                            <a href="login_page.php" class="social-info">
+                              <span class="ti-bag"></span>
+                              <p class="hover-text">add to bag</p>
+                            </a>
+                            ';
+                            }
+                            echo '
+
+                            
+                  
+                            <a href="marketplace_item_page.php?id=' . $published_game_id . '" class="social-info view">
+                              <span class="lnr lnr-move"></span>
+                              <p class="hover-text">View</p>
+                            </a>
+                          </div>
+                        </div>
+                  
+                      </div>
+
+                        </div>
                         
                         ';
-                                }
-                                ?>
+                        }
+                        ?>
 
 
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

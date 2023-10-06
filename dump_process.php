@@ -27,210 +27,193 @@
 
 
   <!-- fontawesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    <?php include 'css/header.css'; ?>
-    <?php include 'css/body.css'; ?>
-    #infoTable tbody tr {
-      background-color: transparent !important;
+    <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>.product_card {
+
+      background-image: linear-gradient(to bottom, transparent 60%, #272a4e 100%);
+      border-radius: 20px;
+      display: flex;
+      padding: 1.7px;
+      transition: background-image 0.3s, transform 0.3s ease;
+      cursor: pointer;
     }
 
-    .image-mini-container {
-      overflow: hidden;
+    .product_card:hover {
+      background-image: linear-gradient(to bottom, transparent 60%, #8e38ba 100%);
+      transform: scale(1.03);
+    }
+
+    .product_card .card {
+      background: linear-gradient(to top, #272a4e 0%, #272a4e 25%);
+      border-radius: 20px;
       width: 100%;
-      position: relative;
-      padding-top: 70%;
     }
 
-    .image-mini {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      -webkit-mask-image: linear-gradient(to left, transparent 0%, black 100%);
-      mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-    }
-
-    .custom-shadow {
-      box-shadow: 0 0 10px #000000;
+    .product_card .card:hover {
+      background: linear-gradient(to top, #49265d 0%, #272a4e 20%);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="col-0 d-flex align-items-center">
-    <input type="checkbox" style="transform: scale(1.5); margin-right: 10px;">
-  </div>
 
 
 
-  <div class="row">
 
-    <div class="col">
+  <div class="product_card" style="width: 20rem;">
+    <div class="card" style="border: none;">
 
-      <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #171717; padding: 0.1rem;">
-
-        <div class="card-header py-1">
-          <div class="row p-0">
-
-
-
-            <div class="col-0 d-flex align-items-center">
-              Classification
-            </div>
-
-            <div class="col-0 d-flex align-items-center ml-auto">
-              <div class="mr-2">order id</div>
-              <div class="mr-2">status</div>
-            </div>
-
-          </div>
-
+      <div class="container p-0" style="margin-bottom: 3rem;">
+        <div class="image-mini-container" style="overflow: hidden; width: 100%; border-radius: 20px; position: relative; padding-top: 45.25%;">
+          <img class="card-img-top image-mini" src="img/i2.jpg" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(to top, transparent 0%, black 40%); mask-image: linear-gradient(to bottom, transparent 0%, black 40%);">
         </div>
+      </div>
 
-        <div class="card-body p-0" style="background-color: #272a4e;">
-          <div class="row d-flex justify-content-between align-items-center ">
-
-            <div class="col-md-2 col-lg-2 col-xl-2 p-0">
-              <div class="container" style="height: 100%; width: 100%;">
-                <div class="image-mini-container mask1">
-                  <img class="image-mini" src="img/i2.jpg">
-                </div>
-              </div>
+      <div class="title-subtitle-container px-2 py-0" style="position: absolute; top: 0; right: 0; width: 100%;">
+        <div class="single-product">
+          <div class="product-details">
+            <div class="prd-bottom">
+              <a href="" class="social-info" data-toggle=>
+                <span class="ti-bag"></span>
+                <p class="hover-text text-capitalize" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);">Add to Cart</p>
+              </a>
             </div>
-
-
-            <div class="col-4">
-              <p class="lead fw-normal mb-2 text-truncate" data-toggle="Title" title="Disabled tooltip"
-                style="max-width: 100%;">Title Lorem ipsum dolor siasdasdertrdtt amet co Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Adipisci consequuntur ipsa quis modi tempora eum id qui maiores iure
-                dolorem quia veritatis, doloribus, quas animi. Porro vitae voluptate officiis quos?</p>
-              <p>
-                <span class="text-muted">Size: </span>M
-                <span class="text-muted">Color: </span>Grey
-              </p>
-            </div>
-
-            <div class="col">
-              <h5 class="mb-0">$499.00</h5>
-            </div>
-
-            <div class="col">
-              <input min="0" max="99" value="1" type="number" class="form-control form-control-sm col-5" />
-            </div>
-
-            <div class="col">
-              <h5 class="mb-0">$499.00</h5>
-            </div>
-
-            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-              <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
-            </div>
-
           </div>
         </div>
+      </div>
 
+      <div class="title-subtitle-container px-2" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+        <div class="row" style="width: 100%;">
+          <div class="col-1">
+            <div class="p-0" style="position: relative; display: inline-block; width: 34px; height: 34px; border-radius: 50%; background-color: #333;">
+              <img src="img/i2.jpg" style="
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 50%;">
+            </div>
+          </div>
+          <div class="col" style="margin-left: 30px;">
+            <div class="row">
+              <h5 class="d-inline-block text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
+                Praeterea iter est quasdam res quas ex communi.asdadaksjdkjaskdasdjkasldjalksdlalsdasdaslkdj
+              </h5>
+            </div>
+            <div class="row">
+              <h6 class="d-inline-block text-muted small text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
+                Category
+              </h6>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
-
   </div>
 
 
-  <div class="container">
-    <div class="row">
-
-      <div class="col-0 d-flex align-items-center">
-        <input type="checkbox" style="transform: scale(1.5); margin-right: 10px;">
-      </div>
-
-      <div class="col">
-
-        <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #171717; padding: 0.1rem;">
-
-          <div class="card-header py-1">
-            <div class="row p-0">
 
 
 
-              <div class="col-0 d-flex align-items-center">
-                Classification
-              </div>
 
-              <div class="col-0 d-flex align-items-center ml-auto">
-                <div class="mr-2">order id</div>
-                <div class="mr-2">status</div>
-              </div>
 
+
+
+
+
+
+
+
+
+
+
+  <div class="container mx-auto mt-4 justify-content-around" style="border: red solid 2px;">
+    <div class="row d-flex justify-content-around">
+
+      <div class="product_card m-2" style="width: 22rem;">
+        <div class="card" style="border: none;">
+
+          <div class="container p-0" style="margin-bottom: 3rem;">
+            <div class="image-mini-container" style="overflow: hidden; width: 100%; border-radius: 20px; position: relative; padding-top: 45.25%;">
+              <img class="card-img-top image-mini" src="img/i2.jpg" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(to top, transparent 0%, black 40%); mask-image: linear-gradient(to bottom, transparent 0%, black 40%);">
             </div>
-
           </div>
 
-          <div class="card-body p-0" style="background-color: #272a4e;">
-            <div class="row d-flex justify-content-between align-items-center ">
-
-              <div class="col-md-2 col-lg-2 col-xl-2 p-0">
-                <div class="container" style="height: 100%; width: 100%;">
-                  <div class="image-mini-container mask1">
-                    <img class="image-mini" src="img/i2.jpg">
-                  </div>
+          <div class="title-subtitle-container px-2 py-0" style="position: absolute; top: 0; right: 0; width: 100%;">
+            <div class="single-product">
+              <div class="product-details">
+                <div class="prd-bottom">
+                  <a href="" class="social-info" data-toggle=>
+                    <span class="ti-bag"></span>
+                    <p class="hover-text text-capitalize" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);">Add to Cart</p>
+                  </a>
                 </div>
               </div>
+            </div>
+          </div>
 
+          <div class="title-subtitle-container px-2" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+            <div class="row" style="width: 100%;">
+              <div class="col-1">
+                <div class="p-0" style="position: relative; display: inline-block; width: 34px; height: 34px; border-radius: 50%; background-color: #333;">
+                  <img src="img/i2.jpg" style="
+                position: absolute;
+                top: 0;
+                left: 0;
 
-              <div class="col-3 overflow-hidden">
-                <p class="lead fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title">
-                  Title
-                </p>
-
-                <p>
-                  <span class="text-muted">Size: </span>M
-                  <span class="text-muted">Color: </span>Grey
-                </p>
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 50%;">
+                </div>
               </div>
-
-              <div class="col">
-                <h5 class="mb-0">$499.00</h5>
+              <div class="col" style="margin-left: 30px;">
+                <div class="row">
+                  <h5 class="d-inline-block text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
+                    Praeterea iter est quasdam res quas ex communi.asdadaksjdkjaskdasdjkasldjalksdlalsdasdaslkdj
+                  </h5>
+                </div>
+                <div class="row">
+                  <h6 class="d-inline-block text-muted text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
+                    Category
+                  </h6>
+                </div>
               </div>
-
-              <div class="col-2">
-                <input min="0" max="99" value="1" type="number" class="form-control form-control-sm col-5" />
-              </div>
-
-              <div class="col">
-                <h5 class="mb-0">$499.00</h5>
-              </div>
-
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
-              </div>
-
             </div>
           </div>
 
         </div>
-
       </div>
 
+      
 
+      
     </div>
-
-    
   </div>
+
+
+
+
+
+
+
+
+
+
+
 
   <script src="js/vendor/jquery-2.2.4.min.js"></script>
 
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-    integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script src="js/vendor/bootstrap.min.js"></script>
   <script src="js/jquery.ajaxchimp.min.js"></script>
   <script src="js/jquery.nice-select.min.js"></script>
