@@ -236,44 +236,6 @@ if (isset($_SESSION['user_id'])) {
                 ]
             });
 
-            // Listen for changes to quantity input using event delegation
-            $('#infoTable').on('click', '.delete-selected', function() {
-
-                Swal.fire({
-                    title: 'Delete Cart',
-                    text: 'Are you sure you want to delete these items?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Delete',
-                    cancelButtonText: 'Cancel',
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-
-                        $.ajax({
-                            type: 'POST',
-                            url: 'process_delete_selected_cart.php',
-                            data: {},
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.success) {
-                                    Swal.fire('Success', response.message, 'success');
-
-                                    $('#infoTable').DataTable().ajax.reload();
-                                    $('#cartTable').DataTable().ajax.reload();
-
-                                    $('#cartCount').DataTable().ajax.reload();
-
-                                } else {
-                                    Swal.fire('Error', response.message, 'error');
-                                }
-                            },
-                            error: function() {
-                                Swal.fire('Error', 'Failed to delete the game', 'error');
-                            }
-                        });
-                    }
-                });
-            });
 
 
             // Listen for changes to quantity input using event delegation
@@ -309,6 +271,72 @@ if (isset($_SESSION['user_id'])) {
             });
 
 
+            $('#infoTable').on('click', '.delete-selected', function() {
+                var checkedCartIds = [];
+                $('input[data-cart_id]:checked').each(function() {
+                    checkedCartIds.push($(this).data('cart_id'));
+                });
+
+                if (checkedCartIds.length === 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'You don\'t have any selected!',
+                    });
+                } else {
+
+                    Swal.fire({
+                        title: 'Delete',
+                        text: 'Are you sure you want to delete these items?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Delete',
+                        cancelButtonText: 'Cancel',
+                    }).then(function(result) {
+                        if (result.isConfirmed) {
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'process_delete_selected_cart.php',
+                                data: {
+                                    cartIds: checkedCartIds
+                                },
+                                dataType: 'json',
+                                success: function(response) {
+                                    if (response.success) {
+                                        $('#infoTable').DataTable().ajax.reload();
+                                        $('#cartTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
+
+                                        Swal.fire('Success', response.message, 'success');
+                                    } else {
+                                        $('#infoTable').DataTable().ajax.reload();
+                                        $('#cartTable').DataTable().ajax.reload();
+
+                                        $('#cartCount').DataTable().ajax.reload();
+
+
+                                        Swal.fire('Error', response.message, 'error');
+                                    }
+                                },
+                                error: function() {
+
+                                    $('#infoTable').DataTable().ajax.reload();
+                                    $('#cartTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
+
+                                    Swal.fire('Error', 'Failed to delete the items', 'error');
+                                }
+                            });
+                        }
+                    });
+
+                }
+            });
+
+
 
 
 
@@ -318,7 +346,7 @@ if (isset($_SESSION['user_id'])) {
                 info: false,
                 paging: false,
                 ordering: false,
-                
+
                 "ajax": {
                     "url": "json_cart.php",
                     data: {

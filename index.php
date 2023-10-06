@@ -126,6 +126,10 @@ session_start();
             object-fit: cover;
         }
 
+        .active .nav-link {
+            color: #26d3e0 !important;
+        }
+
 
 
 
@@ -247,7 +251,7 @@ session_start();
         }
 
         .product_card:hover {
-            background-image: linear-gradient(to bottom, transparent 60%, #8e38ba 100%);
+            background-image: linear-gradient(to bottom, transparent 60%, #b660e8 100%);
             transform: scale(1.03);
         }
 
@@ -485,10 +489,10 @@ session_start();
 
                                     echo '
                 
-                            <div class="product_card m-3" style="width: 20rem;">
+                            <div class="product_card m-3" id="published_game" data-published_game_id="' . $published_game_id . '" style="width: 20rem;">
                                 <div class="card" style="border: none;">
                             
-                                    <div class="container p-0" style="margin-bottom: 3rem;">
+                                    <div class="container p-0" style="margin-bottom: 4rem;">
 
                                         <div class="image-mini-container" style="overflow: hidden; width: 100%; border-radius: 10px; position: relative; padding-top: 45.25%;">
 
@@ -502,7 +506,7 @@ session_start();
                                         <div class="single-product">
                                             <div class="product-details">
                                                 <div class="prd-bottom">
-                                                    '.$a_cart.'
+                                                    ' . $a_cart . '
                                                         <span class="ti-bag"></span>
                                                         <p class="hover-text text-capitalize" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);">Add to Cart</p>
                                                     </a>
@@ -533,10 +537,19 @@ session_start();
                                                         Praeterea iter est quasdam res quas ex communi.asdadaksjdkjaskdasdjkasldjalksdlalsdasdaslkdj
                                                     </h5>
                                                 </div>
+
                                                 <div class="row">
-                                                    <h6 class="d-inline-block text-muted text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
-                                                        Category
+                                                    <h5 class="d-inline-block text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
+                                                        &#8369;' . $marketplace_price . '
+                                                    </h5>
+                                                </div>
+                                                
+
+                                                <div class="row">
+                                                    <h6 class="d-inline-block small text-muted text-truncate" style="max-width: 240px;" data-toggle="tooltip" title="hahah">
+                                                        Board Game
                                                     </h6>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -714,6 +727,11 @@ session_start();
                 });
 
 
+                $(".product_card").click(function() {
+                    var published_game_id = $(this).data("published_game_id");
+
+                    windows.location.href="marketplace_item_page.php?id="+published_game_id;
+                });
 
 
             });

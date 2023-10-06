@@ -34,95 +34,40 @@
 				</button>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex;
-							
-							align-items: center;
-						">
-
+					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center;">
 
 						<li class="nav-item <?php echo $header_home ?> ">
 							<a class="nav-link" href="index.php">Home</a>
 						</li>
 
-						<li class="nav-item submenu dropdown">
-							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-								<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a>
-								</li>
-								<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-								<li class="nav-item active"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-								<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
-							</ul>
+						<li class="nav-item <?php echo $header_marketplace ?> ">
+							<a class="nav-link" href="index.php">Marketplace</a>
 						</li>
 
-						<li class="nav-item submenu dropdown">
-							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-								<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-							</ul>
+						<li class="nav-item <?php echo $header_create_game ?> ">
+							<a class="nav-link" href="index.php">Create Game</a>
 						</li>
 
-						<li class="nav-item submenu dropdown">
-							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-								<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-								<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-							</ul>
+						<li class="nav-item <?php echo $header_game_component ?> ">
+							<a class="nav-link" href="index.php">Buy Game Components</a>
 						</li>
 
 						<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
 
-						<li class="nav-item"></li>
 
 					</ul>
 
 					<ul class="nav navbar-nav menu_nav ml-auto" style="display: flex; align-items: center; padding-top:0px">
-						<!-- // if (isset($_SESSION['user_id'])) {
-							// $user_id = $_SESSION['user_id'];
 
-							// echo ' -->
 						<li class="nav-item">
 							<a class="nav-link" href="cart_page.php">
-								
+
 								<table id="cartCount" class="display" style="width: 100%;">
 									<tbody>
 									</tbody>
 								</table>
-
 							</a>
 						</li>
-
-						<!-- ';
-
-							// $sqlCart = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1";
-							// $resultCart = $conn->query($sqlCart);
-
-							// $count = 0;
-
-							// while ($fetchedCart = $resultCart->fetch_assoc()) {
-							// 	$cart_id = $fetchedCart['cart_id'];
-							// 	$count + 1; //
-							// }
-
-
-							// echo '
-							// <span class="cart-count">(' . $count . ')</span>
-							// 		</span>
-							// 	</a>
-							// </li>
-							// 	';
-						} else {
-							echo '
-								
-								';
-						}
-						?> -->
-
-
-
 
 						<li class="nav-item" style="display: flex; align-items: center;">
 

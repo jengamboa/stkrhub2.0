@@ -541,6 +541,7 @@ session_start();
                               <span class="lnr lnr-move"></span>
                               <p class="hover-text">View</p>
                             </a>
+                            
                           </div>
                         </div>
                   

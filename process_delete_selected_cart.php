@@ -1,29 +1,28 @@
 <?php
 session_start();
 include 'connection.php';
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve the 'cartIds' array from the POST data
+    $cartIds = $_POST['cartIds'];
 
-    $conn->begin_transaction();
+    if (!empty($cartIds)) {
+        $cartIds = array_map('intval', $cartIds); // Sanitize input
 
-    try {
-        $sqlDeleteCart = "DELETE FROM cart WHERE user_id = $user_id AND is_active = 1";
-        $conn->query($sqlDeleteCart);
+        // Use a prepared statement to update the 'is_visible' column
+        $sql = "UPDATE cart SET is_visible = 0 WHERE cart_id IN (" . implode(',', $cartIds) . ")";
 
-        $conn->commit();
-
-        $response = ["success" => true, "message" => "Game and related records deleted successfully"];
-    } catch (mysqli_sql_exception $e) {
-        $conn->rollback();
-
-        $response = ["success" => false, "message" => "Database error: " . $e->getMessage()];
+        if ($conn->query($sql)) {
+            $response = ["success" => true, "message" => "Items marked as invisible successfully"];
+        } else {
+            $response = ["success" => false, "message" => "Error updating items: " . $conn->error];
+        }
+    } else {
+        $response = ["success" => false, "message" => "No items selected for update"];
     }
-
-    echo json_encode($response);
 } else {
     $response = ["success" => false, "message" => "Invalid request method"];
-    echo json_encode($response);
 }
+
+echo json_encode($response);
+?>
