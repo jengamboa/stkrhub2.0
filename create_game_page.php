@@ -77,10 +77,13 @@ include 'connection.php';
         }
 
 
-        <?php include 'css/header.css'; ?>.sticky-wrapper {
+        <?php include 'css/header.css'; ?>
+        
+        .sticky-wrapper {
             top: 0px !important;
         }
 
+        
         .header_area .main_menu .main_box {
             max-width: 100%;
         }
@@ -223,7 +226,11 @@ include 'connection.php';
 </head>
 
 <body>
-    <?php include 'html/page_header.php'; ?>
+    <?php 
+    $header_create_game = 'active';
+    include 'html/page_header.php';
+    
+    ?>
 
     <!-- Back to top button -->
     <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
@@ -329,7 +336,7 @@ include 'connection.php';
 
                         <div class="row">
                             <div class="col-4">
-                                <h1>Created Games</h1>
+                                <h2>Created Games</h2>
                             </div>
 
                             <div class="col">

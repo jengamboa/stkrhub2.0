@@ -151,29 +151,6 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-    <nav class="navbar fixed-bottom navbar-expand-lg bg-primary navbar-dark">
-
-        <div class="container">
-            <div class="row">
-
-                <div class="col">
-                    <!-- DataTables Build Game  -->
-                    <table id="infoTable" class="display">
-
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-        </div>
-
-
-
-    </nav>
-
-
 
 
 
@@ -230,18 +207,16 @@ if (isset($_SESSION['user_id'])) {
                 },
 
                 columns: [{
-                        data: "sub_total"
+                        data: "item"
                     },
-                    {
-                        "data": "actions"
-                    }
+
                 ]
             });
 
 
 
             // Listen for changes to quantity input using event delegation
-            $('#infoTable').on('click', '.purchase-selected', function() {
+            $('#cartTable').on('click', '.purchase-selected', function() {
                 var checkedCartIds = [];
                 $('input[data-cart_id]:checked').each(function() {
                     checkedCartIds.push($(this).data('cart_id'));
@@ -273,7 +248,7 @@ if (isset($_SESSION['user_id'])) {
             });
 
 
-            $('#infoTable').on('click', '.delete-selected', function() {
+            $('#cartTable').on('click', '.delete-selected', function() {
                 var checkedCartIds = [];
                 $('input[data-cart_id]:checked').each(function() {
                     checkedCartIds.push($(this).data('cart_id'));
@@ -383,6 +358,7 @@ if (isset($_SESSION['user_id'])) {
                             console.log(response);
 
                             $('#infoTable').DataTable().ajax.reload();
+                            $('#cartTable').DataTable().ajax.reload();
 
                         },
                         error: function(xhr, status, error) {
@@ -409,6 +385,7 @@ if (isset($_SESSION['user_id'])) {
                             console.log(response);
 
                             $('#infoTable').DataTable().ajax.reload();
+                            $('#cartTable').DataTable().ajax.reload();
 
                         },
                         error: function(xhr, status, error) {

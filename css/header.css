@@ -61,3 +61,8 @@ table.dataTable.no-footer {
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow properties as needed */
 }
+
+
+.active .nav-link {
+  color: #26d3e0 !important;
+}

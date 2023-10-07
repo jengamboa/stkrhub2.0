@@ -52,7 +52,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-
         <?php include 'css/body.css';
         include 'css/header.css' ?>#infoPurhaseTable tbody tr {
             background-color: transparent !important;
@@ -63,6 +62,10 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 <body>
 
     <?php include 'html/page_header.php'; ?>
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
         <div class="container">
@@ -203,7 +206,7 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                                         $total_payment = ($sub_total + $weight_price);
 
-                                        
+
                                         echo 'Total Payment: ' . $total_payment;
 
 

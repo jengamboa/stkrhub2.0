@@ -123,10 +123,6 @@ session_start();
             object-fit: cover;
         }
 
-        .active .nav-link {
-            color: #26d3e0 !important;
-        }
-
 
 
 
@@ -334,8 +330,8 @@ session_start();
 
 
         <!-- Start category Area -->
-        <section class="category-area section_gap" style="
-        background-image: url('img/Backgrounds/bg1.png');
+        <section class="pb-5" style="
+            background-image: url('img/Backgrounds/bg1.png');
         background-size: cover;
         background-repeat: no-repeat;
         /* background-attachment: fixed; */

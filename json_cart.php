@@ -307,7 +307,7 @@ while ($fetched = $result->fetch_assoc()) {
     // quantity_input
     if ($ticket_id) {
         $quantity_input = '
-        <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input" disabled/>
+        <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input" disabled data-toggle="tooltip" title="You need only 1 ticket per game" />
         ';
     } else {
         $quantity_input = '
@@ -391,8 +391,61 @@ while ($fetched = $result->fetch_assoc()) {
 
     </div>
 
+
+    
+
     ';
-};;
+};
+
+
+$sqlA = "SELECT * FROM cart WHERE user_id = $user_id AND is_active = 1 AND is_visible !=0";
+$resultA = $conn->query($sqlA);
+
+$sub_total = 0; // Move the subtotal calculation outside the loop
+
+while ($fetchedA = $resultA->fetch_assoc()) {
+    $cart_id = $fetchedA['cart_id'];
+    $published_game_id = $fetchedA['published_game_id'];
+    $built_game_id = $fetchedA['built_game_id'];
+    $added_component_id = $fetchedA['added_component_id'];
+    $quantity = $fetchedA['quantity'];
+    $price = $fetchedA['price'];
+    $is_active = $fetchedA['is_active'];
+
+    // Calculate the subtotal for each item and accumulate it
+    $sub_total += $price * $quantity;
+}
+
+$item .= '
+<div
+style="position: sticky;
+bottom: 0;
+
+border-radius: 15px 15px 0px 0px;
+box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+
+background: rgba(39, 42, 78, 0.77);
+
+backdrop-filter: blur(5.7px);
+-webkit-backdrop-filter: blur(5.7px);
+">
+
+    <div class="d-flex justify-content-between">
+        <div class="row m-4">
+            asd
+            <button class="delete-selected ml-4">Delete</button>
+        </div>
+
+        <div class="row m-4">
+            <span>Amount to Pay: </span><h3>&nbsp; &#8369;'.$sub_total.'</h3>
+            <button class="purchase-selected ml-4">Purchase</button>
+        </div>
+    </div>
+
+</div>
+
+'
+;
 
 
 

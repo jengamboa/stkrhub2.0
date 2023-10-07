@@ -41,9 +41,15 @@ $actions = '
 ';
 
 
+
+
+$item = '
+'.$sub_total.' '.$actions.'
+';
+
+
 $json[] = array(
-    "sub_total" => $sub_total,
-    "actions" => $actions,
+    "item" => $item,
 );
 
 echo json_encode($json);
