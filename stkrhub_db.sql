@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2023 at 10:57 AM
+-- Generation Time: Oct 07, 2023 at 03:38 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,13 +46,12 @@ CREATE TABLE `added_game_components` (
 INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`, `user_id`) VALUES
 (458, 128, 1, 0, '', 1, NULL, '7x7', 10),
 (459, 129, 3, 0, NULL, 1, 1, '7x7', 10),
-(460, 130, 3, 0, NULL, 1, 1, '7x7', 3),
 (461, NULL, 3, 0, NULL, 1, 1, '7x7', 3),
 (462, NULL, 1, 0, '', 1, NULL, '7x7', 3),
 (463, NULL, 1, 0, '', 1, NULL, '7x7', 3),
 (464, NULL, 3, 0, NULL, 1, 1, '7x7', 3),
 (465, NULL, 1, 1, 'uploads/651e699fcb46d_x2mate.com - Hayaan Mo Sila Lyrics (320 kbps) [vocals].mp3', 3, NULL, '7x7', 3),
-(466, 131, 4, 0, '', 1, NULL, '10x10', 3);
+(477, 158, 2, 1, 'uploads/652131a890cbd_5.png', 1, NULL, '7x7', 3);
 
 -- --------------------------------------------------------
 
@@ -256,7 +255,7 @@ CREATE TABLE `built_games` (
 
 INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_pending_published`, `is_request_denied`, `is_published`, `price`) VALUES
 (106, 0, 'ne', '', 3, '2023-09-27 12:34:08', 0, 0, 0, 0, 0, 0, 0, 7.00),
-(108, 102, 'adsasd67', '', 3, '2023-09-27 13:01:16', 0, 0, 1, 0, 0, 0, 0, 0.00),
+(108, 102, 'adsasd67ff', '', 3, '2023-09-27 13:01:16', 0, 0, 1, 0, 0, 0, 0, 0.00),
 (109, 0, 'bago', '', 3, '2023-09-27 13:07:23', 0, 0, 0, 0, 0, 0, 0, 140.00),
 (112, 107, 'nicolecole', '', 10, '2023-09-28 04:28:06', 0, 0, 0, 0, 0, 0, 0, 21.00),
 (114, 0, 'asdda', 'asds', 10, '2023-09-28 20:09:00', 0, 0, 1, 0, 0, 0, 0, 55.00);
@@ -311,33 +310,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built_game_id`, `added_component_id`, `ticket_id`, `quantity`, `price`, `is_active`, `is_visible`) VALUES
-(276, 10, 131, NULL, NULL, NULL, NULL, 20, 65.00, 1, 0),
-(277, 10, 174, NULL, NULL, NULL, NULL, 3, 1526.00, 1, 0),
-(295, 3, 3, NULL, NULL, NULL, NULL, 2, 80.00, 1, 0),
-(297, 3, 176, NULL, NULL, NULL, NULL, 12, 1093.00, 1, 0),
-(331, 10, NULL, 116, NULL, NULL, 18, 1, 1.20, 1, 0),
-(332, 3, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(333, 3, 176, NULL, NULL, NULL, NULL, 1, 1093.00, 1, 0),
-(342, 10, NULL, 128, NULL, NULL, 26, 1, 1.20, 1, 0),
-(343, 10, NULL, 129, NULL, NULL, 27, 1, 0.70, 1, 0),
-(344, 10, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(345, 10, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(346, 10, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(347, 10, 176, NULL, NULL, NULL, NULL, 1, 1093.00, 1, 0),
-(348, 10, 177, NULL, NULL, NULL, NULL, 1, 855.00, 1, 0),
-(349, 10, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
-(350, 3, NULL, 130, NULL, NULL, 28, 1, 0.70, 1, 0),
-(355, 3, NULL, NULL, NULL, 463, NULL, 1, 12.00, 1, 0),
-(356, 10, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(357, 10, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(358, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
-(359, 3, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(361, 3, 131, NULL, NULL, NULL, NULL, 1, 65.00, 1, 1),
-(366, 3, NULL, NULL, NULL, 464, NULL, 1, 7.00, 1, 1),
-(367, 3, NULL, NULL, NULL, 465, NULL, 82, 12.00, 1, 1),
-(368, 3, NULL, 131, NULL, NULL, 29, 1, 1.40, 1, 1),
-(369, 3, 175, NULL, NULL, NULL, NULL, 1, 115.00, 0, 1),
-(370, 3, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 1);
+(376, 3, 177, NULL, NULL, NULL, NULL, 1, 855.00, 1, 1),
+(377, 3, 3, NULL, NULL, NULL, NULL, 4, 80.00, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -586,8 +560,8 @@ CREATE TABLE `games` (
 
 INSERT INTO `games` (`game_id`, `name`, `description`, `user_id`, `created_at`, `is_built`, `is_pending`, `to_approve`, `is_denied`, `is_approved`, `is_visible`) VALUES
 (116, 'ggs', 'ahaha', 10, '2023-10-01 19:54:54', 0, 0, 1, 0, 0, 0),
-(117, 'gamesgame', 'games\n', 3, '2023-10-02 22:26:39', 0, 0, 0, 0, 0, 1),
-(118, 'games', 'games\n', 3, '2023-10-02 22:26:44', 0, 0, 0, 0, 0, 1),
+(117, 'gamesgame', 'games\n', 3, '2023-10-02 22:26:39', 0, 0, 0, 0, 0, 0),
+(118, 'games', 'games\n', 3, '2023-10-02 22:26:44', 0, 0, 0, 0, 0, 0),
 (119, 'games ', 'hmm', 10, '2023-10-02 22:53:48', 0, 1, 0, 0, 0, 0),
 (120, 'asd', 'asd', 10, '2023-10-02 23:02:34', 0, 0, 0, 0, 0, 0),
 (121, 'Z', '', 10, '2023-10-02 23:24:17', 0, 0, 0, 0, 0, 0),
@@ -599,8 +573,41 @@ INSERT INTO `games` (`game_id`, `name`, `description`, `user_id`, `created_at`, 
 (127, 'asd', '', 10, '2023-10-02 23:49:21', 0, 1, 0, 0, 0, 0),
 (128, 'asdasd', '', 10, '2023-10-02 23:55:19', 0, 0, 1, 0, 0, 1),
 (129, 'new game', 'asd', 10, '2023-10-02 23:57:19', 0, 0, 1, 0, 0, 1),
-(130, 'asd', '', 3, '2023-10-03 01:12:17', 0, 0, 1, 0, 0, 1),
-(131, 'as', 's', 3, '2023-10-05 15:54:58', 0, 1, 0, 0, 0, 1);
+(130, 'asd', '', 3, '2023-10-03 01:12:17', 0, 0, 1, 0, 0, 0),
+(131, 'as', 's', 3, '2023-10-05 15:54:58', 0, 1, 0, 0, 0, 0),
+(132, 'aa', 'hh', 3, '2023-10-07 11:09:02', 0, 0, 0, 0, 0, 0),
+(133, 'aa', '', 3, '2023-10-07 11:10:54', 0, 0, 0, 0, 0, 0),
+(134, 'a', '', 3, '2023-10-07 11:11:29', 0, 0, 0, 0, 0, 0),
+(135, 'f', 'a', 3, '2023-10-07 11:12:19', 0, 0, 0, 0, 0, 0),
+(136, 'asd', 'asd', 3, '2023-10-07 11:45:40', 0, 0, 0, 0, 0, 0),
+(137, 'asdasdajksdhajsdhajsdkh', '', 3, '2023-10-07 12:10:48', 0, 0, 0, 0, 0, 0),
+(138, 'd', 'asd', 3, '2023-10-07 12:10:55', 0, 0, 0, 0, 0, 0),
+(139, 'asd', '', 3, '2023-10-07 12:11:00', 0, 0, 0, 0, 0, 0),
+(140, 'sdasd', 'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', 3, '2023-10-07 12:11:08', 0, 0, 0, 0, 0, 0),
+(141, 'asdasd', '', 3, '2023-10-07 12:16:09', 0, 0, 0, 0, 0, 0),
+(142, 'this is the game tgame of tasdasdasd', '', 3, '2023-10-07 12:16:18', 0, 0, 0, 0, 0, 0),
+(143, 'adsklfjklajsfdalskdalksdjkasdklajsdklajklsdjadsklfjklajsfdalskdalksdjkasdklajsdklajklsdjadsklfjklajsfdalskdalksdjkasdklajsdklajklsdjadsklfjklajsfdalskdalksdjkasdklajsdklajklsdjadsklfjklajsfdalskdalksdjkasdklajsdklajklsdj', '', 3, '2023-10-07 12:16:36', 0, 0, 0, 0, 0, 0),
+(144, 'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', '', 3, '2023-10-07 12:17:15', 0, 0, 0, 0, 0, 0),
+(145, 'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', '', 3, '2023-10-07 12:18:25', 0, 0, 0, 0, 0, 0),
+(146, 'asdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasdaasdasdadsasda', '', 3, '2023-10-07 12:23:16', 0, 0, 0, 0, 0, 0),
+(147, 'asdasdawdawdawdawdawd', '', 3, '2023-10-07 12:45:32', 0, 0, 0, 0, 0, 0),
+(148, 'jklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkjjklaefhlajlwkj', '', 3, '2023-10-07 12:45:37', 0, 0, 0, 0, 0, 0),
+(149, 'klajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdklklajwdkl', '', 3, '2023-10-07 12:55:41', 0, 0, 0, 0, 0, 0),
+(150, 'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', '', 3, '2023-10-07 13:44:39', 0, 0, 0, 0, 0, 0),
+(151, 'd', '', 3, '2023-10-07 14:06:36', 0, 0, 0, 0, 0, 0),
+(152, 'fasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas', 'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', 3, '2023-10-07 14:07:22', 0, 0, 0, 0, 0, 0),
+(153, 'asd', '', 3, '2023-10-07 14:18:52', 0, 0, 0, 0, 0, 0),
+(154, 'sd', 'f', 3, '2023-10-07 15:03:44', 0, 0, 0, 0, 0, 0),
+(155, 's', '', 3, '2023-10-07 15:44:49', 0, 0, 0, 0, 0, 0),
+(156, 'f', '', 3, '2023-10-07 15:50:09', 0, 0, 0, 0, 0, 0),
+(157, 's', '', 3, '2023-10-07 15:50:18', 0, 0, 0, 0, 0, 0),
+(158, 'asd', '', 3, '2023-10-07 18:13:47', 0, 1, 0, 0, 0, 1),
+(159, 'ads', '', 3, '2023-10-07 18:13:51', 0, 0, 0, 0, 0, 0),
+(160, 'd', '', 3, '2023-10-07 18:13:54', 0, 0, 0, 0, 0, 0),
+(161, 'asd', '', 3, '2023-10-07 18:13:58', 0, 0, 0, 0, 0, 1),
+(162, 'd', '', 3, '2023-10-07 18:14:00', 0, 0, 0, 0, 0, 1),
+(163, 'ddd', '', 3, '2023-10-07 18:14:05', 0, 0, 0, 0, 0, 1),
+(164, 'd', '', 3, '2023-10-07 18:14:07', 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -723,16 +730,6 @@ CREATE TABLE `orders` (
   `paypal_transaction_id` varchar(255) DEFAULT NULL,
   `payer_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `cart_id`, `user_id`, `published_game_id`, `built_game_id`, `added_component_id`, `ticket_id`, `quantity`, `price`, `is_pending`, `in_production`, `to_ship`, `to_deliver`, `is_received`, `is_canceled`, `is_completely_canceled`, `order_date`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`, `is_rated`, `fullname`, `number`, `region`, `province`, `city`, `barangay`, `zip`, `street`, `total_payment`, `payment_id`, `paypal_transaction_id`, `payer_id`) VALUES
-(97, 356, 10, 175, NULL, NULL, NULL, 1, 115.00, 0, 0, 0, 1, 0, 0, 0, '2023-10-03 21:44:24', 45.00, 9.00, 36.00, 115.00, 0, '', '', 'Metro Manila', '', '', '', '', '', 200.00, 2, '84786509A2110294U', 'S9QZENZKTVY9A'),
-(98, 357, 10, 175, NULL, NULL, NULL, 1, 115.00, 0, 0, 0, 1, 0, 0, 0, '2023-10-03 22:24:31', 45.00, 9.00, 36.00, 115.00, 0, '', '', 'Metro Manila', '', '', '', '', '', 200.00, 79423108, '6D1273863G664982K', 'S9QZENZKTVY9A'),
-(99, 358, 3, 174, NULL, NULL, NULL, 1, 1526.00, 1, 0, 0, 0, 0, 0, 0, '2023-10-05 09:53:47', 700.00, 140.00, 560.00, 1526.00, 0, 'Denzel Go', '', 'Visayas', '', 'Valenzuela City', '', '', '8 Doneza St. Balubaran Malinta', 1741.00, 9, '99K28012AK103914V', '5HGF7ZREXPDNG'),
-(100, 359, 3, 175, NULL, NULL, NULL, 1, 115.00, 1, 0, 0, 0, 0, 0, 0, '2023-10-05 09:53:47', 45.00, 9.00, 36.00, 115.00, 0, 'Denzel Go', '', 'Visayas', '', 'Valenzuela City', '', '', '8 Doneza St. Balubaran Malinta', 1741.00, 9, '99K28012AK103914V', '5HGF7ZREXPDNG');
 
 -- --------------------------------------------------------
 
@@ -1017,8 +1014,7 @@ CREATE TABLE `tickets` (
 INSERT INTO `tickets` (`ticket_id`, `user_id`, `game_id`, `is_approved`, `is_denied`, `created_at`, `is_at_cart`, `is_purchased`, `is_accepted`, `is_canceled`, `total_price`, `ticket_price`) VALUES
 (25, 10, 129, 0, 0, '2023-10-02 15:57:40', 1, 0, 0, 0, 7.00, 0.70),
 (27, 10, 129, 0, 0, '2023-10-02 16:21:38', 0, 1, 0, 0, 7.00, 0.70),
-(28, 3, 130, 0, 0, '2023-10-02 17:12:29', 0, 1, 0, 0, 7.00, 0.70),
-(29, 3, 131, 0, 0, '2023-10-05 07:55:19', 1, 0, 0, 0, 14.00, 1.40);
+(30, 3, 158, 0, 0, '2023-10-07 11:05:42', 1, 0, 0, 0, 11.00, 1.10);
 
 -- --------------------------------------------------------
 
@@ -1062,16 +1058,17 @@ CREATE TABLE `tutorials` (
   `tutorial_description` text DEFAULT NULL,
   `tutorial_link` varchar(255) DEFAULT NULL,
   `is_primary` tinyint(1) DEFAULT 0,
-  `time_added` datetime DEFAULT NULL
+  `time_added` datetime DEFAULT NULL,
+  `designation` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tutorials`
 --
 
-INSERT INTO `tutorials` (`tutorial_id`, `tutorial_title`, `tutorial_description`, `tutorial_link`, `is_primary`, `time_added`) VALUES
-(1, 'How to Create a Game ', 'asdasdasd asdasdasd asdasd asdasd asd asd asd asd asd asd asd asd d as d asd as dasd asdasda sd asd asd asd asd  a  ds asd asd a sd asd aasdasd', 'https://www.youtube-nocookie.com/embed/dSPh9fqZiHc?si=v9Gkjb1kk0JBdr2S', 1, '2023-09-12 21:31:52'),
-(2, 'Kisame', 'asdasdads asd as dasd as asd', 'https://www.youtube-nocookie.com/embed/NmFwemHybNE?si=H4IEN0-q4oSaIWgh', 1, '2023-09-22 21:49:30');
+INSERT INTO `tutorials` (`tutorial_id`, `tutorial_title`, `tutorial_description`, `tutorial_link`, `is_primary`, `time_added`, `designation`) VALUES
+(1, 'How to Create a Game ', 'asdasdasd asdasdasd asdasd asdasd asd asd asd asd asd asd asd asd d as d asd as dasd asdasda sd asd asd asd asd  a  ds asd asd a sd asd aasdasd', 'https://www.youtube-nocookie.com/embed/dSPh9fqZiHc?si=v9Gkjb1kk0JBdr2S', 1, '2023-09-12 21:31:52', 'create_game'),
+(2, 'Kisame', 'asdasdads asd as dasd as asd', 'https://www.youtube-nocookie.com/embed/NmFwemHybNE?si=H4IEN0-q4oSaIWgh', 1, '2023-09-22 21:49:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -1609,7 +1606,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=467;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=478;
 
 --
 -- AUTO_INCREMENT for table `addresses`
@@ -1663,7 +1660,7 @@ ALTER TABLE `built_games_added_game_components`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=378;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1729,7 +1726,7 @@ ALTER TABLE `dropzone_published_uploads`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `games_reasons`
@@ -1813,7 +1810,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `to_deliver`
