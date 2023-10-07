@@ -41,11 +41,11 @@
 						</li>
 
 						<li class="nav-item <?php echo $header_marketplace ?> ">
-							<a class="nav-link" href="index.php">Marketplace</a>
+							<a class="nav-link" href="pagination.php">Marketplace</a>
 						</li>
 
 						<li class="nav-item <?php echo $header_create_game ?> ">
-							<a class="nav-link" href="index.php">Create Game</a>
+							<a class="nav-link" href="create_game_page.php#section1">Create Game</a>
 						</li>
 
 						<li class="nav-item <?php echo $header_game_component ?> ">

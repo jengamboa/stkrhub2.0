@@ -42,9 +42,6 @@ session_start();
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Include jQuery and Isotope.js -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/css/isotope.min.css">
-
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
@@ -198,41 +195,6 @@ session_start();
         }
 
 
-        #cartCount .odd {
-            background-color: transparent;
-        }
-
-
-        #cartCount thead {
-            display: none;
-            /* Hide the table header */
-        }
-
-        #cartCount th {
-            display: none;
-            /* Hide table header cells */
-        }
-
-        table.dataTable.no-footer {
-            border-bottom: none;
-        }
-
-
-        .sticky-wrapper {
-            top: 20px !important;
-        }
-
-        .header_area .main_menu .main_box {
-            background: #fff;
-            margin: 0px auto 0;
-            max-width: 1200px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-        }
-
         .features-inner {
             box-shadow: none !important;
             padding: 40px 0;
@@ -279,8 +241,11 @@ session_start();
 
     $header_home = 'active';
     include 'html/page_header.php';
-
     ?>
+
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
 
     <div class="swiper-container">
@@ -707,6 +672,7 @@ session_start();
         <script>
             $(document).ready(function() {
 
+                // mahalaga toh
                 <?php include 'js/essential.php'; ?>
 
                 var swiper = new Swiper(".mySwiper", {
@@ -730,7 +696,7 @@ session_start();
                 $(".product_card").click(function() {
                     var published_game_id = $(this).data("published_game_id");
 
-                    windows.location.href="marketplace_item_page.php?id="+published_game_id;
+                    windows.location.href = "marketplace_item_page.php?id=" + published_game_id;
                 });
 
 

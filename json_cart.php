@@ -1,8 +1,6 @@
 <?php
 include "connection.php";
-
 $json = array();
-
 $user_id = $_GET['user_id'];
 
 

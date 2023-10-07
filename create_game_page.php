@@ -7,7 +7,15 @@ include 'connection.php';
 <html>
 
 <head>
-    <title>Navigation with Hidden Sections</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/icon.png">
+    <meta name="author" content="CodePixar">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    <title>My Games</title>
+
+
     <!--CSS================================== -->
     <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
@@ -57,31 +65,10 @@ include 'connection.php';
             align-items: center;
         }
 
-        li.step:after {
-            content: '';
-            width: 100%;
-            height: 2px;
-            background: #898989;
-            position: absolute;
-
-
-            z-index: -1;
-        }
-
-        li.step:first-child:after {
-            content: none;
-        }
-
-        li.step.active:before {
-            background: green;
-            color: white;
-        }
 
         .section-step {
             padding: 20px;
-            background-color: #f0f0f0;
-            margin: 20px;
-            border: 1px solid #ddd;
+            margin: 0px;
             display: none;
         }
 
@@ -89,30 +76,164 @@ include 'connection.php';
             display: block;
         }
 
-        ul.multi-step-bar {
-            display: flex;
-            justify-content: center;
 
+        <?php include 'css/header.css'; ?>.sticky-wrapper {
+            top: 0px !important;
+        }
+
+        .header_area .main_menu .main_box {
+            max-width: 100%;
+        }
+
+        .form-control::placeholder {
+            font-size: 14px;
+            /* Adjust the font size as needed */
         }
 
 
-        <?php include 'css/header.css'; ?>.section-step {
-            /* <!-- glass morph--> */
-            background: rgba(39, 42, 78, 0.57);
-            border-radius: 7px 7px 7px 7px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5.7px);
-            -webkit-backdrop-filter: blur(5.7px);
+        /* btn add */
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 45px;
+            height: 45px;
+            border-radius: calc(45px/2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background: linear-gradient(144deg, #26d3e0, #b660e8);
+        }
+
+        /* plus sign */
+        .sign {
+            width: 100%;
+            font-size: 1.7em;
+            color: white;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-weight: 500;
+            transition-duration: .3s;
+        }
+
+        /* hover effect on button width */
+        .Btn:hover {
+            width: 125px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 15px;
+        }
+
+        /* hover effect button's text */
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 15px;
+        }
+
+        /* button click effect*/
+        .Btn:active {
+            transform: translate(2px, 2px);
+        }
+
+        /* edit button */
+        .edit-game {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #90ee90;
+        }
+
+        /* delete button */
+        .delete-game {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #dc3545;
+        }
+
+        /* approve game button */
+        .approve-game {
+            background-color: #15172e !important;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+            color: #f7f799;
+        }
+
+        .approve-game[disabled] {
+            background-color: #ccc;
+            color: #777;
+            cursor: not-allowed;
+        }
+
+
+        /* datatables */
+        table.dataTable.stripe tbody tr.even,
+        table.dataTable.display tbody tr.even {
+            background-color: #15172e;
+        }
+
+        table.dataTable.stripe tbody tr.odd,
+        table.dataTable.display tbody tr.odd {
+            background-color: #1f2243;
+        }
+
+        table.dataTable {
+            box-shadow: 0 0 10px #000000;
+        }
+
+        tr .odd {
+            padding: 10rem;
+        }
+
+        table.dataTable,
+        table.dataTable thead,
+        table.dataTable tbody,
+        table.dataTable tr,
+        table.dataTable td,
+        table.dataTable th,
+        table.dataTable tbody tr.even,
+        table.dataTable tbody tr.odd {
+            border: none !important;
         }
     </style>
 </head>
 
 <body>
     <?php include 'html/page_header.php'; ?>
-    <!-- Start Banner Area -->
-    <section class="banner-area organic-breadcrumb">
-        <div class="container">
 
+    <!-- Back to top button -->
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+
+    <!-- Start Banner Area -->
+    <section class="features-area">
+        <div class="container" style="padding: 3rem;">
         </div>
     </section>
     <!-- End Banner Area -->
@@ -202,46 +323,43 @@ include 'connection.php';
 
             <!-- sections -->
 
-            <div id="section1" class="section-step">
-                <div class="row">
-
-                    <div class="col-3">
-
-                        <h2>Create Game</h2>
-                        <form id="createGameForm">
-                            <label for="name">Name:</label><br>
-                            <input type="text" id="name" name="name" required>
-                            <br>
-
-                            <label for="description">Description:</label><br>
-                            <textarea id="description" name="description"></textarea> <!-- Added closing tag </textarea> -->
-                            <br>
-
-                            <input type="submit" value="Submit">
-                        </form>
-
-
-                    </div>
+            <div id="section1" class="section-step mt-0">
+                <div class="row" style="width: 100%;">
                     <div class="col">
 
-                        <!-- DataTables Create Game  -->
+                        <div class="row">
+                            <div class="col-4">
+                                <h1>Created Games</h1>
+                            </div>
+
+                            <div class="col">
+                                <button class="Btn" type="button" data-toggle="modal" data-target="#create_game_modal">
+                                    <div class="sign">+</div>
+                                    <div class="text">Create</div>
+                                </button>
+                            </div>
+                        </div>
+
+
                         <table id="createGameTable" class="display" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Game Name</th>
-                                    <th>Description</th>
-                                    <th>Price</th>
-                                    <th>Date Created</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th style="min-width: 80px; max-width: 80px;">Game Name</th>
+                                    <th style="min-width: 80px; max-width: 80px;">Description</th>
+                                    <th style="min-width: 80px; max-width: 80px;">Price</th>
+                                    <th style="min-width: 80px; max-width: 80px;">Date Created</th>
+                                    <th style="min-width: 170px; max-width: 170px;">Status</th>
+                                    <th style="min-width: 120px; max-width: 120px;"></th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                <!-- User data will be displayed here -->
+                                <!-- Your table rows here -->
                             </tbody>
                         </table>
-                        <!-- /DataTables Create Game  -->
+
+
+
+
                     </div>
 
                 </div>
@@ -380,6 +498,50 @@ include 'connection.php';
     </section>
 
 
+    <!-- modals -->
+    <div class="modal fade" id="create_game_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="
+                background: rgba(39, 42, 78, 0.37);
+				border-radius: 15px 15px 15px 15px;
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+				backdrop-filter: blur(5.7px);
+				-webkit-backdrop-filter: blur(5.7px);
+				line-height: 0px !important;
+                ">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Game</h5>
+                </div>
+
+                <form id="createGameForm">
+                    <div class="modal-body">
+
+
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Game Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" id="recipient-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Game Description:</label>
+                            <textarea class="form-control" id="description" name="description" id="message-text"></textarea>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" style="border: none; background: linear-gradient(144deg, #26d3e0, #b660e8);">Create Game</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
 
@@ -415,6 +577,7 @@ include 'connection.php';
     <script>
         $(document).ready(function() {
 
+            // mahalaga toh
             <?php include 'js/essential.php'; ?>
 
             $("#createGameForm").submit(function(event) {
@@ -436,6 +599,8 @@ include 'connection.php';
                             // Clear the form fields
                             $("#name").val("");
                             $("#description").val("");
+
+                            $('#create_game_modal').modal('hide');
 
                             // Reload the DataTable
                             $('#createGameTable').DataTable().ajax.reload();
@@ -473,10 +638,15 @@ include 'connection.php';
             var user_id = <?php echo $user_id; ?>;
 
             $('#createGameTable').DataTable({
+
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
                 paging: false,
-                ordering: true,
+                ordering: false,
 
                 "ajax": {
                     "url": "json_created_games.php",
@@ -509,6 +679,13 @@ include 'connection.php';
 
                 ]
             });
+
+            // search bar
+            var searchInput = $('div.dataTables_filter input');
+            $('#createGameTable thead th:nth-child(6)').append(searchInput);
+            searchInput.attr('placeholder', 'Search here');
+            searchInput.addClass('form-control');
+            searchInput.css('width', '100%');
 
 
 

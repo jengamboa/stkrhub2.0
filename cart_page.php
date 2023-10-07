@@ -112,7 +112,9 @@ if (isset($_SESSION['user_id'])) {
 <body>
 
     <?php include 'html/page_header.php'; ?>
-
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!--================Cart Area =================-->
     <section class="cart_area">

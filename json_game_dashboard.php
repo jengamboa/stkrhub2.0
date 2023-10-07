@@ -12,6 +12,7 @@ $result = $conn->query($sql);
 while ($added_game_components = $result->fetch_assoc()) {
     $added_component_id = $added_game_components['added_component_id'];
     $component_id = $added_game_components['component_id'];
+    $size = $added_game_components['size'];
 
     $getAddedComponentName = "SELECT * FROM game_components WHERE component_id = $component_id";
     $sqlGetAddedComponentName = $conn->query($getAddedComponentName);
@@ -59,7 +60,10 @@ while ($added_game_components = $result->fetch_assoc()) {
 
         // Create a link to the image file
         $imageFilePath = $added_game_components['custom_design_file_path']; // Update with the correct file path
-        $info = '<a href="' . $imageFilePath . '" target="_blank">' . $originalFilename . '</a>';
+        $info = '
+        size: '.$size.'<br>
+        <a href="' . $imageFilePath . '" target="_blank">' . $originalFilename . '</a>
+        ';
         
     } elseif ($added_game_components['color_id']) {
         $getColorName = "SELECT * FROM component_colors WHERE color_id = $color_id";
@@ -69,14 +73,11 @@ while ($added_game_components = $result->fetch_assoc()) {
         $color_code = $fetchedColorName['color_code'];
 
         $info = '
-            <p
-                style="color: ' . $color_code . ' ;"
-            >
-                ' . $color_name . '
-            </p>
+        size: '.$size.'<br>
+        '.$color_name.'
         ';
     } else {
-        $info = "N/A";
+        $info = 'size: '.$size.'<br>';
     }
 
     $modify = "";
@@ -92,8 +93,9 @@ while ($added_game_components = $result->fetch_assoc()) {
                 data-filepath="' . $custom_design_file_path . '"
                 data-originalFilename="' . $originalFilename . '"
                 data-addedcomponentid="' . $added_component_id . '"
+                style="border: none; background-color: #15172e; color: white; border-radius: 10px; cursor: pointer;"
             >
-                Update Custom Design
+                Change Design
             </button>
         ';
     } elseif ($added_game_components['color_id']) {
@@ -124,10 +126,9 @@ while ($added_game_components = $result->fetch_assoc()) {
                         data-componentid="' . $component_id . '"
                         data-colorid="' . $color_id . '"
                         data-addedcomponentid="' . $added_component_id . '"
-
-                        style="background-color: ' . $color_code . ' ;"
+                        style="border: none; background: none; cursor: pointer;"
                     >
-                        _
+                    <i class="fa-solid fa-circle" style="color: ' . $color_code . ';"></i>
                     </button>
                 ';
             }
@@ -139,23 +140,26 @@ while ($added_game_components = $result->fetch_assoc()) {
     }
 
     $delete = '
-        <button
-            class="delete-component"
-            data-gameid="' . $game_id . '"
-            data-componentid= "' . $added_component_id . '"
+    <div class="d-flex justify-content-center">
+        <button class="delete-component" 
+        data-gameid="' . $game_id . '"
+        data-componentid= "' . $added_component_id . '"
         >
-            Delete
+            <i class="fa-solid fa-trash"></i>
         </button>
+    </div>  
     ';
 
     $price_peso = '&#8369 '.$price;
-    $individual_price_peso = '&#8369 '.$individual_price;
+    $individual_price_peso = '<span style="color: #26d3e0;">&#8369 '.$individual_price .'</span>';
+
+    $component_name_value = '<span class="d-inline-block text-truncate" style="color: #26d3e0; max-width: 250px;">'.$component_name .'</span>';
 
 
     $json[] = array(
         "added_component_id" => $added_component_id,
         "component_id" => $component_id,
-        "component_name" => $component_name,
+        "component_name" => $component_name_value,
         "price" => $price_peso,
         "individual_price" => $individual_price_peso,
         "category" => $category,

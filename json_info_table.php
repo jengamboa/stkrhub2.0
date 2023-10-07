@@ -31,56 +31,70 @@ while ($fetched = $result->fetch_assoc()) {
         $total_price += $component_price * $component_quantity;
     }
 
+    $sqlTicket = "SELECT * FROM constants WHERE constant_id = 2";
+    $resultTicket = $conn->query($sqlTicket);
+    while ($fetchedTicket = $resultTicket->fetch_assoc()) {
+        $ticket_percentage = $fetchedTicket['percentage'];
+    }
+
+    $ticket_price = $total_price / $ticket_percentage;
+
+
+
+
+
 
     $item = '
         <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                        <h6>Game ID: <span>' . $game_id . '</span></h6>
+                </div>
 
-            <div class="row">
-                <div class="col-lg-2">
-                    <h6>Game ID: </h6>
+                <div class="row">
+                    <h6>Game Name: <span>' . $name . '</span></h6>
                 </div>
-                <div class="col-md-auto">
-                    <h6>' . $game_id . '</h6>
+
+                <div class="row">
+                    <h6>Description: <span class="text-break text-truncate" style="max-width: 570px" title="' . $description . '">' . $description . '</span></h6>
                 </div>
+
+                <div class="row">
+                    <h6>Total Price: <span>' . $total_price . '</span></h6>
+                </div>
+
+
+                <div class="row">
+
+                    <button class="edit-game" data-game_id="' . $game_id . '">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </button>
+
+                    <button class="delete-game" data-game_id="' . $game_id . '">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </button>
+
+                    <button class="approve-game" 
+                    data-gameid="' . $game_id . '" 
+                    data-total_price="' . $total_price . '" 
+                    data-ticket_price="' . $ticket_price . '" 
+                    data-name="' . htmlspecialchars($name) . '" 
+                    data-description="' . htmlspecialchars($description) . '"
+                    >
+                        <i class="fa-solid fa-ticket"></i> Get Approved
+                    </button>
+
+                </div>
+
+                <br>
+                <div class="row">
+                    <a href="add_custom_component.php?game_id=' . $game_id . '" class="btn" style="color: white; border: none; background: #1f2243">+ Add Custom Game Component</a>
+                </div>
+
             </div>
 
-            <div class="row">
-                <div class="col-lg-2">
-                    <h6>Game Name: </h6>
-                </div>
-                <div class="col-md-auto">
-                    <h6>' . $name . '</h6>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-2">
-                    <h6>Description: </h6>
-                </div>
-                <div class="col-md-auto">
-                    <h6>' . $description . '</h6>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-2">
-                    <h6>Price: </h6>
-                </div>
-                <div class="col-md-auto">
-                    <h6>' . $total_price . '</h6>
-                </div>
-            </div>
-
-            <div class="row">
-                <button class="edit-game" data-game_id="' . $game_id . '">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-            
-                <button class="delete-game" data-game_id="' . $game_id . '">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
-
+        </div>
         </div>
     ';
 

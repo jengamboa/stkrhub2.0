@@ -45,50 +45,194 @@ if ($_SERVER['REQUEST_METHOD']) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        <?php include 'css/body.css' ?><?php include 'css/header.css'; ?>
-        
-        #infoTable td{
-            /* <!-- glass morph--> */
-            background: rgba(39, 42, 78, 0.57);
-            border-radius: 7px 7px 7px 7px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5.7px);
-            -webkit-backdrop-filter: blur(5.7px) !important;
+        <?php include 'css/body.css' ?><?php include 'css/header.css'; ?>#infoTable .odd {
+            background-color: transparent;
+        }
+
+
+        table.dataTable,
+        table.dataTable thead,
+        table.dataTable tbody,
+        table.dataTable tr,
+        table.dataTable td,
+        table.dataTable th,
+        table.dataTable tbody tr.even,
+        table.dataTable tbody tr.odd {
+            border: none !important;
+        }
+
+        .sticky-wrapper {
+            top: 0px !important;
+        }
+
+        .header_area .main_menu .main_box {
+            max-width: 100%;
+        }
+
+        .form-control::placeholder {
+            font-size: 14px;
+            /* Adjust the font size as needed */
+        }
+
+
+
+        /* edit button */
+        .edit-game {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #90ee90;
+        }
+
+        /* delete button */
+        .delete-game {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #dc3545;
+        }
+
+        .delete-component {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #dc3545;
+        }
+
+        .approve-game {
+            background-color: #1f2243 !important;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+            color: #f7f799;
+        }
+
+        label {
+            color: white;
+        }
+
+
+        /* datatables */
+        table.dataTable.stripe tbody tr.even,
+        table.dataTable.display tbody tr.even {
+            background-color: #1f2243;
+        }
+
+        table.dataTable.stripe tbody tr.odd,
+        table.dataTable.display tbody tr.odd {
+            background-color: #272a4e;
+        }
+
+        .odd {
+            margin: 20px;
+        }
+
+        #userTable {
+            box-shadow: 0 0 10px #000000;
+        }
+
+        tr .odd {
+            padding: 10rem;
+        }
+
+        table.dataTable,
+        table.dataTable thead,
+        table.dataTable tbody,
+        table.dataTable tr,
+        table.dataTable td,
+        table.dataTable th,
+        table.dataTable tbody tr.even,
+        table.dataTable tbody tr.odd {
+            border: none !important;
+        }
+
+        input[type="search"] {
+            color: white;
         }
     </style>
 </head>
 
 <body>
     <?php include 'html/page_header.php'; ?>
-    <!-- Start Banner Area -->
-    <section class="banner-area organic-breadcrumb">
-        <div class="container">
 
-        </div>
-    </section>
-    <!-- End Banner Area -->
+    <!-- Back to top button -->
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Start Sample Area -->
     <section class="sample-text-area">
         <div class="container">
-            <!-- DataTables Build Game  -->
-            <table id="infoTable" class="display" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Game Name</th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    <!-- User data will be displayed here -->
-                </tbody>
-            </table>
-            <!-- /DataTables Build Game  -->
+        <h1><a href="create_game_page.php#section1" class="fa-solid fa-arrow-left" style="color: #26d3e0; cursor:pointer;"></a> Game Dashboard</h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <table id="infoTable" class="display" style="width: 100%;">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col">
+                        <div class="container" style="display:flex; flex-direction:column; gap: 20px;">
+                            <?php
+                            $sqlTutorials = "SELECT * FROM tutorials WHERE designation = 'create_game' LIMIT 1";
+                            $result = $conn->query($sqlTutorials);
+
+                            while ($fetchedTutorials = $result->fetch_assoc()) {
+                                $tutorial_id = $fetchedTutorials['tutorial_id'];
+                                $tutorial_title = $fetchedTutorials['tutorial_title'];
+                                $tutorial_description = $fetchedTutorials['tutorial_description'];
+                                $tutorial_link = $fetchedTutorials['tutorial_link'];;
+                                $is_primary = $fetchedTutorials['is_primary'];
+                                $time_added = $fetchedTutorials['time_added'];
+
+                                echo '
+                            <div class="row s_product_inner">
+                                <div class="col-lg-8">
+                                    <div class="iframe-container">
+                                        <iframe class="iframe" src="' . $tutorial_link . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 offset-lg-1" style="margin-left: 0px; margin-top: 0px;">
+                                    <div class="s_product_text" style="margin-top: 20px;">
+                                        <h6>' . $tutorial_title . '</h6>
+
+                                        <div style="
+                                            width: 100%;
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 3;
+                                            -webkit-box-orient:vertical;
+                                            overflow: hidden;
+                                            ">
+                                            <span class="small">
+                                                ' . $tutorial_description . '
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ';
+                            }
+                            ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
         <div class="container">
 
-            <!-- DataTables Game Components -->
             <table id="userTable" class="display" style="width: 100%;">
                 <thead>
                     <tr>
@@ -99,27 +243,18 @@ if ($_SERVER['REQUEST_METHOD']) {
                         <th>Total Price</th>
                         <th>Info</th>
                         <th>Modify</th>
-                        <th>Delete</th>
+                        <th style="min-width: 40px; max-width: 40px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- User data will be displayed here -->
                 </tbody>
             </table>
-            <!-- /DataTables Game Components -->
 
 
         </div>
 
-        <div class="container">
-            <a href="add_custom_component.php?game_id=<?php echo $game_id; ?>">Add Custom Game Component</a>
-        </div>
     </section>
     <!-- End Sample Area -->
-
-    <section class="sample-text-area">
-
-    </section>
 
 
 
@@ -179,10 +314,68 @@ if ($_SERVER['REQUEST_METHOD']) {
             });
 
 
+
+
+
+
+            $('#infoTable').on('click', '.delete-game', function() {
+                var gameId = $(this).data('game_id');
+
+                // Create a SweetAlert2 confirmation dialog for deleting a game
+                Swal.fire({
+                    title: 'Delete Game (ID: ' + gameId + ')',
+                    text: 'Are you sure you want to delete this game?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        // Send an AJAX request to delete the game
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_delete_game.php', // Create a PHP script for deleting the game
+                            data: {
+                                game_id: gameId
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+
+                                    // Optionally, you can refresh the DataTables table after deletion
+                                    $('#infoTable').DataTable().ajax.reload();
+                                    $('#userTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
+
+                                    Swal.fire('Success', response.message, 'success').then(function() {
+                                        window.close();
+                                        window.location.href = 'create_game_page.php#section1'; // Redirect to index.php
+                                    });
+
+                                } else {
+                                    Swal.fire('Error', response.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
+
+
+
             var user_id = <?php echo $user_id; ?>;
             var game_id = <?php echo $game_id; ?>;
 
             $('#userTable').DataTable({
+
+
                 searching: true,
                 info: false,
                 paging: false,
@@ -471,6 +664,7 @@ if ($_SERVER['REQUEST_METHOD']) {
                     }
                 });
             });
+
         });
     </script>
 
