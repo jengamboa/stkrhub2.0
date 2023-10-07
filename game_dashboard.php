@@ -153,6 +153,12 @@ if ($_SERVER['REQUEST_METHOD']) {
         input[type="search"] {
             color: white;
         }
+
+        .approve-game[disabled] {
+            background-color: #ccc;
+            color: #777;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -168,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD']) {
     <section class="sample-text-area">
         <div class="container">
 
-        <h1><a href="create_game_page.php#section1" class="fa-solid fa-arrow-left" style="color: #26d3e0; cursor:pointer;"></a> Game Dashboard</h1>
+            <h1><a href="create_game_page.php#section1" class="fa-solid fa-arrow-left" style="color: #26d3e0; cursor:pointer;"></a> Game Dashboard</h1>
 
             <div class="container">
                 <div class="row">
@@ -313,6 +319,59 @@ if ($_SERVER['REQUEST_METHOD']) {
                 }, ]
             });
 
+
+            $('#infoTable').on('click', '.approve-game', function() {
+                var gameId = $(this).data('gameid');
+                var gameName = $(this).data('name');
+                var gameDescription = $(this).data('description');
+                var total_price = $(this).data('total_price');
+                var ticket_price = $(this).data('ticket_price');
+
+                Swal.fire({
+                    title: 'Approve Game (Ticket Price: ' + ticket_price + ')',
+                    text: 'Total Price: ' + total_price + '\gameId: ' + gameId +
+                        '\nAre you sure you want to Approve this game?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Buy Ticket',
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_get_approved_game.php',
+                            data: {
+                                game_id: gameId,
+                                name: gameName,
+                                description: gameDescription,
+                                total_price: total_price,
+                                ticket_price: ticket_price,
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#infoTable').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    $('#userTable').DataTable().ajax.reload();
+                                    Swal.fire('Success', response.message, 'success');
+                                } else {
+                                    $('#infoTable').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    $('#userTable').DataTable().ajax.reload();
+                                    Swal.fire('Error', response.message, 'error');
+
+                                }
+                            },
+                            error: function() {
+                                $('#infoTable').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    $('#userTable').DataTable().ajax.reload();
+                                Swal.fire('Error', 'Failed to build the game', 'error');
+                            }
+                        });
+                    }
+                });
+            });
 
 
 

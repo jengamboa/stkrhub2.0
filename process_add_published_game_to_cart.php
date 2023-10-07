@@ -28,6 +28,9 @@ $resultCheckCart = $conn->query($checkCart);
 if ($resultCheckCart->num_rows > 0) {
     $cartData = $resultCheckCart->fetch_assoc();
     $existingCartId = $cartData['cart_id'];
+
+    echo 'cart ID'.$existingCartId;
+
     $existingQuantity = $cartData['quantity'] + $quantity;
 
     $updateCart = "UPDATE cart SET quantity = $existingQuantity WHERE cart_id = $existingCartId";

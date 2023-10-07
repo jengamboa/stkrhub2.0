@@ -650,9 +650,6 @@ session_start();
         <script src="js/gmaps.min.js"></script>
         <script src="js/main.js"></script>
 
-
-
-
         <!-- Include DataTables JavaScript -->
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
@@ -665,12 +662,18 @@ session_start();
         <!-- Include DataTables JavaScript -->
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
+        <!-- scroll reveal js -->
+        <script src="https://unpkg.com/scrollreveal"></script>
+
 
 
 
         <!-- Initialize Swiper -->
         <script>
             $(document).ready(function() {
+
+                ScrollReveal().reveal('.features-area');
+                ScrollReveal().reveal('.category-area');
 
                 // mahalaga toh
                 <?php include 'js/essential.php'; ?>

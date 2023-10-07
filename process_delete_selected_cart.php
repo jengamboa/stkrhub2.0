@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cartIds = array_map('intval', $cartIds); // Sanitize input
 
         // Use a prepared statement to update the 'is_visible' column
-        $sql = "UPDATE cart SET is_visible = 0 WHERE cart_id IN (" . implode(',', $cartIds) . ")";
+        $sql = "DELETE FROM cart WHERE cart_id IN (" . implode(',', $cartIds) . ")";
+
 
         if ($conn->query($sql)) {
             $response = ["success" => true, "message" => "Items marked as invisible successfully"];
