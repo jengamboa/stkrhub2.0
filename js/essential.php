@@ -1,5 +1,17 @@
 <?php
 echo '
+$(document).ajaxComplete(function() {
+    ScrollReveal({
+        reset: true
+    });
+    
+    ScrollReveal().reveal(".scroll_reveal", {
+        duration: 700,
+        scale: 0.97
+    });
+});
+
+
 $(document).on("click", "#ajax-link", function(event) {
     event.preventDefault();
 

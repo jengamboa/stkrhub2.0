@@ -58,7 +58,7 @@ table.dataTable.no-footer {
   display: none;
   background: linear-gradient(144deg, #26d3e0, #b660e8);
   border: none;
-  border-radius: 50%;
+  border-radius: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow properties as needed */
 }
 

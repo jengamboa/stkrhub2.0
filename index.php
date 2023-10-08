@@ -33,6 +33,9 @@ session_start();
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
@@ -44,6 +47,8 @@ session_start();
 
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+
 
 
     <style>
@@ -273,13 +278,9 @@ session_start();
             </div>
         </div>
 
-
-
-
-
         <!-- start features Area -->
-        <section class="features-area ">
-            <div class="container">
+        <section class="features-area">
+            <div class="container scroll_reveal">
                 <div class="row features-inner">
                     <!-- single features -->
                     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -323,7 +324,6 @@ session_start();
                     </div>
                 </div>
             </div>
-
         </section>
         <!-- end features Area -->
 
@@ -332,9 +332,9 @@ session_start();
         <!-- Start category Area -->
         <section class="pb-5" style="
             background-image: url('img/Backgrounds/bg1.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        /* background-attachment: fixed; */
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* background-attachment: fixed; */
         ">
 
             <div class="container" style="display:flex; flex-direction:column; gap: 20px;">
@@ -354,7 +354,7 @@ session_start();
                     $time_added = $fetchedTutorials['time_added'];
 
                     echo '
-                    <div class="row s_product_inner">
+                    <div class="row s_product_inner scroll_reveal">
                         <div class="col-lg-8">
                             <div class="iframe-container">
                             <iframe class="iframe" src="' . $tutorial_link . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -380,6 +380,8 @@ session_start();
         </section>
         <!-- End category Area -->
 
+
+
         <!-- start product Area -->
         <section class="" style=" background-image: url('img/Backgrounds/bg2.png');
         background-size: cover;
@@ -392,8 +394,8 @@ session_start();
                     <div class="row justify-content-center">
                         <div class="col-lg-6 text-center">
                             <div class="section-title">
-                                <h1>Latest Products</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                <h1 class="scroll_reveal">Latest Products</h1>
+                                <p class="scroll_reveal">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et
                                     dolore
                                     magna aliqua.</p>
@@ -450,7 +452,7 @@ session_start();
 
                                     echo '
                 
-                            <div class="product_card m-3" id="published_game" data-published_game_id="' . $published_game_id . '" style="width: 20rem;">
+                            <div class="product_card m-3 scroll_reveal" id="published_game" data-published_game_id="' . $published_game_id . '" style="width: 20rem;">
                                 <div class="card" style="border: none;">
                             
                                     <div class="container p-0" style="margin-bottom: 4rem;">
@@ -667,9 +669,6 @@ session_start();
         <!-- Initialize Swiper -->
         <script>
             $(document).ready(function() {
-
-                ScrollReveal().reveal('.features-area');
-                ScrollReveal().reveal('.category-area');
 
                 // mahalaga toh
                 <?php include 'js/essential.php'; ?>

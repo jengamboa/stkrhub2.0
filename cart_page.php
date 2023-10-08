@@ -24,7 +24,8 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
-
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
 
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -48,8 +49,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/header.css'; ?>
-        <?php include 'css/body.css'; ?>
+        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>
 
         /* start header */
         .sticky-wrapper {
@@ -60,6 +60,7 @@ if (isset($_SESSION['user_id'])) {
         .header_area .main_menu .main_box {
             max-width: 100%;
         }
+
         /* end */
 
         #infoTable tbody tr {
@@ -189,8 +190,10 @@ if (isset($_SESSION['user_id'])) {
 
     <script>
         $(document).ready(function() {
-
             <?php include 'js/essential.php'; ?>
+
+
+
 
 
             var user_id = <?php echo $user_id; ?>;
@@ -491,10 +494,7 @@ if (isset($_SESSION['user_id'])) {
 
             });
 
-
-
-
-
+            
         });
     </script>
 </body>

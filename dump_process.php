@@ -1,48 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Sticky Position Header</title>
-
-  <style>
-    .main-nav {
-      position: sticky;
-      bottom: 0;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-
-  </style>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+    ScrollReveal({
+      reset: true
+    });
+  </script>
 </head>
 
 <body>
-  <div class="header-large"></div>
-  <br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br>
 
-  <div class="main-content">
-    <!-- Your main content goes here -->
-  </div>
 
-  <div class="main-nav">
-    <div>HOME</div>
-  </div>
 
-  <br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br><br><br><br>
-  <br><br><br>
+  <h1 class="headline">
+    Widget Inc.
+  </h1>
+  <p class="tagline">
+    The perfect widgets.
+    <span class="punchline">Forever.</span>
+  </p>
+
+
+  <script>
+    ScrollReveal().reveal('.headline');
+    ScrollReveal().reveal('.tagline', {
+      delay: 500
+    });
+    ScrollReveal().reveal('.punchline', {
+      delay: 2000
+    });
+  </script>
 </body>
 
 </html>

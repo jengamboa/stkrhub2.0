@@ -21,7 +21,7 @@ $item = '
 
 $item .=
     '
-    <div class="row" style="padding-bottom:20px;">
+    <div class="row scroll_reveal" style="padding-bottom:20px;">
         <div class="col-0 d-flex align-items-center">';
 
 $sql1 = "SELECT COUNT(*) as total FROM cart WHERE user_id = $user_id AND is_visible = 1";
@@ -330,7 +330,7 @@ while ($fetched = $result->fetch_assoc()) {
 
     $item .= '
 
-    <div class="row">
+    <div class="row scroll_reveal">
 
         <div class="col-0 d-flex align-items-center">
             <input type="checkbox" style="transform: scale(1.7); margin-right: none;"
