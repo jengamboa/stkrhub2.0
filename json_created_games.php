@@ -3,7 +3,7 @@ include "connection.php"; // Include your database connection script
 
 $user_id = $_GET['user_id'];
 
-$sqlGames = "SELECT * FROM games WHERE user_id = $user_id AND is_visible = 1";
+$sqlGames = "SELECT * FROM games WHERE user_id = $user_id AND is_visible = 1 ORDER BY created_at DESC";
 $resultGames = $conn->query($sqlGames);
 
 $data = array();
@@ -20,17 +20,25 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
     $date = $dateTime->format('M. d, Y');
     $time = $dateTime->format('h:i A');
 
+    $date_modified = $fetchedGames['date_modified'];
+    $timestamp = strtotime($date_modified);
+    $dateFormatted = date("M. d, Y", $timestamp);
+    $timeFormatted = date("h:i a", $timestamp);
+
+    $date_modified_value = $dateFormatted . '<br>' . $timeFormatted;
+
     $is_pending = $fetchedGames['is_pending'];
     $to_approve = $fetchedGames['to_approve'];
     $is_denied = $fetchedGames['is_denied'];
     $is_approved = $fetchedGames['is_approved'];
 
 
+
     $game_link = '
     
         <a href="game_dashboard.php?game_id=' . $game_id . '" style="color: #26d3e0;">
-            <p class="d-inline-block text-truncate" style="max-width: 190px;" data-toggle="tooltip" title="'.$name.'" >
-                '.$name.'
+            <p class="d-inline-block text-truncate" style="max-width: 190px;" data-toggle="tooltip" title="' . $name . '" >
+                ' . $name . '
             </p>
         </a>
     ';
@@ -174,7 +182,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
             <i class="fa-solid fa-ticket"></i> Get Approved
         </button>
 
-        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: '.$game_id.'</p>
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     } elseif ($is_denied) {
         $extra_action = '
@@ -190,7 +198,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
             <i class="fa-solid fa-ticket"></i> Get Approved Again
         </button>
 
-        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: '.$game_id.'</p>
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     } elseif ($total_price == '0') {
         $extra_action = '
@@ -208,7 +216,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
             <i class="fa-solid fa-ticket"></i> Get Approved
         </button>
 
-        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: '.$game_id.'</p>
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     } else {
         $extra_action = '
@@ -224,7 +232,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
             <i class="fa-solid fa-ticket"></i> Get Approved
         </button>
 
-        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: '.$game_id.'</p>
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     }
 
@@ -239,15 +247,15 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
     
     ' . $extra_action;
 
-    $total_price_value = '<p class="text-truncate" style="color: #26d3e0; max-width: 100px;" data-toggle="tooltip" title="'.$total_price.'">&#8369;'.$total_price.'</p>';
+    $total_price_value = '<p class="text-truncate" style="color: #26d3e0; max-width: 100px;" data-toggle="tooltip" title="' . $total_price . '">&#8369;' . number_format($total_price, 2) . '</p>';
 
-    $description_value = '<p class="text-truncate" style="max-width: 140px;" data-toggle="tooltip" title="'.$description.'">' . $description . '</p>';
+    $description_value = '<p class="text-truncate" style="max-width: 140px;" data-toggle="tooltip" title="' . $description . '">' . $description . '</p>';
 
     $status_value = '
     <span class="small" 
-    data-toggle="tooltip" title="'.$status.'"
+    data-toggle="tooltip" title="' . $status . '"
     > 
-    '.$status_icon.' '.$status.'
+    ' . $status_icon . ' ' . $status . '
     </span>
     ';
 
@@ -255,7 +263,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         "game_link" => $game_link,
         "description" => $description_value,
         "total_price" => $total_price_value,
-        "formatted_date" => $formatted_date,
+        "formatted_date" => $date_modified_value,
         "status" => $status_value,
         "actions" => $actions,
     );

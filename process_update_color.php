@@ -12,6 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['game_id']) && isset($_G
     $update_result = mysqli_query($conn, $update_query);
 
     if ($update_result) {
+
+        date_default_timezone_set('Asia/Manila');
+        $currentTimestamp = date('Y-m-d H:i:s');
+        $sqlUpdateDateModified = "UPDATE games SET date_modified = '$currentTimestamp' WHERE game_id = $game_id";
+        if ($conn->query($sqlUpdateDateModified)) {
+            echo 'updated date modified';
+        }
+        
         // Retrieve added_game_component details
         $query_component = "SELECT agc.added_component_id, agc.color_id, gc.component_name FROM added_game_components agc INNER JOIN game_components gc ON agc.component_id = gc.component_id WHERE agc.added_component_id = '$added_component_id'";
         $result_component = mysqli_query($conn, $query_component);

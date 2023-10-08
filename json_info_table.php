@@ -85,6 +85,8 @@ while ($fetched = $result->fetch_assoc()) {
             class="btn" 
             style="color: #777; border: none; background: #1f2243; cursor: not-allowed;"
             disabled
+
+            data-toggle="tooltip" title="You cannot update your game\'s components as of now. Admin is evaluating your created game\'s components"
         >
             + Add Custom Game Componentasd
         </a>
@@ -110,6 +112,8 @@ while ($fetched = $result->fetch_assoc()) {
             class="btn" 
             style="color: #777; border: none; background: #1f2243; cursor: not-allowed;"
             disabled
+
+            data-toggle="tooltip" title="You cannot update your game\'s components as of now. Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
         >
             + Add Custom Game Componentasd
         </a>
@@ -122,6 +126,8 @@ while ($fetched = $result->fetch_assoc()) {
         data-ticket_price="' . $ticket_price . '" 
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
+
+        
 
         data-toggle="tooltip" title="Don\'t lose hope, get approved again"
         >
@@ -142,6 +148,7 @@ while ($fetched = $result->fetch_assoc()) {
         data-description="' . htmlspecialchars($description) . '"
         disabled
         style="font-size:px";
+        
 
         data-toggle="tooltip" title="You can not request to approve a game if it is empty"
         >
@@ -193,7 +200,7 @@ while ($fetched = $result->fetch_assoc()) {
                 </div>
 
                 <div class="row">
-                    <h6>Total Price: <span>' . $total_price . '</span></h6>
+                    <h6>Total Price: <span>&#8369;' . number_format($total_price, 2) . '</span></h6>
                 </div>
 
 

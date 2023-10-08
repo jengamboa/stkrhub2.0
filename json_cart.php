@@ -4,6 +4,16 @@ $json = array();
 $user_id = $_GET['user_id'];
 
 
+
+$sql1A = "SELECT COUNT(*) as total FROM cart WHERE user_id = $user_id AND is_visible = 1";
+$result1A = $conn->query($sql1A);
+$row1A = $result1A->fetch_assoc();
+
+$totalRowsA = $row1A['total'];
+
+if ($totalRowsA > 0) {
+    
+
 $item = '
 ';
 
@@ -14,29 +24,29 @@ $item .=
     <div class="row" style="padding-bottom:20px;">
         <div class="col-0 d-flex align-items-center">';
 
-        $sql1 = "SELECT COUNT(*) as total FROM cart WHERE user_id = $user_id AND is_visible = 1";
-        $result1 = $conn->query($sql1);
-        $row1 = $result1->fetch_assoc();
+$sql1 = "SELECT COUNT(*) as total FROM cart WHERE user_id = $user_id AND is_visible = 1";
+$result1 = $conn->query($sql1);
+$row1 = $result1->fetch_assoc();
 
-        $totalRows = $row1['total'];
+$totalRows = $row1['total'];
 
-        if ($totalRows > 0) {
-            // Check if all cart_ids for this user have is_active set to 1
-            $sqlActiveCount = "SELECT COUNT(*) as active_count FROM cart WHERE user_id = $user_id AND is_visible = 1 AND is_active = 1";
-            $resultActiveCount = $conn->query($sqlActiveCount);
-            $rowActiveCount = $resultActiveCount->fetch_assoc();
+if ($totalRows > 0) {
+    // Check if all cart_ids for this user have is_active set to 1
+    $sqlActiveCount = "SELECT COUNT(*) as active_count FROM cart WHERE user_id = $user_id AND is_visible = 1 AND is_active = 1";
+    $resultActiveCount = $conn->query($sqlActiveCount);
+    $rowActiveCount = $resultActiveCount->fetch_assoc();
 
-            $activeCount = $rowActiveCount['active_count'];
+    $activeCount = $rowActiveCount['active_count'];
 
-            if ($activeCount == $totalRows) {
-                $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;" checked>';
-            } else {
-                $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
-            }
-        } else {
-            $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
-        }
-    $item .=
+    if ($activeCount == $totalRows) {
+        $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;" checked>';
+    } else {
+        $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
+    }
+} else {
+    $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
+}
+$item .=
     '
         </div>
 
@@ -81,7 +91,7 @@ $item .=
     </div>
     ';
 
-$sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1";
+$sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1 ORDER by cart_id DESC";
 $result = $conn->query($sql);
 
 while ($fetched = $result->fetch_assoc()) {
@@ -358,7 +368,6 @@ while ($fetched = $result->fetch_assoc()) {
                             </div>
                         </div>
 
-
                         <div class="col-3 overflow-hidden">
                             <p class="lead fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
                                 ' . $fetched_title . '
@@ -367,7 +376,7 @@ while ($fetched = $result->fetch_assoc()) {
                         </div>
 
                         <div class="col">
-                            <h5 class="mb-0">&#8369; ' . $price . '</h5>
+                            <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
                         </div>
 
                         <div class="col-2">
@@ -375,7 +384,7 @@ while ($fetched = $result->fetch_assoc()) {
                         </div>
 
                         <div class="col">
-                            <h5 class="mb-0">&#8369; ' . $total_price . '</h5>
+                            <h5 class="mb-0">&#8369; ' . number_format($total_price, 2) . '</h5>
                         </div>
 
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -424,28 +433,68 @@ bottom: 0;
 border-radius: 15px 15px 0px 0px;
 box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
 
-background: rgba(39, 42, 78, 0.77);
+background: rgba(21, 23, 46, 0.77);
 
 backdrop-filter: blur(5.7px);
 -webkit-backdrop-filter: blur(5.7px);
 ">
 
     <div class="d-flex justify-content-between">
-        <div class="row m-4">
-            asd
-            <button class="delete-selected ml-4">Delete</button>
+        <div class="row m-4">';
+
+
+
+        if ($totalRows > 0) {
+            // Check if all cart_ids for this user have is_active set to 1
+            $sqlActiveCount = "SELECT COUNT(*) as active_count FROM cart WHERE user_id = $user_id AND is_visible = 1 AND is_active = 1";
+            $resultActiveCount = $conn->query($sqlActiveCount);
+            $rowActiveCount = $resultActiveCount->fetch_assoc();
+        
+            $activeCount = $rowActiveCount['active_count'];
+        
+            if ($activeCount == $totalRows) {
+                $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;" checked>';
+            } else {
+                $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
+            }
+        } else {
+            $item .= '<input id="select_all" type="checkbox" style="transform: scale(1.7); margin-right: none;">';
+        }
+
+            
+
+
+
+            $item .='
+            <button style="background: transparent !important; border: none; color: white;">Select All</button>
+            <button class="delete-selected ml-4" style="background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+            color: #dc3545;"><i class="fa-solid fa-trash"></i>Delete Selected</button>
         </div>
+        
 
         <div class="row m-4">
-            <span>Amount to Pay: </span><h3>&nbsp; &#8369;'.$sub_total.'</h3>
-            <button class="purchase-selected ml-4">Purchase</button>
+            <span>Amount to Pay: </span><h3 style="color: #26d3e0;">&nbsp; &#8369;' . number_format($sub_total, 2) . '</h3>
+
+            <a  class="btn purchase-selected ml-4" 
+            style="color: #ffffff; width:7rem; border: none; background: linear-gradient(144deg, #26d3e0, #b660e8); cursor: pointer;"
+            data-toggle="tooltip" title="Purchase using Paypal">
+                Purchase
+            </a>
         </div>
+
+        
     </div>
 
 </div>
 
-'
-;
+';
+
+} else {
+    $item = 'No cart items, please add some.';
+}
+
 
 
 

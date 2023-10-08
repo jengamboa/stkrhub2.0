@@ -43,7 +43,8 @@ include 'connection.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        <?php include 'css/body.css'; ?>.multi-step-bar {
+        <?php include 'css/body.css'; ?>
+        .multi-step-bar {
             overflow: hidden;
             counter-reset: step;
             width: 75%;
@@ -83,7 +84,7 @@ include 'connection.php';
             top: 0px !important;
         }
 
-        
+
         .header_area .main_menu .main_box {
             max-width: 100%;
         }
@@ -226,10 +227,10 @@ include 'connection.php';
 </head>
 
 <body>
-    <?php 
+    <?php
     $header_create_game = 'active';
     include 'html/page_header.php';
-    
+
     ?>
 
     <!-- Back to top button -->
@@ -354,7 +355,7 @@ include 'connection.php';
                                     <th style="min-width: 80px; max-width: 80px;">Game Name</th>
                                     <th style="min-width: 80px; max-width: 80px;">Description</th>
                                     <th style="min-width: 80px; max-width: 80px;">Price</th>
-                                    <th style="min-width: 80px; max-width: 80px;">Date Created</th>
+                                    <th style="min-width: 80px; max-width: 80px;">Date Modified</th>
                                     <th style="min-width: 170px; max-width: 170px;">Status</th>
                                     <th style="min-width: 120px; max-width: 120px;"></th>
                                 </tr>
@@ -363,7 +364,6 @@ include 'connection.php';
                                 <!-- Your table rows here -->
                             </tbody>
                         </table>
-
 
 
 

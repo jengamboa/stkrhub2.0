@@ -49,6 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_with_colors'])) {
         $insert_query = "INSERT INTO added_game_components (game_id, component_id, color_id, quantity, size, user_id) 
         VALUES ('$game_id', '$component_id', '$selected_color_id', '$quantity', '$component_size', '$user_id')";
 
+        date_default_timezone_set('Asia/Manila');
+        $currentTimestamp = date('Y-m-d H:i:s');
+        $sqlUpdateDateModified = "UPDATE games SET date_modified = '$currentTimestamp' WHERE game_id = $game_id";
+        if ($conn->query($sqlUpdateDateModified)) {
+            echo 'updated date modified';
+        }
+
 
         if (mysqli_query($conn, $insert_query)) {
             // Redirect back to the game dashboard after successful addition

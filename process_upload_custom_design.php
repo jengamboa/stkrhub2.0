@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_design'])) {
         $component_size = $fetchedComponentDetails['size'];
     }
 
+
+
     echo $user_id . '<br>';
     echo 'game id: ' . $game_id . '<br>';
     echo $component_id . '<br>';
@@ -83,6 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_design'])) {
                 $insert_query = "INSERT INTO added_game_components (game_id, component_id, size, is_custom_design, custom_design_file_path, quantity, user_id)
                                      VALUES ('$game_id', '$component_id', '$component_size', 1, '$file_dest', '$quantity', '$user_id')"; // is_custom_design = 1 for custom design'$user_id')"; // is_custom_design = 1 for custom design
 
+                date_default_timezone_set('Asia/Manila');
+                $currentTimestamp = date('Y-m-d H:i:s');
+                $sqlUpdateDateModified = "UPDATE games SET date_modified = '$currentTimestamp' WHERE game_id = $game_id";
+                if ($conn->query($sqlUpdateDateModified)) {
+                    echo 'updated date modified';
+                }
+                
                 if (mysqli_query($conn, $insert_query)) {
                     // Redirect back to the game dashboard after successful addition
                     header("Location: game_dashboard.php?game_id={$game_id}");

@@ -119,12 +119,12 @@ if ($_SERVER['REQUEST_METHOD']) {
         /* datatables */
         table.dataTable.stripe tbody tr.even,
         table.dataTable.display tbody tr.even {
-            background-color: #1f2243;
+            background-color: #15172e;
         }
 
         table.dataTable.stripe tbody tr.odd,
         table.dataTable.display tbody tr.odd {
-            background-color: #272a4e;
+            background-color: #1f2243;
         }
 
         .odd {
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD']) {
                         <th>Unit Price</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
-                        <th>Info</th>
+                        <th style="min-width: 170px; max-width: 170px;">Info</th>
                         <th>Modify</th>
                         <th style="min-width: 40px; max-width: 40px;">Actions</th>
                     </tr>

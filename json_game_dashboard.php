@@ -6,7 +6,7 @@ $json = array();
 $game_id = $_GET['game_id'];
 $user_id = $_GET['user_id'];
 
-$sql = "SELECT * FROM added_game_components WHERE game_id = $game_id";
+$sql = "SELECT * FROM added_game_components WHERE game_id = $game_id ORDER BY added_component_id DESC";
 $result = $conn->query($sql);
 
 while ($added_game_components = $result->fetch_assoc()) {
@@ -62,7 +62,7 @@ while ($added_game_components = $result->fetch_assoc()) {
         $imageFilePath = $added_game_components['custom_design_file_path']; // Update with the correct file path
         $info = '
         size: '.$size.'<br>
-        <a href="' . $imageFilePath . '" target="_blank">' . $originalFilename . '</a>
+        <a href="' . $imageFilePath . '" target="_blank" class="d-inline-block text-truncate" style="max-width: 150px;" data-toggle="tooltip" title="'.$originalFilename.'">' . $originalFilename . '</a>
         ';
         
     } elseif ($added_game_components['color_id']) {
@@ -150,8 +150,8 @@ while ($added_game_components = $result->fetch_assoc()) {
     </div>  
     ';
 
-    $price_peso = '&#8369 '.$price;
-    $individual_price_peso = '<span style="color: #26d3e0;">&#8369 '.$individual_price .'</span>';
+    $price_peso = '&#8369 '.number_format($price, 2);
+    $individual_price_peso = '<span style="color: #26d3e0;">&#8369 '.number_format($individual_price, 2) .'</span>';
 
     $component_name_value = '<span class="d-inline-block text-truncate" style="color: #26d3e0; max-width: 250px;">'.$component_name .'</span>';
 

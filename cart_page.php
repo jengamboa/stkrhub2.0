@@ -48,7 +48,21 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>#infoTable tbody tr {
+        <?php include 'css/header.css'; ?>
+        <?php include 'css/body.css'; ?>
+
+        /* start header */
+        .sticky-wrapper {
+            top: 0px !important;
+        }
+
+
+        .header_area .main_menu .main_box {
+            max-width: 100%;
+        }
+        /* end */
+
+        #infoTable tbody tr {
             background-color: transparent !important;
         }
 
@@ -123,23 +137,11 @@ if (isset($_SESSION['user_id'])) {
 
                 <div class="container">
 
-                    <?php
-                    $sql = "SELECT COUNT(*) as visible_count FROM cart WHERE user_id = $user_id AND is_visible = 1";
-                    $result = $conn->query($sql);
-                    $row = $result->fetch_assoc();
+                    <table id="cartTable" class="display" style="width: 100%;">
+                        <tbody>
+                        </tbody>
+                    </table>
 
-                    $visibleCount = $row['visible_count'];
-
-                    if ($visibleCount > 0) {
-                        echo '<table id="cartTable" class="display" style="width: 100%;">
-                                <tbody>
-                                </tbody>
-                              </table>';
-                    } else {
-                        echo 'No cart items are visible for this user.';
-                    }
-
-                    ?>
                 </div>
 
 

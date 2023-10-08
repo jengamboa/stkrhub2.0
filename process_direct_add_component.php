@@ -64,6 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direct_add'])) {
 
         if ($queryComponentToGame = $conn->query($insert_query)) {
             echo 'inserted to added game components with game';
+
+            date_default_timezone_set('Asia/Manila');
+            $currentTimestamp = date('Y-m-d H:i:s');
+            $sqlUpdateDateModified = "UPDATE games SET date_modified = '$currentTimestamp' WHERE game_id = $game_id";
+            if ($conn->query($sqlUpdateDateModified)) {
+                echo 'updated date modified';
+            }
+
         }
 
         $added_component_game_id = mysqli_insert_id($conn);
