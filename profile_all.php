@@ -1,27 +1,17 @@
 <?php
 session_start();
+include 'connection.php';
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
 <head>
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="img/icon.png">
-    <!-- Author Meta -->
-    <meta name="author" content="CodePixar">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
-    <meta charset="UTF-8">
-
-    <title>STKR HUB</title>
-
-    <!--CSS================================= -->
+    <!-- CSS ================================ -->
     <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/themify-icons.css?<?php echo time(); ?>">
@@ -34,7 +24,8 @@ session_start();
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
 
-
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
 
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -54,53 +45,48 @@ session_start();
     <!-- List JS -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 
-
+    <!-- Include Tippy.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>table .odd {
-            background-color: transparent;
+        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>
+
+        /* start header */
+        .sticky-wrapper {
+            top: 0px !important;
         }
 
-        table thead {
-            display: none;
 
+        .header_area .main_menu .main_box {
+            max-width: 100%;
         }
 
-        .odd,
-        .even {
+        /* end */
+
+        #infoTable tbody tr {
             background-color: transparent !important;
         }
 
-        table.dataTable.no-footer {
-            border-bottom: none;
+        .image-mini-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding-top: 80%;
         }
 
-
-
-
-        .sticky-wrapper {
-            top: 20px !important;
+        .image-mini {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            -webkit-mask-image: linear-gradient(to left, transparent 0%, black 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
         }
 
-        .header_area .main_menu .main_box {
-            background: #fff;
-            margin: 0px auto 0;
-            max-width: 1200px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-        }
-
-        .features-inner {
-            box-shadow: none !important;
-            padding: 40px 0;
-        }
-
-        #allOrders tbody tr {
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .custom-shadow {
+            box-shadow: 0 0 10px #000000;
         }
 
         table.dataTable tbody th,
@@ -108,26 +94,52 @@ session_start();
             padding: 0px 0px;
         }
 
-        table.dataTable thead th,
-        table.dataTable thead td {
-            padding: 0px 0px;
+        table.dataTable.no-footer {
             border-bottom: none;
         }
 
-        .mask1 img{
-            -webkit-mask-image: linear-gradient(to left, transparent 25%, black 75%);
-            mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
+        .even,
+        .odd {
+            background-color: transparent !important;
+        }
+
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto;
+            clear: both;
+            /* border-collapse: separate; */
+            border-spacing: -20px;
+        }
+
+        table.dataTable,
+        table.dataTable thead,
+        table.dataTable tbody,
+        table.dataTable tr,
+        table.dataTable td,
+        table.dataTable th,
+        table.dataTable tbody tr.even,
+        table.dataTable tbody tr.odd {
+            border: none !important;
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            color: #fff;
+            background-color: #272a4e;
+        }
+
+        .nav-link {
+            color: #fff;
         }
     </style>
-
-
 </head>
 
 <body>
-    <?php
-    include 'connection.php';
-    include 'html/page_header.php';
-    ?>
+
+    <?php include 'html/page_header.php'; ?>
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <section class="sample-text-area">
         <div class="container">
@@ -193,17 +205,32 @@ session_start();
                                 <div class="tab-pane fade show active">
                                     <section style="padding: 20px;">
 
-                                        <table id="allOrders" class="hover" style="width: 100%;">
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                        <?php
+                                        $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                                        $resultCheckInProduction = $conn->query($sqlCheckInProduction);
+
+                                        if ($resultCheckInProduction) {
+                                            $row = $resultCheckInProduction->fetch_assoc();
+                                            $count = $row['count'];
+
+                                            if ($count > 0) {
+                                                echo '
+                                                <table id="allOrders" class="hover" style="width: 100%;">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                                ';
+                                            } else {
+                                                echo 'No orders.';
+                                            }
+                                        } else {
+                                            echo 'Error checking for orders in production.';
+                                        }
+                                        ?>
 
                                     </section>
                                 </div>
 
-                                <div class="mask1">
-                                    <img src="img/i1.jpg" alt="">
-                                </div>
 
 
 
@@ -226,9 +253,6 @@ session_start();
 
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
-
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
@@ -243,9 +267,6 @@ session_start();
     <script src="js/gmaps.min.js"></script>
     <script src="js/main.js"></script>
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
     <!-- Include DataTables JavaScript -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
@@ -255,12 +276,16 @@ session_start();
     <!-- Filepond JavaScript -->
     <script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
 
-    <!-- Include DataTables JavaScript -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Include Tippy.js JavaScript -->
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
 
 
     <script>
         $(document).ready(function() {
+
+            <?php include 'js/essential.php'; ?>
+
+
             var monkeyList = new List('test-list', {
                 valueNames: ['name'],
                 page: 7,
@@ -277,13 +302,15 @@ session_start();
             var user_id = <?php echo $user_id; ?>;
 
             $('#allOrders').DataTable({
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
-                ordering: false,
-                pagination: true,
                 paging: true,
-                scrollX: true,
-                responsive: true,
+                lengthChange: false,
+                ordering: false,
 
 
                 "ajax": {

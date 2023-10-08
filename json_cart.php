@@ -325,7 +325,7 @@ while ($fetched = $result->fetch_assoc()) {
     if ($ticket_id) {
         $quantity_input = '
         <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input" disabled data-toggle="tooltip" title="You need only 1 ticket per game" 
-        style="border: 0px; margin: 0px;"
+        style="border: 0px; margin: 0px; cursor: not-allowed"
         />
         ';
     } else {

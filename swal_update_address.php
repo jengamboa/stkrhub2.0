@@ -62,6 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         // Address information updated successfully
         echo "Address information updated successfully.";
+
+        $response = ["success" => true, "message" => "Ticket and cart entry added successfully"];
     } else {
         // Error occurred during the update
         echo "Error updating address information: " . $stmt->error;
@@ -74,3 +76,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Invalid request method
     echo "Invalid request method.";
 }
+echo json_encode($response);

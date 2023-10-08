@@ -4,7 +4,7 @@ include "connection.php"; // Include your database connection script
 $user_id = $_GET['user_id'];
 $data = array();
 
-$sqlAll = "SELECT * FROM orders WHERE user_id = $user_id ORDER BY order_date DESC";
+$sqlAll = "SELECT * FROM orders WHERE user_id = $user_id AND is_pending = 1 ORDER BY order_date DESC";
 $queryAll = $conn->query($sqlAll);
 while ($fetched = $queryAll->fetch_assoc()) {
     $order_id = $fetched['order_id'];
@@ -244,14 +244,13 @@ while ($fetched = $queryAll->fetch_assoc()) {
     // $total_price
     $total_price = $quantity * $price;
 
-
     // actions
     if ($is_pending) {
         $action = '
-            <div class="col text-end">
-                <a href="#!" class="text-danger small delete-cart-item" data-order_id="' . $order_id . '"><i class="fa-solid fa-ban"></i> Cancel Order</a>
-            </div>
-        ';
+                <div class="col text-end">
+                    <a href="#!" class="text-danger small delete-cart-item" data-order_id="' . $order_id . '"><i class="fa-solid fa-ban"></i> Cancel Order</a>
+                </div>
+            ';
     } else {
         $action = '';
     }
@@ -313,7 +312,7 @@ $item = '
                     <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
                 </div>
 
-                '.$action.'                
+                '.$action.'  
 
 
             </div>

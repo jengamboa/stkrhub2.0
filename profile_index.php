@@ -6,22 +6,6 @@ session_start();
 <html lang="zxx" class="no-js">
 
 <head>
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="img/fav.png">
-    <!-- Author Meta -->
-    <meta name="author" content="CodePixar">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
-    <meta charset="UTF-8">
-    <!-- Site Title -->
-    <title>Karma Shop</title>
-
-
     <!-- CSS ================================ -->
     <link rel="stylesheet" href="css/linearicons.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/font-awesome.min.css?<?php echo time(); ?>">
@@ -33,10 +17,19 @@ session_start();
     <link rel="stylesheet" href="css/ion.rangeSlider.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css?<?php echo time(); ?>" />
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/main2.css?<?php echo time(); ?>">
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
 
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- material icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -44,9 +37,102 @@ session_start();
     <!-- Filepond -->
     <link href="https://unpkg.com/filepond@4.23.1/dist/filepond.min.css" rel="stylesheet">
 
+    <!-- List JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+    <!-- Include Tippy.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
 
+    <!-- Filepond -->
+    <link href="https://unpkg.com/filepond@4.23.1/dist/filepond.min.css" rel="stylesheet">
 
+
+    <style>
+        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>
+
+        /* start header */
+        .sticky-wrapper {
+            top: 0px !important;
+        }
+
+
+        .header_area .main_menu .main_box {
+            max-width: 100%;
+        }
+
+        /* end */
+
+        #infoTable tbody tr {
+            background-color: transparent !important;
+        }
+
+        .image-mini-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding-top: 70%;
+        }
+
+        .image-mini {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            -webkit-mask-image: linear-gradient(to left, transparent 0%, black 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+        }
+
+        .custom-shadow {
+            box-shadow: 0 0 10px #000000;
+        }
+
+        table.dataTable tbody th,
+        table.dataTable tbody td {
+            padding: 0px 0px;
+        }
+
+        table.dataTable.no-footer {
+            border-bottom: none;
+        }
+
+        .even,
+        .odd {
+            background-color: transparent !important;
+        }
+
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto;
+            clear: both;
+            /* border-collapse: separate; */
+            border-spacing: -20px;
+        }
+
+        table.dataTable,
+        table.dataTable thead,
+        table.dataTable tbody,
+        table.dataTable tr,
+        table.dataTable td,
+        table.dataTable th,
+        table.dataTable tbody tr.even,
+        table.dataTable tbody tr.odd {
+            border: none !important;
+        }
+
+
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            color: #fff;
+            background-color: #272a4e;
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
@@ -55,28 +141,16 @@ session_start();
     include 'html/page_header.php';
     ?>
 
-    <!-- Start Banner Area -->
-    <section class="banner-area organic-breadcrumb">
-        <div class="container">
-            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-                <div class="col-first">
-                    <h1>Element Page</h1>
-                    <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="category.html">Element</a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Banner Area -->
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Start Sample Area -->
     <section class="sample-text-area">
         <div class="container">
 
             <div class="row">
-                <div class="col-3">
+                <div class="col">
                     <div class="nav flex-column nav-pills">
                         <a class="nav-link active" href="profile_index.php">My Account</a>
 
@@ -88,7 +162,7 @@ session_start();
                     </div>
                 </div>
 
-                <div class="col-9">
+                <div class="col-10">
                     <div class="tab-content" id="v-pills-tabContent">
 
                         <div class="tab-pane fade show active" id="v-pills-myaccount" role="tabpanel" aria-labelledby="v-pills-myaccount-tab">
@@ -125,7 +199,7 @@ session_start();
                                             </table>
 
 
-                                            
+
 
                                         </div>
                                     </section>
@@ -178,10 +252,14 @@ session_start();
     <!-- Filepond JavaScript -->
     <script src="https://unpkg.com/filepond@4.23.1/dist/filepond.min.js"></script>
 
+    <!-- Include Tippy.js JavaScript -->
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+
 
 
     <script>
         $(document).ready(function() {
+            <?php include 'js/essential.php'; ?>
 
 
             //DataTables
@@ -205,7 +283,7 @@ session_start();
                 "columns": [{
                         "data": "row"
                     },
-                    
+
                 ]
             });
 

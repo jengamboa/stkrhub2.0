@@ -75,62 +75,89 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     } elseif ($numSelectedCarts >= 41) {
         $weight_price = (float)$weight_price_5;
     }
-
-    // echo 'Sub Total: ' . $sub_total . '<br>';
-    // echo $shipping = 'Shipping: ' . $weight_price . '<br>';
-
-    // $total_payment = ($sub_total + $weight_price);
-
-
-    // echo 'Total Payment: ' . $total_payment;
-
-
-    // echo '
-    // <div id="paypal-payment-button"
-    // data-paypal_payment="' . $total_payment . '"
-    // data-fullname="' . $fullname . '"
-    // data-number="' . $number . '"
-    // data-region="' . $region . '"
-    // data-province="' . $province . '"
-    // data-city="' . $city . '"
-    // data-barangay="' . $barangay . '"
-    // data-zip="' . $zip . '"
-    // data-street="' . $street . '"
-    // data-carts_selected="' . implode(',', $selectedCartIds) . '"
-    // ></div>'
-    
-;
+    $total_payment = ($sub_total + $weight_price);;
 }
 
 
 
-
-
 $item = '
+
+        <div class="card m-0 p-2" 
+        style="
+        background: rgba(39, 42, 78, 0.37);
+        border-radius: 15px 15px 15px 15px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5.7px);
+        -webkit-backdrop-filter: blur(5.7px);
+        ">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <p class="">Subtotal:</p>
+                    </div>
+
+                    <div class="col">
+                        <span style="color: #b660e8"> &#8369;' . number_format($sub_total, 2) . '</span>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Shipping Total:</p>
+                    </div>
+
+                    <div class="col">
+                        <span> &#8369;' . number_format($weight_price, 2) . '</span>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="">Total Payment:</p>
+                    </div>
+
+                    <div class="col lead">
+                        <span style="color: #26d3e0;"> &#8369;' . number_format($total_payment, 2) . '</span>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div id="paypal-payment-button"
+                    data-paypal_payment="' . $total_payment . '"
+                    data-fullname="' . $fullname . '"
+                    data-number="' . $number . '"
+                    data-region="' . $region . '"
+                    data-province="' . $province . '"
+                    data-city="' . $city . '"
+                    data-barangay="' . $barangay . '"
+                    data-zip="' . $zip . '"
+                    data-street="' . $street . '"
+                    data-carts_selected="' . implode(',', $selectedCartIds) . '"
+                    style="width: 100%;"
+                    ></div>
+                </div>
+            </div>
+        </div>
 ';
 
 
-    $item .= 'Sub Total: ' . $sub_total . '<br>';
-    $item .= $shipping = 'Shipping: ' . $weight_price . '<br>';
-
-    $total_payment = ($sub_total + $weight_price);
-    $item .= 'Total Payment: ' . $total_payment;
 
 
-    $item .= '
-    <div id="paypal-payment-button"
-    data-paypal_payment="' . $total_payment . '"
-    data-fullname="' . $fullname . '"
-    data-number="' . $number . '"
-    data-region="' . $region . '"
-    data-province="' . $province . '"
-    data-city="' . $city . '"
-    data-barangay="' . $barangay . '"
-    data-zip="' . $zip . '"
-    data-street="' . $street . '"
-    data-carts_selected="' . implode(',', $selectedCartIds) . '"
-    ></div>
-    ';
+// <div class="card">
+//         <div class="row"></div>
+
+//         <div class="row"><h6>Shipping: &#8369;</h6><span>' . number_format($weight_price, 2) . '</span></div>
+
+//         <div class="row"><h6>Total Payment: &#8369;</h6><span>' . number_format($total_payment, 2) . '</span></div>
+        
+//         <div class="row">
+            
+//         </div>
+//     </div>
+
 
 
 $item .= '

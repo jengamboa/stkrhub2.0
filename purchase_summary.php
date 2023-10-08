@@ -390,18 +390,20 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                                 };
 
-                                // Send an AJAX request to update the address information in the database
                                 $.ajax({
-                                    url: "swal_update_address.php", // Create this PHP file to update the address
+                                    url: "swal_update_address.php",
                                     method: "POST",
                                     data: formData,
                                     success: function() {
-                                        // Reload the DataTable after the address is updated
                                         $('#infoPurhaseTable').DataTable().ajax.reload();
                                         $('#profileAddress').DataTable().ajax.reload();
                                         $('#purchaseTable').DataTable().ajax.reload();
+                                        $('#purchaseAddress').DataTable().ajax.reload();
+                                        $('#paypalTable').DataTable().ajax.reload();
+
 
                                         $('#cartCount').DataTable().ajax.reload();
+
 
                                         // Show a success message with Swal
                                         Swal.fire({
@@ -497,21 +499,21 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                 addressId: addressId
                             },
                             success: function(response) {
-                                // Reload the DataTable after the address is updated
                                 $('#infoPurhaseTable').DataTable().ajax.reload();
                                 $('#profileAddress').DataTable().ajax.reload();
                                 $('#purchaseTable').DataTable().ajax.reload();
+                                $('#purchaseAddress').DataTable().ajax.reload();
+                                $('#paypalTable').DataTable().ajax.reload();
+
 
                                 $('#cartCount').DataTable().ajax.reload();
+
+                                window.location.reload();
 
                                 Swal.fire({
                                     title: "Success",
                                     text: "You changed the default address",
                                     icon: "success",
-                                    didClose: () => {
-                                        // Reload the whole page after the SweetAlert is closed
-                                        window.location.reload();
-                                    },
                                 });
 
 

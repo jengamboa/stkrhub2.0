@@ -23,10 +23,10 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     ' . $street . '  ' . $barangay . '  ' . $city . '  ' . $barangay . '  ' . $province . '  ' . $region . '  ' . $zip . ' 
     ';
 
-    $status = '<span class="p-1" style="border: 2px solid #b660e8; color: #b660e8; border-radius: 7px;">Default</span>';
+    $status = '<span class="p-1 m-2" style="border: 2px solid #b660e8; color: #b660e8; border-radius: 7px;">Default</span>';
 
     $actions = '
-    <span class="p-1" id="change_address"
+    <span class="p-1 m-2" id="change_address"
     style="border: 2px solid ##16162a; color: white; background-color: #16162a; border-radius: 7px; cursor: pointer"
     >
         Change
@@ -40,8 +40,7 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
 
         <div class="col-8">' . $full_address_value . '</div>
 
-        <div class="col">'.$status.'</div>
-        <div class="col">'.$actions.'</div>
+        <div class="col">'.$status.' '.$actions.'</div>
     </div>
 
     ';

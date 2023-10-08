@@ -4,7 +4,7 @@ include "connection.php"; // Include your database connection script
 $user_id = $_GET['user_id'];
 $data = array();
 
-$sqlAll = "SELECT * FROM orders WHERE user_id = $user_id ORDER BY order_date DESC";
+$sqlAll = "SELECT * FROM orders WHERE user_id = $user_id AND is_canceled = 1 ORDER BY order_date DESC";
 $queryAll = $conn->query($sqlAll);
 while ($fetched = $queryAll->fetch_assoc()) {
     $order_id = $fetched['order_id'];
@@ -31,6 +31,8 @@ while ($fetched = $queryAll->fetch_assoc()) {
         $classification = 'Game Component';
     } elseif ($ticket_id) {
         $classification = 'Ticket';
+    } else {
+        $classification = '';
     }
 
     // title
@@ -87,6 +89,8 @@ while ($fetched = $queryAll->fetch_assoc()) {
         $status = 'RECEIVED';
     } elseif ($is_canceled) {
         $status = 'CANCELED';
+    } else {
+        $status = 'Undefined';
     }
 
     // shop_from
@@ -109,7 +113,7 @@ while ($fetched = $queryAll->fetch_assoc()) {
     } elseif ($ticket_id) {
         $shop_from = 'asd';
     } else {
-        $shop_from = 'asd';
+        $shop_from = 'Undefined';
     }
 
     // description
@@ -183,9 +187,7 @@ while ($fetched = $queryAll->fetch_assoc()) {
             $description .= '<span class="text-muted text-truncate" data-toggle="' . $name . '" title="Title" style="max-width:270px;">Game Name: </span>' . $name;
         }
     } else {
-        $description = '
-    
-            ';
+        $description = 'none';
     }
 
     // img_src
@@ -244,14 +246,13 @@ while ($fetched = $queryAll->fetch_assoc()) {
     // $total_price
     $total_price = $quantity * $price;
 
-
     // actions
     if ($is_pending) {
         $action = '
-            <div class="col text-end">
-                <a href="#!" class="text-danger small delete-cart-item" data-order_id="' . $order_id . '"><i class="fa-solid fa-ban"></i> Cancel Order</a>
-            </div>
-        ';
+                        <div class="col text-end">
+                            <a href="#!" class="text-danger small delete-cart-item" data-order_id="' . $order_id . '"><i class="fa-solid fa-ban"></i> Cancel Order</a>
+                        </div>
+                    ';
     } else {
         $action = '';
     }
@@ -262,65 +263,63 @@ while ($fetched = $queryAll->fetch_assoc()) {
 
 $item = '
 
-<div class="row scroll_reveal">
+<div class="row">
+    <div class="col">
 
-<div class="col">
+        <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #17172b; padding: 0.1rem;">
 
-    <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #17172b; padding: 0.1rem;">
+            <div class="card-header py-1">
+                <div class="row p-0">
 
-        <div class="card-header py-1">
-            <div class="row p-0">
+                    <div class="col-0 d-flex align-items-center">
+                        ' . $classification . '
+                    </div>
 
-                <div class="col-0 d-flex align-items-center">
-                    ' . $classification . '
+                    <div class="col-0 d-flex align-items-center ml-auto">
+                        <div class="mr-2">Status: ' . $status . '</div>
+                        <div class="mr-2">Order ID: ' . $order_id . '</div>
+                    </div>
+
                 </div>
-
-                <div class="col-0 d-flex align-items-center ml-auto">
-                    <div class="mr-2">Status: ' . $status . '</div>
-                    <div class="mr-2">Cart ID: ' . $order_id . '</div>
-                </div>
-
             </div>
-        </div>
 
-        <div class="card-body p-0" style="background-color: #272a4e;">
-            <div class="row d-flex justify-content-between align-items-center ">
+            <div class="card-body p-0" style="background-color: #272a4e;">
+                <div class="row d-flex justify-content-between align-items-center ">
 
-                <div class="col-md-2 col-lg-2 col-xl-2 p-0">
-                    <div class="container" style="height: 100%; width: 100%;">
-                        <div class="image-mini-container mask1">
-                            <img class="image-mini" src="' . $img_src . '">
+                    <div class="col-md-2 col-lg-2 col-xl-2 p-0">
+                        <div class="container" style="height: 100%; width: 100%;">
+                            <div class="image-mini-container mask1">
+                                <img class="image-mini" src="' . $img_src . '">
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-3 overflow-hidden">
+                        <p class="lead fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
+                            ' . $fetched_title . '
+                        </p>
+                            ' . $description . '
+                    </div>
+
+                    <div class="col">
+                        <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
+                    </div>
+
+                    <div class="col-2">
+                        ' . $quantity_input . '
+                    </div>
+
+                    <div class="col">
+                        <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
+                    </div>
+
+                    ' . $action . '  
+
                 </div>
-
-                <div class="col-3 overflow-hidden">
-                    <p class="h6 fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
-                        ' . $fetched_title . '
-                    </p>
-                        ' . $description . '
-                </div>
-
-                <div class="col">
-                    <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
-                </div>
-
-                <div class="col">
-                    ' . $quantity_input . '
-                </div>
-
-                <div class="col">
-                    <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
-                </div>
-
-                '.$action.'                
-
-
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 
 </div>
 
