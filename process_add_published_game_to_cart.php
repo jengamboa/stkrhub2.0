@@ -20,21 +20,29 @@ while ($fetchedPrice = $sqlGetPrice->fetch_assoc()) {
 $quantity = 1;
 
 
-// Check if the item already exists in the cart
-$checkCart = "SELECT cart_id, quantity FROM cart WHERE user_id = $user_id AND published_game_id = $published_game_id";
-$resultCheckCart = $conn->query($checkCart);
 
+$sqlCheckCart = "SELECT cart_id, user_id, is_visible, quantity FROM cart WHERE user_id = $user_id AND published_game_id = $published_game_id AND is_visible = 1";
+$resultCheckCart = mysqli_query($conn, $sqlCheckCart);
 
 if ($resultCheckCart->num_rows > 0) {
     $cartData = $resultCheckCart->fetch_assoc();
     $existingCartId = $cartData['cart_id'];
 
-    echo 'cart ID'.$existingCartId;
+    if ($cartData['is_visible'] == 0) {
+        // If is_visible is 0, update quantity
+        $sql = "INSERT INTO cart (user_id, published_game_id, quantity, price) VALUES ($user_id, $published_game_id, $quantity, $price)";
+        mysqli_query($conn, $sql);
 
-    $existingQuantity = $cartData['quantity'] + $quantity;
+        echo 'Inserting new cart entry for user ID ' . $user_id;
+    } else {
+        // If is_visible is not 0, insert a new row
+        echo 'cart ID' . $existingCartId;
 
-    $updateCart = "UPDATE cart SET quantity = $existingQuantity WHERE cart_id = $existingCartId";
-    mysqli_query($conn, $updateCart);
+        $existingQuantity = $cartData['quantity'] + $quantity;
+
+        $updateCart = "UPDATE cart SET quantity = $existingQuantity WHERE cart_id = $existingCartId";
+        mysqli_query($conn, $updateCart);
+    }
 } else {
     $sql = "INSERT INTO cart (user_id, published_game_id, quantity, price) VALUES ($user_id, $published_game_id, $quantity, $price)";
     mysqli_query($conn, $sql);

@@ -5,7 +5,7 @@
 color: #26d3e0;
 
 /* purple */
-color: rgb(182, 96, 232);
+color: #b660e8;
 
 /* light purple */
 color: rgb(39, 42, 78);
@@ -17,6 +17,8 @@ color: rgb(21, 23, 46);
 
 /* 3rd mid purple */
 color: rgb(31, 34, 67);
+
+background: linear-gradient(144deg, #26d3e0, #b660e8);
 
 }
 

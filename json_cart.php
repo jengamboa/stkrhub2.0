@@ -21,7 +21,7 @@ $item = '
 
 $item .=
     '
-    <div class="row scroll_reveal" style="padding-bottom:20px;">
+    <div class="row" style="padding-bottom:20px;">
         <div class="col-0 d-flex align-items-center">';
 
 $sql1 = "SELECT COUNT(*) as total FROM cart WHERE user_id = $user_id AND is_visible = 1";
@@ -90,6 +90,13 @@ $item .=
 
     </div>
     ';
+
+
+
+
+
+
+// main part
 
 $sql = "SELECT * FROM cart WHERE user_id = $user_id AND is_visible = 1 ORDER by cart_id DESC";
 $result = $conn->query($sql);
@@ -317,20 +324,27 @@ while ($fetched = $result->fetch_assoc()) {
     // quantity_input
     if ($ticket_id) {
         $quantity_input = '
-        <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input" disabled data-toggle="tooltip" title="You need only 1 ticket per game" />
+        <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input" disabled data-toggle="tooltip" title="You need only 1 ticket per game" 
+        style="border: 0px; margin: 0px;"
+        />
         ';
     } else {
         $quantity_input = '
-            <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input"/>
+            <input min="1" max="99" data-cart_id="' . $cart_id . '" value="' . $quantity . '" type="number" class="form-control form-control-sm col-5" id="quantity_input"
+            style="border: 0px; margin: 0px;"/>
         ';
     }
 
     // $total_price
     $total_price = $quantity * $price;
 
+
+
+    // item
+
     $item .= '
 
-    <div class="row scroll_reveal">
+    <div class="row">
 
         <div class="col-0 d-flex align-items-center">
             <input type="checkbox" style="transform: scale(1.7); margin-right: none;"
@@ -351,7 +365,7 @@ while ($fetched = $result->fetch_assoc()) {
                         </div>
 
                         <div class="col-0 d-flex align-items-center ml-auto">
-                            <div class="mr-2">Order ID: ' . $cart_id . '</div>
+                            <div class="mr-2">Cart ID: ' . $cart_id . '</div>
                         </div>
 
                     </div>
@@ -384,7 +398,7 @@ while ($fetched = $result->fetch_assoc()) {
                         </div>
 
                         <div class="col">
-                            <h5 class="mb-0">&#8369; ' . number_format($total_price, 2) . '</h5>
+                            <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
                         </div>
 
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -407,6 +421,15 @@ while ($fetched = $result->fetch_assoc()) {
 };
 
 
+
+
+
+
+
+
+
+
+// lower part
 $sqlA = "SELECT * FROM cart WHERE user_id = $user_id AND is_active = 1 AND is_visible !=0";
 $resultA = $conn->query($sqlA);
 

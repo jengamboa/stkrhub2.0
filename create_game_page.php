@@ -80,14 +80,14 @@ include 'connection.php';
 
         <?php include 'css/header.css'; ?>
         
+        /* header */
         .sticky-wrapper {
             top: 0px !important;
         }
-
-
         .header_area .main_menu .main_box {
             max-width: 100%;
         }
+        /* header end */
 
         .form-control::placeholder {
             font-size: 14px;
