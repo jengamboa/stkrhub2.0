@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $ticket_cost = $ticket_price;
 
-    $sqlUpdateIsBuilt = "UPDATE games SET is_built = 1, to_approve = 0, is_approved = 1 WHERE game_id = $game_id";
+    $sqlUpdateIsBuilt = "UPDATE games SET is_built = 1, is_purchased = 0, to_approve = 0, is_denied = 0, is_approved = 1 WHERE game_id = $game_id";
     $conn->query($sqlUpdateIsBuilt);
 
     $sqlUpdateTicket = "UPDATE tickets SET is_approved = 1 WHERE ticket_id = $latestTicketId";

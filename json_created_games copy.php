@@ -3,7 +3,7 @@ include "connection.php"; // Include your database connection script
 
 $user_id = $_GET['user_id'];
 
-$sqlGames = "SELECT * FROM games WHERE user_id = $user_id AND is_visible = 1";
+$sqlGames = "SELECT * FROM games WHERE user_id = $user_id AND is_visible = 1 ORDER BY created_at DESC";
 $resultGames = $conn->query($sqlGames);
 
 $data = array();
@@ -20,15 +20,28 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
     $date = $dateTime->format('M. d, Y');
     $time = $dateTime->format('h:i A');
 
+    $date_modified = $fetchedGames['date_modified'];
+    $timestamp = strtotime($date_modified);
+    $dateFormatted = date("M. d, Y", $timestamp);
+    $timeFormatted = date("h:i a", $timestamp);
+
+    $date_modified_value = $dateFormatted . '<br>' . $timeFormatted;
+
     $is_pending = $fetchedGames['is_pending'];
+    $is_purchased = $fetchedGames['is_purchased'];
     $to_approve = $fetchedGames['to_approve'];
     $is_denied = $fetchedGames['is_denied'];
     $is_approved = $fetchedGames['is_approved'];
 
 
+
     $game_link = '
-        <a href="game_dashboard.php?game_id=' . $game_id . '">' . $name . '</a><br>
-        ID: '. $game_id .'<br>
+    
+        <a href="game_dashboard.php?game_id=' . $game_id . '" style="color: #26d3e0;">
+            <p class="d-inline-block text-truncate" style="max-width: 190px;" data-toggle="tooltip" title="' . $name . '" >
+                ' . $name . '
+            </p>
+        </a>
     ';
 
 
@@ -47,7 +60,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         $total_price += $component_price * $component_quantity;
     }
 
-    $formatted_date = $date .'<br>' . $time;
+    $formatted_date = $date . '<br>' . $time;
 
 
 
@@ -65,24 +78,29 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         }
     }
 
-    if ($is_approved) {
+
+    if ($is_pending) {
+        $status = 'Your Ticket is in the Cart, please purchase it for the admin to proceed';
+        $status_icon = '<i class="fa-regular fa-circle-dot" style="color: #3dc1e1"></i>';
+    } elseif ($is_purchased) {
+        $status = 'You already Purchased. Wait for the Admin\'s Response';
+        $status_icon = '<i class="fa-regular fa-circle-dot" style="color: #f7f799"></i>';
+    } elseif ($to_approve) {
+        $status = 'Admin is ready to review your game. Wait for the Admin\'s Response';
+        $status_icon = '<i class="fa-regular fa-circle-dot" style="color: orange"></i>';
+    } elseif ($is_approved) {
         $status = 'Approved';
+        $status_icon = '<i class="fa-regular fa-circle-dot" style="color: #90ee90"></i>';
     } elseif ($is_denied) {
         $status = '
         <button class="view-reason" data-built_game_id="' . $game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
             View Reason
         </button>
         ';
-    } elseif ($to_approve) {
-        $status = 'Wait for the Admin\'s Response';
-    } elseif ($total_price == '0') {
-        $status = '
-            You can not request to approve a game if it is empty
-        ';
-    } elseif ($is_pending) {
-        $status = 'Your Ticket is in the Cart, please purchase it for the admin to proceed';
+        $status_icon = '<i class="fa-regular fa-circle-dot" style="color: #dc3545"></i>';
     } else {
-        $status = 'Approve this Game so that you can proceed.';
+        $status = 'Get Approve this Game so that you can proceed.';
+        $status_icon = '<i class="fa-regular fa-circle-dot"></i>';
     }
 
 
@@ -124,20 +142,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
     $ticket_price = $totalPrice / $ticket_percentage;
 
-
-    if ($is_approved) {
-        $extra_action = '
-        <button class="approve-game" 
-        data-gameid="' . $game_id . '" 
-        data-total_price="' . $total_price . '" 
-        data-ticket_price="' . $ticket_price . '" 
-        data-name="' . htmlspecialchars($name) . '" 
-        data-description="' . htmlspecialchars($description) . '"
-        >
-            <i class="fa-solid fa-puzzle-piece"></i> Get Approved Again
-        </button>
-        ';
-    } elseif ($to_approve) {
+    if ($total_price == '0') {
         $extra_action = '
         <button class="approve-game" 
         data-gameid="' . $game_id . '" 
@@ -146,9 +151,14 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
         disabled
+        style="font-size:px";
+
+        data-toggle="tooltip" title="You can not request to approve a game if it is empty"
         >
-            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+            <i class="fa-solid fa-ticket"></i> Get Approved
         </button>
+
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     } elseif ($is_pending) {
         $extra_action = '
@@ -159,8 +169,76 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
         disabled
+
+        style="margin: 5px;"
+
+        data-toggle="tooltip" title="Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
         >
-            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+            <i class="fa-solid fa-ticket"></i> Get Approved
+        </button>
+
+        <button class="cancel-ticket" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+
+        style="margin: 5px;"
+
+        data-toggle="tooltip" title="Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
+        >
+            <i class="fa-solid fa-ban"></i> Cancel Ticket
+        </button>
+
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
+        ';
+    } elseif ($is_purchased) {
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        disabled
+
+        style="margin: 5px;"
+
+        data-toggle="tooltip" title="Wait for the admin"
+        >
+            <i class="fa-solid fa-ticket"></i> Get Approved
+        </button>
+
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
+        ';
+    } elseif ($to_approve) {
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        disabled
+
+        data-toggle="tooltip" title="Admin is evaluating your created game\'s components"
+        >
+            <i class="fa-solid fa-ticket"></i> Get Approved
+        </button>
+        ';
+    } elseif ($is_approved) {
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+
+        data-toggle="tooltip" title="Admin will check the game components you\'ve added as well as the assets you uploaded, if there is any plagiarism..."
+        >
+            <i class="fa-solid fa-ticket"></i> Get Approved Again
         </button>
         ';
     } elseif ($is_denied) {
@@ -171,24 +249,13 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         data-ticket_price="' . $ticket_price . '" 
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
+
+        data-toggle="tooltip" title="Don\'t lose hope, get approved again"
         >
-            <i class="fa-solid fa-puzzle-piece"></i> Get Approved Again
+            <i class="fa-solid fa-ticket"></i> Get Approved Again
         </button>
 
-        
-        ';
-    } elseif ($total_price == '0') {
-        $extra_action = '
-        <button class="approve-game" 
-        data-gameid="' . $game_id . '" 
-        data-total_price="' . $total_price . '" 
-        data-ticket_price="' . $ticket_price . '" 
-        data-name="' . htmlspecialchars($name) . '" 
-        data-description="' . htmlspecialchars($description) . '"
-        disabled
-        >
-            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
-        </button>
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     } else {
         $extra_action = '
@@ -198,9 +265,13 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         data-ticket_price="' . $ticket_price . '" 
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
+
+        data-toggle="tooltip" title="Buy a ticket so that admin can review your game and proceed on your journey as publisher"
         >
-            <i class="fa-solid fa-puzzle-piece"></i> Get Approved
+            <i class="fa-solid fa-ticket"></i> Get Approved
         </button>
+
+        <p class="small text-muted" style="padding: 0px; margin:0px">game ID: ' . $game_id . '</p>
         ';
     }
 
@@ -215,16 +286,25 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
     
     ' . $extra_action;
 
+    $total_price_value = '<p class="text-truncate" style="color: #26d3e0; max-width: 100px;" data-toggle="tooltip" title="' . $total_price . '">&#8369;' . number_format($total_price, 2) . '</p>';
 
+    $description_value = '<p class="text-truncate" style="max-width: 140px;" data-toggle="tooltip" title="' . $description . '">' . $description . '</p>';
+
+    $status_value = '
+    <span class="small" 
+    data-toggle="tooltip" title="' . $status . '"
+    > 
+    ' . $status_icon . ' ' . $status . '
+    </span>
+    ';
 
     $data[] = array(
         "game_link" => $game_link,
-        "description" => $description,
-        "total_price" => $total_price,
-        "formatted_date" => $formatted_date,
-        "status" => $status,
+        "description" => $description_value,
+        "total_price" => $total_price_value,
+        "formatted_date" => $date_modified_value,
+        "status" => $status_value,
         "actions" => $actions,
-
     );
 }
 

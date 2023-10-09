@@ -64,11 +64,11 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
 
 
-    $sqlReason = "SELECT * FROM games_reasons WHERE game_id = $game_id";
+    $sqlReason = "SELECT * FROM denied_approve_game_requests WHERE game_id = $game_id";
     $queryReason = $conn->query($sqlReason);
     while ($fetchedReason = $queryReason->fetch_assoc()) {
 
-        $games_reason_id = $fetchedReason['games_reason_id'];
+        $denied_approve_game_request_id = $fetchedReason['denied_approve_game_request_id'];
         $reason = $fetchedReason['reason'];
 
         if ($fetchedReason['file_path'] === null) {
@@ -93,9 +93,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
         $status_icon = '<i class="fa-regular fa-circle-dot" style="color: #90ee90"></i>';
     } elseif ($is_denied) {
         $status = '
-        <button class="view-reason" data-built_game_id="' . $game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
-            View Reason
-        </button>
+        Denied
         ';
         $status_icon = '<i class="fa-regular fa-circle-dot" style="color: #dc3545"></i>';
     } else {
@@ -290,17 +288,45 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
     $description_value = '<p class="text-truncate" style="max-width: 140px;" data-toggle="tooltip" title="' . $description . '">' . $description . '</p>';
 
-    $status_value = '
-    <span class="small" 
-    data-toggle="tooltip" title="' . $status . '"
-    > 
-    ' . $status_icon . ' ' . $status . '
-    </span>
-    ';
+
+    
+    if ($to_approve) {
+        $status_value = '
+        <span class="small" 
+        data-toggle="tooltip" title="' . $status . '"
+        > 
+        ' . $status_icon . ' ' . $status . '
+        </span>
+        ';
+    } elseif ($is_denied) {
+        $cleaned_path = str_replace("../", "", $file_path);
+
+        $status_value = '
+        <span class="small" 
+        data-toggle="tooltip" title="Your request was denied"
+        > 
+        ' . $status_icon . ' ' . $status . '
+        </span>
+
+        
+        <button class="view-reason" data-built_game_id="' . $game_id . '" data-reason="' . $reason . '" data-file_path="' . $cleaned_path . '">
+            View Reason
+        </button>
+        ';
+    } else {
+        $status_value = '
+        <span class="small" 
+        data-toggle="tooltip" title="' . $status . '"
+        > 
+        ' . $status_icon . ' ' . $status . '
+        </span>
+        ';
+    }
+
 
     $data[] = array(
         "game_link" => $game_link,
-        "description" => $description_value,
+        "description" => $description,
         "total_price" => $total_price_value,
         "formatted_date" => $date_modified_value,
         "status" => $status_value,

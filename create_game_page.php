@@ -490,7 +490,7 @@ include 'connection.php';
 
             <div id="section7" class="section-step">
                 <!-- DataTables publishedGameTable  -->
-                <table id="publishedGameTable" class="display" style="width: 100%;">
+                <!-- <table id="publishedGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>Published Game Name</th>
@@ -505,9 +505,8 @@ include 'connection.php';
                     </thead>
 
                     <tbody>
-                        <!-- User data will be displayed here -->
                     </tbody>
-                </table>
+                </table> -->
                 <!-- /DataTables publishedGameTable  -->
             </div>
 
@@ -998,7 +997,7 @@ include 'connection.php';
 
                 // Check if file_path is not NULL before creating the download link
                 if (file_path === 0) {
-                    downloadLink = 'wala attachment';
+                    downloadLink = ' ';
                 } else {
                     downloadLink = '<br><a href="' + file_path + '" download>Download Attachment</a>';
                 }

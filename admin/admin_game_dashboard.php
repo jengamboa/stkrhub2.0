@@ -260,6 +260,33 @@ if ($_SERVER['REQUEST_METHOD']) {
     </div>
 
 
+    <!-- modals -->
+    <div class="modal fade" id="changeAddress">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">My Address</h5>
+                </div>
+                <form id="denyForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+
+                        <label for="reason">Reason:</label>
+                        <input type="text" id="reason" name="reason" required><br>
+
+                        <label for="fileupload">File Upload:</label>
+                        <input type="file" id="fileupload" name="fileupload"><br>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -385,6 +412,48 @@ if ($_SERVER['REQUEST_METHOD']) {
             });
 
 
+            $('#infoTable').on('click', '.deny-game', function() {
+                var gameId = $(this).data('game_id');
+                var creator_id = $(this).data('creator_id');
+
+                $("#changeAddress").modal("show");
+
+                // You can also set hidden input fields to pass the gameId and creatorId to the PHP script
+                $('#denyForm').append('<input type="hidden" id="game_id" value="' + gameId + '">');
+                $('#denyForm').append('<input type="hidden" id="creator_id" value="' + creator_id + '">');
+            });
+
+
+            $("#denyForm").submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                var formData = new FormData();
+                formData.append('reason', $('#reason').val());
+                formData.append('fileupload', $('#fileupload')[0].files[0]);
+
+                formData.append('game_id', $('#game_id').val());
+                formData.append('creator_id', $('#creator_id').val());
+
+                // Make an AJAX request to submit the form data
+                $.ajax({
+                    url: 'admin_process_deny_game_request.php', // Replace with your server-side script URL
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Handle the success response here
+                        console.log("Form submitted successfully.");
+                        // You can do something here like displaying a success message or closing the modal
+                        $("#changeAddress").modal('hide');
+                    },
+                    error: function(error) {
+                        // Handle any errors here
+                        console.error("Error submitting the form: " + error);
+                        // You can display an error message or take any other appropriate action
+                    }
+                });
+            });
 
 
         });
