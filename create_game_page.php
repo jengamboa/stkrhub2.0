@@ -43,8 +43,7 @@ include 'connection.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        <?php include 'css/body.css'; ?>
-        .multi-step-bar {
+        <?php include 'css/body.css'; ?>.multi-step-bar {
             overflow: hidden;
             counter-reset: step;
             width: 75%;
@@ -79,14 +78,16 @@ include 'connection.php';
 
 
         <?php include 'css/header.css'; ?>
-        
+
         /* header */
         .sticky-wrapper {
             top: 0px !important;
         }
+
         .header_area .main_menu .main_box {
             max-width: 100%;
         }
+
         /* header end */
 
         .form-control::placeholder {
@@ -193,6 +194,15 @@ include 'connection.php';
             cursor: not-allowed;
         }
 
+        .cancel-ticket {
+            background-color: #dc3545 !important;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+            color: #f7f799;
+        }
+
 
         /* datatables */
         table.dataTable.stripe tbody tr.even,
@@ -223,6 +233,8 @@ include 'connection.php';
         table.dataTable tbody tr.odd {
             border: none !important;
         }
+
+        
     </style>
 </head>
 
@@ -356,7 +368,7 @@ include 'connection.php';
                                     <th style="min-width: 80px; max-width: 80px;">Description</th>
                                     <th style="min-width: 80px; max-width: 80px;">Price</th>
                                     <th style="min-width: 80px; max-width: 80px;">Date Modified</th>
-                                    <th style="min-width: 170px; max-width: 170px;">Status</th>
+                                    <th style="min-width: 170px; max-width: 170px;">Recent Status</th>
                                     <th style="min-width: 120px; max-width: 120px;"></th>
                                 </tr>
                             </thead>
@@ -891,6 +903,82 @@ include 'connection.php';
                             },
                             error: function() {
                                 Swal.fire('Error', 'Failed to build the game', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
+
+            $('#createGameTable').on('click', '.cancel-ticket', function() {
+                var gameId = $(this).data('gameid');
+                var gameName = $(this).data('name');
+                var gameDescription = $(this).data('description');
+                var total_price = $(this).data('total_price');
+                var ticket_price = $(this).data('ticket_price');
+
+                Swal.fire({
+                    title: 'Cancel Ticket',
+                    text: '',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Cancel Ticket',
+                    cancelButtonText: 'No, do not cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_cancel_ticket_cart.php',
+                            data: {
+                                game_id: gameId,
+                                name: gameName,
+                                description: gameDescription,
+                                total_price: total_price,
+                                ticket_price: ticket_price,
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    Swal.fire('Success', response.message, 'success');
+                                } else {
+                                    $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    Swal.fire('Error', response.message, 'error');
+
+                                }
+                            },
+                            error: function() {
+                                $('#createGameTable').DataTable().ajax.reload();
+                                    $('#builtGameTable').DataTable().ajax.reload();
+                                    $('#pendingGameTable').DataTable().ajax.reload();
+
+                                    $('#canceledGameTable').DataTable().ajax.reload();
+                                    $('#approvedGameTable').DataTable().ajax.reload();
+                                    $('#purchasedGameTable').DataTable().ajax.reload();
+                                    $('#publishedGameTable').DataTable().ajax.reload();
+
+                                    $('#cartCount').DataTable().ajax.reload();
+                                Swal.fire('Error', 'Failed to Cancel Ticket', 'error');
                             }
                         });
                     }

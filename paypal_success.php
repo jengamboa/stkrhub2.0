@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     // $status = "to_deliver";
                     // $status_value = 1;
 
-                    $status = "is_pending";
+                    $status = "is_received";
                     $status_value = 1;
 
                     $desired_markup = '';
@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     while ($resultOK = $queryTicketGamesOK->fetch_assoc()) {
                         $game_id = $resultOK['game_id'];
 
-                        $sqlUpdateGameTicket = "UPDATE games SET is_pending = 0, to_approve = 1 WHERE game_id = $game_id";
+                        $sqlUpdateGameTicket = "UPDATE games SET is_pending = 0, is_purchased = 1, to_approve = 1 WHERE game_id = $game_id";
                         $queryUpdateGameTicket = $conn->query($sqlUpdateGameTicket);
                         if ($queryUpdateGameTicket) {
                             echo "Game Ticket updated successfully.";
@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             echo "Failed to update game ticket.";
                         }
 
-                        $sqlUpdateGameTicket2 = "UPDATE tickets SET is_at_cart = 0, is_purchased = 1 WHERE ticket_id = $ticket_id";
+                        $sqlUpdateGameTicket2 = "UPDATE tickets SET is_at_cart = 0, is_purchased = 1, is_accepted = 1 WHERE ticket_id = $ticket_id";
                         $queryUpdateGameTicket2 = $conn->query($sqlUpdateGameTicket2);
                         if ($queryUpdateGameTicket2) {
                             echo "Game Ticket updated successfully.";

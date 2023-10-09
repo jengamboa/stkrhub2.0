@@ -3,20 +3,29 @@ session_start();
 include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve the 'cartIds' array from the POST data
     $cartIds = $_POST['cartIds'];
 
     if (!empty($cartIds)) {
-        $cartIds = array_map('intval', $cartIds); // Sanitize input
+        $cartIds = array_map('intval', $cartIds);
 
-        // Use a prepared statement to update the 'is_visible' column
-        $sql = "DELETE FROM cart WHERE cart_id IN (" . implode(',', $cartIds) . ")";
+        // First, update the games with is_pending = 0 for the corresponding cart_id's ticket_id
+        $updateSql = "UPDATE games 
+                      JOIN cart ON games.game_id = cart.game_id 
+                      SET games.is_pending = 0 
+                      WHERE cart.cart_id IN (" . implode(',', $cartIds) . ") 
+                      AND cart.ticket_id IS NOT NULL";
 
+        if ($conn->query($updateSql)) {
+            // Next, delete the cart items
+            $deleteSql = "DELETE FROM cart WHERE cart_id IN (" . implode(',', $cartIds) . ")";
 
-        if ($conn->query($sql)) {
-            $response = ["success" => true, "message" => "Items marked as invisible successfully"];
+            if ($conn->query($deleteSql)) {
+                $response = ["success" => true, "message" => "Items marked as invisible successfully"];
+            } else {
+                $response = ["success" => false, "message" => "Error deleting items: " . $conn->error];
+            }
         } else {
-            $response = ["success" => false, "message" => "Error updating items: " . $conn->error];
+            $response = ["success" => false, "message" => "Error updating games: " . $conn->error];
         }
     } else {
         $response = ["success" => false, "message" => "No items selected for update"];
@@ -26,4 +35,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo json_encode($response);
-?>

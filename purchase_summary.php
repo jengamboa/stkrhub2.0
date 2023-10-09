@@ -636,12 +636,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
 
-
-
-
-
-
-
             $('#purchaseAddress').DataTable({
                 searching: false,
                 info: false,

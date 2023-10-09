@@ -111,6 +111,15 @@ if ($_SERVER['REQUEST_METHOD']) {
             color: #f7f799;
         }
 
+        .cancel-ticket {
+            background-color: #dc3545 !important;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+            color: #f7f799;
+        }
+
         label {
             color: white;
         }
@@ -364,9 +373,62 @@ if ($_SERVER['REQUEST_METHOD']) {
                             },
                             error: function() {
                                 $('#infoTable').DataTable().ajax.reload();
+                                $('#cartCount').DataTable().ajax.reload();
+                                $('#userTable').DataTable().ajax.reload();
+                                Swal.fire('Error', 'Failed to build the game', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+            $('#infoTable').on('click', '.cancel-ticket', function() {
+                var gameId = $(this).data('gameid');
+                var gameName = $(this).data('name');
+                var gameDescription = $(this).data('description');
+                var total_price = $(this).data('total_price');
+                var ticket_price = $(this).data('ticket_price');
+
+                Swal.fire({
+                    title: 'Cancel Ticket',
+                    text: '',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Cancel Ticket',
+                    cancelButtonText: 'No, do not cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_cancel_ticket_cart.php',
+                            data: {
+                                game_id: gameId,
+                                name: gameName,
+                                description: gameDescription,
+                                total_price: total_price,
+                                ticket_price: ticket_price,
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#infoTable').DataTable().ajax.reload();
                                     $('#cartCount').DataTable().ajax.reload();
                                     $('#userTable').DataTable().ajax.reload();
-                                Swal.fire('Error', 'Failed to build the game', 'error');
+                                    Swal.fire('Success', response.message, 'success');
+                                } else {
+                                    $('#infoTable').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    $('#userTable').DataTable().ajax.reload();
+                                    Swal.fire('Error', response.message, 'error');
+
+                                }
+                            },
+                            error: function() {
+                                $('#infoTable').DataTable().ajax.reload();
+                                $('#cartCount').DataTable().ajax.reload();
+                                $('#userTable').DataTable().ajax.reload();
+                                Swal.fire('Error', 'Failed to Cancel Ticket', 'error');
                             }
                         });
                     }

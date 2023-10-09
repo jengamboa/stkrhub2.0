@@ -2,7 +2,7 @@
 include "connection.php";
 
 // Query to find game pieces
-$sql = "SELECT * FROM orders WHERE to_deliver = 1";
+$sql = "SELECT * FROM orders WHERE to_deliver = 1 OR is_received = 1";
 $result = $conn->query($sql);
 
 $data = array();
@@ -31,11 +31,8 @@ while ($row = $result->fetch_assoc()) {
     $paypal_transaction_id = $row['paypal_transaction_id'];
     $payer_id = $row['payer_id'];
 
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
-    $id = $order_id;
 
-
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+    // classification
     if ($ticket_id) {
         $classification = 'Ticket';
     } elseif ($published_game_id) {
@@ -48,8 +45,7 @@ while ($row = $result->fetch_assoc()) {
         $classification = 'Undefined';
     }
 
-
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
+    // title
     if ($ticket_id) {
         $sqlGetGame = "SELECT * from cart WHERE cart_id = $cart_id";
         $resultGame = $conn->query($sqlGetGame);
@@ -63,10 +59,10 @@ while ($row = $result->fetch_assoc()) {
         $description = $rowGame2['description'];
 
         $title = '
-        Ticket from Game <br>
-        game name: ' . $name . ' <br>
-        game ID: ' . $game_id . '
-        ';
+            Ticket from Game <br>
+            game name: ' . $name . ' <br>
+            game ID: ' . $game_id . '
+            ';
     } elseif ($published_game_id) {
         $sqlGetGame = "SELECT * from cart WHERE cart_id = $cart_id";
         $resultGame = $conn->query($sqlGetGame);
@@ -79,9 +75,9 @@ while ($row = $result->fetch_assoc()) {
         $game_name = $rowGame2['game_name'];
 
         $title = '
-        Published Game Name: ' . $game_name . ' <br>
-        published game id: ' . $published_game_id . '
-        ';
+            Published Game Name: ' . $game_name . ' <br>
+            published game id: ' . $published_game_id . '
+            ';
     } elseif ($built_game_id) {
         $sqlGetGame = "SELECT * from cart WHERE cart_id = $cart_id";
         $resultGame = $conn->query($sqlGetGame);
@@ -94,9 +90,9 @@ while ($row = $result->fetch_assoc()) {
         $name = $rowGame2['name'];
 
         $title = '
-        Built Game Name: ' . $name . ' <br>
-        built game id: ' . $built_game_id . '
-        ';
+            Built Game Name: ' . $name . ' <br>
+            built game id: ' . $built_game_id . '
+            ';
     } elseif ($added_component_id) {
         $sqlGetGame = "SELECT * from cart WHERE cart_id = $cart_id";
         $resultGame = $conn->query($sqlGetGame);
@@ -117,44 +113,44 @@ while ($row = $result->fetch_assoc()) {
 
         if ($is_custom_design) {
             $title = '
-                Built Game Name: ' . $component_name . ' <br>
-                built game id: ' . $added_component_id . '<br>
-                Custom Design: Yes
-            ';
+                    Built Game Name: ' . $component_name . ' <br>
+                    built game id: ' . $added_component_id . '<br>
+                    Custom Design: Yes
+                ';
         } else {
             $title = '
-                Built Game Name: ' . $component_name . ' <br>
-                built game id: ' . $added_component_id . '<br>
-                Custom Design: No
-            ';
+                    Built Game Name: ' . $component_name . ' <br>
+                    built game id: ' . $added_component_id . '<br>
+                    Custom Design: No
+                ';
         }
     } else {
         $title = 'Undefined';
     }
 
-
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
-    // $price = $price;
-
-
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
     $user = $user_id;
 
 
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
-    $sqlDate = "SELECT * FROM to_deliver WHERE order_id = $order_id";
-    $queryDate = $conn->query($sqlDate);
-    $fetchedDate = $queryDate->fetch_assoc();
-    $date_completed = $fetchedDate['date_time_stamp'];
-    $formatted_date = date('M. j, Y g:ia', strtotime($date_completed));
-
-
-    // TODO:TODO:TODO:TODO:TODO:TODO:TODO:
-    if($is_received){
-        $status = 'Received';
+    // date
+    if ($ticket_id) {
+        $formatted_date = date('M. j, Y g:ia', strtotime($order_date));
     } else {
-        $status = 'Waiting for user\'s confirmation';
+        $sqlDate = "SELECT * FROM to_deliver WHERE order_id = $order_id";
+        $queryDate = $conn->query($sqlDate);
+        $fetchedDate = $queryDate->fetch_assoc();
+        $date_completed = $fetchedDate['date_time_stamp'];
+        $formatted_date = date('M. j, Y g:ia', strtotime($date_completed));
     }
+
+
+
+    $id = $order_id;
+    $classification = $classification;
+    $title = $title;
+    $price = $price;
+    $user = $user;
+    $formatted_date = $formatted_date;
+    $status = 'status';
 
     $data[] = array(
         "id" => $id,

@@ -10,11 +10,11 @@ $numSelectedCarts = count($selectedCartIds);
 
 $selectedCartIdsString = implode(',', $selectedCartIds);
 
+
 $sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString) AND is_visible = 1";
 $result = $conn->query($sql);
 
 $sub_total = 0;
-
 while ($fetched = $result->fetch_assoc()) {
     $cart_id = $fetched['cart_id'];
     $published_game_id = $fetched['published_game_id'];
@@ -75,6 +75,24 @@ while ($fetchedActive = $queryGetActive->fetch_assoc()) {
     } elseif ($numSelectedCarts >= 41) {
         $weight_price = (float)$weight_price_5;
     }
+
+
+    // check if only ticket sa cart shipping 0
+    if ($numSelectedCarts === 1) {
+        $oneCartId = $selectedCartIds[0];
+        $sqlCheckTicket = "SELECT * FROM cart WHERE cart_id = '$oneCartId'";
+        if ($resultCheckTicket = mysqli_query($conn, $sqlCheckTicket)) {
+            if (mysqli_num_rows($resultCheckTicket) > 0) {
+                $rowCheckTicket = mysqli_fetch_assoc($resultCheckTicket);
+                $ticket_id = $rowCheckTicket['ticket_id'];
+                if($ticket_id){
+                    $weight_price = 0;
+                }
+            }
+        }
+    }
+
+
     $total_payment = ($sub_total + $weight_price);;
 }
 
@@ -143,20 +161,6 @@ $item = '
         </div>
 ';
 
-
-
-
-// <div class="card">
-//         <div class="row"></div>
-
-//         <div class="row"><h6>Shipping: &#8369;</h6><span>' . number_format($weight_price, 2) . '</span></div>
-
-//         <div class="row"><h6>Total Payment: &#8369;</h6><span>' . number_format($total_payment, 2) . '</span></div>
-        
-//         <div class="row">
-            
-//         </div>
-//     </div>
 
 
 

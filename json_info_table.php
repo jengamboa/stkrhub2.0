@@ -15,6 +15,7 @@ while ($fetched = $result->fetch_assoc()) {
     $is_built = $fetched['is_built'];
 
     $is_pending = $fetched['is_pending'];
+    $is_purchased = $fetched['is_purchased'];
     $to_approve = $fetched['to_approve'];
     $is_denied = $fetched['is_denied'];
     $is_approved = $fetched['is_approved'];
@@ -45,8 +46,8 @@ while ($fetched = $result->fetch_assoc()) {
     $ticket_price = $total_price / $ticket_percentage;
 
 
-
-    if ($is_approved) {
+    // extra action and add component button
+    if ($is_pending) {
         $extra_action = '
         <button class="approve-game" 
         data-gameid="' . $game_id . '" 
@@ -54,15 +55,67 @@ while ($fetched = $result->fetch_assoc()) {
         data-ticket_price="' . $ticket_price . '" 
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
+        disabled
 
-        data-toggle="tooltip" title="Admin will check the game components you\'ve added as well as the assets you uploaded, if there is any plagiarism..."
+        style="margin: 5px;"
+
+        data-toggle="tooltip" title="Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
         >
-            <i class="fa-solid fa-ticket"></i> Get Approved Again
+            <i class="fa-solid fa-ticket"></i> Get Approved
+        </button>
+
+        <button class="cancel-ticket" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+
+        style="margin: 5px;"
+
+        data-toggle="tooltip" title="Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
+        >
+            <i class="fa-solid fa-ban"></i> Cancel Ticket
         </button>
         ';
 
         $add_component_button = '
-        <a href="add_custom_component.php?game_id=' . $game_id . '" class="btn" style="color: white; border: none; background: #1f2243">+ Add Custom Game Component</a>
+        <a 
+            class="btn" 
+            style="color: #777; border: none; background: #1f2243; cursor: not-allowed;"
+            disabled
+
+            data-toggle="tooltip" title="You cannot update your game\'s components as of now. Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
+        >
+            + Add Custom Game Componentasd
+        </a>
+        ';
+    } elseif ($is_purchased) {
+        $extra_action = '
+        <button class="approve-game" 
+        data-gameid="' . $game_id . '" 
+        data-total_price="' . $total_price . '" 
+        data-ticket_price="' . $ticket_price . '" 
+        data-name="' . htmlspecialchars($name) . '" 
+        data-description="' . htmlspecialchars($description) . '"
+        disabled
+
+        data-toggle="tooltip" title="Admin will evaluate your created game\'s components"
+        >
+            <i class="fa-solid fa-ticket"></i> Get Approved
+        </button>
+        ';
+
+        $add_component_button = '
+        <a 
+            class="btn" 
+            style="color: #777; border: none; background: #1f2243; cursor: not-allowed;"
+            disabled
+
+            data-toggle="tooltip" title="You cannot update your game\'s components as of now. Admin will evaluate your created game\'s components"
+        >
+            + Add Custom Game Componentasd
+        </a>
         ';
     } elseif ($to_approve) {
         $extra_action = '
@@ -91,7 +144,7 @@ while ($fetched = $result->fetch_assoc()) {
             + Add Custom Game Componentasd
         </a>
         ';
-    } elseif ($is_pending) {
+    } else if ($is_approved) {
         $extra_action = '
         <button class="approve-game" 
         data-gameid="' . $game_id . '" 
@@ -99,24 +152,15 @@ while ($fetched = $result->fetch_assoc()) {
         data-ticket_price="' . $ticket_price . '" 
         data-name="' . htmlspecialchars($name) . '" 
         data-description="' . htmlspecialchars($description) . '"
-        disabled
 
-        data-toggle="tooltip" title="Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
+        data-toggle="tooltip" title="Admin will check the game components you\'ve added as well as the assets you uploaded, if there is any plagiarism..."
         >
-            <i class="fa-solid fa-ticket"></i> Get Approved
+            <i class="fa-solid fa-ticket"></i> Get Approved Again
         </button>
         ';
 
         $add_component_button = '
-        <a 
-            class="btn" 
-            style="color: #777; border: none; background: #1f2243; cursor: not-allowed;"
-            disabled
-
-            data-toggle="tooltip" title="You cannot update your game\'s components as of now. Please purhase your ticket at cart so that the admin can now proceed reviewing your game"
-        >
-            + Add Custom Game Componentasd
-        </a>
+        <a href="add_custom_component.php?game_id=' . $game_id . '" class="btn" style="color: white; border: none; background: #1f2243">+ Add Custom Game Component</a>
         ';
     } elseif ($is_denied) {
         $extra_action = '
@@ -229,8 +273,6 @@ while ($fetched = $result->fetch_assoc()) {
         </div>
         </div>
     ';
-
-    $total_price = 'asd';
 
 
     $json[] = array(

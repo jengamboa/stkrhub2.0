@@ -30,10 +30,19 @@ while ($added_game_components = $result->fetch_assoc()) {
     $filenameParts = explode('_', $custom_design_file_path);
     $originalFilename = end($filenameParts);
 
+    $sqlGames = "SELECT * FROM games WHERE game_id = $game_id";
+    $resultGames = $conn->query($sqlGames);
+    while ($fetchedGames = $resultGames->fetch_assoc()) {
+        $is_pending = $fetchedGames['is_pending'];
+        $is_purchased = $fetchedGames['is_purchased'];
+        $to_approve = $fetchedGames['to_approve'];
+        $is_denied = $fetchedGames['is_denied'];
+        $is_approved = $fetchedGames['is_approved'];
+    }
 
-
-    $edit_quantity = '
-    <input 
+    if ($is_pending) {
+        $edit_quantity = '
+        <input 
         type="number" 
         class="quantity-input" 
         min="1" 
@@ -42,8 +51,66 @@ while ($added_game_components = $result->fetch_assoc()) {
         data-gameid="' . $game_id . '" 
         data-componentid="' . $added_component_id . '"
         value="' . $quantity . '" 
-    >
-    ';
+
+        disabled
+
+        style="cursor:not-allowed"
+        data-toggle="tooltip" title="You can not modify your game as of the moment."
+        >
+        ';
+    } elseif ($is_purchased) {
+        $edit_quantity = '
+        <input 
+        type="number" 
+        class="quantity-input" 
+        min="1" 
+        max="99"
+
+        data-gameid="' . $game_id . '" 
+        data-componentid="' . $added_component_id . '"
+        value="' . $quantity . '" 
+
+        disabled
+
+        style="cursor:not-allowed"
+        data-toggle="tooltip" title="You just bought a ticket. You can not modify your game as of the moment."
+
+        >
+        ';
+    } elseif ($to_approve) {
+        $edit_quantity = '
+        <input 
+        type="number" 
+        class="quantity-input" 
+        min="1" 
+        max="99"
+
+        data-gameid="' . $game_id . '" 
+        data-componentid="' . $added_component_id . '"
+        value="' . $quantity . '" 
+
+        disabled
+
+        style="cursor:not-allowed"
+        data-toggle="tooltip" title="You can not modify your game as of the moment."
+
+        >
+        ';
+    } else {
+        $edit_quantity = '
+        <input 
+        type="number" 
+        class="quantity-input" 
+        min="1" 
+        max="99"
+
+        data-gameid="' . $game_id . '" 
+        data-componentid="' . $added_component_id . '"
+        value="' . $quantity . '" 
+        >
+        ';
+    }
+
 
     $individual_price = $quantity * $price;
 
@@ -61,10 +128,9 @@ while ($added_game_components = $result->fetch_assoc()) {
         // Create a link to the image file
         $imageFilePath = $added_game_components['custom_design_file_path']; // Update with the correct file path
         $info = '
-        size: '.$size.'<br>
-        <a href="' . $imageFilePath . '" target="_blank" class="d-inline-block text-truncate" style="max-width: 150px;" data-toggle="tooltip" title="'.$originalFilename.'">' . $originalFilename . '</a>
+        size: ' . $size . '<br>
+        <a href="' . $imageFilePath . '" target="_blank" class="d-inline-block text-truncate" style="max-width: 150px;" data-toggle="tooltip" title="' . $originalFilename . '">' . $originalFilename . '</a>
         ';
-        
     } elseif ($added_game_components['color_id']) {
         $getColorName = "SELECT * FROM component_colors WHERE color_id = $color_id";
         $sqlGetColorName = $conn->query($getColorName);
@@ -73,16 +139,78 @@ while ($added_game_components = $result->fetch_assoc()) {
         $color_code = $fetchedColorName['color_code'];
 
         $info = '
-        size: '.$size.'<br>
-        '.$color_name.'
+        size: ' . $size . '<br>
+        ' . $color_name . '
         ';
     } else {
-        $info = 'size: '.$size.'<br>';
+        $info = 'size: ' . $size . '<br>';
     }
 
     $modify = "";
     if ($added_game_components['custom_design_file_path']) {
-        $modify = '
+
+        if ($is_pending) {
+            $modify = '
+            <button
+                class="update-design"
+                data-gameid="' . $game_id . '"
+                data-componentid="' . $added_component_id . '"
+                data-componentname="' . $component_name . '"
+                data-componentprice="' . $price . '"
+                data-componentcategory="' . $category . '"
+                data-filepath="' . $custom_design_file_path . '"
+                data-originalFilename="' . $originalFilename . '"
+                data-addedcomponentid="' . $added_component_id . '"
+                style="border: none; background-color: #15172e; color: white; border-radius: 10px; cursor: not-allowed;"
+
+                disabled
+                data-toggle="tooltip" title="You can not modify your game as of the moment."
+            >
+                Change Design
+            </button>
+            ';
+        } elseif ($is_purchased) {
+            $modify = '
+            <button
+                class="update-design"
+                data-gameid="' . $game_id . '"
+                data-componentid="' . $added_component_id . '"
+                data-componentname="' . $component_name . '"
+                data-componentprice="' . $price . '"
+                data-componentcategory="' . $category . '"
+                data-filepath="' . $custom_design_file_path . '"
+                data-originalFilename="' . $originalFilename . '"
+                data-addedcomponentid="' . $added_component_id . '"
+                style="border: none; background-color: #15172e; color: white; border-radius: 10px; cursor: not-allowed;"
+
+                disabled
+                data-toggle="tooltip" title="You can not modify your game as of the moment."
+            >
+                Change Design
+            </button>
+            ';
+        } elseif ($to_approve) {
+            $modify = '
+            <button
+                class="update-design"
+                data-gameid="' . $game_id . '"
+                data-componentid="' . $added_component_id . '"
+                data-componentname="' . $component_name . '"
+                data-componentprice="' . $price . '"
+                data-componentcategory="' . $category . '"
+                data-filepath="' . $custom_design_file_path . '"
+                data-originalFilename="' . $originalFilename . '"
+                data-addedcomponentid="' . $added_component_id . '"
+                style="border: none; background-color: #15172e; color: white; border-radius: 10px; cursor: not-allowed;"
+
+                disabled
+                data-toggle="tooltip" title="You can not modify your game as of the moment."
+            >
+                Change Design
+            </button>
+            ';
+        } else {
+            $modify = '
             <button
                 class="update-design"
                 data-gameid="' . $game_id . '"
@@ -97,7 +225,8 @@ while ($added_game_components = $result->fetch_assoc()) {
             >
                 Change Design
             </button>
-        ';
+            ';
+        }
     } elseif ($added_game_components['color_id']) {
         $getColors = "SELECT * FROM component_colors WHERE component_id = '$component_id'";
         $sqlGetColors = $conn->query($getColors);
@@ -118,7 +247,56 @@ while ($added_game_components = $result->fetch_assoc()) {
                 $color_id = $color_ids[$index];
                 $color_code = $color_codes[$index];
 
-                $buttons[] = '
+                if ($is_pending) {
+                    $buttons[] = '
+                    <button
+                        type="button" 
+                        class="color-link"
+                        data-gameid="' . $game_id . '"
+                        data-componentid="' . $component_id . '"
+                        data-colorid="' . $color_id . '"
+                        data-addedcomponentid="' . $added_component_id . '"
+                        style="border: none; background: none; cursor: not-allowed;"
+                        disabled
+                        data-toggle="tooltip" title="You can not modify your game as of the moment."
+                    >
+                    <i class="fa-solid fa-circle" style="color: ' . $color_code . ';"></i>
+                    </button>
+                    ';
+                } elseif ($is_purchased) {
+                    $buttons[] = '
+                    <button
+                        type="button" 
+                        class="color-link"
+                        data-gameid="' . $game_id . '"
+                        data-componentid="' . $component_id . '"
+                        data-colorid="' . $color_id . '"
+                        data-addedcomponentid="' . $added_component_id . '"
+                        style="border: none; background: none; cursor: not-allowed;"
+                        disabled
+                        data-toggle="tooltip" title="You can not modify your game as of the moment."
+                    >
+                    <i class="fa-solid fa-circle" style="color: ' . $color_code . ';"></i>
+                    </button>
+                    ';
+                } elseif ($to_approve) {
+                    $buttons[] = '
+                    <button
+                        type="button" 
+                        class="color-link"
+                        data-gameid="' . $game_id . '"
+                        data-componentid="' . $component_id . '"
+                        data-colorid="' . $color_id . '"
+                        data-addedcomponentid="' . $added_component_id . '"
+                        style="border: none; background: none; cursor: not-allowed;"
+                        disabled
+                        data-toggle="tooltip" title="You can not modify your game as of the moment."
+                    >
+                    <i class="fa-solid fa-circle" style="color: ' . $color_code . ';"></i>
+                    </button>
+                    ';
+                } else {
+                    $buttons[] = '
                     <button
                         type="button" 
                         class="color-link"
@@ -130,30 +308,85 @@ while ($added_game_components = $result->fetch_assoc()) {
                     >
                     <i class="fa-solid fa-circle" style="color: ' . $color_code . ';"></i>
                     </button>
-                ';
+                    ';
+                }
             }
 
             $modify = implode(" ", $buttons);
         }
     } else {
-        $modify = "else";
+        $modify = "";
     }
 
-    $delete = '
-    <div class="d-flex justify-content-center">
-        <button class="delete-component" 
-        data-gameid="' . $game_id . '"
-        data-componentid= "' . $added_component_id . '"
-        >
-            <i class="fa-solid fa-trash"></i>
-        </button>
-    </div>  
-    ';
 
-    $price_peso = '&#8369 '.number_format($price, 2);
-    $individual_price_peso = '<span style="color: #26d3e0;">&#8369 '.number_format($individual_price, 2) .'</span>';
 
-    $component_name_value = '<span class="d-inline-block text-truncate" style="color: #26d3e0; max-width: 250px;">'.$component_name .'</span>';
+    if ($is_pending) {
+        $delete = '
+        <div class="d-flex justify-content-center">
+            <button class="delete-component" 
+            data-gameid="' . $game_id . '"
+            data-componentid= "' . $added_component_id . '"
+            disabled
+
+            style="cursor:not-allowed"
+            data-toggle="tooltip" title="You can not modify your game as of the moment."
+
+            >
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>  
+        ';
+    } elseif ($is_purchased) {
+        $delete = '
+        <div class="d-flex justify-content-center">
+            <button class="delete-component" 
+            data-gameid="' . $game_id . '"
+            data-componentid= "' . $added_component_id . '"
+            disabled
+
+            style="cursor:not-allowed"
+            data-toggle="tooltip" title="You can not modify your game as of the moment."
+
+            >
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>  
+        ';
+    } elseif ($to_approve) {
+        $delete = '
+        <div class="d-flex justify-content-center">
+            <button class="delete-component" 
+            data-gameid="' . $game_id . '"
+            data-componentid= "' . $added_component_id . '"
+            disabled
+
+            style="cursor:not-allowed"
+            data-toggle="tooltip" title="You can not modify your game as of the moment."
+
+            >
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>  
+        ';
+    } else {
+        $delete = '
+        <div class="d-flex justify-content-center">
+            <button class="delete-component" 
+            data-gameid="' . $game_id . '"
+            data-componentid= "' . $added_component_id . '"
+            >
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>  
+        ';
+    }
+
+
+
+    $price_peso = '&#8369 ' . number_format($price, 2);
+    $individual_price_peso = '<span style="color: #26d3e0;">&#8369 ' . number_format($individual_price, 2) . '</span>';
+
+    $component_name_value = '<span class="d-inline-block text-truncate" style="color: #26d3e0; max-width: 250px;">' . $component_name . '</span>';
 
 
     $json[] = array(

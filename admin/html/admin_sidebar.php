@@ -18,14 +18,11 @@
                         </ul>
                     </li>
 
-                    <li class="nav-label"></li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Approve / Deny</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Games Pending Approval</a></li>
-                            <li><a href="./app-calender.html">Publish Game Details Requests</a></li>
-                            <li><a href="./app-calender.html">Edit Published Game Requests</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-label">Approve / Deny</li>
+                    <li><a href="games_approval_requests.php">Games Pending Approval</a></li>
+                    <li><a href="./app-calender.html">Publish Game Details Requests</a></li>
+                    <li><a href="./app-calender.html">Edit Published Game Requests</a></li>
+
 
                     <li class="nav-label">Orders</li>
                     <li><a href="pending_all.php" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">All Pending Orders</span></a></li>
