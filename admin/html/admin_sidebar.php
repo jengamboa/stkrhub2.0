@@ -10,11 +10,11 @@
 
 
                     <li class="nav-label"></li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Add Game Components</span></a>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Game Components</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="add_game_piece.php">Add Game Piece</a></li>
-                            <li><a href="./app-profile.html">Add Game Card</a></li>
-                            <li><a href="./app-calender.html">Add Box</a></li>
+                            <li><a href="<?php echo $_SERVER['PHP_SELF'] . '?category=game piece'; ?>">Dices</a></li>
+                            <li><a href="<?php echo $_SERVER['PHP_SELF'] . '?category=card'; ?>">Game Cards</a></li>
+                            <li><a href="<?php echo $_SERVER['PHP_SELF'] . '?category=box'; ?>">Add Box</a></li>
                         </ul>
                     </li>
 
