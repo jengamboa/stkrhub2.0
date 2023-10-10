@@ -86,7 +86,7 @@
 
 								if (!is_null($avatar)) {
 									echo '
-									<a class="nav-link" href="user_profile_testing.php">
+									<a class="nav-link" href="profile_index.php">
 										<div style="position: relative; display: inline-block; width: 37px; height: 37px; border-radius: 50%; background-color: #333;">
 											<img src="' . $avatar . '" alt="" style="
 													position: absolute;

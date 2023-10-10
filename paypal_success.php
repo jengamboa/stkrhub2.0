@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Retrieve the data from the POST request
     $user_id = $_POST["user_id"] ?? null;
@@ -42,10 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $payer_country_code = $_POST["order_data"]["payer"]["address"]["country_code"] ?? null;
 
 
+    $currentTimestamp = time();
+    $formattedTimestamp = date("Y-m-d H:i:s", $currentTimestamp);
+
+    $convertedTimestamp = str_replace(array('-', ' ', ':'), '', $formattedTimestamp);
+    $unique_order_group_id = $convertedTimestamp;
+
+
 
 
     $sqlInsertPaypalTransaction = "INSERT INTO paypal_transactions (
-    payment_id,
     paypal_transaction_id,
     order_data_intent,
     order_data_status,
@@ -67,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     payer_email,
     payer_id,
     payer_country_code) VALUES (
-    '$payment_id',
     '$order_data_id',
     '$order_data_intent',
     '$order_data_status',
@@ -101,7 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $cart_items = explode(',', $carts_selected);
 
-    // Iterate over the array of cart items
     foreach ($cart_items as $cart_item) {
 
         $sql = "SELECT * FROM cart WHERE cart_id = $cart_item";
@@ -120,9 +125,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if ($ticket_id) {
                     $item_type = "ticket_id";
                     $item_id = $ticket_id;
-
-                    // $status = "to_deliver";
-                    // $status_value = 1;
 
                     $status = "is_received";
                     $status_value = 1;
@@ -152,8 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         } else {
                             echo "Failed to update game ticket.";
                         }
-
-
                     }
                 } elseif ($published_game_id) {
                     $item_type = "published_game_id";
@@ -194,11 +194,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $marketplace_price = '';
                 }
 
-                // Insert the order into the 'orders' table
+                $unique_id = uniqid();
+                $unique_order_id = $item_id . $unique_id;
+
                 $sqlInsertOrders = "INSERT INTO orders 
-                (cart_id, user_id, $item_type, quantity, price, $status, desired_markup, manufacturer_profit, creator_profit, marketplace_price, fullname, number, region, province, city, barangay, zip, street, total_payment, payment_id, paypal_transaction_id, payer_id) 
+                (unique_order_id, unique_order_group_id, cart_id, user_id, $item_type, quantity, price, $status, desired_markup, manufacturer_profit, creator_profit, marketplace_price, fullname, number, region, province, city, barangay, zip, street, total_payment, paypal_transaction_id, payer_id) 
                 VALUES 
-                ('$cart_item', '$user_id', '$item_id', '$quantity', '$price', '$status_value', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price', '$fullname', '$number', '$region', '$province', '$city', '$barangay', '$zip', '$street', '$paypal_payment', '$payment_id', '$order_data_id', '$payer_id' )";
+                ('$unique_order_id', '$unique_order_group_id', '$cart_item', '$user_id', '$item_id', '$quantity', '$price', '$status_value', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price', '$fullname', '$number', '$region', '$province', '$city', '$barangay', '$zip', '$street', '$paypal_payment', '$order_data_id', '$payer_id' )";
 
                 $queryInsertOrders = $conn->query($sqlInsertOrders);
 

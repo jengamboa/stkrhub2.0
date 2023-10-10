@@ -2,7 +2,7 @@
 include "connection.php";
 
 // Query to find game pieces
-$sql = "SELECT * FROM orders WHERE is_pending = 1";
+$sql = "SELECT * FROM orders WHERE is_pending = 1 ORDER BY order_date DESC";
 $result = $conn->query($sql);
 
 $data = array();
@@ -27,7 +27,7 @@ while ($row = $result->fetch_assoc()) {
     $formatted_order_date = $order_datetime->format('M. d, Y g:ia');
 
     $total_payment = $row['total_payment'];
-    $payment_id = $row['payment_id'];
+    // $payment_id = $row['payment_id'];
     $paypal_transaction_id = $row['paypal_transaction_id'];
     $payer_id = $row['payer_id'];
 

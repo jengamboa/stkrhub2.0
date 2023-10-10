@@ -314,11 +314,13 @@ session_start();
                                 new_username: newUsername
                             },
                             success: function(response) {
+                                $("#cartCount").DataTable().ajax.reload();
                                 Swal.fire('Updated!', 'Username has been updated.', 'success');
 
                                 $('#profileUsername').DataTable().ajax.reload();
                             },
                             error: function() {
+                                $("#cartCount").DataTable().ajax.reload();
                                 Swal.fire('Error', 'Failed to update username', 'error');
                             }
                         });
@@ -367,6 +369,7 @@ session_start();
                     if (result.isConfirmed) {
                         Swal.fire('Updated!', 'Avatar has been updated.', 'success');
                         $('#profileUsername').DataTable().ajax.reload();
+                        $("#cartCount").DataTable().ajax.reload();
                     }
                 });
             });
