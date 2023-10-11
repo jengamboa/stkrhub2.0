@@ -177,38 +177,39 @@ include 'connection.php';
 
 
             $('#allOrders').on('click', '#to_ship', function() {
-                var order_id = $(this).data('order_id');
+                var unique_order_group_id = $(this).data('unique_order_group_id');
 
                 Swal.fire({
-                    title: "Are you sure?",
-                    text: "When confirmed, the order is ready to be picked by the courier.",
-                    icon: "warning",
+                    title: 'Proceed Orders',
+                    text: 'Are you sure you want to ship these items?',
+                    icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: "Yes, proceed",
-                    cancelButtonText: "No, cancel",
-                }).then((result) => {
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'Close',
+                }).then(function(result) {
                     if (result.isConfirmed) {
+
                         $.ajax({
-                            url: "admin_process_to_ship.php",
-                            method: "POST",
+                            type: 'POST',
+                            url: 'admin_process_to_ship_orders.php',
                             data: {
-                                order_id: order_id
+                                unique_order_group_id: unique_order_group_id
                             },
-                            dataType: "json", // Expect JSON response
+                            dataType: 'json',
                             success: function(response) {
-                                if (response.status === "success") {
-                                    $('#inProductionTable').DataTable().ajax.reload();
-                                    Swal.fire("Order is in production", "", "success");
+                                if (response.success) {
+                                    $('#allOrders').DataTable().ajax.reload();
+                                    Swal.fire('Success', response.message, 'success');
                                 } else {
-                                    $('#inProductionTable').DataTable().ajax.reload();
-                                    Swal.fire("Failed to process order", response.message, "error");
+                                    $('#allOrders').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    Swal.fire('Error', response.message, 'error');
                                 }
                             },
                             error: function() {
-                                $('#inProductionTable').DataTable().ajax.reload();
-                                Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
-
-                            },
+                                $('#allOrders').DataTable().ajax.reload();
+                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                            }
                         });
                     }
                 });

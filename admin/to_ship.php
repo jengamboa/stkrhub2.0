@@ -66,21 +66,28 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <table id="toShipTable" class="display" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Classification</th>
-                                            <th>Title</th>
-                                            <th>Price</th>
-                                            <th>User</th>
-                                            <th>Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                <?php
+                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
+
+                                if ($resultCheckInProduction) {
+                                    $row = $resultCheckInProduction->fetch_assoc();
+                                    $count = $row['count'];
+
+                                    if ($count > 0) {
+                                        echo '
+                                                <table id="allOrders" class="hover" style="width: 100%;">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                                ';
+                                    } else {
+                                        echo 'None.';
+                                    }
+                                } else {
+                                    echo 'Error checking for orders in production.';
+                                }
+                                ?>
 
                             </div>
                         </div>
@@ -143,51 +150,35 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#toShipTable').DataTable({
+            $('#allOrders').DataTable({
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
                 paging: true,
-                ordering: true,
+                lengthChange: false,
+                ordering: false,
+
 
                 "ajax": {
-                    "url": "admin_json_to_ship.php",
+                    "url": "admin_json_to_ship_orders.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "id",
-                        width: '10%',
-                        className: 'dt-center'
-                    },
-                    {
-                        "data": "classification",
-                    },
-                    {
-                        "data": "title"
-                    },
-                    {
-                        "data": "price"
-                    },
-                    {
-                        "data": "user"
-                    },
-                    {
-                        "data": "date"
-                    },
-                    {
-                        "data": "actions"
-                    },
-
-
-                ]
+                    "data": "item"
+                }, ]
             });
 
 
 
 
 
-            $('#toShipTable').on('click', '#to_deliver', function() {
-                var order_id = $(this).data('order_id');
+
+            $('#allOrders').on('click', '#to_deliver', function() {
+                var unique_order_group_id = $(this).data('unique_order_group_id');
 
                 $.ajax({
                     type: 'GET',
@@ -225,27 +216,27 @@ include 'connection.php';
 
                                     $.ajax({
                                         type: 'POST',
-                                        url: 'admin_process_to_deliver.php',
+                                        url: 'admin_process_to_deliver_orders.php',
                                         data: {
-                                            order_id: order_id,
+                                            unique_order_group_id: unique_order_group_id,
                                             text: textValue,
                                             select: selectValue,
                                         },
-                                        dataType: "json", // Expect JSON response
+                                        dataType: 'json',
                                         success: function(response) {
-                                            if (response.status === "success") {
-                                                $('#toShipTable').DataTable().ajax.reload();
-                                                Swal.fire("Order is ready to deliver", "", "success");
+                                            if (response.success) {
+                                                $('#allOrders').DataTable().ajax.reload();
+                                                Swal.fire('Success', response.message, 'success');
                                             } else {
-                                                $('#toShipTable').DataTable().ajax.reload();
-                                                Swal.fire("Failed to process order", response.message, "error");
+                                                $('#allOrders').DataTable().ajax.reload();
+                                                $('#cartCount').DataTable().ajax.reload();
+                                                Swal.fire('Error', response.message, 'error');
                                             }
                                         },
                                         error: function() {
-                                            $('#toShipTable').DataTable().ajax.reload();
-                                            Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
-
-                                        },
+                                            $('#allOrders').DataTable().ajax.reload();
+                                            Swal.fire('Error', 'Failed to delete the game', 'error');
+                                        }
                                     });
                                 }
                             });

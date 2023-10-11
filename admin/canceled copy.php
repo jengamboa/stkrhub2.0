@@ -66,28 +66,21 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <?php
-                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
-                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
-
-                                if ($resultCheckInProduction) {
-                                    $row = $resultCheckInProduction->fetch_assoc();
-                                    $count = $row['count'];
-
-                                    if ($count > 0) {
-                                        echo '
-                                                <table id="allOrders" class="hover" style="width: 100%;">
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                                ';
-                                    } else {
-                                        echo 'None.';
-                                    }
-                                } else {
-                                    echo 'Error checking for orders in production.';
-                                }
-                                ?>
+                                <table id="canceledOrdersTable" class="display" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Classification</th>
+                                            <th>Title</th>
+                                            <th>Price</th>
+                                            <th>User</th>
+                                            <th>Date Completed</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
                             </div>
                         </div>
@@ -150,26 +143,43 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#allOrders').DataTable({
-                language: {
-                    search: "",
-                },
-
+            $('#canceledOrdersTable').DataTable({
                 searching: true,
                 info: false,
                 paging: true,
-                lengthChange: false,
-                ordering: false,
-
+                ordering: true,
 
                 "ajax": {
-                    "url": "admin_json_canceled_orders.php",
+                    "url": "admin_json_canceled.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                    "data": "item"
-                }, ]
+                        "data": "id",
+                        width: '10%',
+                        className: 'dt-center'
+                    },
+                    {
+                        "data": "classification",
+                    },
+                    {
+                        "data": "title"
+                    },
+                    {
+                        "data": "price"
+                    },
+                    {
+                        "data": "user"
+                    },
+                    {
+                        "data": "date_completed"
+                    },
+                    {
+                        "data": "status"
+                    },
+
+
+                ]
             });
 
 

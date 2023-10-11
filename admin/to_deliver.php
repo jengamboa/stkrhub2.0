@@ -66,21 +66,28 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <table id="completedOrdersTable" class="display" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Classification</th>
-                                            <th>Title</th>
-                                            <th>Price</th>
-                                            <th>User</th>
-                                            <th>Date Completed</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                <?php
+                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
+
+                                if ($resultCheckInProduction) {
+                                    $row = $resultCheckInProduction->fetch_assoc();
+                                    $count = $row['count'];
+
+                                    if ($count > 0) {
+                                        echo '
+                                                <table id="allOrders" class="hover" style="width: 100%;">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                                ';
+                                    } else {
+                                        echo 'None.';
+                                    }
+                                } else {
+                                    echo 'Error checking for orders in production.';
+                                }
+                                ?>
 
                             </div>
                         </div>
@@ -143,43 +150,26 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#completedOrdersTable').DataTable({
+            $('#allOrders').DataTable({
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
                 paging: true,
-                ordering: true,
+                lengthChange: false,
+                ordering: false,
+
 
                 "ajax": {
-                    "url": "admin_json_to_deliver.php",
+                    "url": "admin_json_to_deliver_orders.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "id",
-                        width: '10%',
-                        className: 'dt-center'
-                    },
-                    {
-                        "data": "classification",
-                    },
-                    {
-                        "data": "title"
-                    },
-                    {
-                        "data": "price"
-                    },
-                    {
-                        "data": "user"
-                    },
-                    {
-                        "data": "date_completed"
-                    },
-                    {
-                        "data": "status"
-                    },
-
-
-                ]
+                    "data": "item"
+                }, ]
             });
 
 

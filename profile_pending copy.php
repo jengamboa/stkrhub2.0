@@ -336,8 +336,10 @@ if (isset($_SESSION['user_id'])) {
 
 
                 "ajax": {
-                    "url": "json_to_ship_orders.php",
-                    data: {},
+                    "url": "json_pending_orders.php",
+                    data: {
+                        user_id: user_id,
+                    },
                     "dataSrc": ""
                 },
                 "columns": [{
