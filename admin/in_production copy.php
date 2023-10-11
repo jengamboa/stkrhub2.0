@@ -52,8 +52,8 @@ include 'connection.php';
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>All Pending Orders</h4>
-                            <p class="mb-0">Once order is accepted, STKR Players could not cancel it anymore.</p>
+                            <h4>All In Production Orders</h4>
+                            <p class="mb-0">Users are now expeting the their order is being processed.</p>
                         </div>
                     </div>
                 </div>
@@ -66,28 +66,21 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <?php
-                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
-                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
-
-                                if ($resultCheckInProduction) {
-                                    $row = $resultCheckInProduction->fetch_assoc();
-                                    $count = $row['count'];
-
-                                    if ($count > 0) {
-                                        echo '
-                                                <table id="allOrders" class="hover" style="width: 100%;">
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                                ';
-                                    } else {
-                                        echo 'No orders.';
-                                    }
-                                } else {
-                                    echo 'Error checking for orders in production.';
-                                }
-                                ?>
+                                <table id="inProductionTable" class="display" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Classification</th>
+                                            <th>Title</th>
+                                            <th>Price</th>
+                                            <th>User</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
                             </div>
                         </div>
@@ -150,73 +143,86 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#allOrders').DataTable({
-                language: {
-                    search: "",
-                },
-
+            $('#inProductionTable').DataTable({
                 searching: true,
                 info: false,
                 paging: true,
-                lengthChange: false,
-                ordering: false,
-
+                ordering: true,
 
                 "ajax": {
-                    "url": "admin_json_pending_orders.php",
-                    data: {
-                    },
+                    "url": "admin_json_in_production.php",
+                    data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                    "data": "item"
-                }, ]
+                        "data": "id",
+                        width: '10%',
+                        className: 'dt-center'
+                    },
+                    {
+                        "data": "classification",
+                    },
+                    {
+                        "data": "title"
+                    },
+                    {
+                        "data": "price"
+                    },
+                    {
+                        "data": "user"
+                    },
+                    {
+                        "data": "date"
+                    },
+                    {
+                        "data": "actions"
+                    },
+
+
+                ]
             });
 
 
 
 
 
-            $('#allOrders').on('click', '#proceed_order', function() {
-                var unique_order_group_id = $(this).data('unique_order_group_id');
+            $('#inProductionTable').on('click', '#to_ship', function() {
+                var order_id = $(this).data('order_id');
 
                 Swal.fire({
-                    title: 'Proceed Orders',
-                    text: 'Are you sure you want to proceed these items?',
-                    icon: 'warning',
+                    title: "Are you sure?",
+                    text: "When confirmed, the order is ready to be picked by the courier.",
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, Proceed Orders',
-                    cancelButtonText: 'Close',
-                }).then(function(result) {
+                    confirmButtonText: "Yes, proceed",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
                     if (result.isConfirmed) {
-
                         $.ajax({
-                            type: 'POST',
-                            url: 'admin_process_proceed_orders.php',
+                            url: "admin_process_to_ship.php",
+                            method: "POST",
                             data: {
-                                unique_order_group_id: unique_order_group_id
+                                order_id: order_id
                             },
-                            dataType: 'json',
+                            dataType: "json", // Expect JSON response
                             success: function(response) {
-                                if (response.success) {
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    Swal.fire('Success', response.message, 'success');
+                                if (response.status === "success") {
+                                    $('#inProductionTable').DataTable().ajax.reload();
+                                    Swal.fire("Order is in production", "", "success");
                                 } else {
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    $('#cartCount').DataTable().ajax.reload();
-                                    Swal.fire('Error', response.message, 'error');
+                                    $('#inProductionTable').DataTable().ajax.reload();
+                                    Swal.fire("Failed to process order", response.message, "error");
                                 }
                             },
                             error: function() {
-                                $('#allOrders').DataTable().ajax.reload();
-                                Swal.fire('Error', 'Failed to delete the game', 'error');
-                            }
+                                $('#inProductionTable').DataTable().ajax.reload();
+                                Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
+                                
+                            },
                         });
                     }
                 });
             });
-
-
 
 
 

@@ -1,10 +1,9 @@
 <?php
 include "connection.php"; // Include your database connection script
 
-$user_id = $_GET['user_id'];
 $data = array();
 
-$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE user_id = $user_id";
+$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE in_production = 1";
 $queryUniqueOrderDates = $conn->query($sqlUniqueOrderDates);
 while ($row = $queryUniqueOrderDates->fetch_assoc()) {
     $unique_order_group_id = $row['unique_order_group_id'];
@@ -26,7 +25,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                 
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2">Status: status</div>
-                                    <div class="mr-2">Cart ID: ' . $unique_order_group_id . '</div>
+                                    <div class="mr-2">Order Group ID: ' . $unique_order_group_id . '</div>
                                 </div>
                 
                             </div>
@@ -36,7 +35,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             <div class="row d-flex justify-content-between align-items-center ">
                                 <div class="col">';
 
-                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id";
+                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND in_production = 1";
                                 $queryAll = $conn->query($sqlAll);
                                 while ($fetched = $queryAll->fetch_assoc()) {
                                     $order_id = $fetched['order_id'];
@@ -306,7 +305,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
                                                         <div class="col-0 d-flex align-items-center ml-auto">
                                                             <div class="mr-2">Status: ' . $status . '</div>
-                                                            <div class="mr-2">Cart ID: ' . $order_id . '</div>
+                                                            <div class="mr-2">Order ID: ' . $order_id . '</div>
                                                         </div>
 
                                                     </div>
@@ -315,13 +314,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                                 <div class="card-body p-0" style="background-color: #272a4e;">
                                                     <div class="row d-flex justify-content-between align-items-center ">
 
-                                                        <div class="col-md-2 col-lg-2 col-xl-2 p-0">
-                                                            <div class="container" style="height: 100%; width: 100%;">
-                                                                <div class="image-mini-container mask1">
-                                                                    <img class="image-mini" src="' . $img_src . '">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
 
                                                         <div class="col-3 overflow-hidden">
                                                             <p class="h6 fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
@@ -363,7 +356,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             </div>
                         </div>
 
-                        <div class="card-header py-1">
+                        <div class="card-footer py-1">
                             <div class="row p-0">
                 
                                 <div class="col-0 d-flex align-items-center">
@@ -373,7 +366,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2"></div>
                                     <div class="mr-2">
-                                        <a href="#!" class="text-danger cancel-order" data-unique_order_group_id="' . $unique_order_group_id . '"><i class="fa-solid fa-ban"></i> Cancel Order</a>
+                                        <a href="#!" class="text-primary" id="to_ship" data-unique_order_group_id="' . $unique_order_group_id . '">To Ship</a>
                                     </div>
                                 </div>
                 

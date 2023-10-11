@@ -66,21 +66,28 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <table id="inProductionTable" class="display" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Classification</th>
-                                            <th>Title</th>
-                                            <th>Price</th>
-                                            <th>User</th>
-                                            <th>Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                <?php
+                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
+
+                                if ($resultCheckInProduction) {
+                                    $row = $resultCheckInProduction->fetch_assoc();
+                                    $count = $row['count'];
+
+                                    if ($count > 0) {
+                                        echo '
+                                                <table id="allOrders" class="hover" style="width: 100%;">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                                ';
+                                    } else {
+                                        echo 'None.';
+                                    }
+                                } else {
+                                    echo 'Error checking for orders in production.';
+                                }
+                                ?>
 
                             </div>
                         </div>
@@ -143,50 +150,33 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#inProductionTable').DataTable({
+            $('#allOrders').DataTable({
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
                 paging: true,
-                ordering: true,
+                lengthChange: false,
+                ordering: false,
+
 
                 "ajax": {
-                    "url": "admin_json_in_production.php",
+                    "url": "admin_json_in_production_orders.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "id",
-                        width: '10%',
-                        className: 'dt-center'
-                    },
-                    {
-                        "data": "classification",
-                    },
-                    {
-                        "data": "title"
-                    },
-                    {
-                        "data": "price"
-                    },
-                    {
-                        "data": "user"
-                    },
-                    {
-                        "data": "date"
-                    },
-                    {
-                        "data": "actions"
-                    },
-
-
-                ]
+                    "data": "item"
+                }, ]
             });
 
 
 
 
 
-            $('#inProductionTable').on('click', '#to_ship', function() {
+            $('#allOrders').on('click', '#to_ship', function() {
                 var order_id = $(this).data('order_id');
 
                 Swal.fire({
@@ -217,7 +207,7 @@ include 'connection.php';
                             error: function() {
                                 $('#inProductionTable').DataTable().ajax.reload();
                                 Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
-                                
+
                             },
                         });
                     }

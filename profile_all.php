@@ -324,6 +324,51 @@ if (isset($_SESSION['user_id'])) {
                     "data": "item"
                 }, ]
             });
+
+
+            $('#allOrders').on('click', '.cancel-order', function() {
+                var unique_order_group_id = $(this).data('unique_order_group_id');
+
+                Swal.fire({
+                    title: 'Cancel Orders',
+                    text: 'Are you sure you want to cancel these items? Note that we can not cancel anymore the ticket.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Cancel Orders',
+                    cancelButtonText: 'Close',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: 'process_cancel_orders.php',
+                            data: {
+                                unique_order_group_id: unique_order_group_id
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#allOrders').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    Swal.fire('Success', response.message, 'success');
+                                } else {
+                                    $('#allOrders').DataTable().ajax.reload();
+                                    $('#cartCount').DataTable().ajax.reload();
+                                    Swal.fire('Error', response.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                $('#allOrders').DataTable().ajax.reload();
+                                $('#cartCount').DataTable().ajax.reload();
+                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
         });
     </script>
 

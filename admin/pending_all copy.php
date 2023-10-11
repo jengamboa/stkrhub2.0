@@ -66,28 +66,20 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <?php
-                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
-                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
-
-                                if ($resultCheckInProduction) {
-                                    $row = $resultCheckInProduction->fetch_assoc();
-                                    $count = $row['count'];
-
-                                    if ($count > 0) {
-                                        echo '
-                                                <table id="allOrders" class="hover" style="width: 100%;">
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                                ';
-                                    } else {
-                                        echo 'No orders.';
-                                    }
-                                } else {
-                                    echo 'Error checking for orders in production.';
-                                }
-                                ?>
+                                <table id="allOrdersTable" class="display" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Group Order ID</th>
+                                            <th>Number of Items</th>
+                                            <th>Price</th>
+                                            <th>User</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
                             </div>
                         </div>
@@ -150,67 +142,79 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#allOrders').DataTable({
-                language: {
-                    search: "",
-                },
-
+            $('#allOrdersTable').DataTable({
                 searching: true,
                 info: false,
                 paging: true,
-                lengthChange: false,
-                ordering: false,
-
+                ordering: true,
 
                 "ajax": {
-                    "url": "admin_json_pending_orders.php",
-                    data: {
-                    },
+                    "url": "admin_json_pending_all.php",
+                    data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                    "data": "item"
-                }, ]
+                        "data": "id",
+                        width: '10%',
+                        className: 'dt-center'
+                    },
+                    {
+                        "data": "number_of_items",
+                    },
+                    {
+                        "data": "price"
+                    },
+                    {
+                        "data": "user"
+                    },
+                    {
+                        "data": "date"
+                    },
+                    {
+                        "data": "actions"
+                    },
+
+
+                ]
             });
 
 
 
 
 
-            $('#allOrders').on('click', '#proceed_order', function() {
-                var unique_order_group_id = $(this).data('unique_order_group_id');
+            $('#allOrdersTable').on('click', '#proceed_order', function() {
+                var order_id = $(this).data('order_id');
 
                 Swal.fire({
-                    title: 'Proceed Orders',
-                    text: 'Are you sure you want to proceed these items?',
-                    icon: 'warning',
+                    title: "Are you sure?",
+                    text: "When proceeded, the order will be marked as in-production, and the user cannot cancel/refund the order anymore",
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, Proceed Orders',
-                    cancelButtonText: 'Close',
-                }).then(function(result) {
+                    confirmButtonText: "Yes, proceed",
+                    cancelButtonText: "No, cancel",
+                }).then((result) => {
                     if (result.isConfirmed) {
-
                         $.ajax({
-                            type: 'POST',
-                            url: 'admin_process_proceed_orders.php',
+                            url: "admin_process_proceed_order.php",
+                            method: "POST",
                             data: {
-                                unique_order_group_id: unique_order_group_id
+                                order_id: order_id
                             },
-                            dataType: 'json',
+                            dataType: "json", // Expect JSON response
                             success: function(response) {
-                                if (response.success) {
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    Swal.fire('Success', response.message, 'success');
+                                if (response.status === "success") {
+                                    $('#allOrdersTable').DataTable().ajax.reload();
+                                    Swal.fire("Order is in production", "", "success");
                                 } else {
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    $('#cartCount').DataTable().ajax.reload();
-                                    Swal.fire('Error', response.message, 'error');
+                                    $('#allOrdersTable').DataTable().ajax.reload();
+                                    Swal.fire("Failed to process order", response.message, "error");
                                 }
                             },
                             error: function() {
-                                $('#allOrders').DataTable().ajax.reload();
-                                Swal.fire('Error', 'Failed to delete the game', 'error');
-                            }
+                                $('#allOrdersTable').DataTable().ajax.reload();
+                                Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
+                                
+                            },
                         });
                     }
                 });
