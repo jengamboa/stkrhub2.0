@@ -214,12 +214,12 @@ if (isset($_SESSION['user_id'])) {
                                             $count = $row['count'];
 
                                             if ($count > 0) {
-                                                // echo '
-                                                // <table id="allOrders" class="hover" style="width: 100%;">
-                                                //     <tbody>
-                                                //     </tbody>
-                                                // </table>
-                                                // ';
+                                                echo '
+                                                <table id="allOrders" class="hover" style="width: 100%;">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                                ';
                                             } else {
                                                 echo 'No orders.';
                                             }

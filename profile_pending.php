@@ -31,10 +31,13 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- material icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -49,7 +52,8 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>
+        <?php include 'css/header.css'; ?>
+        <?php include 'css/body.css'; ?>
 
         /* start header */
         .sticky-wrapper {
@@ -160,7 +164,8 @@ if (isset($_SESSION['user_id'])) {
                 <div class="col-9">
                     <div class="tab-content" id="v-pills-tabContent">
 
-                        <div class="tab-pane fade " id="v-pills-myaccount" role="tabpanel" aria-labelledby="v-pills-myaccount-tab">
+                        <div class="tab-pane fade " id="v-pills-myaccount" role="tabpanel"
+                            aria-labelledby="v-pills-myaccount-tab">
 
                             <!-- laman -->
                             <nav>
@@ -204,7 +209,8 @@ if (isset($_SESSION['user_id'])) {
 
                         </div>
 
-                        <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
+                        <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel"
+                            aria-labelledby="v-pills-mypurchase-tab">
                             <!-- laman -->
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -258,7 +264,8 @@ if (isset($_SESSION['user_id'])) {
                             <!-- /laman -->
                         </div>
 
-                        <div class="tab-pane fade" id="v-pills-logout" role="tabpanel" aria-labelledby="v-pills-logout-tab">
+                        <div class="tab-pane fade" id="v-pills-logout" role="tabpanel"
+                            aria-labelledby="v-pills-logout-tab">
                             logout
                         </div>
 
@@ -275,7 +282,9 @@ if (isset($_SESSION['user_id'])) {
 
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -303,7 +312,7 @@ if (isset($_SESSION['user_id'])) {
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             <?php include 'js/essential.php'; ?>
 
@@ -336,13 +345,15 @@ if (isset($_SESSION['user_id'])) {
 
 
                 "ajax": {
-                    "url": "json_to_ship_orders.php",
-                    data: {},
+                    "url": "json_is_pending_orders.php",
+                    data: {
+                        user_id: user_id,
+                    },
                     "dataSrc": ""
                 },
                 "columns": [{
                     "data": "item"
-                }, ]
+                },]
             });
         });
     </script>
