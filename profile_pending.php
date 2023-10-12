@@ -31,13 +31,10 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- material icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -52,8 +49,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css">
 
     <style>
-        <?php include 'css/header.css'; ?>
-        <?php include 'css/body.css'; ?>
+        <?php include 'css/header.css'; ?><?php include 'css/body.css'; ?>
 
         /* start header */
         .sticky-wrapper {
@@ -75,7 +71,7 @@ if (isset($_SESSION['user_id'])) {
             overflow: hidden;
             width: 100%;
             position: relative;
-            padding-top: 80%;
+            padding-top: 70%;
         }
 
         .image-mini {
@@ -164,8 +160,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="col-9">
                     <div class="tab-content" id="v-pills-tabContent">
 
-                        <div class="tab-pane fade " id="v-pills-myaccount" role="tabpanel"
-                            aria-labelledby="v-pills-myaccount-tab">
+                        <div class="tab-pane fade " id="v-pills-myaccount" role="tabpanel" aria-labelledby="v-pills-myaccount-tab">
 
                             <!-- laman -->
                             <nav>
@@ -209,8 +204,7 @@ if (isset($_SESSION['user_id'])) {
 
                         </div>
 
-                        <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel"
-                            aria-labelledby="v-pills-mypurchase-tab">
+                        <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
                             <!-- laman -->
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -264,8 +258,7 @@ if (isset($_SESSION['user_id'])) {
                             <!-- /laman -->
                         </div>
 
-                        <div class="tab-pane fade" id="v-pills-logout" role="tabpanel"
-                            aria-labelledby="v-pills-logout-tab">
+                        <div class="tab-pane fade" id="v-pills-logout" role="tabpanel" aria-labelledby="v-pills-logout-tab">
                             logout
                         </div>
 
@@ -281,10 +274,53 @@ if (isset($_SESSION['user_id'])) {
 
 
 
+    <!-- modals -->
+    <div class="modal fade" id="cancelReason">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Reason</h5>
+                </div>
+                <form id="cancelForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+
+                        <?php
+                        $cancellationReasons = array();
+
+                        // Query to retrieve cancellation reasons from the database
+                        $sqlSelectReasons = "SELECT reason_id, reason_text FROM cancel_order_reasons";
+                        $queryReasons = $conn->query($sqlSelectReasons);
+
+                        if ($queryReasons) {
+                            // Fetch reasons and store them in the array
+                            while ($row = $queryReasons->fetch_assoc()) {
+                                $cancellationReasons[] = $row;
+                            }
+                        }
+
+                        foreach ($cancellationReasons as $reason) {
+                            $reason_id = $reason['reason_id'];
+                            $reason_text = $reason['reason_text'];
+                            echo '<input type="radio" id="' . $reason_id . '" name="reason_id" value="' . $reason_id . '" required>' . $reason_text . '<br>';
+                        }
+
+                        ?>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -312,7 +348,7 @@ if (isset($_SESSION['user_id'])) {
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             <?php include 'js/essential.php'; ?>
 
@@ -353,8 +389,56 @@ if (isset($_SESSION['user_id'])) {
                 },
                 "columns": [{
                     "data": "item"
-                },]
+                }, ]
             });
+
+
+
+            $('#allOrders').on('click', '#cancel_orders', function() {
+                var unique_order_group_id = $(this).data('unique_order_group_id');
+                var user_id = <?php echo $user_id; ?>;
+
+                $("#cancelReason").modal("show");
+
+                $('#cancelForm').append('<input type="hidden" id="unique_order_group_id" value="' + unique_order_group_id + '">');
+                $('#cancelForm').append('<input type="hidden" id="user_id" value="' + user_id + '">');
+            });
+
+
+            $("#cancelForm").submit(function(e) {
+                e.preventDefault();
+
+                var selectedReasonId = $("input[name='reason_id']:checked").val();
+
+                if (selectedReasonId) {
+                    var formData = new FormData();
+                    formData.append('reason_id', selectedReasonId);
+                    formData.append('unique_order_group_id', $('#unique_order_group_id').val());
+                    formData.append('user_id', $('#user_id').val());
+
+                    $.ajax({
+                        url: 'process_cancel_order_with_reason.php',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            console.log("Form submitted successfully.");
+                            $("#cancelReason").modal('hide');
+                        },
+                        error: function(error) {
+                            console.error("Error submitting the form: " + error);
+                        }
+                    });
+                } else {
+                    // No radio button was selected, handle this case
+                    console.log("Please select a reason.");
+                }
+            });
+
+
+
+
         });
     </script>
 

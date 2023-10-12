@@ -293,49 +293,56 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
 
                                     $item .= '
-                                    <div class="container">
+                                    <div class="container p-0 m-0" style="border-bottom: 2px solid #15172e;">
 
                                     <div class="row">
 
                                         <div class="col">
-                                        
-                                            <div class="card-header py-1">
-                                                <div class="row p-0">
-
-                                                    <div class="col-0 d-flex align-items-center">
-                                                        ' . $classification . '
-                                                    </div>
-
-                                                    <div class="col-0 d-flex align-items-center ml-auto">
-                                                        <div class="mr-2">Status: ' . $status . '</div>
-                                                        <div class="mr-2">Order ID: ' . $order_id . '</div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
 
                                             <div class="card-body p-0" style="background-color: #272a4e;">
                                                 <div class="row d-flex justify-content-between align-items-center ">
 
-                                                    
-
-                                                    <div class="col-3 overflow-hidden">
-                                                        <p class="h6 fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
-                                                            ' . $fetched_title . '
-                                                        </p>
-                                                            ' . $description . '
+                                                    <div class="col-md-2 col-lg-2 col-xl-2 p-0">
+                                                        <div class="container" style="height: 100%; width: 100%;">
+                                                            <div class="image-mini-container mask1">
+                                                                <img class="image-mini" src="' . $img_src . '">
+                                                            </div>
+                                                        </div>
                                                     </div>
 
-                                                    <div class="col">
-                                                        <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
+                                                    <div class="col overflow-hidden">
+                                                        <div class="container" style="line-height: 17px;">
+                                                            <div class="row">
+                                                                <span class="d-inline-block text-truncate" style="max-width: 500px;">
+                                                                    Praeterea iter est quasdam res quas ex communi.asjdajsdjaisdjasjdaisjdasdasd
+                                                                </span>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                <span class="d-inline-block text-truncate" style="max-width: 500px;">
+                                                                    Praeterea iter est quasdam res quas ex communi.asjdajsdjaisdjasjdaisjdasdasd
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <span class="d-inline-block text-truncate" style="max-width: 500px;">
+                                                                    Praeterea iter est quasdam res quas ex communi.asjdajsdjaisdjasjdaisjdasdasd
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
 
-                                                    <div class="col">
-                                                        ' . $quantity_input . '
-                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="container" style="line-height: 17px;">
+                                                            <div class="row">
+                                                                <span class="mb-0" style="">2x</span>
+                                                            </div>
 
-                                                    <div class="col">
-                                                        <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
+                                                            <div class="row">
+                                                                <span class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</span>
+                                                            </div>
+                                                        </div>
+                                                        
                                                     </div>              
 
 
@@ -359,22 +366,21 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             </div>
                         </div>
 
-                        <div class="card-footer py-1">
-                            <div class="row p-0">
-                
-                                <div class="col-0 d-flex align-items-center">
-                                    
+                        <div class="card-footer" style="background: rgb(38,211,224);
+                        background: linear-gradient(143deg, rgba(38,211,224,1) 0%, rgba(182,96,232,0.50) 40%, rgba(21,23,46,1) 100%);">
+                            <div class="d-flex justify-content-end">
+
+                                <div class="px-4 py-3">
+                                    Order Total: asdasjdasdasidajshdjashd
+                                    <br>
+                                    <a href="#!" class="text-primary d-flex justify-content-end" id="cancel_orders" data-unique_order_group_id="' . $unique_order_group_id . '">Cancel</a>
                                 </div>
-                
-                                <div class="col-0 d-flex align-items-center ml-auto">
-                                    <div class="mr-2"></div>
-                                    <div class="mr-2">
-                                        <a href="#!" class="text-primary" id="to_deliver" data-unique_order_group_id="' . $unique_order_group_id . '">To Deliver</a>
-                                    </div>
-                                </div>`
+                                
                 
                             </div>
                         </div>
+
+                        
 
                     </div>
                 
