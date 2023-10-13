@@ -5,6 +5,10 @@ include 'connection.php';
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
+
+if (isset($_GET['unique_order_group_id'])) {
+    $unique_order_group_id = $_GET['unique_order_group_id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +75,7 @@ if (isset($_SESSION['user_id'])) {
             overflow: hidden;
             width: 100%;
             position: relative;
-            padding-top: 70%;
+            padding-top: 80%;
         }
 
         .image-mini {
@@ -131,6 +135,54 @@ if (isset($_SESSION['user_id'])) {
         .nav-link {
             color: #fff;
         }
+
+        /* progress step by step */
+        .progresses {
+            display: flex;
+            align-items: center;
+        }
+
+        .step-line {
+            width: 200px;
+            height: 4px;
+            background: #63d19e;
+        }
+
+        .step-line-b {
+            width: 200px;
+            height: 4px;
+            background: transparent;
+        }
+
+        .steps {
+            display: flex;
+            background-color: #63d19e;
+            color: #fff;
+            font-size: 14px;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .steps-b {
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            white-space: nowrap;
+
+        }
+
+        /* end progress step by step */
     </style>
 </head>
 
@@ -191,12 +243,21 @@ if (isset($_SESSION['user_id'])) {
                                     </section>
                                 </div>
 
-                                <div class="tab-pane fade show active">
-                                    <section style="padding: 20px;">
-                                        <div class="container">
-                                            change pass
+                                <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
+
+
+                                    <div class="tab-content" id="nav-tabContent">
+
+                                        <div class="tab-pane fade show active">
+                                            <section style="padding: 20px;">
+                                                <div class="container">
+                                                    Canceled
+                                                </div>
+                                            </section>
                                         </div>
-                                    </section>
+
+                                    </div>
+                                    <!-- /laman -->
                                 </div>
 
                             </div>
@@ -205,57 +266,38 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
-                            <!-- laman -->
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link " href="profile_all.php">All</a>
+                            <table id="orderDetails" class="hover" style="width: 100%;">
+                                <tbody>
+                                </tbody>
+                            </table>
 
-                                    <a class="nav-item nav-link active" href="profile_pending.php">Pending</a>
+                            <?php
+                            $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                            $resultCheckInProduction = $conn->query($sqlCheckInProduction);
 
-                                    <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
+                            if ($resultCheckInProduction) {
+                                $row = $resultCheckInProduction->fetch_assoc();
+                                $count = $row['count'];
 
-                                    <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
+                                if ($count > 0) {
+                                    echo '
+                                    <table id="allOrders" class="hover" style="width: 100%;">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    ';
+                                } else {
+                                    echo 'None.';
+                                }
+                            } else {
+                                echo 'Error checking for orders in production.';
+                            }
+                            ?>
 
-                                    <a class="nav-item nav-link " href="profile_received.php">Received</a>
-
-                                    <a class="nav-item nav-link " href="profile_canceled.php">Canceled</a>
-                                </div>
-                            </nav>
-
-                            <div class="tab-content" id="nav-tabContent">
-
-
-                                <div class="tab-pane fade show active">
-                                    <section style="padding: 20px;">
-                                        <?php
-                                        $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
-                                        $resultCheckInProduction = $conn->query($sqlCheckInProduction);
-
-                                        if ($resultCheckInProduction) {
-                                            $row = $resultCheckInProduction->fetch_assoc();
-                                            $count = $row['count'];
-
-                                            if ($count > 0) {
-                                                echo '
-                                                <table id="allOrders" class="hover" style="width: 100%;">
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                                ';
-                                            } else {
-                                                echo 'None.';
-                                            }
-                                        } else {
-                                            echo 'Error checking for orders in production.';
-                                        }
-                                        ?>
-                                    </section>
-                                </div>
-
-
-
-                            </div>
-                            <!-- /laman -->
+                            <table id="orderBreakdown" class="hover" style="width: 100%;">
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
 
                         <div class="tab-pane fade" id="v-pills-logout" role="tabpanel" aria-labelledby="v-pills-logout-tab">
@@ -270,51 +312,6 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </section>
     <!-- End Sample Area -->
-
-
-
-
-    <!-- modals -->
-    <div class="modal fade" id="cancelReason">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Reason</h5>
-                </div>
-                <form id="cancelForm" enctype="multipart/form-data">
-                    <div class="modal-body">
-
-                        <?php
-                        $cancellationReasons = array();
-
-                        // Query to retrieve cancellation reasons from the database
-                        $sqlSelectReasons = "SELECT cancel_order_reason_id, reason_text FROM cancel_order_reasons";
-                        $queryReasons = $conn->query($sqlSelectReasons);
-
-                        if ($queryReasons) {
-                            // Fetch reasons and store them in the array
-                            while ($row = $queryReasons->fetch_assoc()) {
-                                $cancellationReasons[] = $row;
-                            }
-                        }
-
-                        foreach ($cancellationReasons as $reason) {
-                            $cancel_order_reason_id = $reason['cancel_order_reason_id'];
-                            $reason_text = $reason['reason_text'];
-                            echo '<input type="radio" id="' . $cancel_order_reason_id . '" name="cancel_order_reason_id" value="' . $cancel_order_reason_id . '" required>' . $reason_text . '<br>';
-                        }
-
-                        ?>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -367,23 +364,50 @@ if (isset($_SESSION['user_id'])) {
             var userList = new List('game_components_table', options);
 
             var user_id = <?php echo $user_id; ?>;
+            var unique_order_group_id = <?php echo $unique_order_group_id; ?>;
 
             $('#allOrders').DataTable({
                 language: {
                     search: "",
                 },
 
-                searching: true,
+                searching: false,
                 info: false,
-                paging: true,
+                paging: false,
                 lengthChange: false,
                 ordering: false,
 
 
                 "ajax": {
-                    "url": "json_is_pending_orders.php",
+                    "url": "json_cancelation_details.php",
                     data: {
                         user_id: user_id,
+                        unique_order_group_id: unique_order_group_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                    "data": "item"
+                }, ]
+            });
+
+            $('#orderDetails').DataTable({
+                language: {
+                    search: "",
+                },
+
+                searching: false,
+                info: false,
+                paging: false,
+                lengthChange: false,
+                ordering: false,
+
+
+                "ajax": {
+                    "url": "json_order_details.php",
+                    data: {
+                        user_id: user_id,
+                        unique_order_group_id: unique_order_group_id,
                     },
                     "dataSrc": ""
                 },
@@ -393,75 +417,30 @@ if (isset($_SESSION['user_id'])) {
             });
 
 
+            $('#orderBreakdown').DataTable({
+                language: {
+                    search: "",
+                },
 
-            $('#allOrders').on('click', '#cancel_orders', function() {
-                var unique_order_group_id = $(this).data('unique_order_group_id');
-                var user_id = <?php echo $user_id; ?>;
+                searching: false,
+                info: false,
+                paging: false,
+                lengthChange: false,
+                ordering: false,
 
-                // Clear previous values
-                $('#unique_order_group_id').remove();
-                $('#user_id').remove();
-                $("input[name='cancel_order_reason_id']").prop("checked", false);
 
-                $("#cancelReason").modal("show");
-
-                // Append new values
-                $('#cancelForm').append('<input type="hidden" id="unique_order_group_id" value="' + unique_order_group_id + '">');
-                $('#cancelForm').append('<input type="hidden" id="user_id" value="' + user_id + '">');
+                "ajax": {
+                    "url": "json_order_breakdown.php",
+                    data: {
+                        user_id: user_id,
+                        unique_order_group_id: unique_order_group_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                    "data": "item"
+                }, ]
             });
-
-
-            $("#cancelForm").submit(function(e) {
-                e.preventDefault();
-
-                // Use SweetAlert for confirmation
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "Do you want to submit the form?",
-                    icon: "question",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var selectedReasonId = $("input[name='cancel_order_reason_id']:checked").val();
-
-                        var formData = new FormData();
-                        formData.append('cancel_order_reason_id', selectedReasonId);
-                        formData.append('unique_order_group_id', $('#unique_order_group_id').val());
-                        formData.append('user_id', $('#user_id').val());
-
-                        $.ajax({
-                            url: 'process_cancel_order_with_reason.php',
-                            type: 'POST',
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.success) {
-                                    $("#cancelReason").modal("hide");
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    Swal.fire('Success', response.message, 'success');
-                                } else {
-                                    $("#cancelReason").modal("hide");
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    Swal.fire('Error', response.message, 'error');
-
-                                }
-                            },
-                            error: function() {
-                                $("#cancelReason").modal("hide");
-                                $('#allOrders').DataTable().ajax.reload();
-                                Swal.fire('Error', 'Failed to build the game', 'error');
-                            }
-                        });
-
-                    }
-                });
-            });
-
-
 
 
         });

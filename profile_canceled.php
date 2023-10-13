@@ -253,7 +253,7 @@ if (isset($_SESSION['user_id'])) {
                                     <section style="padding: 20px;">
 
                                         <?php
-                                        $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders WHERE is_received = 1";
+                                        $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
                                         $resultCheckInProduction = $conn->query($sqlCheckInProduction);
 
                                         if ($resultCheckInProduction) {
@@ -268,10 +268,10 @@ if (isset($_SESSION['user_id'])) {
                                                 </table>
                                                 ';
                                             } else {
-                                                echo 'No orders are canceled.';
+                                                echo 'None.';
                                             }
                                         } else {
-                                            echo 'Error checking for orders canceled.';
+                                            echo 'Error checking for orders in production.';
                                         }
                                         ?>
                                     </section>

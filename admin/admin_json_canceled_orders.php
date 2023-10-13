@@ -3,7 +3,7 @@ include "connection.php"; // Include your database connection script
 
 $data = array();
 
-$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE is_canceled = 1 AND is_completely_canceled = 1";
+$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE is_canceled = 1";
 $queryUniqueOrderDates = $conn->query($sqlUniqueOrderDates);
 while ($row = $queryUniqueOrderDates->fetch_assoc()) {
     $unique_order_group_id = $row['unique_order_group_id'];
@@ -35,7 +35,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             <div class="row d-flex justify-content-between align-items-center ">
                                 <div class="col">';
 
-                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND is_canceled = 1 AND is_completely_canceled = 1";
+                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND is_canceled = 1";
                                 $queryAll = $conn->query($sqlAll);
                                 while ($fetched = $queryAll->fetch_assoc()) {
                                     $order_id = $fetched['order_id'];
@@ -48,7 +48,6 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
                                     $is_pending = $fetched['is_pending'];
                                     $in_production = $fetched['in_production'];
-                                    $to_ship = $fetched['to_ship'];
                                     $to_deliver = $fetched['to_deliver'];
                                     $is_received = $fetched['is_received'];
                                     $is_canceled = $fetched['is_canceled'];
@@ -113,9 +112,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                         $status = 'PENDING';
                                     } elseif ($in_production) {
                                         $status = 'IN PRODUCTION';
-                                    } elseif ($to_ship) {
-                                        $status = 'TO SHIP';
-                                    }elseif ($to_deliver) {
+                                    } elseif ($to_deliver) {
                                         $status = 'TO DELIVER';
                                     } elseif ($is_received) {
                                         $status = 'RECEIVED';
@@ -363,15 +360,21 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             <div class="row p-0">
                 
                                 <div class="col-0 d-flex align-items-center">
-                                    
                                 </div>
                 
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2"></div>
                                     <div class="mr-2">
-                                        <a href="#!" class="text-primary" id="to_deliver" data-unique_order_group_id="' . $unique_order_group_id . '">To Deliver</a>
+                                        <a href="#!" class="text-primary" id="refund_order" 
+                                        data-creator_id="' . $creator_id . '"
+                                        data-unique_order_group_id="' . $unique_order_group_id . '"
+                                        data-total_amount="' . $total_amount . '"
+                                        data-refunded_amount="' . $refunded_amount . '"
+                                        >
+                                            Refund Order
+                                        </a>
                                     </div>
-                                </div>`
+                                </div>
                 
                             </div>
                         </div>

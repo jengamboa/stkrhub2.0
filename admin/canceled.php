@@ -176,76 +176,49 @@ include 'connection.php';
 
 
 
-            $('#canceledOrdersTable').on('click', '#to_deliver', function() {
-                var order_id = $(this).data('order_id');
+            $('#allOrders').on('click', '#refund_order', function() {
+                var creator_id = $(this).data('creator_id');
+                var unique_order_group_id = $(this).data('unique_order_group_id');
+                var total_amount = $(this).data('total_amount');
+                var refunded_amount = $(this).data('refunded_amount');
 
-                $.ajax({
-                    type: 'GET',
-                    url: 'get_courier.php',
-                    dataType: 'json',
-                    success: function(data) {
-                        if (data && data.length > 0) {
-                            // Create an empty string to store the options
-                            let options = '';
+                Swal.fire({
+                    title: 'Send Money through Paypal',
+                    html: 'Payee\'s Email: <br> Amount to Pay:',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sent',
+                }).then((result) => {
+                    if (result.isConfirmed) {
 
-                            // Iterate through the data and generate <option> elements
-                            data.forEach(function(courier) {
-                                options += `<option value="${courier.courier_name}">${courier.courier_name}</option>`;
-                            });
-
-                            // Create and show the SweetAlert dialog with the dynamic options
-                            Swal.fire({
-                                title: 'To Deliver',
-                                html: '<input id="text-field" class="swal2-input" placeholder="Enter Tracking Number" required>' +
-                                    '<select id="select-field" class="swal2-select">' +
-                                    options + // Insert the generated options here
-                                    '</select>',
-                                showCancelButton: true,
-                                confirmButtonText: 'Submit',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    const textValue = $('#text-field').val();
-                                    const selectValue = $('#select-field').val();
-
-                                    // Check if the input field is not empty
-                                    if (!textValue) {
-                                        Swal.fire("Input Field Required", "Please enter a tracking number.", "error");
-                                        return; // Exit the function if the input field is empty
-                                    }
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'admin_process_to_deliver.php',
-                                        data: {
-                                            order_id: order_id,
-                                            text: textValue,
-                                            select: selectValue,
-                                        },
-                                        dataType: "json", // Expect JSON response
-                                        success: function(response) {
-                                            if (response.status === "success") {
-                                                $('#toShipTable').DataTable().ajax.reload();
-                                                Swal.fire("Order is ready to deliver", "", "success");
-                                            } else {
-                                                $('#toShipTable').DataTable().ajax.reload();
-                                                Swal.fire("Failed to process order", response.message, "error");
-                                            }
-                                        },
-                                        error: function() {
-                                            $('#toShipTable').DataTable().ajax.reload();
-                                            Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
-
-                                        },
-                                    });
-                                }
-                            });
-                        } else {
-                            console.error('No courier data available.');
-                        }
-                    },
-                    error: function(error) {
-                        console.error('Error fetching courier data:', error);
-                    },
+                        Swal.fire({
+                            title: 'Are you sure you already sent?',
+                            html: 'Payee\'s Email: <br> Amount to Pay:',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'admin_process_refunded.php',
+                                    data: {
+                                        creator_id: creator_id,
+                                        unique_order_group_id: unique_order_group_id,
+                                        total_amount: total_amount,
+                                        refunded_amount: refunded_amount,
+                                    },
+                                    dataType: "json",
+                                    success: function(response) {
+                                        $('#toShipTable').DataTable().ajax.reload();
+                                        Swal.fire("Order is ready to deliver", "", "success");
+                                    },
+                                    error: function() {
+                                        $('#toShipTable').DataTable().ajax.reload();
+                                        Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
+                                    },
+                                });
+                            }
+                        });
+                    }
                 });
 
 
