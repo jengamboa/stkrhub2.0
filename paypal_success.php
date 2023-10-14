@@ -198,9 +198,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $unique_order_id = $item_id . $unique_id;
 
                 $sqlInsertOrders = "INSERT INTO orders 
-                (unique_order_id, unique_order_group_id, cart_id, user_id, $item_type, quantity, price, $status, desired_markup, manufacturer_profit, creator_profit, marketplace_price, fullname, number, region, province, city, barangay, zip, street, total_payment, paypal_transaction_id, payer_id) 
+                (unique_order_id, unique_order_group_id, cart_id, user_id, $item_type, quantity, price, $status, desired_markup, manufacturer_profit, creator_profit, marketplace_price, fullname, number, region, province, city, barangay, zip, street, total_payment, paypal_transaction_id, payer_id, order_data_payee_email) 
                 VALUES 
-                ('$unique_order_id', '$unique_order_group_id', '$cart_item', '$user_id', '$item_id', '$quantity', '$price', '$status_value', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price', '$fullname', '$number', '$region', '$province', '$city', '$barangay', '$zip', '$street', '$paypal_payment', '$order_data_id', '$payer_id' )";
+                ('$unique_order_id', '$unique_order_group_id', '$cart_item', '$user_id', '$item_id', '$quantity', '$price', '$status_value', '$desired_markup', '$manufacturer_profit', '$creator_profit', '$marketplace_price', '$fullname', '$number', '$region', '$province', '$city', '$barangay', '$zip', '$street', '$paypal_payment', '$order_data_id', '$payer_id', '$order_data_payee_email')";
 
                 $queryInsertOrders = $conn->query($sqlInsertOrders);
 

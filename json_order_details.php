@@ -14,8 +14,6 @@ while ($fetched = $result->fetch_assoc()) {
 
 
 
-
-
 $item = '
 
 <div class="row p-0">

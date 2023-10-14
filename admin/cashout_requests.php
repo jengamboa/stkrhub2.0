@@ -52,7 +52,7 @@ include 'connection.php';
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>All In Production Orders</h4>
+                            <h4>Cash Out Requests</h4>
                             <p class="mb-0">Users are now expeting the their order is being processed.</p>
                         </div>
                     </div>
@@ -161,31 +161,43 @@ include 'connection.php';
                 lengthChange: false,
                 ordering: false,
 
-
                 "ajax": {
-                    "url": "admin_json_canceled_orders.php",
+                    "url": "admin_json_cash_out.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                    "data": "item"
-                }, ]
+                        "data": "user_id"
+                    },
+                    {
+                        "data": "transaction_type"
+                    },
+                    {
+                        "data": "transaction_date"
+                    },
+                    {
+                        "data": "amount"
+                    },
+                    {
+                        "data": "paypal_email_destination"
+                    },
+                    {
+                        "data": "actions"
+                    },
+                ]
             });
 
 
 
-
-
-            $('#allOrders').on('click', '#refund_order', function() {
+            $('#allOrders').on('click', '#send_money', function() {
                 var creator_id = $(this).data('creator_id');
-                var unique_order_group_id = $(this).data('unique_order_group_id');
-                var order_total_price = $(this).data('order_total_price');
-                var creator_email = $(this).data('creator_email');
-                var refunded_amount = $(this).data('refunded_amount');
+                var wallet_transaction_id = $(this).data('wallet_transaction_id');
+                var paypal_email_destination = $(this).data('paypal_email_destination');
+                var amount = $(this).data('amount');
 
                 Swal.fire({
                     title: 'Send Money through Paypal',
-                    html: 'Payee\'s Email: ' + creator_email + '<br> Amount to Pay: ' + refunded_amount,
+                    html: 'Payee\'s Email: ' + paypal_email_destination + '<br> Amount to Pay: ' + amount,
                     showCancelButton: true,
                     confirmButtonText: 'Sent',
                 }).then((result) => {
@@ -193,7 +205,7 @@ include 'connection.php';
 
                         Swal.fire({
                             title: 'Are you sure you already sent?',
-                            html: 'Payee\'s Email: <br> Amount to Pay: '+ refunded_amount,
+                            html: 'Payee\'s Email: ' + paypal_email_destination + '<br> Amount to Pay: ' + amount,
                             showCancelButton: true,
                             confirmButtonText: 'Yes',
                         }).then((result) => {
@@ -202,21 +214,23 @@ include 'connection.php';
                                     type: 'POST',
                                     url: 'admin_process_refunded.php',
                                     data: {
+                                        wallet_transaction_id: wallet_transaction_id,
                                         creator_id: creator_id,
-                                        unique_order_group_id: unique_order_group_id,
-                                        creator_email: creator_email,
-                                        order_total_price: order_total_price,
-                                        refunded_amount: refunded_amount,
+                                        paypal_email_destination: paypal_email_destination,
+                                        amount: amount,
                                     },
-                                    dataType: "json",
+                                    dataType: 'json',
                                     success: function(response) {
-                                        $('#toShipTable').DataTable().ajax.reload();
-                                        Swal.fire("Order is ready to deliver", "", "success");
+                                        if (response.success) {
+                                            Swal.fire('Success', response.message, 'success');
+                                            $('#allOrders').DataTable().ajax.reload();
+                                        } else {
+                                            Swal.fire('Error', response.message, 'error');
+                                        }
                                     },
                                     error: function() {
-                                        $('#toShipTable').DataTable().ajax.reload();
-                                        Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
-                                    },
+                                        Swal.fire('Error', 'Failed to build the game', 'error');
+                                    }
                                 });
                             }
                         });

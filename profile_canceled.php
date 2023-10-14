@@ -151,6 +151,8 @@ if (isset($_SESSION['user_id'])) {
 
                         <a class="nav-link active" href="profile_all.php">My Purchase</a>
 
+                        <a class="nav-link" href="profile_wallet.php">STKR Wallet</a>
+
                         <a class="nav-link " href="process_logout.php">Logout</a>
 
 
