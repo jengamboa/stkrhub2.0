@@ -52,7 +52,7 @@ include 'connection.php';
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>All In Production Orders</h4>
+                            <h4>Cash Out Requests</h4>
                             <p class="mb-0">Users are now expeting the their order is being processed.</p>
                         </div>
                     </div>
@@ -161,58 +161,83 @@ include 'connection.php';
                 lengthChange: false,
                 ordering: false,
 
-
                 "ajax": {
-                    "url": "admin_json_in_production_orders.php",
+                    "url": "admin_json_cash_out.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                    "data": "item"
-                }, ]
+                        "data": "user_id"
+                    },
+                    {
+                        "data": "transaction_type"
+                    },
+                    {
+                        "data": "transaction_date"
+                    },
+                    {
+                        "data": "amount"
+                    },
+                    {
+                        "data": "paypal_email_destination"
+                    },
+                    {
+                        "data": "actions"
+                    },
+                ]
             });
 
 
 
-
-
-            $('#allOrders').on('click', '#to_ship', function() {
-                var unique_order_group_id = $(this).data('unique_order_group_id');
+            $('#allOrders').on('click', '#send_money', function() {
+                var creator_id = $(this).data('creator_id');
+                var wallet_transaction_id = $(this).data('wallet_transaction_id');
+                var paypal_email_destination = $(this).data('paypal_email_destination');
+                var amount = $(this).data('amount');
 
                 Swal.fire({
-                    title: 'Proceed Orders',
-                    text: 'Are you sure you want to ship these items?',
-                    icon: 'warning',
+                    title: 'Send Money through Paypal',
+                    html: 'Payee\'s Email: ' + paypal_email_destination + '<br> Amount to Pay: ' + amount,
                     showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'Close',
-                }).then(function(result) {
+                    confirmButtonText: 'Sent',
+                }).then((result) => {
                     if (result.isConfirmed) {
 
-                        $.ajax({
-                            type: 'POST',
-                            url: 'admin_process_to_ship_orders.php',
-                            data: {
-                                unique_order_group_id: unique_order_group_id
-                            },
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.success) {
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    Swal.fire('Success', response.message, 'success');
-                                } else {
-                                    $('#allOrders').DataTable().ajax.reload();
-                                    $('#cartCount').DataTable().ajax.reload();
-                                    Swal.fire('Error', response.message, 'error');
-                                }
-                            },
-                            error: function() {
-                                $('#allOrders').DataTable().ajax.reload();
-                                Swal.fire('Error', 'Failed to delete the game', 'error');
+                        Swal.fire({
+                            title: 'Are you sure you already sent?',
+                            html: 'Payee\'s Email: ' + paypal_email_destination + '<br> Amount to Pay: ' + amount,
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'admin_process_refunded.php',
+                                    data: {
+                                        wallet_transaction_id: wallet_transaction_id,
+                                        creator_id: creator_id,
+                                        paypal_email_destination: paypal_email_destination,
+                                        amount: amount,
+                                    },
+                                    dataType: 'json',
+                                    success: function(response) {
+                                        if (response.success) {
+                                            Swal.fire('Success', response.message, 'success');
+                                            $('#allOrders').DataTable().ajax.reload();
+                                        } else {
+                                            Swal.fire('Error', response.message, 'error');
+                                        }
+                                    },
+                                    error: function() {
+                                        Swal.fire('Error', 'Failed to build the game', 'error');
+                                    }
+                                });
                             }
                         });
                     }
                 });
+
+
             });
 
 

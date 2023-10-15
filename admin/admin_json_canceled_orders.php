@@ -1,46 +1,38 @@
 <?php
-
-include "connection.php";
-$user_id = $_GET['user_id'];
+include "connection.php"; // Include your database connection script
 
 $data = array();
 
-$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE in_production = 1 AND user_id = $user_id";
+$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE is_canceled = 1";
 $queryUniqueOrderDates = $conn->query($sqlUniqueOrderDates);
 while ($row = $queryUniqueOrderDates->fetch_assoc()) {
     $unique_order_group_id = $row['unique_order_group_id'];
-
+    $order_total_price = 0;
 
     $item = '
             <div class="row">
-
                 <div class="col">
-                
                     <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #17172b; padding: 0.1rem;">
-                
                         <div class="card-header py-1">
                             <div class="row p-0">
-                
                                 <div class="col-0 d-flex align-items-center">
                                     title
                                 </div>
-                
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2">Status: status</div>
                                     <div class="mr-2">Order Group ID: ' . $unique_order_group_id . '</div>
                                 </div>
-                
                             </div>
                         </div>
                 
                         <div class="card-body p-0" style="background-color: #272a4e;">
                             <div class="row d-flex justify-content-between align-items-center ">
                                 <div class="col">';
-
-                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND in_production = 1 AND user_id = $user_id";
+                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND is_canceled = 1";
                                 $queryAll = $conn->query($sqlAll);
                                 while ($fetched = $queryAll->fetch_assoc()) {
                                     $order_id = $fetched['order_id'];
+                                    $creator_id = $fetched['user_id'];
                                     $published_game_id = $fetched['published_game_id'];
                                     $built_game_id = $fetched['built_game_id'];
                                     $added_component_id = $fetched['added_component_id'];
@@ -50,11 +42,13 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
                                     $is_pending = $fetched['is_pending'];
                                     $in_production = $fetched['in_production'];
-                                    $to_ship = $fetched['to_ship'];
                                     $to_deliver = $fetched['to_deliver'];
                                     $is_received = $fetched['is_received'];
                                     $is_canceled = $fetched['is_canceled'];
                                     $is_completely_canceled = $fetched['is_completely_canceled'];
+
+                                    $paypal_transaction_id = $fetched['paypal_transaction_id'];
+                                    $order_data_payee_email = $fetched['order_data_payee_email'];
 
                                     // classification
                                     if ($published_game_id) {
@@ -115,9 +109,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                         $status = 'PENDING';
                                     } elseif ($in_production) {
                                         $status = 'IN PRODUCTION';
-                                    } elseif ($to_ship) {
-                                        $status = 'TO SHIP';
-                                    }elseif ($to_deliver) {
+                                    } elseif ($to_deliver) {
                                         $status = 'TO DELIVER';
                                     } elseif ($is_received) {
                                         $status = 'RECEIVED';
@@ -148,7 +140,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                         $shop_from = 'asd';
                                     }
 
-                                        // description
+                                    // description
                                     if ($published_game_id) {
                                         $sqlGetTitle = "SELECT * FROM published_built_games WHERE published_game_id = $published_game_id";
                                         $queryGetTitle = $conn->query($sqlGetTitle);
@@ -291,6 +283,15 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                         $action = '';
                                     }
 
+                                    // creator_id
+                                    $creator_email = $order_data_payee_email;
+
+                                    // order_total_price
+                                    $order_total_price += $price;
+
+                                    // refunded_amount
+                                    $refunded_amount = $order_total_price - 40;
+                                    
 
                                     $item .= '
                                     <div class="container">
@@ -355,7 +356,6 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
 
                                 }
-
                                 $item .= '
                                 </div>
                             </div>
@@ -365,16 +365,22 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             <div class="row p-0">
                 
                                 <div class="col-0 d-flex align-items-center">
-                                    
                                 </div>
                 
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2"></div>
                                     <div class="mr-2">
-                                        <a href="#!" class="text-primary" id="to_deliver" data-unique_order_group_id="' . $unique_order_group_id . '">To Deliver</a>
+                                        <a href="#!" class="text-primary" id="refund_order" 
+                                        data-creator_id="' . $creator_id . '"
+                                        data-unique_order_group_id="' . $unique_order_group_id . '"
+                                        data-creator_email="'.$creator_email.'"
+                                        data-order_total_price="'.$order_total_price.'"
+                                        data-refunded_amount="'.$refunded_amount.'"
+                                        >
+                                            Refund Order
+                                        </a>
                                     </div>
-                                </div>`
-                
+                                </div>
                             </div>
                         </div>
 

@@ -1,7 +1,8 @@
 <?php
-include "connection.php"; // Include your database connection script
 
+include "connection.php";
 $user_id = $_GET['user_id'];
+
 $data = array();
 
 $sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE user_id = $user_id";
@@ -26,7 +27,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                 
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2">Status: status</div>
-                                    <div class="mr-2">Cart ID: ' . $unique_order_group_id . '</div>
+                                    <div class="mr-2">Order Group ID: ' . $unique_order_group_id . '</div>
                                 </div>
                 
                             </div>
@@ -36,7 +37,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             <div class="row d-flex justify-content-between align-items-center ">
                                 <div class="col">';
 
-                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id";
+                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND user_id = $user_id";
                                 $queryAll = $conn->query($sqlAll);
                                 while ($fetched = $queryAll->fetch_assoc()) {
                                     $order_id = $fetched['order_id'];
@@ -49,6 +50,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
                                     $is_pending = $fetched['is_pending'];
                                     $in_production = $fetched['in_production'];
+                                    $to_ship = $fetched['to_ship'];
                                     $to_deliver = $fetched['to_deliver'];
                                     $is_received = $fetched['is_received'];
                                     $is_canceled = $fetched['is_canceled'];
@@ -113,7 +115,9 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                         $status = 'PENDING';
                                     } elseif ($in_production) {
                                         $status = 'IN PRODUCTION';
-                                    } elseif ($to_deliver) {
+                                    } elseif ($to_ship) {
+                                        $status = 'TO SHIP';
+                                    }elseif ($to_deliver) {
                                         $status = 'TO DELIVER';
                                     } elseif ($is_received) {
                                         $status = 'RECEIVED';
@@ -295,58 +299,49 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
 
                                         <div class="col">
 
-                                            <div class="card rounded-3 mb-4 p-0 custom-shadow" style="background-color: #17172b; padding: 0.1rem;">
+                                            <div class="card-header py-1">
+                                                <div class="row p-0">
 
-                                                <div class="card-header py-1">
-                                                    <div class="row p-0">
-
-                                                        <div class="col-0 d-flex align-items-center">
-                                                            ' . $classification . '
-                                                        </div>
-
-                                                        <div class="col-0 d-flex align-items-center ml-auto">
-                                                            <div class="mr-2">Status: ' . $status . '</div>
-                                                            <div class="mr-2">Cart ID: ' . $order_id . '</div>
-                                                        </div>
-
+                                                    <div class="col-0 d-flex align-items-center">
+                                                        ' . $classification . '
                                                     </div>
-                                                </div>
 
-                                                <div class="card-body p-0" style="background-color: #272a4e;">
-                                                    <div class="row d-flex justify-content-between align-items-center ">
-
-                                                        <div class="col-md-2 col-lg-2 col-xl-2 p-0">
-                                                            <div class="container" style="height: 100%; width: 100%;">
-                                                                <div class="image-mini-container mask1">
-                                                                    <img class="image-mini" src="' . $img_src . '">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-3 overflow-hidden">
-                                                            <p class="h6 fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
-                                                                ' . $fetched_title . '
-                                                            </p>
-                                                                ' . $description . '
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            ' . $quantity_input . '
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
-                                                        </div>              
-
-
+                                                    <div class="col-0 d-flex align-items-center ml-auto">
+                                                        <div class="mr-2">Status: ' . $status . '</div>
+                                                        <div class="mr-2">Order ID: ' . $order_id . '</div>
                                                     </div>
+
                                                 </div>
                                             </div>
 
+                                            <div class="card-body p-0" style="background-color: #272a4e;">
+                                                <div class="row d-flex justify-content-between align-items-center ">
+
+                                                    
+
+                                                    <div class="col-3 overflow-hidden">
+                                                        <p class="h6 fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
+                                                            ' . $fetched_title . '
+                                                        </p>
+                                                            ' . $description . '
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        ' . $quantity_input . '
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
+                                                    </div>              
+
+
+                                                </div>
+                                            </div>
+                                            
                                         </div>
 
                                     </div>
@@ -363,7 +358,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             </div>
                         </div>
 
-                        <div class="card-header py-1">
+                        <div class="card-footer py-1">
                             <div class="row p-0">
                 
                                 <div class="col-0 d-flex align-items-center">
@@ -373,9 +368,9 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                 <div class="col-0 d-flex align-items-center ml-auto">
                                     <div class="mr-2"></div>
                                     <div class="mr-2">
-                                        <a href="#!" class="text-danger cancel-order" data-unique_order_group_id="' . $unique_order_group_id . '"><i class="fa-solid fa-ban"></i> Cancel Order</a>
+                                        <a href="#!" class="text-primary" id="to_deliver" data-unique_order_group_id="' . $unique_order_group_id . '">To Deliver</a>
                                     </div>
-                                </div>
+                                </div>`
                 
                             </div>
                         </div>

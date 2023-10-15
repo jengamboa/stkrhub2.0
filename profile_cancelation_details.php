@@ -5,6 +5,10 @@ include 'connection.php';
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
+
+if (isset($_GET['unique_order_group_id'])) {
+    $unique_order_group_id = $_GET['unique_order_group_id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -131,6 +135,54 @@ if (isset($_SESSION['user_id'])) {
         .nav-link {
             color: #fff;
         }
+
+        /* progress step by step */
+        .progresses {
+            display: flex;
+            align-items: center;
+        }
+
+        .step-line {
+            width: 200px;
+            height: 4px;
+            background: #63d19e;
+        }
+
+        .step-line-b {
+            width: 200px;
+            height: 4px;
+            background: transparent;
+        }
+
+        .steps {
+            display: flex;
+            background-color: #63d19e;
+            color: #fff;
+            font-size: 14px;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .steps-b {
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            white-space: nowrap;
+
+        }
+
+        /* end progress step by step */
     </style>
 </head>
 
@@ -150,8 +202,6 @@ if (isset($_SESSION['user_id'])) {
                         <a class="nav-link " href="profile_index.php">My Account</a>
 
                         <a class="nav-link active" href="profile_all.php">My Purchase</a>
-
-                        <a class="nav-link" href="profile_wallet.php">STKR Wallet</a>
 
                         <a class="nav-link " href="process_logout.php">Logout</a>
 
@@ -194,22 +244,7 @@ if (isset($_SESSION['user_id'])) {
                                 </div>
 
                                 <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
-                                    <!-- laman -->
-                                    <nav>
-                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <a class="nav-item nav-link " href="profile_all.php">All</a>
 
-                                            <a class="nav-item nav-link" href="profile_pending.php">Pending</a>
-
-                                            <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
-
-                                            <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
-
-                                            <a class="nav-item nav-link " href="profile_received.php">Received</a>
-
-                                            <a class="nav-item nav-link active" href="profile_canceled.php">Canceled</a>
-                                        </div>
-                                    </nav>
 
                                     <div class="tab-content" id="nav-tabContent">
 
@@ -231,58 +266,38 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
-                            <!-- laman -->
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link " href="profile_all.php">All</a>
+                            <table id="orderDetails" class="hover" style="width: 100%;">
+                                <tbody>
+                                </tbody>
+                            </table>
 
-                                    <a class="nav-item nav-link " href="profile_pending.php">Pending</a>
+                            <?php
+                            $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                            $resultCheckInProduction = $conn->query($sqlCheckInProduction);
 
-                                    <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
+                            if ($resultCheckInProduction) {
+                                $row = $resultCheckInProduction->fetch_assoc();
+                                $count = $row['count'];
 
-                                    <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
+                                if ($count > 0) {
+                                    echo '
+                                    <table id="allOrders" class="hover" style="width: 100%;">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    ';
+                                } else {
+                                    echo 'None.';
+                                }
+                            } else {
+                                echo 'Error checking for orders in production.';
+                            }
+                            ?>
 
-                                    <a class="nav-item nav-link " href="profile_received.php">Received</a>
-
-                                    <a class="nav-item nav-link active" href="profile_canceled.php">Canceled</a>
-                                </div>
-                            </nav>
-
-                            <div class="tab-content" id="nav-tabContent">
-
-
-                                <div class="tab-pane fade show active">
-                                    <section style="padding: 20px;">
-
-                                        <?php
-                                        $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
-                                        $resultCheckInProduction = $conn->query($sqlCheckInProduction);
-
-                                        if ($resultCheckInProduction) {
-                                            $row = $resultCheckInProduction->fetch_assoc();
-                                            $count = $row['count'];
-
-                                            if ($count > 0) {
-                                                echo '
-                                                <table id="allOrders" class="hover" style="width: 100%;">
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                                ';
-                                            } else {
-                                                echo 'None.';
-                                            }
-                                        } else {
-                                            echo 'Error checking for orders in production.';
-                                        }
-                                        ?>
-                                    </section>
-                                </div>
-
-
-
-                            </div>
-                            <!-- /laman -->
+                            <table id="orderBreakdown" class="hover" style="width: 100%;">
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
 
                         <div class="tab-pane fade" id="v-pills-logout" role="tabpanel" aria-labelledby="v-pills-logout-tab">
@@ -349,23 +364,25 @@ if (isset($_SESSION['user_id'])) {
             var userList = new List('game_components_table', options);
 
             var user_id = <?php echo $user_id; ?>;
+            var unique_order_group_id = <?php echo $unique_order_group_id; ?>;
 
             $('#allOrders').DataTable({
                 language: {
                     search: "",
                 },
 
-                searching: true,
+                searching: false,
                 info: false,
-                paging: true,
+                paging: false,
                 lengthChange: false,
                 ordering: false,
 
 
                 "ajax": {
-                    "url": "json_is_canceled_orders.php",
+                    "url": "json_cancelation_details.php",
                     data: {
                         user_id: user_id,
+                        unique_order_group_id: unique_order_group_id,
                     },
                     "dataSrc": ""
                 },
@@ -373,6 +390,59 @@ if (isset($_SESSION['user_id'])) {
                     "data": "item"
                 }, ]
             });
+
+            $('#orderDetails').DataTable({
+                language: {
+                    search: "",
+                },
+
+                searching: false,
+                info: false,
+                paging: false,
+                lengthChange: false,
+                ordering: false,
+
+
+                "ajax": {
+                    "url": "json_order_details.php",
+                    data: {
+                        user_id: user_id,
+                        unique_order_group_id: unique_order_group_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                    "data": "item"
+                }, ]
+            });
+
+
+            $('#orderBreakdown').DataTable({
+                language: {
+                    search: "",
+                },
+
+                searching: false,
+                info: false,
+                paging: false,
+                lengthChange: false,
+                ordering: false,
+
+
+                "ajax": {
+                    "url": "json_order_breakdown.php",
+                    data: {
+                        user_id: user_id,
+                        unique_order_group_id: unique_order_group_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                    "data": "item"
+                }, ]
+            });
+
+
         });
     </script>
 

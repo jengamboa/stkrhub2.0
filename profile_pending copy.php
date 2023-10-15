@@ -151,8 +151,6 @@ if (isset($_SESSION['user_id'])) {
 
                         <a class="nav-link active" href="profile_all.php">My Purchase</a>
 
-                        <a class="nav-link" href="profile_wallet.php">STKR Wallet</a>
-
                         <a class="nav-link " href="process_logout.php">Logout</a>
 
 
@@ -193,36 +191,12 @@ if (isset($_SESSION['user_id'])) {
                                     </section>
                                 </div>
 
-                                <div class="tab-pane fade show active" id="v-pills-mypurchase" role="tabpanel" aria-labelledby="v-pills-mypurchase-tab">
-                                    <!-- laman -->
-                                    <nav>
-                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <a class="nav-item nav-link " href="profile_all.php">All</a>
-
-                                            <a class="nav-item nav-link" href="profile_pending.php">Pending</a>
-
-                                            <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
-
-                                            <a class="nav-item nav-link " href="profile_to_deliver.php">To Deliver</a>
-
-                                            <a class="nav-item nav-link " href="profile_received.php">Received</a>
-
-                                            <a class="nav-item nav-link active" href="profile_canceled.php">Canceled</a>
+                                <div class="tab-pane fade show active">
+                                    <section style="padding: 20px;">
+                                        <div class="container">
+                                            change pass
                                         </div>
-                                    </nav>
-
-                                    <div class="tab-content" id="nav-tabContent">
-
-                                        <div class="tab-pane fade show active">
-                                            <section style="padding: 20px;">
-                                                <div class="container">
-                                                    Canceled
-                                                </div>
-                                            </section>
-                                        </div>
-
-                                    </div>
-                                    <!-- /laman -->
+                                    </section>
                                 </div>
 
                             </div>
@@ -236,7 +210,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link " href="profile_all.php">All</a>
 
-                                    <a class="nav-item nav-link " href="profile_pending.php">Pending</a>
+                                    <a class="nav-item nav-link active" href="profile_pending.php">Pending</a>
 
                                     <a class="nav-item nav-link " href="profile_in_production.php">In Production</a>
 
@@ -244,7 +218,7 @@ if (isset($_SESSION['user_id'])) {
 
                                     <a class="nav-item nav-link " href="profile_received.php">Received</a>
 
-                                    <a class="nav-item nav-link active" href="profile_canceled.php">Canceled</a>
+                                    <a class="nav-item nav-link " href="profile_canceled.php">Canceled</a>
                                 </div>
                             </nav>
 
@@ -253,7 +227,6 @@ if (isset($_SESSION['user_id'])) {
 
                                 <div class="tab-pane fade show active">
                                     <section style="padding: 20px;">
-
                                         <?php
                                         $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
                                         $resultCheckInProduction = $conn->query($sqlCheckInProduction);
@@ -363,7 +336,7 @@ if (isset($_SESSION['user_id'])) {
 
 
                 "ajax": {
-                    "url": "json_is_canceled_orders.php",
+                    "url": "json_pending_orders.php",
                     data: {
                         user_id: user_id,
                     },

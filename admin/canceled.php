@@ -66,21 +66,28 @@ include 'connection.php';
                         <div class="card">
                             <div class="card-body">
 
-                                <table id="canceledOrdersTable" class="display" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Classification</th>
-                                            <th>Title</th>
-                                            <th>Price</th>
-                                            <th>User</th>
-                                            <th>Date Completed</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                <?php
+                                $sqlCheckInProduction = "SELECT COUNT(*) AS count FROM orders";
+                                $resultCheckInProduction = $conn->query($sqlCheckInProduction);
+
+                                if ($resultCheckInProduction) {
+                                    $row = $resultCheckInProduction->fetch_assoc();
+                                    $count = $row['count'];
+
+                                    if ($count > 0) {
+                                        echo '
+                                                <table id="allOrders" class="hover" style="width: 100%;">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                                ';
+                                    } else {
+                                        echo 'None.';
+                                    }
+                                } else {
+                                    echo 'Error checking for orders in production.';
+                                }
+                                ?>
 
                             </div>
                         </div>
@@ -143,119 +150,77 @@ include 'connection.php';
         $(document).ready(function() {
 
 
-            $('#canceledOrdersTable').DataTable({
+            $('#allOrders').DataTable({
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
                 paging: true,
-                ordering: true,
+                lengthChange: false,
+                ordering: false,
+
 
                 "ajax": {
-                    "url": "admin_json_canceled.php",
+                    "url": "admin_json_canceled_orders.php",
                     data: {},
                     "dataSrc": ""
                 },
                 "columns": [{
-                        "data": "id",
-                        width: '10%',
-                        className: 'dt-center'
-                    },
-                    {
-                        "data": "classification",
-                    },
-                    {
-                        "data": "title"
-                    },
-                    {
-                        "data": "price"
-                    },
-                    {
-                        "data": "user"
-                    },
-                    {
-                        "data": "date_completed"
-                    },
-                    {
-                        "data": "status"
-                    },
-
-
-                ]
+                    "data": "item"
+                }, ]
             });
 
 
 
 
 
-            $('#canceledOrdersTable').on('click', '#to_deliver', function() {
-                var order_id = $(this).data('order_id');
+            $('#allOrders').on('click', '#refund_order', function() {
+                var creator_id = $(this).data('creator_id');
+                var unique_order_group_id = $(this).data('unique_order_group_id');
+                var order_total_price = $(this).data('order_total_price');
+                var creator_email = $(this).data('creator_email');
+                var refunded_amount = $(this).data('refunded_amount');
 
-                $.ajax({
-                    type: 'GET',
-                    url: 'get_courier.php',
-                    dataType: 'json',
-                    success: function(data) {
-                        if (data && data.length > 0) {
-                            // Create an empty string to store the options
-                            let options = '';
+                Swal.fire({
+                    title: 'Send Money through Paypal',
+                    html: 'Payee\'s Email: ' + creator_email + '<br> Amount to Pay: ' + refunded_amount,
+                    showCancelButton: true,
+                    confirmButtonText: 'Sent',
+                }).then((result) => {
+                    if (result.isConfirmed) {
 
-                            // Iterate through the data and generate <option> elements
-                            data.forEach(function(courier) {
-                                options += `<option value="${courier.courier_name}">${courier.courier_name}</option>`;
-                            });
-
-                            // Create and show the SweetAlert dialog with the dynamic options
-                            Swal.fire({
-                                title: 'To Deliver',
-                                html: '<input id="text-field" class="swal2-input" placeholder="Enter Tracking Number" required>' +
-                                    '<select id="select-field" class="swal2-select">' +
-                                    options + // Insert the generated options here
-                                    '</select>',
-                                showCancelButton: true,
-                                confirmButtonText: 'Submit',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    const textValue = $('#text-field').val();
-                                    const selectValue = $('#select-field').val();
-
-                                    // Check if the input field is not empty
-                                    if (!textValue) {
-                                        Swal.fire("Input Field Required", "Please enter a tracking number.", "error");
-                                        return; // Exit the function if the input field is empty
-                                    }
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'admin_process_to_deliver.php',
-                                        data: {
-                                            order_id: order_id,
-                                            text: textValue,
-                                            select: selectValue,
-                                        },
-                                        dataType: "json", // Expect JSON response
-                                        success: function(response) {
-                                            if (response.status === "success") {
-                                                $('#toShipTable').DataTable().ajax.reload();
-                                                Swal.fire("Order is ready to deliver", "", "success");
-                                            } else {
-                                                $('#toShipTable').DataTable().ajax.reload();
-                                                Swal.fire("Failed to process order", response.message, "error");
-                                            }
-                                        },
-                                        error: function() {
-                                            $('#toShipTable').DataTable().ajax.reload();
-                                            Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
-
-                                        },
-                                    });
-                                }
-                            });
-                        } else {
-                            console.error('No courier data available.');
-                        }
-                    },
-                    error: function(error) {
-                        console.error('Error fetching courier data:', error);
-                    },
+                        Swal.fire({
+                            title: 'Are you sure you already sent?',
+                            html: 'Payee\'s Email: <br> Amount to Pay: '+ refunded_amount,
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'admin_process_refunded.php',
+                                    data: {
+                                        creator_id: creator_id,
+                                        unique_order_group_id: unique_order_group_id,
+                                        creator_email: creator_email,
+                                        order_total_price: order_total_price,
+                                        refunded_amount: refunded_amount,
+                                    },
+                                    dataType: "json",
+                                    success: function(response) {
+                                        $('#toShipTable').DataTable().ajax.reload();
+                                        Swal.fire("Order is ready to deliver", "", "success");
+                                    },
+                                    error: function() {
+                                        $('#toShipTable').DataTable().ajax.reload();
+                                        Swal.fire("Failed to process order", "An error occurred while processing the order", "error");
+                                    },
+                                });
+                            }
+                        });
+                    }
                 });
 
 

@@ -1,11 +1,9 @@
 <?php
-
-include "connection.php";
-$user_id = $_GET['user_id'];
+include "connection.php"; // Include your database connection script
 
 $data = array();
 
-$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE in_production = 1 AND user_id = $user_id";
+$sqlUniqueOrderDates = "SELECT DISTINCT unique_order_group_id FROM orders WHERE to_deliver = 1";
 $queryUniqueOrderDates = $conn->query($sqlUniqueOrderDates);
 while ($row = $queryUniqueOrderDates->fetch_assoc()) {
     $unique_order_group_id = $row['unique_order_group_id'];
@@ -37,7 +35,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                             <div class="row d-flex justify-content-between align-items-center ">
                                 <div class="col">';
 
-                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND in_production = 1 AND user_id = $user_id";
+                                $sqlAll = "SELECT * FROM orders WHERE unique_order_group_id = $unique_order_group_id AND to_deliver = 1";
                                 $queryAll = $conn->query($sqlAll);
                                 while ($fetched = $queryAll->fetch_assoc()) {
                                     $order_id = $fetched['order_id'];
@@ -368,12 +366,7 @@ while ($row = $queryUniqueOrderDates->fetch_assoc()) {
                                     
                                 </div>
                 
-                                <div class="col-0 d-flex align-items-center ml-auto">
-                                    <div class="mr-2"></div>
-                                    <div class="mr-2">
-                                        <a href="#!" class="text-primary" id="to_deliver" data-unique_order_group_id="' . $unique_order_group_id . '">To Deliver</a>
-                                    </div>
-                                </div>`
+                            
                 
                             </div>
                         </div>

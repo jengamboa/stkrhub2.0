@@ -9,6 +9,12 @@ if (isset($_SESSION['user_id'])) {
 if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     $selectedCartIds = $_POST['cart_id'];
 }
+
+$sqlClient = "SELECT * FROM constants WHERE classification = 'paypal_client_id'";
+$resultClient = $conn->query($sqlClient);
+while ($rowClient = $resultClient->fetch_assoc()) {
+    $paypal_client_id = $rowClient['text'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -281,9 +287,7 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
     <!-- Replace the "test" client-id value with your client-id -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AUtrxFWAdHF9RgdAqRcEjzOICrG5WaXVfckhbUYdcTVDVIz-QnvKNoYqEZ9zE-JI5ViTJEy4AoN6iCJL&currency=PHP&disable-funding=credit,card"></script>
-
-
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo $paypal_client_id ?>&currency=PHP&disable-funding=credit,card"></script>
 
     <script>
         $(document).ready(function() {
