@@ -42,7 +42,7 @@ if (isset($_SESSION['category'])) {
             $templates[] = $templateRow['template_name']; // Add template to the array
         }
 
-        $actions = '<a href="edit_game_components.php" data-component_id="'.$component_id.'">Edit</a>';
+        $actions = '<a href="edit_game_components.php?id=' . $component_id . '">Edit</a> <a href="delete_game_component.php?id=' . $component_id . '" Style = "color:red;">Delete</a>' ;
 
         $data[] = array(
             "name" => $name,
