@@ -20,7 +20,7 @@
 
                     <li class="nav-label">Approve / Deny</li>
                     <li><a href="games_approval_requests.php">Games Pending Approval</a></li>
-                    <li><a href="./app-calender.html">Publish Game Details Requests</a></li>
+                    <li><a href="pending_details_request.php">Publish Game Details Requests</a></li>
                     <li><a href="./app-calender.html">Edit Published Game Requests</a></li>
 
                     <li class="nav-label">Cash Out</li>

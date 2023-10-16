@@ -24,6 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Update the orders table
                 $sqlUpdateOrders = "UPDATE orders SET is_received = 1 WHERE order_id = $order_id";
                 $conn->query($sqlUpdateOrders);
+            } elseif ($built_game_id) {
+                // Update the orders table
+                $sqlUpdateOrders = "UPDATE orders SET is_pending = 0, in_production = 1 WHERE order_id = $order_id";
+                $conn->query($sqlUpdateOrders);
+
+                $sqlUpdateBuiltGame = "UPDATE built_games SET is_semi_purchased = 0, is_purchased = 1 WHERE built_game_id = $built_game_id";
+                $queryUpdateBuiltGame = $conn->query($sqlUpdateBuiltGame);
             } else {
                 // Update the orders table
                 $sqlUpdateOrders = "UPDATE orders SET is_pending = 0, in_production = 1 WHERE order_id = $order_id";

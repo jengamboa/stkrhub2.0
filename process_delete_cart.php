@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultGame = $conn->query($sqlGetGame);
     $rowGame = $resultGame->fetch_assoc();
     $ticket_id = $rowGame['ticket_id'];
+    $built_game_id = $rowGame['built_game_id'];
 
 
     $conn->begin_transaction();
@@ -24,7 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update the games table
             $sqlUpdateGames = "UPDATE games SET is_pending = 0 WHERE game_id = $game_id";
             $conn->query($sqlUpdateGames);
+        } elseif($built_game_id){
+            // Update the games table
+            $sqlUpdateGames = "UPDATE built_games SET is_at_cart = 0 WHERE built_game_id = $built_game_id";
+            $conn->query($sqlUpdateGames);
         }
+
         $sqlDeleteCart = "DELETE FROM cart WHERE cart_id = $cart_id";
         $conn->query($sqlDeleteCart);
 

@@ -192,11 +192,29 @@ while ($rowClient = $resultClient->fetch_assoc()) {
                 </div>
 
                 <div class="col-3">
-                    <table id="paypalTable" class="display" style="width:100%">
-                        <tbody>
 
-                        </tbody>
-                    </table>
+                    <label for="payment_method">Select Payment Method:</label>
+                    <select name="payment_method" id="payment_method">
+                        <option value="paypal">PayPal</option>
+                        <option value="stkr_wallet">STKR Wallet</option>
+                    </select>
+
+                    <div id="paypal_selected">
+                        <table id="paypalTable" class="display" style="width:100%">
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="stkr_selected" style="display: none">
+                        <table id="stkrTable" class="display" style="width:100%">
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
             </div>
@@ -291,6 +309,18 @@ while ($rowClient = $resultClient->fetch_assoc()) {
 
     <script>
         $(document).ready(function() {
+            $("#paypal_selected").show();
+
+            $("#payment_method").change(function() {
+                var selectedOption = $(this).val();
+                if (selectedOption === 'paypal') {
+                    $("#paypal_selected").show();
+                    $("#stkr_selected").hide();
+                } else if (selectedOption === 'stkr_wallet') {
+                    $("#paypal_selected").hide();
+                    $("#stkr_selected").show();
+                }
+            });
 
             <?php include 'js/essential.php' ?>
 
@@ -690,6 +720,93 @@ while ($rowClient = $resultClient->fetch_assoc()) {
                     data: "item"
                 }, ]
             });
+
+            $('#stkrTable').DataTable({
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
+                ajax: {
+                    url: "json_stkr.php",
+                    method: "POST",
+                    "data": {
+                        user_id: user_id,
+                        selectedCartIds: selectedCartIds,
+                    },
+                    dataSrc: ""
+                },
+                columns: [{
+                    data: "item"
+                }, ]
+            });
+
+            $('#stkrTable').on('click', '#stkr-payment-button', function() {
+                var user_id = <?php echo $user_id; ?>;
+
+                var paypal_payment = $('#stkr-payment-button').data('paypal_payment');
+                var fullname = $('#stkr-payment-button').data('fullname');
+                var number = $('#stkr-payment-button').data('number');
+                var region = $('#stkr-payment-button').data('region');
+                var province = $('#stkr-payment-button').data('province');
+                var city = $('#stkr-payment-button').data('city');
+                var barangay = $('#stkr-payment-button').data('barangay');
+                var zip = $('#stkr-payment-button').data('zip');
+                var street = $('#stkr-payment-button').data('street');
+                var carts_selected = $('#stkr-payment-button').data('carts_selected');
+
+                Swal.fire({
+                    title: "Confirm Purchase",
+                    text: "Are you sure you want to purchase using STKR wallet? This can\'t be undone.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Sure",
+                    cancelButtonText: "Cancel",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var data = {
+                            "user_id": user_id,
+                            "paypal_payment": paypal_payment,
+                            "fullname": fullname,
+                            "number": number,
+                            "region": region,
+                            "province": province,
+                            "city": city,
+                            "barangay": barangay,
+                            "zip": zip,
+                            "street": street,
+                            "carts_selected": carts_selected,
+                        };
+
+                        $.ajax({
+                            method: "POST",
+                            url: "stkr_wallet_success.php",
+                            data: data,
+                            success: function(response) {
+                                $('#infoPurhaseTable').DataTable().ajax.reload();
+                                $('#profileAddress').DataTable().ajax.reload();
+                                $('#purchaseTable').DataTable().ajax.reload();
+                                $('#stkrTable').DataTable().ajax.reload();
+
+                                $('#cartCount').DataTable().ajax.reload();
+
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "Purchased successfully!",
+                                    icon: "success",
+                                });
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    title: "Error",
+                                    text: "Purchased unsuccessful!",
+                                    icon: "error",
+                                });
+                            },
+                        });
+
+                    }
+                });
+            });
         });
 
 
@@ -777,7 +894,6 @@ while ($rowClient = $resultClient->fetch_assoc()) {
                 }
             }).render('#paypal-payment-button');
         });
-        
     </script>
 
 

@@ -9,6 +9,12 @@ if (isset($_SESSION['user_id'])) {
 if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
     $selectedCartIds = $_POST['cart_id'];
 }
+
+$sqlClient = "SELECT * FROM constants WHERE classification = 'paypal_client_id'";
+$resultClient = $conn->query($sqlClient);
+while ($rowClient = $resultClient->fetch_assoc()) {
+    $paypal_client_id = $rowClient['text'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +96,8 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
             mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
         }
 
-        .custom-shadow {
+        .custom-shadow,
+        .address-card {
             box-shadow: 0 0 10px #000000;
         }
 
@@ -121,10 +128,11 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
         table.dataTable tbody,
         table.dataTable tr,
         table.dataTable td,
-        table.dataTable th,
+        table.dataTable thead th,
         table.dataTable tbody tr.even,
         table.dataTable tbody tr.odd {
             border: none !important;
+            padding: 0px;
         }
     </style>
 </head>
@@ -149,19 +157,44 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <button id="addAddressBtn">Add Address</button>
-                    <table id="profileAddress" class="display" style="width: 100%;">
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="card address-card p-0 m-0" style="background-color: #272a4e;">
+                        <div class="card-header px-4 py-2 m-0" style="background-color: #16162a">
+                            <span class="h6" style="
+                            background: -webkit-linear-gradient(right, #26d3e0, #b660e8);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                            ">
+                                <i class="fa-solid fa-map-location"></i> Delivery Address
+                            </span>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="purchaseAddress" class="display" style="width: 100%;">
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
+            <br><br>
 
             <div class="row">
 
                 <div class="col">
                     <table id="purchaseTable" class="display" style="width: 100%;">
                         <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-3">
+                    <table id="paypalTable" class="display" style="width:100%">
+                        <tbody>
+
                         </tbody>
                     </table>
                 </div>
@@ -173,134 +206,9 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
         <div class="container">
             <div class="row">
 
-                <div class="col">
-                    <!-- DataTables Build Game  -->
-
-
-                </div>
-
 
                 <div class="col">
-                    <table id="example" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <?php
-                                    // Count the number of cart IDs
-                                    $numSelectedCarts = count($selectedCartIds);
-
-                                    $selectedCartIdsString = implode(',', $selectedCartIds);
-
-                                    $sql = "SELECT * FROM cart WHERE user_id = $user_id AND cart_id IN ($selectedCartIdsString) AND is_visible = 1";
-                                    $result = $conn->query($sql);
-
-                                    $sub_total = 0;
-
-                                    while ($fetched = $result->fetch_assoc()) {
-                                        $cart_id = $fetched['cart_id'];
-                                        $published_game_id = $fetched['published_game_id'];
-                                        $built_game_id = $fetched['built_game_id'];
-                                        $added_component_id = $fetched['added_component_id'];
-                                        $quantity = $fetched['quantity'];
-                                        $price = $fetched['price'];
-                                        $is_active = $fetched['is_active'];
-
-                                        (int)$sub_total += $price * $quantity;
-                                    }
-
-
-                                    $sqlGetActive = "SELECT * FROM addresses WHERE is_default = 1 AND user_id = $user_id";
-                                    $queryGetActive = $conn->query($sqlGetActive);
-                                    while ($fetchedActive = $queryGetActive->fetch_assoc()) {
-                                        $address_id = $fetchedActive['address_id'];
-                                        $fullname = $fetchedActive['fullname'];
-                                        $number = $fetchedActive['number'];
-                                        $region = $fetchedActive['region'];
-                                        $province = $fetchedActive['province'];
-                                        $city = $fetchedActive['city'];
-                                        $barangay = $fetchedActive['barangay'];
-                                        $zip = $fetchedActive['zip'];
-                                        $street = $fetchedActive['street'];
-
-                                        echo '
-                                            <p class="card-text text-muted">
-                                            ' . $region . ' | ' . $province . ' | ' . $city . ' | ' . $barangay . ' | ' . $zip . ' | ' . $street . '
-                                            </p>
-                                            ';
-
-
-                                        // Initialize $destination_id with a default value
-                                        $destination_id = 0;
-
-                                        // Check if the inner query has any results before entering the nested loop
-                                        $sqlCheckDestination = "SELECT * FROM destination_rates WHERE destination_name = '$region'";
-                                        $queryCheckDestination = $conn->query($sqlCheckDestination);
-                                        if ($queryCheckDestination->num_rows > 0) {
-                                            // Fetch the results from the inner query
-                                            $fetchedDestination = $queryCheckDestination->fetch_assoc();
-
-                                            $destination_id = $fetchedDestination['destination_id'];
-                                            $weight_price_1 = $fetchedDestination['weight_price_1'];
-                                            $weight_price_2 = $fetchedDestination['weight_price_2'];
-                                            $weight_price_3 = $fetchedDestination['weight_price_3'];
-                                            $weight_price_4 = $fetchedDestination['weight_price_4'];
-                                            $weight_price_5 = $fetchedDestination['weight_price_5'];
-                                        }
-
-                                        $numSelectedCarts = count($selectedCartIds);
-                                        // Initialize variables
-                                        $weight_price = 0;
-
-                                        if ($numSelectedCarts >= 1 && $numSelectedCarts <= 10) {
-                                            $weight_price = (float)$weight_price_1;
-                                        } elseif ($numSelectedCarts >= 11 && $numSelectedCarts <= 20) {
-                                            $weight_price = (float)$weight_price_2;
-                                        } elseif ($numSelectedCarts >= 21 && $numSelectedCarts <= 30) {
-                                            $weight_price = (float)$weight_price_3;
-                                        } elseif ($numSelectedCarts >= 31 && $numSelectedCarts <= 40) {
-                                            $weight_price = (float)$weight_price_4;
-                                        } elseif ($numSelectedCarts >= 41) {
-                                            $weight_price = (float)$weight_price_5;
-                                        }
-
-                                        echo 'Sub Total: ' . $sub_total . '<br>';
-                                        echo $shipping = 'Shipping: ' . $weight_price . '<br>';
-
-                                        $total_payment = ($sub_total + $weight_price);
-
-
-                                        echo 'Total Payment: ' . $total_payment;
-
-
-                                        echo '
-                                            <div id="paypal-payment-button"
-                                            data-paypal_payment="' . $total_payment . '"
-                                            data-fullname="' . $fullname . '"
-                                            data-number="' . $number . '"
-                                            data-region="' . $region . '"
-                                            data-province="' . $province . '"
-                                            data-city="' . $city . '"
-                                            data-barangay="' . $barangay . '"
-                                            data-zip="' . $zip . '"
-                                            data-street="' . $street . '"
-                                            data-carts_selected="' . implode(',', $selectedCartIds) . '"
-                                            ></div>
-                                        ';
-                                    }
-                                    ?>
-
-
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
 
@@ -318,11 +226,27 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
 
-
-
-
-
-    <!-- <button id="clickButton">Click Me</button> -->
+    <!-- modals -->
+    <div class="modal fade" id="changeAddress">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">My Address</h5>
+                </div>
+                <div class="modal-body">
+                    <button id="addAddressBtn">Add Address</button>
+                    <table id="profileAddress" class="display" style="width: 100%;">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -363,9 +287,7 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
     <!-- Replace the "test" client-id value with your client-id -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AUtrxFWAdHF9RgdAqRcEjzOICrG5WaXVfckhbUYdcTVDVIz-QnvKNoYqEZ9zE-JI5ViTJEy4AoN6iCJL&currency=PHP&disable-funding=credit,card"></script>
-
-
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo $paypal_client_id ?>&currency=PHP&disable-funding=credit,card"></script>
 
     <script>
         $(document).ready(function() {
@@ -376,85 +298,6 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
             var selectedCartIds = <?php echo json_encode($selectedCartIds); ?>;
 
 
-
-            var paypal_payment = $('#paypal-payment-button').data('paypal_payment');
-            var fullname = $('#paypal-payment-button').data('fullname');
-            var number = $('#paypal-payment-button').data('number');
-            var region = $('#paypal-payment-button').data('region');
-            var province = $('#paypal-payment-button').data('province');
-            var city = $('#paypal-payment-button').data('city');
-            var barangay = $('#paypal-payment-button').data('barangay');
-            var zip = $('#paypal-payment-button').data('zip');
-            var street = $('#paypal-payment-button').data('street');
-            var carts_selected = $('#paypal-payment-button').data('carts_selected');
-
-            paypal.Buttons({
-                style: {
-                    color: 'blue',
-                    shape: 'pill'
-                },
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: paypal_payment
-                            }
-                        }],
-                        application_context: {
-                            shipping_preference: 'NO_SHIPPING'
-                        }
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(orderData) {
-                        console.log(orderData);
-                        // successful
-                        const transaction = orderData.purchase_units[0].payments.captures[0];
-
-                        var data = {
-                            "user_id": user_id,
-                            "paypal_payment": paypal_payment,
-                            "fullname": fullname,
-                            "number": number,
-                            "region": region,
-                            "province": province,
-                            "city": city,
-                            "barangay": barangay,
-                            "zip": zip,
-                            "street": street,
-                            "carts_selected": carts_selected,
-                            "payment_id": transaction.id,
-                            "order_data": orderData,
-                        };
-
-                        $.ajax({
-                            method: "POST",
-                            url: "paypal_success.php",
-                            data: data,
-                            success: function(response) {
-                                alertify.success("Order Placed Successfully");
-                                windows.location.href = '';
-
-                            },
-                            error: function(error) {
-                                alertify.error("An error occurred while processing your order.");
-                            }
-                        });
-                    });
-                },
-                onCancel: function(data) {
-                    window.location.reload();
-
-                }
-            }).render('#paypal-payment-button');
-
-            $('#example').DataTable({
-                searching: false, // Disable search bar
-                info: false, // Disable info (i.e., "Showing X of Y entries")
-                paging: false, // Disable paging
-                ordering: false, // Disable column sorting
-
-            });
 
             $('#infoPurhaseTable').DataTable({
                 searching: false,
@@ -551,18 +394,20 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
                                 };
 
-                                // Send an AJAX request to update the address information in the database
                                 $.ajax({
-                                    url: "swal_update_address.php", // Create this PHP file to update the address
+                                    url: "swal_update_address.php",
                                     method: "POST",
                                     data: formData,
                                     success: function() {
-                                        // Reload the DataTable after the address is updated
                                         $('#infoPurhaseTable').DataTable().ajax.reload();
                                         $('#profileAddress').DataTable().ajax.reload();
                                         $('#purchaseTable').DataTable().ajax.reload();
+                                        $('#purchaseAddress').DataTable().ajax.reload();
+                                        $('#paypalTable').DataTable().ajax.reload();
+
 
                                         $('#cartCount').DataTable().ajax.reload();
+
 
                                         // Show a success message with Swal
                                         Swal.fire({
@@ -658,21 +503,21 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
                                 addressId: addressId
                             },
                             success: function(response) {
-                                // Reload the DataTable after the address is updated
                                 $('#infoPurhaseTable').DataTable().ajax.reload();
                                 $('#profileAddress').DataTable().ajax.reload();
                                 $('#purchaseTable').DataTable().ajax.reload();
+                                $('#purchaseAddress').DataTable().ajax.reload();
+                                $('#paypalTable').DataTable().ajax.reload();
+
 
                                 $('#cartCount').DataTable().ajax.reload();
+
+                                window.location.reload();
 
                                 Swal.fire({
                                     title: "Success",
                                     text: "You changed the default address",
                                     icon: "success",
-                                    didClose: () => {
-                                        // Reload the whole page after the SweetAlert is closed
-                                        window.location.reload();
-                                    },
                                 });
 
 
@@ -795,21 +640,145 @@ if (isset($_POST['cart_id']) && is_array($_POST['cart_id'])) {
 
 
 
+            $('#purchaseAddress').DataTable({
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
+
+                "ajax": {
+                    "url": "json_purchase_address.php",
+                    data: {
+                        user_id: user_id,
+                    },
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "item"
+                    },
+
+                ]
+            });
+
+
+            $('#purchaseAddress').on('click', '#change_address', function() {
+
+                $("#changeAddress").modal("show");
+            });
 
 
 
 
 
+            // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
 
-
-
-
-
-
+            $('#paypalTable').DataTable({
+                searching: false,
+                info: false,
+                paging: false,
+                ordering: false,
+                ajax: {
+                    url: "json_paypal.php",
+                    method: "POST",
+                    "data": {
+                        user_id: user_id,
+                        selectedCartIds: selectedCartIds,
+                    },
+                    dataSrc: ""
+                },
+                columns: [{
+                    data: "item"
+                }, ]
+            });
         });
+
+
+
+
+
+
+
+
+
+
+
+        $(window).on('load', function() {
+
+            var user_id = <?php echo $user_id; ?>;
+
+            var paypal_payment = $('#paypal-payment-button').data('paypal_payment');
+            var fullname = $('#paypal-payment-button').data('fullname');
+            var number = $('#paypal-payment-button').data('number');
+            var region = $('#paypal-payment-button').data('region');
+            var province = $('#paypal-payment-button').data('province');
+            var city = $('#paypal-payment-button').data('city');
+            var barangay = $('#paypal-payment-button').data('barangay');
+            var zip = $('#paypal-payment-button').data('zip');
+            var street = $('#paypal-payment-button').data('street');
+            var carts_selected = $('#paypal-payment-button').data('carts_selected');
+
+            paypal.Buttons({
+                style: {
+                    color: 'blue',
+                    shape: 'pill'
+                },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: paypal_payment
+                            }
+                        }],
+                        application_context: {
+                            shipping_preference: 'NO_SHIPPING'
+                        }
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(orderData) {
+                        console.log(orderData);
+                        // successful
+                        const transaction = orderData.purchase_units[0].payments.captures[0];
+
+                        var data = {
+                            "user_id": user_id,
+                            "paypal_payment": paypal_payment,
+                            "fullname": fullname,
+                            "number": number,
+                            "region": region,
+                            "province": province,
+                            "city": city,
+                            "barangay": barangay,
+                            "zip": zip,
+                            "street": street,
+                            "carts_selected": carts_selected,
+                            "payment_id": transaction.id,
+                            "order_data": orderData,
+                        };
+
+                        $.ajax({
+                            method: "POST",
+                            url: "paypal_success.php",
+                            data: data,
+                            success: function(response) {
+                                alertify.success("Order Placed Successfully");
+                                windows.location.href = '';
+
+                            },
+                            error: function(error) {
+                                alertify.error("An error occurred while processing your order.");
+                            }
+                        });
+                    });
+                },
+                onCancel: function(data) {
+                    window.location.reload();
+
+                }
+            }).render('#paypal-payment-button');
+        });
+        
     </script>
-
-
 
 
 

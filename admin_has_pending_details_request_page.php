@@ -87,7 +87,6 @@ include 'connection.php';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- User data will be displayed here -->
                                 </tbody>
                             </table>
                             <!-- /DataTables Game Components -->

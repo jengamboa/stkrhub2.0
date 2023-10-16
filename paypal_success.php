@@ -181,6 +181,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $manufacturer_profit = '';
                     $creator_profit = '';
                     $marketplace_price = '';
+
+                    $sqlUpdateBuiltGame = "UPDATE built_games SET is_at_cart = 0, is_semi_purchased = 1 WHERE built_game_id = $built_game_id";
+                    $queryUpdateBuiltGame = $conn->query($sqlUpdateBuiltGame);
+                    if ($queryUpdateBuiltGame) {
+                        echo "built_game_id updated successfully.";
+                    } else {
+                        echo "Failed to update built_game_id.";
+                    }
                 } elseif ($added_component_id) {
                     $item_type = "added_component_id";
                     $item_id = $added_component_id;

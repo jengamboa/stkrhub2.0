@@ -1,65 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+    <title>Select Option Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
+    <label for="payment_method">Select Payment Method:</label>
+    <select name="payment_method" id="payment_method">
+        <option value="paypal">PayPal</option>
+        <option value="stkr_wallet">STKR Wallet</option>
+    </select>
 
-  <div class="container">
+    <div id="paypal_selected">Selected PayPal</div>
+    <div id="stkr_selected" style="display: none">Selected STKR Wallet</div>
 
-    <div class="row">
-
-      <div class="col">
-
-        <div class="card-header py-1">
-          <div class="row p-0">
-
-            <div class="col-0 d-flex align-items-center">
-              ' . $classification . '
-            </div>
-
-            <div class="col-0 d-flex align-items-center ml-auto">
-              <div class="mr-2">Status: ' . $status . '</div>
-              <div class="mr-2">Order ID: ' . $order_id . '</div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="card-body p-0" style="background-color: #272a4e;">
-          <div class="row d-flex justify-content-between align-items-center ">
-
-
-
-            <div class="col-3 overflow-hidden">
-              <p class="h6 fw-normal mb-2 text-truncate" data-toggle="tooltip" title="Title" style="max-width:270px;">
-                ' . $fetched_title . '
-              </p>
-              ' . $description . '
-            </div>
-
-            <div class="col">
-              <h5 class="mb-0">&#8369; ' . number_format($price, 2) . '</h5>
-            </div>
-
-            <div class="col">
-              ' . $quantity_input . '
-            </div>
-
-            <div class="col">
-              <h5 class="mb-0" style="color: #26d3e0">&#8369; ' . number_format($total_price, 2) . '</h5>
-            </div>
-
-
-          </div>
-        </div>
-
-
-      </div>
-
-    </div>
-  </div>
+    <script>
+        $(document).ready(function () {
+            $("#paypal_selected").show();
+            
+            $("#payment_method").change(function () {
+                var selectedOption = $(this).val();
+                if (selectedOption === 'paypal') {
+                    $("#paypal_selected").show();
+                    $("#stkr_selected").hide();
+                } else if (selectedOption === 'stkr_wallet') {
+                    $("#paypal_selected").hide();
+                    $("#stkr_selected").show();
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>

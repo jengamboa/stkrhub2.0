@@ -169,8 +169,25 @@ include 'connection.php';
             color: #90ee90;
         }
 
+        /* edit button */
+        .edit-built_game {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #90ee90;
+        }
+
         /* delete button */
         .delete-game {
+            background-color: transparent !important;
+            border: none;
+            cursor: pointer;
+
+            color: #dc3545;
+        }
+
+        .delete-built_game {
             background-color: transparent !important;
             border: none;
             cursor: pointer;
@@ -186,6 +203,22 @@ include 'connection.php';
             cursor: pointer;
 
             color: #f7f799;
+        }
+
+        /* approve game button */
+        .add-to-cart-approved {
+            background-color: #15172e !important;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+            color: #f7f799;
+        }
+
+        .add-to-cart-approved[disabled] {
+            background-color: #ccc;
+            color: #777;
+            cursor: not-allowed;
         }
 
         .approve-game[disabled] {
@@ -207,12 +240,12 @@ include 'connection.php';
         /* datatables */
         table.dataTable.stripe tbody tr.even,
         table.dataTable.display tbody tr.even {
-            background-color: #15172e;
+            background-color: #1f2243;
         }
 
         table.dataTable.stripe tbody tr.odd,
         table.dataTable.display tbody tr.odd {
-            background-color: #1f2243;
+            background-color: #272a4e;
         }
 
         table.dataTable {
@@ -233,8 +266,6 @@ include 'connection.php';
         table.dataTable tbody tr.odd {
             border: none !important;
         }
-
-        
     </style>
 </head>
 
@@ -449,13 +480,13 @@ include 'connection.php';
                 <table id="approvedGameTable" class="display" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Built Game Name</th>
-                            <th>Description</th>
-                            <th>From what game</th>
-                            <th>Price</th>
-                            <th>Date Built</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th style="min-width: 120px; max-width: 120px;">Built Game Name</th>
+                            <th style="min-width: 80px; max-width: 80px;">Description</th>
+                            <th style="min-width: 80px; max-width: 80px;">From what game</th>
+                            <th style="min-width: 80px; max-width: 80px;">Price</th>
+                            <th style="min-width: 80px; max-width: 80px;">Date Built</th>
+                            <th style="min-width: 120px; max-width: 120px;">Status</th>
+                            <th style="min-width: 150px; max-width: 150px;"></th>
                         </tr>
                     </thead>
 
@@ -598,6 +629,8 @@ include 'connection.php';
             // mahalaga toh
             <?php include 'js/essential.php'; ?>
 
+            var user_id = <?php echo $user_id; ?>;
+
             $("#createGameForm").submit(function(event) {
                 event.preventDefault(); // Prevent the default form submission
 
@@ -653,7 +686,7 @@ include 'connection.php';
             });
 
             //DataTables
-            var user_id = <?php echo $user_id; ?>;
+
 
             $('#createGameTable').DataTable({
 
@@ -968,15 +1001,15 @@ include 'connection.php';
                             },
                             error: function() {
                                 $('#createGameTable').DataTable().ajax.reload();
-                                    $('#builtGameTable').DataTable().ajax.reload();
-                                    $('#pendingGameTable').DataTable().ajax.reload();
+                                $('#builtGameTable').DataTable().ajax.reload();
+                                $('#pendingGameTable').DataTable().ajax.reload();
 
-                                    $('#canceledGameTable').DataTable().ajax.reload();
-                                    $('#approvedGameTable').DataTable().ajax.reload();
-                                    $('#purchasedGameTable').DataTable().ajax.reload();
-                                    $('#publishedGameTable').DataTable().ajax.reload();
+                                $('#canceledGameTable').DataTable().ajax.reload();
+                                $('#approvedGameTable').DataTable().ajax.reload();
+                                $('#purchasedGameTable').DataTable().ajax.reload();
+                                $('#publishedGameTable').DataTable().ajax.reload();
 
-                                    $('#cartCount').DataTable().ajax.reload();
+                                $('#cartCount').DataTable().ajax.reload();
                                 Swal.fire('Error', 'Failed to Cancel Ticket', 'error');
                             }
                         });
@@ -1389,10 +1422,14 @@ include 'connection.php';
 
             // TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:
             $('#approvedGameTable').DataTable({
+                language: {
+                    search: "",
+                },
+
                 searching: true,
                 info: false,
-                paging: true,
-                ordering: true,
+                paging: false,
+                ordering: false,
 
                 "ajax": {
                     "url": "json_approved_games.php",
@@ -1426,6 +1463,13 @@ include 'connection.php';
                 ]
             });
 
+            // search bar
+            var searchInput = $('div.dataTables_filter input');
+            $('#approvedGameTable thead th:nth-child(7)').append(searchInput);
+            searchInput.attr('placeholder', 'Search here');
+            searchInput.addClass('form-control');
+            searchInput.css('width', '100%');
+
 
             // Add click event handler for "build" buttons
             $('#approvedGameTable').on('click', '#built_game_buy', function() {
@@ -1433,11 +1477,62 @@ include 'connection.php';
                 var built_game_id = $(this).data("built_game_id");
 
                 $.ajax({
-                    url: "process_add_built_game_to_cart.php?built_game_id=" + built_game_id,
-                    type: "GET",
-                    success: function(data) {
-                        $(".cart-count").html(data);
+                    type: 'POST',
+                    url: 'process_add_built_game_to_cart.php',
+                    data: {
+                        built_game_id: built_game_id,
+                        user_id: user_id,
                     },
+                    success: function(response) {
+                        Swal.fire('Success', response.message, 'success');
+
+                        $('#createGameTable').DataTable().ajax.reload();
+                        $('#builtGameTable').DataTable().ajax.reload();
+                        $('#pendingGameTable').DataTable().ajax.reload();
+
+                        $('#canceledGameTable').DataTable().ajax.reload();
+                        $('#approvedGameTable').DataTable().ajax.reload();
+                        $('#purchasedGameTable').DataTable().ajax.reload();
+                        $('#publishedGameTable').DataTable().ajax.reload();
+
+                        $('#cartCount').DataTable().ajax.reload();
+
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Failed to delete the game', 'error');
+                    }
+                });
+            });
+
+            $('#approvedGameTable').on('click', '#built_game_buy_again', function() {
+
+                var built_game_id = $(this).data("built_game_id");
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'process_add_built_game_to_cart_again.php',
+                    data: {
+                        built_game_id: built_game_id,
+                        user_id: user_id,
+                    },
+                    success: function(response) {
+                        Swal.fire('Success', response.message, 'success');
+
+                        $('#createGameTable').DataTable().ajax.reload();
+                        $('#builtGameTable').DataTable().ajax.reload();
+                        $('#pendingGameTable').DataTable().ajax.reload();
+
+                        $('#canceledGameTable').DataTable().ajax.reload();
+                        $('#approvedGameTable').DataTable().ajax.reload();
+                        $('#purchasedGameTable').DataTable().ajax.reload();
+                        $('#publishedGameTable').DataTable().ajax.reload();
+
+                        $('#cartCount').DataTable().ajax.reload();
+
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Failed to delete the game', 'error');
+                    }
                 });
             });
 
@@ -1632,7 +1727,7 @@ include 'connection.php';
             });
 
             // Add click event handler for "build" buttons
-            $('#purchasedGameTable').on('click', '.view-reason', function() {
+            $('#approvedGameTable').on('click', '.view-reason', function() {
                 var built_game_id = $(this).data('built_game_id');
                 var reason = $(this).data('reason');
                 var file_path = $(this).data('file_path');
@@ -1641,7 +1736,7 @@ include 'connection.php';
 
                 // Check if file_path is not NULL before creating the download link
                 if (file_path === 0) {
-                    downloadLink = 'wala attachment';
+                    downloadLink = '';
                 } else {
                     downloadLink = '<br><a href="' + file_path + '" download>Download Attachment</a>';
                 }
