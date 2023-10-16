@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $creator_id = $_POST['creator_id'];
     $paypal_email_destination = $_POST["paypal_email_destination"];
     $amount = $_POST["amount"];
+    $cash_out_fee = $_POST["cash_out_fee"];
+
+    $minus_amount = $amount + $cash_out_fee;
 
     $conn->begin_transaction();
 
@@ -14,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sqlInsertWallet = "UPDATE wallet_transactions SET status = 'success', cash_out_timestamp = NOW() WHERE wallet_transaction_id = $wallet_transaction_id";
         $queryInsertWallet = $conn->query($sqlInsertWallet);
 
-        $sqlUpdateUser = "UPDATE users SET wallet_amount = wallet_amount - $amount WHERE user_id = $creator_id";
+        $sqlUpdateUser = "UPDATE users SET wallet_amount = wallet_amount - $minus_amount WHERE user_id = $creator_id";
         if ($conn->query($sqlUpdateUser) === TRUE) {
             echo "Wallet amount updated successfully";
         } else {

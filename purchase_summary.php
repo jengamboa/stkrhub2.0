@@ -777,6 +777,7 @@ while ($rowClient = $resultClient->fetch_assoc()) {
                 }
             }).render('#paypal-payment-button');
         });
+        
     </script>
 
 

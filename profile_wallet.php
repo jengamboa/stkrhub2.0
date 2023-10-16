@@ -547,6 +547,7 @@ while ($rowMin = $resultMin->fetch_assoc()) {
                                     cash_out_amount: cash_out_amount,
                                     cash_out_paypal_email: cash_out_paypal_email,
                                     "user_id": user_id,
+                                    "cash_out_fee": cash_out_fee,
                                 };
 
                                 $.ajax({

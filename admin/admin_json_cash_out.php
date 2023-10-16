@@ -12,8 +12,8 @@ while ($row = $query->fetch_assoc()) {
     $amount = $row['amount'];
     $transaction_date = $row['transaction_date'];
     $paypal_email_destination  = $row['paypal_email_destination'];
+    $cash_out_fee  = $row['cash_out_fee'];
     
-
 
     $actions = '
     <a href="#!" class="text-primary" id="send_money" 
@@ -21,6 +21,7 @@ while ($row = $query->fetch_assoc()) {
     data-creator_id="' . $creator_id . '"
     data-paypal_email_destination="'.$paypal_email_destination.'"
     data-amount="'.$amount.'"
+    data-cash_out_fee="'.$cash_out_fee.'"
     >
         Send Money
     </a>

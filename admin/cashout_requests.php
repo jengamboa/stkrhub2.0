@@ -194,6 +194,7 @@ include 'connection.php';
                 var wallet_transaction_id = $(this).data('wallet_transaction_id');
                 var paypal_email_destination = $(this).data('paypal_email_destination');
                 var amount = $(this).data('amount');
+                var cash_out_fee = $(this).data('cash_out_fee');
 
                 Swal.fire({
                     title: 'Send Money through Paypal',
@@ -218,6 +219,7 @@ include 'connection.php';
                                         creator_id: creator_id,
                                         paypal_email_destination: paypal_email_destination,
                                         amount: amount,
+                                        cash_out_fee: cash_out_fee,
                                     },
                                     dataType: 'json',
                                     success: function(response) {
