@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2023 at 06:46 AM
+-- Generation Time: Oct 16, 2023 at 06:19 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,8 +44,8 @@ CREATE TABLE `added_game_components` (
 --
 
 INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`, `user_id`) VALUES
-(529, 207, 3, 0, NULL, 3, 1, '7x7', 3),
-(530, 207, 1, 1, 'uploads/652633e394390_Screenshot 2023-09-30 184804.png', 1, NULL, '7x7', 3);
+(531, 208, 1, 0, '', 1, NULL, '7x7', 3),
+(532, 209, 1, 0, '', 1, NULL, '7x7', 3);
 
 -- --------------------------------------------------------
 
@@ -73,11 +73,11 @@ CREATE TABLE `addresses` (
 --
 
 INSERT INTO `addresses` (`address_id`, `user_id`, `fullname`, `number`, `region`, `province`, `city`, `barangay`, `zip`, `street`, `is_default`, `created_at`) VALUES
-(7, 3, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 0, '2023-09-03 06:23:40'),
+(7, 3, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1, '2023-09-03 06:23:40'),
 (16, 10, 'Denzel Go', '', 'Luzon ', '', 'Valenzuela City', '', '', '8 Doneza St. Balubaran Malinta', 0, '2023-09-27 19:58:48'),
 (17, 10, '', '', 'Metro Manila', '', '', '', '', '', 1, '2023-09-27 19:59:00'),
 (18, 3, 'Metro M', '09770257461', 'Metro Manila', '', '', '', '', '8 Doneza St. Balubaran Malinta', 0, '2023-09-29 11:30:48'),
-(19, 3, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 1, '2023-10-09 14:36:20');
+(19, 3, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 0, '2023-10-09 14:36:20');
 
 -- --------------------------------------------------------
 
@@ -153,7 +153,9 @@ INSERT INTO `admin_logs` (`log_id`, `admin_id`, `event_type`, `timestamp`) VALUE
 (31, 2, 'login', '2023-10-13 08:33:56'),
 (32, 2, 'login', '2023-10-13 16:00:15'),
 (33, 2, 'login', '2023-10-14 05:33:57'),
-(34, 2, 'login', '2023-10-15 16:34:27');
+(34, 2, 'login', '2023-10-15 16:34:27'),
+(35, 2, 'login', '2023-10-16 05:06:07'),
+(36, 2, 'login', '2023-10-16 13:21:55');
 
 -- --------------------------------------------------------
 
@@ -421,7 +423,38 @@ INSERT INTO `audit_logs` (`log_id`, `user_id`, `action`, `details`, `timestamp`)
 (209, 3, 'PAY USING PAYPAL', 'Purchase published_game_id: 175', '2023-10-13 16:24:13'),
 (210, 3, 'PAY USING PAYPAL', 'Purchase published_game_id: 175', '2023-10-14 06:53:06'),
 (211, 3, 'PAY USING PAYPAL', 'Purchase published_game_id: 176', '2023-10-14 06:59:43'),
-(212, 3, 'PAY USING PAYPAL', 'Purchase published_game_id: 175', '2023-10-14 06:59:43');
+(212, 3, 'PAY USING PAYPAL', 'Purchase published_game_id: 175', '2023-10-14 06:59:43'),
+(213, 3, 'PAY USING STKR WALLET', 'Purchase published_game_id: 174', '2023-10-16 06:35:12'),
+(214, 3, 'PAY USING STKR WALLET', 'Purchase published_game_id: 177', '2023-10-16 06:38:10'),
+(215, 3, 'PAY USING STKR WALLET', 'Purchase published_game_id: 174', '2023-10-16 06:42:14'),
+(216, 3, 'PAY USING PAYPAL', 'Purchase published_game_id: 174', '2023-10-16 06:43:57'),
+(217, 3, 'PAY USING PAYPAL', 'Purchase ticket_id: 93', '2023-10-16 13:21:42'),
+(218, 3, 'PAY USING STKR WALLET', 'Purchase ticket_id: 94', '2023-10-16 13:26:06'),
+(219, 3, 'PAY USING PAYPAL', 'Purchase built_game_id: 129', '2023-10-16 14:13:42'),
+(220, 3, 'PAY USING STKR WALLET', 'Purchase ticket_id: 98', '2023-10-16 14:17:34'),
+(221, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 130', '2023-10-16 14:18:24'),
+(222, 3, 'PAY USING STKR WALLET', 'Purchase ticket_id: 99', '2023-10-16 14:19:43'),
+(223, 3, 'PAY USING PAYPAL', 'Purchase built_game_id: 131', '2023-10-16 14:20:19'),
+(224, 3, 'PAY USING PAYPAL', 'Purchase ticket_id: 101', '2023-10-16 14:32:45'),
+(225, 3, 'PAY USING PAYPAL', 'Purchase ticket_id: 100', '2023-10-16 14:32:45'),
+(226, 3, 'PAY USING PAYPAL', 'Purchase built_game_id: 133', '2023-10-16 14:33:53'),
+(227, 3, 'PAY USING PAYPAL', 'Purchase built_game_id: 132', '2023-10-16 14:33:53'),
+(228, 3, 'PAY USING PAYPAL', 'Purchase ticket_id: 102', '2023-10-16 14:34:41'),
+(229, 3, 'PAY USING STKR WALLET', 'Purchase ticket_id: 103', '2023-10-16 14:34:56'),
+(230, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 134', '2023-10-16 14:35:46'),
+(231, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 135', '2023-10-16 14:36:29'),
+(232, 3, 'PAY USING STKR WALLET', 'Purchase ticket_id: 104', '2023-10-16 14:41:50'),
+(233, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 133', '2023-10-16 14:41:50'),
+(234, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 134', '2023-10-16 14:41:50'),
+(235, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 129', '2023-10-16 14:41:50'),
+(236, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 131', '2023-10-16 14:41:50'),
+(237, 3, 'PAY USING STKR WALLET', 'Purchase ticket_id: 105', '2023-10-16 14:46:19'),
+(238, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 130', '2023-10-16 14:48:28'),
+(239, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 129', '2023-10-16 14:48:28'),
+(240, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 131', '2023-10-16 14:48:28'),
+(241, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 132', '2023-10-16 14:48:28'),
+(242, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 134', '2023-10-16 14:48:29'),
+(243, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 136', '2023-10-16 14:48:29');
 
 -- --------------------------------------------------------
 
@@ -546,6 +579,8 @@ CREATE TABLE `built_games` (
   `is_pending` tinyint(4) DEFAULT 0,
   `is_canceled` tinyint(4) DEFAULT 0,
   `is_approved` tinyint(4) DEFAULT 0,
+  `is_at_cart` tinyint(4) NOT NULL DEFAULT 0,
+  `is_semi_purchased` tinyint(4) NOT NULL DEFAULT 0,
   `is_purchased` tinyint(4) DEFAULT 0,
   `is_pending_published` tinyint(4) NOT NULL DEFAULT 0,
   `is_request_denied` tinyint(4) NOT NULL DEFAULT 0,
@@ -558,12 +593,15 @@ CREATE TABLE `built_games` (
 -- Dumping data for table `built_games`
 --
 
-INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_purchased`, `is_pending_published`, `is_request_denied`, `is_published`, `price`, `ticket_cost`) VALUES
-(123, 199, 'coli8', '', 3, '2023-10-09 19:19:24', 0, 0, 1, 0, 0, 0, 0, 7.40, 0.74),
-(124, 199, 'coli8', '', 3, '2023-10-09 19:40:52', 0, 0, 1, 0, 0, 0, 0, 35.40, 0.74),
-(125, 199, 'coli8', '', 3, '2023-10-09 21:26:14', 0, 0, 1, 0, 0, 0, 0, 190.80, 19.08),
-(126, 0, 'f', '', 3, '2023-10-09 21:37:15', 0, 0, 1, 0, 0, 0, 0, 33.40, 3.34),
-(127, 207, 'game 1', '', 3, '2023-10-11 13:35:44', 0, 0, 1, 0, 0, 0, 0, 34.20, 3.42);
+INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `creator_id`, `build_date`, `is_pending`, `is_canceled`, `is_approved`, `is_at_cart`, `is_semi_purchased`, `is_purchased`, `is_pending_published`, `is_request_denied`, `is_published`, `price`, `ticket_cost`) VALUES
+(129, 208, 'asd', '', 3, '2023-10-16 21:26:18', 0, 0, 1, 0, 1, 1, 0, 0, 1, 12.00, 1.20),
+(130, 208, 'asd', '', 3, '2023-10-16 22:17:51', 0, 0, 1, 0, 1, 1, 0, 1, 0, 12.00, 1.20),
+(131, 209, 'f', '', 3, '2023-10-16 22:19:56', 0, 0, 1, 0, 1, 1, 0, 0, 0, 12.00, 1.20),
+(132, 209, 'f', '', 3, '2023-10-16 22:32:56', 0, 0, 1, 0, 1, 1, 0, 0, 0, 12.00, 1.20),
+(133, 208, 'asd', '', 3, '2023-10-16 22:33:02', 0, 0, 1, 0, 1, 1, 0, 0, 0, 12.00, 1.20),
+(134, 209, 'f', '', 3, '2023-10-16 22:35:07', 0, 0, 1, 0, 1, 1, 0, 0, 0, 12.00, 1.20),
+(135, 208, 'asd', '', 3, '2023-10-16 22:35:12', 0, 0, 1, 0, 0, 1, 0, 0, 0, 12.00, 1.20),
+(136, 209, 'f', '', 3, '2023-10-16 22:46:24', 0, 0, 1, 0, 1, 0, 0, 0, 0, 12.00, 1.20);
 
 -- --------------------------------------------------------
 
@@ -588,11 +626,14 @@ CREATE TABLE `built_games_added_game_components` (
 --
 
 INSERT INTO `built_games_added_game_components` (`added_component_id`, `built_game_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`) VALUES
-(415, 126, 0, 3, 0, '', 1, 3, '7x7'),
-(416, 126, 0, 4, 1, 'uploads/65240162a03de_5.png', 1, 0, '10x10'),
-(417, 126, 0, 1, 1, 'uploads/652401d74082c_The Good Planet_Promo Banner.jpg', 1, 0, '7x7'),
-(418, 127, 207, 3, 0, '', 3, 1, '7x7'),
-(419, 127, 207, 1, 1, 'uploads/652633e394390_Screenshot 2023-09-30 184804.png', 1, 0, '7x7');
+(421, 129, 208, 1, 0, '', 1, 0, '7x7'),
+(422, 130, 208, 1, 0, '', 1, 0, '7x7'),
+(423, 131, 209, 1, 0, '', 1, 0, '7x7'),
+(424, 132, 209, 1, 0, '', 1, 0, '7x7'),
+(425, 133, 208, 1, 0, '', 1, 0, '7x7'),
+(426, 134, 209, 1, 0, '', 1, 0, '7x7'),
+(427, 135, 208, 1, 0, '', 1, 0, '7x7'),
+(428, 136, 209, 1, 0, '', 1, 0, '7x7');
 
 -- --------------------------------------------------------
 
@@ -767,26 +808,12 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built
 (633, 3, 176, NULL, NULL, NULL, NULL, 1, 1093.00, 1, 0),
 (634, 3, 132, NULL, NULL, NULL, NULL, 1, 80.00, 1, 0),
 (635, 3, 133, NULL, NULL, NULL, NULL, 1, 65.00, 1, 0),
-(636, 3, NULL, 207, NULL, NULL, 90, 1, 3.42, 1, 0),
-(637, 3, NULL, 207, NULL, NULL, 91, 1, 3.42, 1, 0),
-(638, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(639, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(640, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(641, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(642, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(643, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(644, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(645, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(646, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(647, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
-(648, 3, NULL, 207, 127, NULL, NULL, 1, 34.20, 1, 0),
 (649, 3, 177, NULL, NULL, NULL, NULL, 1, 855.00, 1, 0),
 (650, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
 (651, 3, 3, NULL, NULL, NULL, NULL, 1, 80.00, 1, 0),
 (652, 3, 131, NULL, NULL, NULL, NULL, 1, 65.00, 1, 0),
 (653, 3, 132, NULL, NULL, NULL, NULL, 1, 80.00, 1, 0),
 (654, 3, 133, NULL, NULL, NULL, NULL, 1, 65.00, 1, 0),
-(655, 3, NULL, 207, NULL, NULL, 92, 1, 3.42, 1, 0),
 (658, 3, 174, NULL, NULL, NULL, NULL, 2, 1526.00, 1, 0),
 (659, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
 (660, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
@@ -795,7 +822,38 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built
 (663, 3, 131, NULL, NULL, NULL, NULL, 1, 65.00, 1, 0),
 (664, 3, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
 (665, 3, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 0),
-(666, 3, 176, NULL, NULL, NULL, NULL, 1, 1093.00, 1, 0);
+(666, 3, 176, NULL, NULL, NULL, NULL, 1, 1093.00, 1, 0),
+(668, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
+(670, 3, 177, NULL, NULL, NULL, NULL, 1, 855.00, 1, 0),
+(671, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
+(672, 3, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 0),
+(702, 3, NULL, 208, NULL, NULL, 93, 1, 1.20, 1, 0),
+(703, 3, NULL, 208, NULL, NULL, 94, 1, 1.20, 1, 0),
+(714, 3, NULL, 208, 129, NULL, NULL, 2, 12.00, 1, 0),
+(715, 3, NULL, 208, NULL, NULL, 98, 1, 1.20, 1, 0),
+(716, 3, NULL, 208, 130, NULL, NULL, 2, 12.00, 1, 0),
+(717, 3, NULL, 209, NULL, NULL, 99, 1, 1.20, 1, 0),
+(718, 3, NULL, 209, 131, NULL, NULL, 2, 12.00, 1, 0),
+(720, 3, NULL, 209, NULL, NULL, 100, 1, 1.20, 1, 0),
+(721, 3, NULL, 208, NULL, NULL, 101, 1, 1.20, 1, 0),
+(722, 3, NULL, 209, 132, NULL, NULL, 2, 12.00, 1, 0),
+(723, 3, NULL, 208, 133, NULL, NULL, 1, 12.00, 1, 0),
+(724, 3, NULL, 209, NULL, NULL, 102, 1, 1.20, 1, 0),
+(725, 3, NULL, 208, NULL, NULL, 103, 1, 1.20, 1, 0),
+(726, 3, NULL, 209, 134, NULL, NULL, 2, 12.00, 1, 0),
+(729, 3, NULL, 208, 135, NULL, NULL, 1, 12.00, 1, 0),
+(736, 3, NULL, 209, 131, NULL, NULL, 2, 12.00, 1, 0),
+(737, 3, NULL, 208, 129, NULL, NULL, 1, 12.00, 1, 0),
+(738, 3, NULL, 209, 134, NULL, NULL, 2, 12.00, 1, 0),
+(739, 3, NULL, 208, 133, NULL, NULL, 1, 12.00, 1, 0),
+(740, 3, NULL, 209, NULL, NULL, 104, 1, 1.20, 1, 0),
+(741, 3, NULL, 208, NULL, NULL, 105, 1, 1.20, 1, 0),
+(742, 3, NULL, 209, 136, NULL, NULL, 1, 12.00, 1, 0),
+(743, 3, NULL, 209, 134, NULL, NULL, 2, 12.00, 1, 0),
+(744, 3, NULL, 209, 132, NULL, NULL, 2, 12.00, 1, 0),
+(745, 3, NULL, 209, 131, NULL, NULL, 2, 12.00, 1, 0),
+(746, 3, NULL, 208, 129, NULL, NULL, 1, 12.00, 1, 0),
+(747, 3, NULL, 208, 130, NULL, NULL, 1, 12.00, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2023,7 +2081,8 @@ INSERT INTO `constants` (`constant_id`, `classification`, `image_path`, `text`, 
 (3, 'thumbnail_ticket', 'img/i1.jpg', NULL, NULL),
 (4, 'paypal_client_id', NULL, 'AUtrxFWAdHF9RgdAqRcEjzOICrG5WaXVfckhbUYdcTVDVIz-QnvKNoYqEZ9zE-JI5ViTJEy4AoN6iCJL', NULL),
 (5, 'cash_out_fee', NULL, NULL, 20.00),
-(6, 'minimum_cash_out_amount', NULL, NULL, 50.00);
+(6, 'minimum_cash_out_amount', NULL, NULL, 50.00),
+(7, 'shipping_discount_percent', NULL, NULL, 50.00);
 
 -- --------------------------------------------------------
 
@@ -2080,6 +2139,13 @@ CREATE TABLE `denied_publish_requests` (
   `reason` text DEFAULT NULL,
   `file_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `denied_publish_requests`
+--
+
+INSERT INTO `denied_publish_requests` (`denied_publish_request_id`, `built_game_id`, `reason`, `file_path`) VALUES
+(27, 130, '7', '0');
 
 -- --------------------------------------------------------
 
@@ -2171,7 +2237,9 @@ INSERT INTO `games` (`game_id`, `name`, `description`, `user_id`, `created_at`, 
 (204, '89', '', 3, '2023-10-11 01:53:09', '2023-10-10 17:53:16', 0, 0, 1, 1, 0, 0, 0),
 (205, 'op', '', 3, '2023-10-11 10:52:35', '2023-10-11 02:52:48', 0, 0, 1, 1, 0, 0, 0),
 (206, 'hello', '', 3, '2023-10-11 10:54:05', '2023-10-11 02:54:10', 0, 0, 1, 1, 0, 0, 0),
-(207, 'game 1', '', 3, '2023-10-11 13:28:57', '2023-10-11 05:29:30', 1, 0, 1, 1, 0, 1, 1);
+(207, 'game 1', '', 3, '2023-10-11 13:28:57', '2023-10-11 05:29:30', 1, 0, 1, 1, 0, 1, 0),
+(208, 'asd', '', 3, '2023-10-16 20:05:37', '2023-10-16 13:21:17', 1, 0, 1, 1, 0, 1, 1),
+(209, 'f', '', 3, '2023-10-16 21:33:06', '2023-10-16 13:36:50', 1, 0, 0, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2305,7 +2373,38 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`order_id`, `unique_order_id`, `unique_order_group_id`, `cart_id`, `user_id`, `published_game_id`, `built_game_id`, `added_component_id`, `ticket_id`, `quantity`, `price`, `is_pending`, `in_production`, `to_ship`, `to_deliver`, `is_received`, `is_canceled`, `cancel_order_reason_id`, `is_completely_canceled`, `order_date`, `desired_markup`, `manufacturer_profit`, `creator_profit`, `marketplace_price`, `is_rated`, `fullname`, `number`, `region`, `province`, `city`, `barangay`, `zip`, `street`, `total_payment`, `paypal_transaction_id`, `payer_id`, `order_data_payee_email`) VALUES
 (304, '175652a3ad269ee1', '20231014085306', 664, 3, 175, NULL, NULL, NULL, 1, 115.00, 0, 0, 0, 0, 0, 1, 3, 0, '2023-10-14 14:53:06', 45.00, 9.00, 36.00, 115.00, 0, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 200.00, '4E497855X2463370L', 'S9QZENZKTVY9A', 'sb-i4hyn27575086@business.example.com'),
 (305, '176652a3c5fcec1f', '20231014085943', 666, 3, 176, NULL, NULL, NULL, 1, 1093.00, 0, 0, 0, 0, 0, 1, 1, 0, '2023-10-14 14:59:43', 1000.00, 200.00, 800.00, 1093.00, 0, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 1293.00, '17N002481D702810C', 'S9QZENZKTVY9A', 'sb-i4hyn27575086@business.example.com'),
-(306, '175652a3c5fd83c4', '20231014085943', 665, 3, 175, NULL, NULL, NULL, 1, 115.00, 0, 0, 0, 0, 0, 1, 1, 0, '2023-10-14 14:59:43', 45.00, 9.00, 36.00, 115.00, 0, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 1293.00, '17N002481D702810C', 'S9QZENZKTVY9A', 'sb-i4hyn27575086@business.example.com');
+(306, '175652a3c5fd83c4', '20231014085943', 665, 3, 175, NULL, NULL, NULL, 1, 115.00, 0, 0, 0, 0, 0, 1, 1, 0, '2023-10-14 14:59:43', 45.00, 9.00, 36.00, 115.00, 0, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 1293.00, '17N002481D702810C', 'S9QZENZKTVY9A', 'sb-i4hyn27575086@business.example.com'),
+(307, '174652cd9a08cbaf', '20231016083512', 668, 3, 174, NULL, NULL, NULL, 1, 1526.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 14:35:12', 700.00, 140.00, 560.00, 1526.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1621.00, NULL, NULL, NULL),
+(308, '177652cda529306c', '20231016083810', 670, 3, 177, NULL, NULL, NULL, 1, 855.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 14:38:10', 500.00, 100.00, 400.00, 855.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 950.00, NULL, NULL, NULL),
+(309, '174652cdb465b27b', '20231016084214', 671, 3, 174, NULL, NULL, NULL, 1, 1526.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 14:42:14', 700.00, 140.00, 560.00, 1526.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1573.50, NULL, NULL, NULL),
+(310, '174652cdbad6d536', '20231016084357', 672, 3, 174, NULL, NULL, NULL, 1, 1526.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 14:43:57', 700.00, 140.00, 560.00, 1526.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1621.00, '8RH07488TS200280J', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(311, '93652d38e6c9e13', '20231016152142', 702, 3, NULL, NULL, NULL, 93, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 21:21:42', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, '7L733521YP560623X', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(312, '94652d39eed675b', '20231016152606', 703, 3, NULL, NULL, NULL, 94, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 21:26:06', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, NULL, NULL, NULL),
+(313, '129652d45164a80b', '20231016161342', 714, 3, NULL, 129, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:13:42', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 107.00, '3B730120RY299745K', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(314, '98652d45fe2b5a0', '20231016161734', 715, 3, NULL, NULL, NULL, 98, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:17:34', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, NULL, NULL, NULL),
+(315, '130652d463098d7c', '20231016161824', 716, 3, NULL, 130, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:18:24', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 59.50, NULL, NULL, NULL),
+(316, '99652d467f4aeac', '20231016161943', 717, 3, NULL, NULL, NULL, 99, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:19:43', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, NULL, NULL, NULL),
+(317, '131652d46a35107a', '20231016162019', 718, 3, NULL, 131, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:20:19', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 107.00, '0LN28031BJ0257319', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(318, '101652d498d34564', '20231016163245', 721, 3, NULL, NULL, NULL, 101, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:32:45', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 97.40, '6RF34647VC248743N', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(319, '100652d498d397f9', '20231016163245', 720, 3, NULL, NULL, NULL, 100, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:32:45', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 97.40, '6RF34647VC248743N', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(320, '133652d49d117379', '20231016163353', 723, 3, NULL, 133, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:33:53', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 119.00, '34E2557225937625G', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(321, '132652d49d11a481', '20231016163353', 722, 3, NULL, 132, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:33:53', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 119.00, '34E2557225937625G', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(322, '102652d4a0109d3e', '20231016163441', 724, 3, NULL, NULL, NULL, 102, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:34:41', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, '5D89204702737523X', '5HGF7ZREXPDNG', 'sb-i4hyn27575086@business.example.com'),
+(323, '103652d4a10ae493', '20231016163456', 725, 3, NULL, NULL, NULL, 103, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:34:56', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, NULL, NULL, NULL),
+(324, '134652d4a42da3d5', '20231016163546', 726, 3, NULL, 134, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:35:46', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 59.50, NULL, NULL, NULL),
+(325, '135652d4a6d0f197', '20231016163629', 729, 3, NULL, 135, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:36:29', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 59.50, NULL, NULL, NULL),
+(326, '104652d4bae0be6f', '20231016164150', 740, 3, NULL, NULL, NULL, 104, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:41:50', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 132.70, NULL, NULL, NULL),
+(327, '133652d4bae10165', '20231016164150', 739, 3, NULL, 133, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:41:50', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 132.70, NULL, NULL, NULL),
+(328, '134652d4bae12dd9', '20231016164150', 738, 3, NULL, 134, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:41:50', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 132.70, NULL, NULL, NULL),
+(329, '129652d4bae16254', '20231016164150', 737, 3, NULL, 129, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:41:50', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 132.70, NULL, NULL, NULL),
+(330, '131652d4bae18fcc', '20231016164150', 736, 3, NULL, 131, NULL, NULL, 3, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:41:50', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 132.70, NULL, NULL, NULL),
+(331, '105652d4cbb77921', '20231016164619', 741, 3, NULL, NULL, NULL, 105, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-16 22:46:19', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 1.20, NULL, NULL, NULL),
+(332, '130652d4d3ce96ff', '20231016164828', 747, 3, NULL, 130, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
+(333, '129652d4d3cebba0', '20231016164828', 746, 3, NULL, 129, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
+(334, '131652d4d3cedee7', '20231016164828', 745, 3, NULL, 131, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
+(335, '132652d4d3cf0c95', '20231016164828', 744, 3, NULL, 132, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
+(336, '134652d4d3cf3f44', '20231016164828', 743, 3, NULL, 134, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
+(337, '136652d4d3d028da', '20231016164828', 742, 3, NULL, 136, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:29', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2424,7 +2523,24 @@ INSERT INTO `paypal_transactions` (`payment_id`, `paypal_transaction_id`, `order
 (89, '61T21760PC3128403', 'CAPTURE', 'COMPLETED', 'PHP', 500.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '34C50612678960335', 'COMPLETED', 'PHP', 500.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-15 16:39:46', '2023-10-15 16:39:46', 'Denzel', 'Go', 'sb-ihj6x27602776@personal.example.com', 'S9QZENZKTVY9A', 'US'),
 (90, '6YJ2414239038023B', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '88W72435XU580202A', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-15 16:43:59', '2023-10-15 16:43:59', 'Denzel', 'Go', 'sb-ihj6x27602776@personal.example.com', 'S9QZENZKTVY9A', 'US'),
 (91, '51M870961N064723P', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '0YN02935VX736934P', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-15 16:45:49', '2023-10-15 16:45:49', 'Denzel', 'Go', 'sb-ihj6x27602776@personal.example.com', 'S9QZENZKTVY9A', 'US'),
-(92, '24E94644KA992140S', 'CAPTURE', 'COMPLETED', 'PHP', 5000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '7PF12497YU694093P', 'COMPLETED', 'PHP', 5000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-15 16:46:59', '2023-10-15 16:46:59', 'Denzel', 'Go', 'sb-ihj6x27602776@personal.example.com', 'S9QZENZKTVY9A', 'US');
+(92, '24E94644KA992140S', 'CAPTURE', 'COMPLETED', 'PHP', 5000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '7PF12497YU694093P', 'COMPLETED', 'PHP', 5000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-15 16:46:59', '2023-10-15 16:46:59', 'Denzel', 'Go', 'sb-ihj6x27602776@personal.example.com', 'S9QZENZKTVY9A', 'US'),
+(93, '23356704891914343', 'CAPTURE', 'COMPLETED', 'PHP', 5000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '35319049BN327205S', 'COMPLETED', 'PHP', 5000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 05:04:58', '2023-10-16 05:04:58', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(94, '368901153J960305R', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '37377447UF301121Y', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 05:37:59', '2023-10-16 05:37:59', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(95, '8GS053428U243980F', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '92F644813H711610U', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 05:46:01', '2023-10-16 05:46:01', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(96, '3G1510580D760901E', 'CAPTURE', 'COMPLETED', 'PHP', 1611.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '0VC926215J027793R', 'COMPLETED', 'PHP', 1611.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 05:51:10', '2023-10-16 05:51:10', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(97, '9MV880649E540663E', 'CAPTURE', 'COMPLETED', 'PHP', 10.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '63Y24962064240006', 'COMPLETED', 'PHP', 10.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 06:36:37', '2023-10-16 06:36:37', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(98, '2K003203LK9186328', 'CAPTURE', 'COMPLETED', 'PHP', 903.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '73F93557SB4153534', 'COMPLETED', 'PHP', 903.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 06:37:51', '2023-10-16 06:37:51', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(99, '0FP8926540700120M', 'CAPTURE', 'COMPLETED', 'PHP', 47.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '6GN99655BT931013X', 'COMPLETED', 'PHP', 47.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 06:41:38', '2023-10-16 06:41:38', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(100, '2YB0287588771804X', 'CAPTURE', 'COMPLETED', 'PHP', 1574.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '9PP19671NB3602612', 'COMPLETED', 'PHP', 1574.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 06:42:09', '2023-10-16 06:42:09', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(101, '8RH07488TS200280J', 'CAPTURE', 'COMPLETED', 'PHP', 1621.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '1UM95220L17280058', 'COMPLETED', 'PHP', 1621.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 06:44:02', '2023-10-16 06:44:02', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(102, '7L733521YP560623X', 'CAPTURE', 'COMPLETED', 'PHP', 1.20, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '4L6301279T094471E', 'COMPLETED', 'PHP', 1.20, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 13:21:49', '2023-10-16 13:21:49', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(103, '4UE16989799083043', 'CAPTURE', 'COMPLETED', 'PHP', 100.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '0DY92661H6411610X', 'COMPLETED', 'PHP', 100.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 13:25:00', '2023-10-16 13:25:00', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(104, '3B730120RY299745K', 'CAPTURE', 'COMPLETED', 'PHP', 107.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '3CX628242G8015803', 'COMPLETED', 'PHP', 107.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:13:49', '2023-10-16 14:13:49', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(105, '0LN28031BJ0257319', 'CAPTURE', 'COMPLETED', 'PHP', 107.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '7D772236U2464650N', 'COMPLETED', 'PHP', 107.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:20:26', '2023-10-16 14:20:26', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(106, '6RF34647VC248743N', 'CAPTURE', 'COMPLETED', 'PHP', 97.40, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '3W232813GS580384G', 'COMPLETED', 'PHP', 97.40, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:32:51', '2023-10-16 14:32:51', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(107, '34E2557225937625G', 'CAPTURE', 'COMPLETED', 'PHP', 119.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '9EP7304763452754T', 'COMPLETED', 'PHP', 119.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:33:59', '2023-10-16 14:33:59', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(108, '5D89204702737523X', 'CAPTURE', 'COMPLETED', 'PHP', 1.20, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '76122573N82062803', 'COMPLETED', 'PHP', 1.20, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:34:47', '2023-10-16 14:34:47', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(109, '7K1966833M078654S', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '42D01109VC191610E', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:35:46', '2023-10-16 14:35:46', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US');
 
 -- --------------------------------------------------------
 
@@ -2663,7 +2779,8 @@ INSERT INTO `published_built_games` (`published_game_id`, `built_game_id`, `game
 (174, 73, '777bagong bagooooooo', '6', '890890890', '2023-09-27 00:00:00', 3, 2, 'awdafwaefaefaef', 'asdaweaqwdawdf', 'https://facebook.com', 'uploads/65135ba115178_656464.jpg', 890890, 2147483647, 2147483647, 2147483647, 0, 0, 700.00, 140.00, 560.00, 1526.00, 0),
 (175, 74, 'haha', '2', 'first', '2023-09-27 00:00:00', 3, 3, '34', '34', 'https://facebook.comopo7', 'uploads/65136bb9a73e4_1577032.jpg', 34, 34, 34, 34, 0, 0, 45.00, 9.00, 36.00, 115.00, 1),
 (176, 94, 'dfg', '2', 'dfg', '2023-09-27 00:00:00', 3, 1, '234', '234', 'https://facebook.comopo7', 'uploads/651382263257f_2021-2022 2nd sem card.jpg', 234, 234, 234, 234, 0, 1, 1000.00, 200.00, 800.00, 1093.00, 0),
-(177, 107, 'dsf', '3', '123', '2023-09-27 00:00:00', 10, 1, '123', '123', 'https://facebook.com', 'uploads/6513bff2151e3_2021-2022 2nd sem card.jpg', 123, 123, 123, 123, 0, 0, 500.00, 100.00, 400.00, 855.00, 0);
+(177, 107, 'dsf', '3', '123', '2023-09-27 00:00:00', 10, 1, '123', '123', 'https://facebook.com', 'uploads/6513bff2151e3_2021-2022 2nd sem card.jpg', 123, 123, 123, 123, 0, 0, 500.00, 100.00, 400.00, 855.00, 0),
+(178, 129, '123', '2', '123', '2023-10-16 00:00:00', 3, 2, '123', '123', 'https://facebook.com', 'uploads/652d58d5a6187_wp7687177-desktop-hd-gaming-wallpapers.jpg', 123, 123, 123, 123, 0, 0, 70.00, 14.00, 56.00, 82.00, 0);
 
 -- --------------------------------------------------------
 
@@ -2705,7 +2822,11 @@ INSERT INTO `published_multiple_files` (`published_file_id`, `published_built_ga
 (213, 177, 107, 10, 'uploads/6513bff21660b_656464.jpg'),
 (214, 177, 107, 10, 'uploads/6513bff216a88_970588.jpg'),
 (215, 177, 107, 10, 'uploads/6513bff216d35_1162247.jpg'),
-(216, 177, 107, 10, 'uploads/6513bff21718f_1232917.jpg');
+(216, 177, 107, 10, 'uploads/6513bff21718f_1232917.jpg'),
+(217, 178, 129, 3, 'uploads/652d58d5a7879_5.png'),
+(218, 178, 129, 3, 'uploads/652d58d5a7aaa_Grunge Texture - PiXimperfect.jpg'),
+(219, 178, 129, 3, 'uploads/652d58d5a7c76_close-up-photography-negative.jpg'),
+(220, 178, 129, 3, 'uploads/652d58d5a7e34_3.png');
 
 -- --------------------------------------------------------
 
@@ -2772,9 +2893,19 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`ticket_id`, `user_id`, `game_id`, `is_approved`, `is_denied`, `created_at`, `is_at_cart`, `is_purchased`, `is_accepted`, `is_canceled`, `total_price`, `ticket_price`, `denied_approve_game_request_id`) VALUES
-(90, 3, 207, 0, 1, '2023-10-11 05:31:24', 0, 1, 1, 0, 34.20, 3.42, 8),
-(91, 3, 207, 1, 0, '2023-10-11 05:34:35', 0, 1, 1, 0, 34.20, 3.42, NULL),
-(92, 3, 207, 0, 0, '2023-10-12 14:37:01', 0, 1, 1, 0, 34.20, 3.42, NULL);
+(93, 3, 208, 1, 0, '2023-10-16 13:21:21', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(94, 3, 208, 1, 0, '2023-10-16 13:24:07', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(95, 3, 208, 0, 0, '2023-10-16 13:36:20', 1, 0, 0, 0, 12.00, 1.20, NULL),
+(96, 3, 209, 0, 0, '2023-10-16 13:36:54', 1, 0, 0, 0, 12.00, 1.20, NULL),
+(97, 3, 208, 0, 0, '2023-10-16 13:47:09', 1, 0, 0, 0, 12.00, 1.20, NULL),
+(98, 3, 208, 1, 0, '2023-10-16 14:17:28', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(99, 3, 209, 1, 0, '2023-10-16 14:19:37', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(100, 3, 209, 1, 0, '2023-10-16 14:31:20', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(101, 3, 208, 1, 0, '2023-10-16 14:31:28', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(102, 3, 209, 1, 0, '2023-10-16 14:34:29', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(103, 3, 208, 1, 0, '2023-10-16 14:34:51', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(104, 3, 209, 1, 0, '2023-10-16 14:41:38', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(105, 3, 208, 0, 0, '2023-10-16 14:46:14', 0, 1, 1, 0, 12.00, 1.20, NULL);
 
 -- --------------------------------------------------------
 
@@ -2853,7 +2984,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `created_at`, `shipping_address`, `avatar`, `wallet_amount`) VALUES
-(3, 'denzel', 'denzelgo17@gmail.com', '$2y$10$ARZ0Q6SNMcoKJIvaaiGwZeb/T0EtfPk9HMj.XvGnVgdcMYL8ZkwKa', '2023-08-02 09:11:37', 'asd', 'uploads/avatars/6527ba3224590_Screenshot 2023-10-06 194548.png', 0.00),
+(3, 'denzel', 'denzelgo17@gmail.com', '$2y$10$ARZ0Q6SNMcoKJIvaaiGwZeb/T0EtfPk9HMj.XvGnVgdcMYL8ZkwKa', '2023-08-02 09:11:37', 'asd', 'uploads/avatars/6527ba3224590_Screenshot 2023-10-06 194548.png', 9627.80),
 (4, 'jerrick', 'jerrick@gmail.com', '$2y$10$GLMUnEDCDln02y6c/zMR9O2W78THngXnkxL06sair.wT5gt9Bx7Ya', '2023-08-02 09:14:19', NULL, NULL, 0.00),
 (5, 'jp', 'jp@gmail.com', '$2y$10$4B39cJlUoie9r2lN65LRbu.1YdKsDgMdfuIPUJECdFlgsUBNSWQn.', '2023-08-03 05:09:20', NULL, NULL, 0.00),
 (6, 'berns', 'berns@gmail.com', '$2y$10$cGi0jPeiwD62dxv/vk7WMePFmV4ro0rAut7dAQscujTptnGXnPTte', '2023-08-10 08:46:14', NULL, NULL, 0.00),
@@ -3078,7 +3209,11 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (194, 3, 'login', '2023-10-13 14:54:20'),
 (195, 3, 'login', '2023-10-14 05:33:30'),
 (196, 3, 'login', '2023-10-15 16:32:17'),
-(197, 3, 'login', '2023-10-16 04:45:55');
+(197, 3, 'login', '2023-10-16 04:45:55'),
+(198, 3, 'login', '2023-10-16 05:03:56'),
+(199, 3, 'login', '2023-10-16 08:26:20'),
+(200, 3, 'login', '2023-10-16 11:59:49'),
+(201, 3, 'login', '2023-10-16 12:00:28');
 
 -- --------------------------------------------------------
 
@@ -3134,7 +3269,33 @@ INSERT INTO `wallet_transactions` (`wallet_transaction_id`, `user_id`, `transact
 (38, 3, 'Cash In', 10000.00, '2023-10-15 16:45:50', 'success', 'Paypal', '51M870961N064723P', NULL, NULL, NULL),
 (39, 3, 'Cash Out', 10020.00, '2023-10-15 16:46:12', 'success', 'Paypal', '', 'sb-i4hyn27575086@business.example.com', '2023-10-15 16:46:19', 20.00),
 (40, 3, 'Cash In', 5000.00, '2023-10-15 16:47:00', 'success', 'Paypal', '24E94644KA992140S', NULL, NULL, NULL),
-(41, 3, 'Cash Out', 5020.00, '2023-10-15 16:47:15', 'success', 'Paypal', '', 'sb-i4hyn27575086@business.example.com', '2023-10-15 16:47:25', 20.00);
+(41, 3, 'Cash Out', 5020.00, '2023-10-15 16:47:15', 'success', 'Paypal', '', 'sb-i4hyn27575086@business.example.com', '2023-10-15 16:47:25', 20.00),
+(42, 3, 'Cash In', 5000.00, '2023-10-16 05:04:53', 'success', 'Paypal', '23356704891914343', NULL, NULL, NULL),
+(43, 3, 'Cash Out', 4980.00, '2023-10-16 05:06:01', 'success', 'Paypal', '', 'sb-i4hyn27575086@business.example.com', '2023-10-16 05:06:18', 20.00),
+(44, 3, 'Cash In', 10000.00, '2023-10-16 05:37:54', 'success', 'Paypal', '368901153J960305R', NULL, NULL, NULL),
+(45, 3, 'Cash Out', 9980.00, '2023-10-16 05:40:42', 'success', 'Paypal', '', 'sb-i4hyn27575086@business.example.com', '2023-10-16 05:40:47', 20.00),
+(46, 3, 'Cash In', 10000.00, '2023-10-16 05:45:56', 'success', 'Paypal', '8GS053428U243980F', NULL, NULL, NULL),
+(47, 3, 'Cash Out', 9980.00, '2023-10-16 05:50:26', 'success', 'Paypal', '', 'sb-i4hyn27575086@business.example.com', '2023-10-16 05:50:32', 20.00),
+(48, 3, 'Cash In', 1611.00, '2023-10-16 05:51:05', 'success', 'Paypal', '3G1510580D760901E', NULL, NULL, NULL),
+(49, 3, 'Pay', 1621.00, '2023-10-16 06:35:12', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(50, 3, 'Cash In', 10.00, '2023-10-16 06:36:32', 'success', 'Paypal', '9MV880649E540663E', NULL, NULL, NULL),
+(51, 3, 'Cash In', 903.00, '2023-10-16 06:37:46', 'success', 'Paypal', '2K003203LK9186328', NULL, NULL, NULL),
+(52, 3, 'Pay', 950.00, '2023-10-16 06:38:10', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(53, 3, 'Cash In', 47.00, '2023-10-16 06:41:33', 'success', 'Paypal', '0FP8926540700120M', NULL, NULL, NULL),
+(54, 3, 'Cash In', 1574.00, '2023-10-16 06:42:04', 'success', 'Paypal', '2YB0287588771804X', NULL, NULL, NULL),
+(55, 3, 'Pay', 1573.50, '2023-10-16 06:42:14', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(56, 3, 'Cash In', 100.00, '2023-10-16 13:24:53', 'success', 'Paypal', '4UE16989799083043', NULL, NULL, NULL),
+(57, 3, 'Pay', 1.20, '2023-10-16 13:26:06', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(58, 3, 'Pay', 1.20, '2023-10-16 14:17:34', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(59, 3, 'Pay', 59.50, '2023-10-16 14:18:24', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(60, 3, 'Pay', 1.20, '2023-10-16 14:19:43', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(61, 3, 'Pay', 1.20, '2023-10-16 14:34:56', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(62, 3, 'Cash In', 10000.00, '2023-10-16 14:35:39', 'success', 'Paypal', '7K1966833M078654S', NULL, NULL, NULL),
+(63, 3, 'Pay', 59.50, '2023-10-16 14:35:46', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(64, 3, 'Pay', 59.50, '2023-10-16 14:36:29', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(65, 3, 'Pay', 132.70, '2023-10-16 14:41:50', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(66, 3, 'Pay', 1.20, '2023-10-16 14:46:19', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(67, 3, 'Pay', 155.50, '2023-10-16 14:48:29', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -3222,7 +3383,6 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `built_game_id` (`built_game_id`),
   ADD KEY `FK_cart_added_game_components` (`added_component_id`),
-  ADD KEY `FK_cart_games` (`game_id`),
   ADD KEY `FK_cart_users` (`user_id`);
 
 --
@@ -3459,7 +3619,7 @@ ALTER TABLE `wallet_transactions`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=531;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
 
 --
 -- AUTO_INCREMENT for table `addresses`
@@ -3477,7 +3637,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `admin_review_response`
@@ -3495,7 +3655,7 @@ ALTER TABLE `age`
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
 
 --
 -- AUTO_INCREMENT for table `barangay`
@@ -3507,13 +3667,13 @@ ALTER TABLE `barangay`
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
 --
 ALTER TABLE `built_games_added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=420;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=429;
 
 --
 -- AUTO_INCREMENT for table `cancel_order_reasons`
@@ -3525,7 +3685,7 @@ ALTER TABLE `cancel_order_reasons`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=668;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=748;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -3561,7 +3721,7 @@ ALTER TABLE `component_templates`
 -- AUTO_INCREMENT for table `constants`
 --
 ALTER TABLE `constants`
-  MODIFY `constant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `constant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `courier`
@@ -3579,7 +3739,7 @@ ALTER TABLE `denied_approve_game_requests`
 -- AUTO_INCREMENT for table `denied_publish_requests`
 --
 ALTER TABLE `denied_publish_requests`
-  MODIFY `denied_publish_request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `denied_publish_request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `denied_update_publish_requests`
@@ -3603,7 +3763,7 @@ ALTER TABLE `dropzone_published_uploads`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
 
 --
 -- AUTO_INCREMENT for table `games_reasons`
@@ -3633,25 +3793,25 @@ ALTER TABLE `markup_percentage`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
 
 --
 -- AUTO_INCREMENT for table `paypal_transactions`
 --
 ALTER TABLE `paypal_transactions`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `pending_published_built_games`
 --
 ALTER TABLE `pending_published_built_games`
-  MODIFY `pending_published_built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `pending_published_built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `pending_published_multiple_files`
 --
 ALTER TABLE `pending_published_multiple_files`
-  MODIFY `pending_published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `pending_published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `pending_update_published_built_games`
@@ -3675,13 +3835,13 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT for table `published_built_games`
 --
 ALTER TABLE `published_built_games`
-  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
+  MODIFY `published_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
 
 --
 -- AUTO_INCREMENT for table `published_multiple_files`
 --
 ALTER TABLE `published_multiple_files`
-  MODIFY `published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+  MODIFY `published_file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -3699,7 +3859,7 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `to_deliver`
@@ -3723,7 +3883,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
@@ -3735,7 +3895,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `wallet_transactions`
 --
 ALTER TABLE `wallet_transactions`
-  MODIFY `wallet_transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `wallet_transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- Constraints for dumped tables
@@ -3780,7 +3940,6 @@ ALTER TABLE `built_games_added_game_components`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `FK_cart_added_game_components` FOREIGN KEY (`added_component_id`) REFERENCES `added_game_components` (`added_component_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_cart_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`built_game_id`) REFERENCES `built_games` (`built_game_id`) ON DELETE CASCADE;
 
