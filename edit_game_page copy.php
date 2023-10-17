@@ -2,6 +2,8 @@
 session_start();
 include 'connection.php';
 
+
+
 $built_game_id = $_GET['built_game_id'];
 
 // Retrieve the markup percentage from the database
@@ -23,7 +25,6 @@ if (mysqli_num_rows($result_categories) > 0) {
 
 if (mysqli_num_rows($result) > 0) {
     $gameInfo = mysqli_fetch_assoc($result);
-
 }
 
 ?>
@@ -46,6 +47,12 @@ if (mysqli_num_rows($result) > 0) {
     <link rel="stylesheet" href="css/magnific-popup.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="css/main.css?<?php echo time(); ?>">
 
+    <!-- sweetalert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Include DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
@@ -56,9 +63,7 @@ if (mysqli_num_rows($result) > 0) {
     <link href="https://unpkg.com/filepond@4.28.2/dist/filepond.css" rel="stylesheet">
 
     <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         <?php include 'css/body.css'; ?>
@@ -150,12 +155,13 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="row">
                                 <div class="col-lg-12 mt-25">
 
-                                    <form method="post" action="process_publish_built_game.php"
-                                        enctype="multipart/form-data">
+                                    <!-- <form method="post" action="process_publish_built_game.php"
+                                        enctype="multipart/form-data"> -->
+                                    <form id="uploadForm" enctype="multipart/form-data">
 
                                         <input type="hidden" name="built_game_id" value="<?php echo $built_game_id; ?>">
-                                        <input type="hidden" name="creator_id"
-                                            value="<?php echo $gameInfo['creator_id']; ?>">
+
+                                        <input type="hidden" name="creator_id" value="<?php echo $gameInfo['creator_id']; ?>">
                                         <!-- Add this line -->
 
                                         <!-- Rest of your form inputs -->
@@ -207,8 +213,7 @@ if (mysqli_num_rows($result) > 0) {
 
                                         <!-- others -->
                                         <label for="short_description">Short Description:</label><br>
-                                        <textarea id="short_description" name="short_description"
-                                            required></textarea><br>
+                                        <textarea id="short_description" name="short_description" required></textarea><br>
 
                                         <label for="long_description">Long Description:</label><br>
                                         <textarea id="long_description" name="long_description" required></textarea><br>
@@ -234,15 +239,13 @@ if (mysqli_num_rows($result) > 0) {
 
                                             <!-- Hidden input fields to store calculated values -->
                                             <label for="manufacturer_profit">STKR:</label>
-                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit"
-                                                readonly>
+                                            <input type="number" id="manufacturerProfitInput" name="manufacturer_profit" readonly>
 
                                             <label for="creator_profit">Creator:</label>
                                             <input type="number" id="creatorProfitInput" name="creator_profit" readonly>
 
                                             <label for="marketplace_price">Marketplace Price:</label>
-                                            <input type="number" id="marketplacePriceInput" name="marketplace_price"
-                                                readonly>
+                                            <input type="number" id="marketplacePriceInput" name="marketplace_price" readonly>
                                         </div>
 
 
@@ -274,9 +277,7 @@ if (mysqli_num_rows($result) > 0) {
     <!-- new jquery version -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -292,7 +293,46 @@ if (mysqli_num_rows($result) > 0) {
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
+
+            $('#uploadForm').on('submit', function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                Swal.fire({
+                    title: '',
+                    text: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'Cancel',
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'process_publish_built_game.php',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(response);
+
+                                // Display a SweetAlert success notification
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                }).then(function() {
+                                    window.location.href = 'create_game_page.php#section6';
+                                });
+                            },
+                        });
+                    }
+                });
+            });
+
+
+
             // Initialize FilePond with the specified settings
             const inputElement = document.querySelector('input[name="logo"]');
             const pond = FilePond.create(inputElement, {
@@ -325,7 +365,7 @@ if (mysqli_num_rows($result) > 0) {
             var markupPercentage = <?php echo $markup_percentage; ?>; // Get the markup percentage
 
             // Set up event listener for desired markup change
-            $('#desired_markup').on('input', function () {
+            $('#desired_markup').on('input', function() {
                 var desiredMarkup = parseFloat($(this).val()); // Parse the input value as a float
 
                 // STKR Hub

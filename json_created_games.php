@@ -326,7 +326,7 @@ while ($fetchedGames = $resultGames->fetch_assoc()) {
 
     $data[] = array(
         "game_link" => $game_link,
-        "description" => $description,
+        "description" => $description_value,
         "total_price" => $total_price_value,
         "formatted_date" => $date_modified_value,
         "status" => $status_value,

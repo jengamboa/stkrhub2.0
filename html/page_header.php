@@ -104,7 +104,7 @@
 									';
 								} else {
 									echo '
-									<a class="nav-link" href="user_profile.php">
+									<a class="nav-link" href="profile_index.php">
 										<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 37px; height: 37px; border-radius: 50%;
 										background: rgb(38,211,224);
 										background: linear-gradient(90deg, rgba(38,211,224,1) 0%, rgba(182,96,232,1) 100%);">

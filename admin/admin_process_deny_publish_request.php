@@ -36,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateQuery = "UPDATE built_games SET is_pending_published = 0, is_request_denied = 1 WHERE built_game_id = $builtGameId";
     if (mysqli_query($conn, $updateQuery)) {
         // Delete related records
-        $deleteQuery1 = "DELETE FROM pending_published_multiple_files WHERE built_game_id = $builtGameId";
-        mysqli_query($conn, $deleteQuery1);
+        // $deleteQuery1 = "DELETE FROM pending_published_multiple_files WHERE built_game_id = $builtGameId";
+        // mysqli_query($conn, $deleteQuery1);
 
-        $deleteQuery2 = "DELETE FROM pending_published_built_games WHERE built_game_id = $builtGameId";
-        mysqli_query($conn, $deleteQuery2);
+        // $deleteQuery2 = "DELETE FROM pending_published_built_games WHERE built_game_id = $builtGameId";
+        // mysqli_query($conn, $deleteQuery2);
 
         echo $uploadPath;
 

@@ -47,6 +47,8 @@ while ($fetched = $resultApproved->fetch_assoc()) {
     <a href="built_game_dashboard.php?built_game_id=' . $built_game_id . '">' . $name . '</a>
     ';
 
+    $description_value = '<p class="text-truncate" style="max-width: 140px;" data-toggle="tooltip" title="' . $description . '">' . $description . '</p>';
+
 
     if ($game_id == 0) {
         $from_what_game_value = '
@@ -70,6 +72,7 @@ while ($fetched = $resultApproved->fetch_assoc()) {
         $status_value = 'Please Purchase at Cart';
     } elseif ($is_request_denied == 1) {
         $status_value = '
+        <a href="denied_publish_request_page.php?built_game_id=' . $built_game_id . '">View Reason Denied</a>
         Your request has been denied
         <button class="view-reason" data-built_game_id="' . $built_game_id . '" data-reason="' . $reason . '" data-file_path="' . $file_path . '">
             View Reason
@@ -203,7 +206,7 @@ while ($fetched = $resultApproved->fetch_assoc()) {
 
     $data[] = array(
         "built_game_link" => $built_game_link,
-        "description" => $description,
+        "description" => $description_value,
         "from_what_game" => $from_what_game,
         "total_price" => $total_price,
         "formatted_date" => $formatted_date,

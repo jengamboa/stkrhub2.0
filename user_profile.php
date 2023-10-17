@@ -1,14 +1,7 @@
 <?php
 session_start();
-?>
+include 'connection.php';
 
-<?php
-// Include the connection.php file to access the existing database connection
-require_once 'connection.php';
-require_once 'html/header.html.php';
-
-
-// Check if the user is logged in and if the "user_id" is set in the session
 if (!isset($_SESSION['user_id'])) {
     // Redirect to the login page if the user is not logged in
     header("Location: login.php");

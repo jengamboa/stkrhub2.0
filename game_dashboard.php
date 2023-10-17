@@ -217,13 +217,13 @@ if ($_SERVER['REQUEST_METHOD']) {
                                 </div>
 
                                 <div class="col-lg-4 offset-lg-1" style="margin-left: 0px; margin-top: 0px;">
-                                    <div class="s_product_text" style="margin-top: 20px;">
+                                    <div class="s_product_text" style="margin-top: 20px;line-height: 10px;">
                                         <h6>' . $tutorial_title . '</h6>
 
                                         <div style="
                                             width: 100%;
                                             display: -webkit-box;
-                                            -webkit-line-clamp: 3;
+                                            -webkit-line-clamp: 7;
                                             -webkit-box-orient:vertical;
                                             overflow: hidden;
                                             ">
