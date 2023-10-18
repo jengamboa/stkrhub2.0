@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2023 at 06:19 PM
+-- Generation Time: Oct 18, 2023 at 07:37 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -45,7 +45,8 @@ CREATE TABLE `added_game_components` (
 
 INSERT INTO `added_game_components` (`added_component_id`, `game_id`, `component_id`, `is_custom_design`, `custom_design_file_path`, `quantity`, `color_id`, `size`, `user_id`) VALUES
 (531, 208, 1, 0, '', 1, NULL, '7x7', 3),
-(532, 209, 1, 0, '', 1, NULL, '7x7', 3);
+(532, 209, 1, 0, '', 1, NULL, '7x7', 3),
+(533, 210, 1, 0, '', 1, NULL, '7x7', 14);
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,8 @@ INSERT INTO `addresses` (`address_id`, `user_id`, `fullname`, `number`, `region`
 (16, 10, 'Denzel Go', '', 'Luzon ', '', 'Valenzuela City', '', '', '8 Doneza St. Balubaran Malinta', 0, '2023-09-27 19:58:48'),
 (17, 10, '', '', 'Metro Manila', '', '', '', '', '', 1, '2023-09-27 19:59:00'),
 (18, 3, 'Metro M', '09770257461', 'Metro Manila', '', '', '', '', '8 Doneza St. Balubaran Malinta', 0, '2023-09-29 11:30:48'),
-(19, 3, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 0, '2023-10-09 14:36:20');
+(19, 3, 'Denzel Go', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', '8 Doneza St. Balubaran Malinta', 0, '2023-10-09 14:36:20'),
+(20, 14, 'Jennica Gamboa', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', 'jenjen st', 1, '2023-10-18 05:33:55');
 
 -- --------------------------------------------------------
 
@@ -155,7 +157,8 @@ INSERT INTO `admin_logs` (`log_id`, `admin_id`, `event_type`, `timestamp`) VALUE
 (33, 2, 'login', '2023-10-14 05:33:57'),
 (34, 2, 'login', '2023-10-15 16:34:27'),
 (35, 2, 'login', '2023-10-16 05:06:07'),
-(36, 2, 'login', '2023-10-16 13:21:55');
+(36, 2, 'login', '2023-10-16 13:21:55'),
+(37, 2, 'login', '2023-10-18 05:35:07');
 
 -- --------------------------------------------------------
 
@@ -454,7 +457,9 @@ INSERT INTO `audit_logs` (`log_id`, `user_id`, `action`, `details`, `timestamp`)
 (240, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 131', '2023-10-16 14:48:28'),
 (241, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 132', '2023-10-16 14:48:28'),
 (242, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 134', '2023-10-16 14:48:29'),
-(243, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 136', '2023-10-16 14:48:29');
+(243, 3, 'PAY USING STKR WALLET', 'Purchase built_game_id: 136', '2023-10-16 14:48:29'),
+(244, 14, 'PAY USING STKR WALLET', 'Purchase ticket_id: 106', '2023-10-18 05:34:08'),
+(245, 14, 'PAY USING STKR WALLET', 'Purchase built_game_id: 137', '2023-10-18 05:36:18');
 
 -- --------------------------------------------------------
 
@@ -601,7 +606,8 @@ INSERT INTO `built_games` (`built_game_id`, `game_id`, `name`, `description`, `c
 (133, 208, 'asd', '', 3, '2023-10-16 22:33:02', 0, 0, 1, 0, 1, 1, 0, 0, 0, 12.00, 1.20),
 (134, 209, 'f', '', 3, '2023-10-16 22:35:07', 0, 0, 1, 0, 1, 1, 0, 0, 0, 12.00, 1.20),
 (135, 208, 'asd', '', 3, '2023-10-16 22:35:12', 0, 0, 1, 0, 0, 1, 0, 0, 0, 12.00, 1.20),
-(136, 209, 'f', '', 3, '2023-10-16 22:46:24', 0, 0, 1, 0, 1, 0, 0, 0, 0, 12.00, 1.20);
+(136, 209, 'f', '', 3, '2023-10-16 22:46:24', 0, 0, 1, 0, 1, 0, 0, 0, 0, 12.00, 1.20),
+(137, 210, 'jen', 'description\n', 14, '2023-10-18 13:35:49', 0, 0, 1, 0, 0, 1, 0, 0, 0, 12.00, 1.20);
 
 -- --------------------------------------------------------
 
@@ -633,7 +639,8 @@ INSERT INTO `built_games_added_game_components` (`added_component_id`, `built_ga
 (425, 133, 208, 1, 0, '', 1, 0, '7x7'),
 (426, 134, 209, 1, 0, '', 1, 0, '7x7'),
 (427, 135, 208, 1, 0, '', 1, 0, '7x7'),
-(428, 136, 209, 1, 0, '', 1, 0, '7x7');
+(428, 136, 209, 1, 0, '', 1, 0, '7x7'),
+(429, 137, 210, 1, 0, '', 1, 0, '7x7');
 
 -- --------------------------------------------------------
 
@@ -664,7 +671,7 @@ INSERT INTO `cancel_order_reasons` (`cancel_order_reason_id`, `reason_text`) VAL
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `published_game_id` int(11) DEFAULT NULL,
   `game_id` int(11) DEFAULT NULL,
   `built_game_id` int(11) DEFAULT NULL,
@@ -853,7 +860,13 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `published_game_id`, `game_id`, `built
 (744, 3, NULL, 209, 132, NULL, NULL, 2, 12.00, 1, 0),
 (745, 3, NULL, 209, 131, NULL, NULL, 2, 12.00, 1, 0),
 (746, 3, NULL, 208, 129, NULL, NULL, 1, 12.00, 1, 0),
-(747, 3, NULL, 208, 130, NULL, NULL, 1, 12.00, 1, 0);
+(747, 3, NULL, 208, 130, NULL, NULL, 1, 12.00, 1, 0),
+(748, 8, 178, NULL, NULL, NULL, NULL, 1, 82.00, 1, 1),
+(749, 3, 178, NULL, NULL, NULL, NULL, 1, 82.00, 1, 1),
+(750, 10, 174, NULL, NULL, NULL, NULL, 1, 1526.00, 1, 1),
+(751, 4, 175, NULL, NULL, NULL, NULL, 1, 115.00, 1, 1),
+(752, 14, NULL, 210, NULL, NULL, 106, 1, 1.20, 1, 0),
+(753, 14, NULL, 210, 137, NULL, NULL, 1, 12.00, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2239,7 +2252,8 @@ INSERT INTO `games` (`game_id`, `name`, `description`, `user_id`, `created_at`, 
 (206, 'hello', '', 3, '2023-10-11 10:54:05', '2023-10-11 02:54:10', 0, 0, 1, 1, 0, 0, 0),
 (207, 'game 1', '', 3, '2023-10-11 13:28:57', '2023-10-11 05:29:30', 1, 0, 1, 1, 0, 1, 0),
 (208, 'asd', '', 3, '2023-10-16 20:05:37', '2023-10-16 13:21:17', 1, 0, 1, 1, 0, 1, 1),
-(209, 'f', '', 3, '2023-10-16 21:33:06', '2023-10-16 13:36:50', 1, 0, 0, 0, 0, 1, 1);
+(209, 'f', '', 3, '2023-10-16 21:33:06', '2023-10-16 13:36:50', 1, 0, 0, 0, 0, 1, 1),
+(210, 'jen', 'description\n', 14, '2023-10-18 13:31:15', '2023-10-18 05:32:20', 1, 0, 0, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2404,7 +2418,9 @@ INSERT INTO `orders` (`order_id`, `unique_order_id`, `unique_order_group_id`, `c
 (334, '131652d4d3cedee7', '20231016164828', 745, 3, NULL, 131, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
 (335, '132652d4d3cf0c95', '20231016164828', 744, 3, NULL, 132, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
 (336, '134652d4d3cf3f44', '20231016164828', 743, 3, NULL, 134, NULL, NULL, 2, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:28', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
-(337, '136652d4d3d028da', '20231016164828', 742, 3, NULL, 136, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:29', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL);
+(337, '136652d4d3d028da', '20231016164828', 742, 3, NULL, 136, NULL, NULL, 1, 12.00, 1, 0, 0, 0, 0, 0, NULL, 0, '2023-10-16 22:48:29', 0.00, 0.00, 0.00, 0.00, 0, 'Luzon', '09770257461', 'Luzon', '', '', '', 'asd', '8 Doneza St. Balubaran Malinta', 155.50, NULL, NULL, NULL),
+(338, '106652f6e504bf71', '20231018073408', 752, 14, NULL, NULL, NULL, 106, 1, 1.20, 0, 0, 0, 0, 1, 0, NULL, 0, '2023-10-18 13:34:08', 0.00, 0.00, 0.00, 0.00, 0, 'Jennica Gamboa', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', 'jenjen st', 1.20, NULL, NULL, NULL),
+(339, '137652f6ed21bf0f', '20231018073618', 753, 14, NULL, 137, NULL, NULL, 1, 12.00, 0, 1, 0, 0, 0, 0, NULL, 0, '2023-10-18 13:36:18', 0.00, 0.00, 0.00, 0.00, 0, 'Jennica Gamboa', '09770257461', 'Metro Manila', 'Metro Manila', 'Valenzuela', 'Barangay 5', '1440', 'jenjen st', 54.50, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2540,7 +2556,9 @@ INSERT INTO `paypal_transactions` (`payment_id`, `paypal_transaction_id`, `order
 (106, '6RF34647VC248743N', 'CAPTURE', 'COMPLETED', 'PHP', 97.40, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '3W232813GS580384G', 'COMPLETED', 'PHP', 97.40, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:32:51', '2023-10-16 14:32:51', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
 (107, '34E2557225937625G', 'CAPTURE', 'COMPLETED', 'PHP', 119.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '9EP7304763452754T', 'COMPLETED', 'PHP', 119.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:33:59', '2023-10-16 14:33:59', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
 (108, '5D89204702737523X', 'CAPTURE', 'COMPLETED', 'PHP', 1.20, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '76122573N82062803', 'COMPLETED', 'PHP', 1.20, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:34:47', '2023-10-16 14:34:47', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
-(109, '7K1966833M078654S', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '42D01109VC191610E', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:35:46', '2023-10-16 14:35:46', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US');
+(109, '7K1966833M078654S', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '42D01109VC191610E', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-16 14:35:46', '2023-10-16 14:35:46', 'John', 'Doe', 'sb-tzxms27587820@business.example.com', '5HGF7ZREXPDNG', 'US'),
+(110, '6AA65114R03674403', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '5HF83187KY495114F', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-18 05:17:04', '2023-10-18 05:17:04', 'John', 'Doe', 'sb-m1xqg27628470@personal.example.com', 'LWM5FGBWXPFSW', 'US'),
+(111, '18R33179EB972743M', 'CAPTURE', 'COMPLETED', 'PHP', 10000.00, 'sb-i4hyn27575086@business.example.com', 'QNTT33YWSCXP4', '1B17329817551094Y', 'COMPLETED', 'PHP', 10000.00, 0, 'ELIGIBLE', 'ITEM_NOT_RECEIVED, UNAUTHORIZED_TRANSACTION', '2023-10-18 05:30:51', '2023-10-18 05:30:51', 'John', 'Doe', 'sb-m1xqg27628470@personal.example.com', 'LWM5FGBWXPFSW', 'US');
 
 -- --------------------------------------------------------
 
@@ -2905,7 +2923,8 @@ INSERT INTO `tickets` (`ticket_id`, `user_id`, `game_id`, `is_approved`, `is_den
 (102, 3, 209, 1, 0, '2023-10-16 14:34:29', 0, 1, 1, 0, 12.00, 1.20, NULL),
 (103, 3, 208, 1, 0, '2023-10-16 14:34:51', 0, 1, 1, 0, 12.00, 1.20, NULL),
 (104, 3, 209, 1, 0, '2023-10-16 14:41:38', 0, 1, 1, 0, 12.00, 1.20, NULL),
-(105, 3, 208, 0, 0, '2023-10-16 14:46:14', 0, 1, 1, 0, 12.00, 1.20, NULL);
+(105, 3, 208, 0, 0, '2023-10-16 14:46:14', 0, 1, 1, 0, 12.00, 1.20, NULL),
+(106, 14, 210, 1, 0, '2023-10-18 05:32:23', 0, 1, 1, 0, 12.00, 1.20, NULL);
 
 -- --------------------------------------------------------
 
@@ -2985,15 +3004,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `created_at`, `shipping_address`, `avatar`, `wallet_amount`) VALUES
 (3, 'denzel', 'denzelgo17@gmail.com', '$2y$10$ARZ0Q6SNMcoKJIvaaiGwZeb/T0EtfPk9HMj.XvGnVgdcMYL8ZkwKa', '2023-08-02 09:11:37', 'asd', 'uploads/avatars/6527ba3224590_Screenshot 2023-10-06 194548.png', 9627.80),
-(4, 'jerrick', 'jerrick@gmail.com', '$2y$10$GLMUnEDCDln02y6c/zMR9O2W78THngXnkxL06sair.wT5gt9Bx7Ya', '2023-08-02 09:14:19', NULL, NULL, 0.00),
-(5, 'jp', 'jp@gmail.com', '$2y$10$4B39cJlUoie9r2lN65LRbu.1YdKsDgMdfuIPUJECdFlgsUBNSWQn.', '2023-08-03 05:09:20', NULL, NULL, 0.00),
-(6, 'berns', 'berns@gmail.com', '$2y$10$cGi0jPeiwD62dxv/vk7WMePFmV4ro0rAut7dAQscujTptnGXnPTte', '2023-08-10 08:46:14', NULL, NULL, 0.00),
-(7, 'fauline', 'fauline_knipz@yahoo.com', '$2y$10$tgbZZGb7jph4SJ3xKpF8Au5Rr74McPWqsUdqpoY/uR2VE2j/s/qJe', '2023-08-30 03:04:24', NULL, NULL, 0.00),
-(8, 'jennica', 'jennica@gmail.com', '$2y$10$WJlhPmUz0xTn8wUpTbDB/eVIbApu/Pnz8m8.Ypk6XCFROFCjw.xZ6', '2023-08-30 05:19:12', NULL, NULL, 0.00),
-(9, 'Kenmar', 'kenmar@gmail.com', '$2y$10$AIAMKryRhZ7viSqRnxrdHexrA2TMDiAaqwLTK0QzKla6OEH6nXgkS', '2023-08-30 06:34:05', NULL, NULL, 0.00),
-(10, 'nicole', 'nicole@gmail.com', '$2y$10$P7TNqwoCy7jqry07RZOiye1j3lzNocu5d1e1NDR89BM8fpsmYgOGi', '2023-09-27 04:35:55', NULL, NULL, 0.00),
-(11, 'admin', 'denzelgo17@gmail.com', '123', '2023-09-28 14:57:02', NULL, NULL, 0.00),
-(12, 'admin1', 'admin@gmail.com', '$2y$10$GKrIa619rJuXVRSjWtLoLOvssAnsM7wGkdgyyem6UCbDJym3ixaEO', '2023-09-28 15:01:03', NULL, NULL, 0.00);
+(14, 'jen', 'jen@gmail.com', '$2y$10$4Hhq25WBr.Aj/KZ0QeTfHeNvG8lCpB8UySKfM/7I6EEcQhynbJupa', '2023-10-18 05:30:06', NULL, NULL, 9944.30);
 
 -- --------------------------------------------------------
 
@@ -3213,7 +3224,13 @@ INSERT INTO `user_logs` (`log_id`, `user_id`, `event_type`, `timestamp`) VALUES
 (198, 3, 'login', '2023-10-16 05:03:56'),
 (199, 3, 'login', '2023-10-16 08:26:20'),
 (200, 3, 'login', '2023-10-16 11:59:49'),
-(201, 3, 'login', '2023-10-16 12:00:28');
+(201, 3, 'login', '2023-10-16 12:00:28'),
+(202, 8, 'login', '2023-10-18 05:16:34'),
+(203, 3, 'login', '2023-10-18 05:17:53'),
+(204, 10, 'login', '2023-10-18 05:18:22'),
+(205, 4, 'login', '2023-10-18 05:18:39'),
+(206, 3, 'login', '2023-10-18 05:22:32'),
+(207, 14, 'login', '2023-10-18 05:30:09');
 
 -- --------------------------------------------------------
 
@@ -3245,7 +3262,7 @@ INSERT INTO `user_review_response` (`user_review_response_id`, `built_game_id`, 
 
 CREATE TABLE `wallet_transactions` (
   `wallet_transaction_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `transaction_type` varchar(10) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `transaction_date` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -3295,7 +3312,11 @@ INSERT INTO `wallet_transactions` (`wallet_transaction_id`, `user_id`, `transact
 (64, 3, 'Pay', 59.50, '2023-10-16 14:36:29', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
 (65, 3, 'Pay', 132.70, '2023-10-16 14:41:50', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
 (66, 3, 'Pay', 1.20, '2023-10-16 14:46:19', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
-(67, 3, 'Pay', 155.50, '2023-10-16 14:48:29', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL);
+(67, 3, 'Pay', 155.50, '2023-10-16 14:48:29', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(68, 8, 'Cash In', 10000.00, '2023-10-18 05:17:04', 'success', 'Paypal', '6AA65114R03674403', NULL, NULL, NULL),
+(69, 14, 'Cash In', 10000.00, '2023-10-18 05:30:51', 'success', 'Paypal', '18R33179EB972743M', NULL, NULL, NULL),
+(70, 14, 'Pay', 1.20, '2023-10-18 05:34:08', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL),
+(71, 14, 'Pay', 54.50, '2023-10-18 05:36:18', 'success', 'STKR Wallet Pay', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -3619,13 +3640,13 @@ ALTER TABLE `wallet_transactions`
 -- AUTO_INCREMENT for table `added_game_components`
 --
 ALTER TABLE `added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=534;
 
 --
 -- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -3637,7 +3658,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `admin_review_response`
@@ -3655,7 +3676,7 @@ ALTER TABLE `age`
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `barangay`
@@ -3667,13 +3688,13 @@ ALTER TABLE `barangay`
 -- AUTO_INCREMENT for table `built_games`
 --
 ALTER TABLE `built_games`
-  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `built_game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT for table `built_games_added_game_components`
 --
 ALTER TABLE `built_games_added_game_components`
-  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=429;
+  MODIFY `added_component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=430;
 
 --
 -- AUTO_INCREMENT for table `cancel_order_reasons`
@@ -3685,7 +3706,7 @@ ALTER TABLE `cancel_order_reasons`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=748;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=754;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -3763,7 +3784,7 @@ ALTER TABLE `dropzone_published_uploads`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT for table `games_reasons`
@@ -3793,13 +3814,13 @@ ALTER TABLE `markup_percentage`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
 
 --
 -- AUTO_INCREMENT for table `paypal_transactions`
 --
 ALTER TABLE `paypal_transactions`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `pending_published_built_games`
@@ -3859,7 +3880,7 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `to_deliver`
@@ -3877,13 +3898,13 @@ ALTER TABLE `tutorials`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 
 --
 -- AUTO_INCREMENT for table `user_review_response`
@@ -3895,7 +3916,7 @@ ALTER TABLE `user_review_response`
 -- AUTO_INCREMENT for table `wallet_transactions`
 --
 ALTER TABLE `wallet_transactions`
-  MODIFY `wallet_transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `wallet_transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- Constraints for dumped tables
@@ -3908,12 +3929,6 @@ ALTER TABLE `added_game_components`
   ADD CONSTRAINT `FK_added_game_components_color` FOREIGN KEY (`color_id`) REFERENCES `component_colors` (`color_id`),
   ADD CONSTRAINT `added_game_components_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `added_game_components_ibfk_2` FOREIGN KEY (`component_id`) REFERENCES `game_components` (`component_id`);
-
---
--- Constraints for table `addresses`
---
-ALTER TABLE `addresses`
-  ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `admin_review_response`
@@ -3940,7 +3955,6 @@ ALTER TABLE `built_games_added_game_components`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `FK_cart_added_game_components` FOREIGN KEY (`added_component_id`) REFERENCES `added_game_components` (`added_component_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_cart_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`built_game_id`) REFERENCES `built_games` (`built_game_id`) ON DELETE CASCADE;
 
 --
@@ -4007,12 +4021,6 @@ ALTER TABLE `ratings`
 --
 ALTER TABLE `tickets`
   ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`);
-
---
--- Constraints for table `wallet_transactions`
---
-ALTER TABLE `wallet_transactions`
-  ADD CONSTRAINT `wallet_transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
